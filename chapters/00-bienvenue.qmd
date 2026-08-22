@@ -1,0 +1,55 @@
+::: {.en}
+## Who this book is for {#audience}
+
+Local AI — open-weight language models running on your own hardware — has reached the point where it beats cloud APIs for a growing share of professional work: sensitive data, domain-specific tasks, unlimited usage at zero marginal cost. This book is the complete reference for adopting it in a French research, public-sector or corporate environment, using the Unsloth ecosystem.
+
+| You are… | Read first | You will get |
+|---|---|---|
+| A researcher new to AI | Appendix A, then Part II | Running your first local assistant today |
+| An AI practitioner / engineer | Parts II–IV | Production-grade setup, fine-tuning, agents, evaluation |
+| A lab or department director | Chapter 14 (+ Part I for context) | Costs, risks and a 90-day pilot plan |
+| Institute leadership / CIO | Chapters 1, 15 | Sovereignty strategy, regulation, investment scenarios |
+| IT security / DPO | Chapter 13 | GDPR mapping and hardening checklist |
+
+**How to read it:** each chapter exists in French and English; pick one at render time — `quarto render --profile fr` or `--profile en` (see the project README). Rankings and product facts are an early-2026 snapshot with sources listed in Annex B; the *methods* chapters (5, 7, 12) are durable.
+:::
+
+::: {.fr}
+## À qui s'adresse ce livre {#audience}
+
+L'IA locale — des modèles de langage à poids ouverts exécutés sur votre propre matériel — est arrivée à maturité : elle bat les API cloud sur une part croissante du travail professionnel — données sensibles, tâches métier, usage illimité à coût marginal nul. Ce livre est la référence complète pour son adoption dans un environnement français de recherche, public ou privé, au moyen de l'écosystème Unsloth.
+
+| Vous êtes… | Commencez par | Vous obtiendrez |
+|---|---|---|
+| Chercheur novice en IA | Annexe A, puis Partie II | Votre premier assistant local dès aujourd'hui |
+| Praticien / ingénieur IA | Parties II–IV | Installation de production, fine-tuning, agents, évaluation |
+| Directeur de laboratoire ou département | Chapitre 14 (+ Partie I pour le contexte) | Coûts, risques et plan pilote de 90 jours |
+| Direction d'institut / DSI | Chapitres 1 et 15 | Stratégie de souveraineté, régulation, scénarios d'investissement |
+| Sécurité IT / DPO | Chapitre 13 | Correspondance RGPD et liste de durcissement |
+
+**Comment le lire :** chaque chapitre existe en français et en anglais ; on choisit sa langue au moment du rendu — `quarto render --profile fr` ou `--profile en` (voir le README du projet). Les classements et faits produits sont un instantané début 2026, sources en annexe B ; les chapitres *méthode* (5, 7, 12) ne périment pas.
+:::
+
+::: {.en}
+## The five parts {#parts}
+
+- **Part I — Foundations**: why local AI now, and how to choose models.
+- **Part II — Running models**: installing Unsloth, Studio Chat, and every inference parameter explained.
+- **Part III — Training**: the no-code fine-tuning pipeline, hyperparameters decoded, synthetic data with Data Recipes.
+- **Part IV — Deploying**: export paths, coding agents on local models, the Python route, and evaluation before trust.
+- **Part V — Governing**: GDPR mapping and hardening, the business case, the institute-level strategy.
+
+Appendix A is a 30-minute primer for researchers; Annex B lists sources and honest limits.
+:::
+
+::: {.fr}
+## Les cinq parties {#parts}
+
+- **Partie I — Fondations** : pourquoi l'IA locale maintenant, et comment choisir ses modèles.
+- **Partie II — Exécuter** : installer Unsloth, Studio Chat, et tous les paramètres d'inférence expliqués.
+- **Partie III — Entraîner** : le pipeline sans code, les hyperparamètres décryptés, les données synthétiques avec Data Recipes.
+- **Partie IV — Déployer** : exports, agents de code sur modèles locaux, la voie Python, l'évaluation avant confiance.
+- **Partie V — Gouverner** : RGPD et durcissement, dossier économique, stratégie à l'échelle d'un institut.
+
+L'annexe A est un primer de 30 minutes pour chercheurs ; l'annexe B liste les sources et les limites honnêtes.
+:::

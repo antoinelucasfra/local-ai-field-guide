@@ -1,0 +1,57 @@
+## Local models for coding agents {#agents}
+
+::: {.en}
+Coding agents (Claude Code, Codex, OpenCode…) accept custom endpoints — so they can drive **your** local model, keeping code and prompts on-premise. Unsloth wires this up in one command:
+
+```bash
+unsloth start claude     # also: codex | hermes | openclaw | opencode
+unsloth start claude --continue
+```
+
+With a model loaded in Studio, `unsloth start` sets the endpoint, API key, model name and context length for the agent launch — your normal agent config is untouched. Manual equivalent:
+
+```bash
+export ANTHROPIC_BASE_URL="http://localhost:8888"
+export ANTHROPIC_AUTH_TOKEN="sk-unsloth-xxxxxxxx"   # Settings -> API -> Create
+export ANTHROPIC_API_KEY=""
+claude --model unsloth/gemma-4-26B-A4B-it-GGUF
+```
+
+The Unsloth endpoint speaks both dialects on one port: Anthropic `/v1/messages` and OpenAI `/v1/chat/completions` + `/v1/responses`, with streaming, tool calling and vision. API keys (`sk-unsloth-…`) are created in Settings → API, shown once, stored hashed, revocable.
+
+[Critical performance fix for Claude Code:]{fg="#b22222"} its attribution header (`x-anthropic-billing-header:`) changes every request and invalidates the local model's KV cache — up to 90 % slower inference. Disable it:
+
+```bash
+claude --settings '{"env":{"CLAUDE_CODE_ATTRIBUTION_HEADER":"0","CLAUDE_CODE_ENABLE_TELEMETRY":"0","CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC":"1"}}'
+```
+
+Per the AA Coding Agent Index, expect open 26–30B-class models to handle routine refactors, tests and reviews well, while the largest closed models keep an edge on very long multi-file missions — route accordingly.
+:::
+
+::: {.fr}
+Les agents de code (Claude Code, Codex, OpenCode…) acceptent des endpoints personnalisés — ils peuvent donc piloter **votre** modèle local, en gardant code et prompts sur site. Unsloth câble ça en une commande :
+
+```bash
+unsloth start claude     # aussi : codex | hermes | openclaw | opencode
+unsloth start claude --continue
+```
+
+Avec un modèle chargé dans le Studio, `unsloth start` règle endpoint, clé API, nom de modèle et longueur de contexte pour l'agent — votre configuration habituelle reste intacte. Équivalent manuel :
+
+```bash
+export ANTHROPIC_BASE_URL="http://localhost:8888"
+export ANTHROPIC_AUTH_TOKEN="sk-unsloth-xxxxxxxx"   # Settings -> API -> Create
+export ANTHROPIC_API_KEY=""
+claude --model unsloth/gemma-4-26B-A4B-it-GGUF
+```
+
+L'endpoint Unsloth parle les deux dialectes sur un même port : Anthropic `/v1/messages` et OpenAI `/v1/chat/completions` + `/v1/responses`, avec streaming, appels d'outils et vision. Les clés (`sk-unsloth-…`) se créent dans Settings → API, affichées une fois, stockées hachées, révocables.
+
+[Correctif de performance critique pour Claude Code :]{fg="#b22222"} son header d'attribution (`x-anthropic-billing-header:`) change à chaque requête et invalide le cache KV du modèle local — jusqu'à 90 % d'inférence en plus. Désactivez-le :
+
+```bash
+claude --settings '{"env":{"CLAUDE_CODE_ATTRIBUTION_HEADER":"0","CLAUDE_CODE_ENABLE_TELEMETRY":"0","CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC":"1"}}'
+```
+
+Selon l'AA Coding Agent Index, attendez-vous à ce que des modèles ouverts de classe 26–30B traitent bien refactors courants, tests et revues, tandis que les plus gros modèles fermés gardent l'avantage sur les très longues missions multi-fichiers — routez en conséquence.
+:::

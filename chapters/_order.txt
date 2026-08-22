@@ -1,0 +1,25 @@
+# order manifest — tools/build_book.py reads this
+PART | Part I — Foundations | Partie I — Fondations
+FILE 00-bienvenue.qmd
+FILE 01-pourquoi.qmd
+FILE 02-choisir-modeles.qmd
+PART | Part II — Running models | Partie II — Exécuter
+FILE 03-ecosysteme-installation.qmd
+FILE 04-studio-chat.qmd
+FILE 05-parametres-inference.qmd
+PART | Part III — Training | Partie III — Entraîner
+FILE 06-pipeline-finetuning.qmd
+FILE 07-hyperparametres-entrainement.qmd
+FILE 08-data-recipes.qmd
+PART | Part IV — Deploying | Partie IV — Déployer
+FILE 09-export-deploiement.qmd
+FILE 10-agents-code-locaux.qmd
+FILE 11-voie-python.qmd
+FILE 12-evaluer.qmd
+PART | Part V — Governing | Partie V — Gouverner
+FILE 13-gdpr-durcissement.qmd
+FILE 14-dossier-economique.qmd
+FILE 15-note-strategique.qmd
+PART | Appendices | Annexes
+FILE A-annexe-chercheur.qmd
+FILE B-sources-limites.qmd

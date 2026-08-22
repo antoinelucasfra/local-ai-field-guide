@@ -1,0 +1,40 @@
+## Sources {#sources}
+:::
+
+::: {.fr}
+## Sources {#sources}
+:::
+
+::: {.en}
+- Unsloth documentation: [studio overview](https://unsloth.ai/docs/new/studio), [getting started](https://unsloth.ai/docs/new/studio/start), [installation](https://unsloth.ai/docs/new/studio/install), [chat](https://unsloth.ai/docs/new/studio/chat), [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe), [export](https://unsloth.ai/docs/new/studio/export), [API endpoint](https://unsloth.ai/docs/basics/api), [Claude Code](https://unsloth.ai/docs/basics/claude-code), [Codex](https://unsloth.ai/docs/basics/codex), [fine-tuning guide](https://unsloth.ai/docs/get-started/fine-tuning-llms-guide), [Desktop](https://unsloth.ai/docs/desktop)
+- Artificial Analysis: [models leaderboard](https://artificialanalysis.ai/models), [coding agents](https://artificialanalysis.ai/agents/coding-agents), [AI trends](https://artificialanalysis.ai/trends) (Intelligence Index v4.1.1, Coding Agent Index v1.4; snapshot early 2026)
+:::
+
+::: {.fr}
+- Documentation Unsloth : [présentation Studio](https://unsloth.ai/docs/new/studio), [prise en main](https://unsloth.ai/docs/new/studio/start), [installation](https://unsloth.ai/docs/new/studio/install), [chat](https://unsloth.ai/docs/new/studio/chat), [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe), [export](https://unsloth.ai/docs/new/studio/export), [endpoint API](https://unsloth.ai/docs/basics/api), [Claude Code](https://unsloth.ai/docs/basics/claude-code), [Codex](https://unsloth.ai/docs/basics/codex), [guide de fine-tuning](https://unsloth.ai/docs/get-started/fine-tuning-llms-guide), [Desktop](https://unsloth.ai/docs/desktop)
+- Artificial Analysis : [classement des modèles](https://artificialanalysis.ai/models), [agents de code](https://artificialanalysis.ai/agents/coding-agents), [tendances IA](https://artificialanalysis.ai/trends) (Intelligence Index v4.1.1, Coding Agent Index v1.4 ; instantané début 2026)
+:::
+
+::: {.en}
+## Limits {#limits}
+:::
+
+::: {.fr}
+## Limites {#limits}
+:::
+
+::: {.en}
+- Rankings quoted here are a snapshot; model leadership shifts monthly — re-check artificialanalysis.ai before decisions.
+- A fine-tuned mid-size model is near-SOTA **on its domain**, not a frontier generalist; route hard general questions accordingly.
+- Hallucinations remain possible — keep a human in the loop for decisions affecting individuals (Art. 22 restricts fully automated decisions).
+- Quantisation (4-bit) still costs some accuracy; benchmark UD quants vs higher precision before choosing.
+- Studio is beta: features and defaults evolve quickly; pin versions in production.
+:::
+
+::: {.fr}
+- Les classements cités sont un instantané ; le leadership change chaque mois — revérifiez artificialanalysis.ai avant décision.
+- Un modèle intermédiaire affûté est quasi-SOTA **sur son domaine**, pas un généraliste de pointe ; orientez les questions générales difficiles en conséquence.
+- Les hallucinations restent possibles — gardez un humain dans la boucle pour les décisions affectant des personnes (l'art. 22 encadre les décisions entièrement automatisées).
+- La quantification (4-bit) coûte encore un peu de précision ; benchmarkez les quants UD vs précisions supérieures avant de choisir.
+- Le Studio est en bêta : fonctionnalités et défauts évoluent vite ; figez les versions en production.
+:::

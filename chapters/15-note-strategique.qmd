@@ -1,0 +1,166 @@
+::: {.en}
+## Local AI as Institutional Strategy {#strategy}
+:::
+
+::: {.fr}
+## L'IA locale comme stratégie d'institution {#strategy}
+:::
+
+
+::: {.en}
+## Strategic context: a consolidating landscape
+
+Frontier AI capability is concentrating. Artificial Analysis tracks hyperscaler AI capital expenditure in the hundreds of billions of dollars per year, and its country analysis shows frontier-intelligence production dominated by US and Chinese labs, with Europe represented mainly through open-weight releases (e.g. Mistral, France). Two consequences for a research institute:
+
+1. **Dependency risk**: routing institutional knowledge work through a small set of foreign commercial platforms places core research processes under foreign jurisdiction, pricing power and product decisions.
+2. **The capability hedge exists**: open-weight models are within ~3 points of the closed frontier (AA Intelligence Index v4.1.1: Kimi K3 59.7 / GLM-5.3 59.5 vs Claude Opus 5 63.1) and run on commodity hardware. Sovereignty no longer requires sacrificing capability.
+:::
+
+::: {.fr}
+## Contexte stratégique : un paysage qui se concentre
+
+La capacité IA de pointe se concentre. Artificial Analysis recense des dépenses en capital de plusieurs centaines de milliards de dollars par an chez les hyperscalers, et son analyse par pays montre une production d'intelligence de pointe dominée par les laboratoires américains et chinois, l'Europe étant surtout présente via les poids ouverts (ex. Mistral, France). Deux conséquences pour un institut de recherche :
+
+1. **Risque de dépendance** : router le travail intellectuel institutionnel via un petit ensemble de plateformes commerciales étrangères soumet des processus de recherche fondamentaux à une juridiction, une tarification et des décisions produit étrangères.
+2. **La parade existe** : les modèles à poids ouverts sont à ~3 points de la frontière fermée (AA Intelligence Index v4.1.1 : Kimi K3 59,7 / GLM-5.3 59,5 contre Claude Opus 5 63,1) et tournent sur du matériel standard. La souveraineté n'exige plus de sacrifier la capacité.
+:::
+
+::: {.en}
+## Regulatory horizon
+
+| Date | Regulation | What it demands |
+|---|---|---|
+| Feb 2025 | EU AI Act — prohibitions apply | No unacceptable-risk practices; inventory of AI uses begins |
+| Aug 2025 | EU AI Act — GPAI obligations | Transparency for general-purpose model providers; documentation flows downstream to deployers (us) |
+| Ongoing | GDPR Arts. 5, 22, 25, 32, 35, Ch. V | Lawful basis, minimisation, DPIA for large-scale sensitive processing, security, transfer rules |
+| Aug 2026 | EU AI Act — high-risk obligations | Risk management, data governance, logging, human oversight for high-risk systems |
+
+A local-first posture is regulatory *arbitrage*: on-premise inference removes international-transfer analysis (GDPR Ch. V) and simplifies Art. 25 privacy-by-design arguments, while open weights give auditable, versioned artefacts that satisfy emerging AI Act documentation expectations better than opaque API endpoints ever will.
+:::
+
+::: {.fr}
+## Horizon réglementaire
+
+| Date | Réglementation | Exigences |
+|---|---|---|
+| Fév. 2025 | AI Act UE — interdictions applicables | Pas de pratiques à risque inacceptable ; inventaire des usages IA à entamer |
+| Août 2025 | AI Act UE — obligations GPAI | Transparence pour les fournisseurs de modèles généraux ; la documentation se répercute sur les déployeurs (nous) |
+| Continu | RGPD art. 5, 22, 25, 32, 35, chap. V | Base légale, minimisation, AIPD pour traitements sensibles à grande échelle, sécurité, transferts |
+| Août 2026 | AI Act UE — obligations haut risque | Gestion des risques, gouvernance des données, journalisation, supervision humaine |
+
+La posture « local d'abord » est un *arbitrage* réglementaire : l'inférence sur site supprime l'analyse des transferts internationaux (RGPD chap. V) et simplifie l'argument de protection dès la conception (art. 25), tandis que les poids ouverts fournissent des artefacts auditables et versionnés qui satisferont mieux que toute API opaque aux attentes documentaires de l'AI Act.
+:::
+
+::: {.en}
+## Governance framework (the part that makes it real)
+
+Technology without governance creates risk; governance without technology creates nothing. Institute-level instruments needed:
+
+- **Model registry**: every deployed model recorded — version hash, source, licence, quantisation, intended purpose, evaluation report. Weights are assets; treat them like one.
+- **Acceptable-use policy**: permitted data classes per deployment zone; mandatory human review for outputs affecting individuals (GDPR Art. 22); prohibition on feeding personal data into models outside approved zones.
+- **Evaluation gate**: no model enters service without passing a domain-specific test set built from real institutional tasks (the practitioner guide's "Evaluate before you trust" section defines the protocol).
+- **Incident procedure**: hallucination-caused harm, data exposure suspicion and prompt-injection abuse all route to the existing IT-security incident process.
+- **Skills plan**: a small central platform team serves all labs; researchers get training, not ops duties.
+:::
+
+::: {.fr}
+## Cadre de gouvernance (ce qui rend tout cela réel)
+
+La technologie sans gouvernance crée du risque ; la gouvernance sans technologie ne crée rien. Instruments nécessaires au niveau de l'institut :
+
+- **Registre des modèles** : chaque modèle déployé est enregistré — hash de version, source, licence, quantification, finalité, rapport d'évaluation. Les poids sont des actifs ; traitez-les comme tels.
+- **Politique d'usage acceptable** : classes de données autorisées par zone de déploiement ; relecture humaine obligatoire pour les sorties affectant des personnes (RGPD art. 22) ; interdiction d'injecter des données personnelles dans des modèles hors zones approuvées.
+- **Porte d'évaluation** : aucun modèle n'entre en service sans réussir un jeu de tests métier construit à partir de tâches institutionnelles réelles (la section « Évaluer avant de faire confiance » du guide praticien définit le protocole).
+- **Procédure d'incident** : préjudice par hallucination, suspicion d'exposition de données, abus par injection de prompt — tout suit le processus d'incident de sécurité informatique existant.
+- **Plan de compétences** : une petite équipe plateforme centrale sert tous les labos ; les chercheurs reçoivent de la formation, pas des tâches d'exploitation.
+:::
+
+::: {.en}
+## Decision framework: local, cloud or hybrid
+
+| Situation | Posture |
+|---|---|
+| Personal data, unpublished results, grant drafts, clinical/genomic material | **Local only** |
+| Public-domain tasks, non-sensitive text, where frontier quality is decisive and contracts allow | Cloud acceptable |
+| High-volume batch jobs at predictable scale | Local (no rate limits, zero marginal cost) |
+| Exploratory experiments by individuals | Local small models on laptops |
+| Mission-critical long agentic runs needing top-1 global model | Cloud if policy allows; otherwise best local + human review |
+
+The default question shifts from "why not use the cloud?" to "what legally and strategically *requires* the cloud?".
+:::
+
+::: {.fr}
+## Cadre de décision : local, cloud ou hybride
+
+| Situation | Posture |
+|---|---|
+| Données personnelles, résultats non publiés, dossiers de subvention, matériel clinique/génomique | **Local uniquement** |
+| Tâches sur domaines publics, textes non sensibles, quand la qualité front est décisive et les contrats le permettent | Cloud acceptable |
+| Traitements par lots à fort volume et échelle prévisible | Local (pas de limite de débit, coût marginal nul) |
+| Expérimentations individuelles | Petits modèles locaux sur portables |
+| Courses agentiques longues critiques exigeant le modèle mondial n°1 | Cloud si la politique le permet ; sinon meilleur modèle local + relecture humaine |
+
+La question par défaut passe de « pourquoi pas le cloud ? » à « qu'est-ce qui exige légalement et stratégiquement le cloud ? ».
+:::
+
+::: {.en}
+## Investment scenarios
+
+| Scenario | Scope | Indicative budget band | Outcome |
+|---|---|---|---|
+| Minimal | 2–3 workstations, pilot in two labs, central registry spreadsheet | Low five figures (€) | Proof points and skills seed |
+| Recommended | Shared GPU server (multi-GPU), platform engineer at ~0.5 FTE, training program, full governance pack | Mid six figures over 3 yrs incl. staff | Institute-scale capability, compliance-ready |
+| Ambitious | Cluster + fine-tuning programme for domain models (French-language science, institutional corpora), published model cards | Seven figures, multi-year | Regional reference capability; possible research output on domain adaptation itself |
+
+Sequencing matters more than size: each scenario starts with the same 90-day pilot (see business case) and scales only on evidence.
+:::
+
+::: {.fr}
+## Scénarios d'investissement
+
+| Scénario | Périmètre | Fourchette budgétaire indicative | Résultat |
+|---|---|---|---|
+| Minimal | 2–3 stations, pilote dans deux labos, registre des modèles tabulaire | Petit cinq chiffres (€) | Preuves et amorçage des compétences |
+| Recommandé | Serveur GPU partagé (multi-GPU), ingénieur plateforme ~0,5 ETP, programme de formation, pack gouvernance complet | Milieu de six chiffres sur 3 ans, personnel inclus | Capacité à l'échelle de l'institut, prête pour la conformité |
+| Ambitieux | Cluster + programme d'affûtage de modèles métier (science francophone, corpora institutionnels), model cards publiés | Sept chiffres, pluriannuel | Capacité de référence régionale ; possible production scientifique sur l'adaptation de domaines |
+
+Le séquençage compte plus que la taille : chaque scénario démarre par le même pilote de 90 jours (chap. 14) et ne monte en puissance que sur preuves.
+:::
+
+::: {.en}
+## Risks of acting vs not acting
+
+**Acting too cautiously**: some engineering effort, hardware refresh cycles, need to hire/retain one platform profile. All ordinary.
+
+**Not acting**: sensitive-data workloads remain unautomated or drift into shadow usage of consumer tools (the worst of both worlds); regulatory documentation debt accumulates against 2026 AI Act milestones; dependency on a shrinking set of foreign platforms deepens; competitors' institutes build capability and talent attraction.
+
+The asymmetric risk is clearly on the side of inaction.
+:::
+
+::: {.fr}
+## Risques d'agir vs de ne pas agir
+
+**Agir avec prudence** : un peu d'ingénierie, des cycles de renouvellement matériel, le besoin de recruter/fidéliser un profil plateforme. Rien d'inhabituel.
+
+**Ne pas agir** : les charges sensibles restent non automatisées ou dérivent vers un usage fantôme d'outils grand public (le pire des deux mondes) ; la dette documentaire s'accumule face aux échéances AI Act de 2026 ; la dépendance à un ensemble restreint de plateformes étrangères s'accentue ; les instituts concurrents construisent capacité et attractivité.
+
+Le risque asymétrique est clairement du côté de l'inaction.
+:::
+
+::: {.en}
+## Twelve-month roadmap
+
+1. **Q1** — Governance instruments adopted (registry, AUP, eval gate); 90-day pilot launched; platform hire identified.
+2. **Q2** — Pilot evaluated against pre-written criteria; shared server procured on go decision; first training cohort.
+3. **Q3** — Two additional labs onboarded; French-language model evaluation published internally; hybrid routing policy live.
+4. **Q4** — Board review: KPIs, incidents, cost per task; decision on domain fine-tuning programme (scenario tier).
+:::
+
+::: {.fr}
+## Feuille de route sur douze mois
+
+1. **T1** — Instruments de gouvernance adoptés (registre, politique d'usage, porte d'évaluation) ; pilote de 90 jours lancé ; recrutement plateforme identifié.
+2. **T2** — Pilote évalué selon critères préécrits ; serveur partagé acheté en cas de go ; première cohorte formée.
+3. **T3** — Deux labos supplémentaires intégrés ; évaluation de modèles francophones publiée en interne ; politique de routage hybride active.
+4. **T4** — Revue par la direction : indicateurs, incidents, coût par tâche ; décision sur le programme d'affûtage métier (palier de scénario).
+:::

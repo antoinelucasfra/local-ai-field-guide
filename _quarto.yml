@@ -1,0 +1,5 @@
+project:
+  type: default
+  pre-render: tools/build_book.py
+  render:
+    - book.qmd

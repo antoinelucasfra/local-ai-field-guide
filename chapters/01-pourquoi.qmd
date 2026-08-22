@@ -1,0 +1,54 @@
+## The rise of local AI: why now {#why}
+:::
+
+::: {.fr}
+## L'essor de l'IA locale : pourquoi maintenant {#why}
+:::
+
+::: {.en}
+For three years, frontier AI meant closed APIs: GPT, Claude, Gemini. Enterprises traded data sovereignty for capability — every prompt processed by a third party, priced per token, subject to foreign jurisdictions and vendor retention policies.
+
+That trade-off is dissolving. Artificial Analysis ([artificialanalysis.ai](https://artificialanalysis.ai)), which benchmarks models continuously, shows open-weight models converging on proprietary ones:
+
+- **Intelligence**: on the AA Intelligence Index v4.1.1 (early 2026), the best open models — Kimi K3 (59.7), GLM-5.3 (59.5) — sit within ~3 points of the best closed models (Claude Opus 5 at 63.1, GPT-5.6 Sol and Grok 4.6 at ~60.9). Two years ago the gap was twice that.
+- **Coding agents**: on the AA Coding Agent Index v1.4, the open Kimi K3 driven by a CLI harness scores 0.63 vs 0.68 for Claude Code + Opus 5 — near-parity on real software-engineering tasks.
+- **Economics**: AA's efficiency trends show the price of a given intelligence level falling by orders of magnitude year over year, while output speed rises. Intelligence is becoming a commodity.
+- **Architecture**: the open ecosystem has consolidated around Mixture-of-Experts (MoE) designs — huge total parameter counts with small active-per-token counts — making strong models runnable on a single workstation.
+
+Meanwhile, hyperscaler capital expenditure on AI infrastructure (hundreds of billions of dollars per year, tracked by AA) concentrates compute in a handful of US and Chinese labs. For European organisations, that concentration is itself a governance risk.
+
+**Why local AI wins on governance and sovereignty:**
+
+- **No third-party processor**: prompts, documents and fine-tuning corpora never leave your perimeter — no Art. 28 processor agreements, no international transfer analysis (Ch. V GDPR), no vendor training on your data.
+- **Auditability**: you know exactly which weights, which version, which quantisation answered a question. Weights can be hashed, versioned and archived like any other IT asset.
+- **No arbitrary deprecation**: API models are retired; your fine-tuned model keeps working.
+- **Exit from lock-in**: open weights run on llama.cpp, vLLM, Ollama, LM Studio — swap runtimes without changing models.
+- **European option**: open models from EU labs (e.g. Mistral, France) reduce exposure to extra-EU jurisdiction.
+
+The historical objection — quality — no longer holds for domain-specific work: a fine-tuned mid-size open model beats a generic frontier API on narrow tasks, at zero marginal cost, offline.
+:::
+
+::: {.fr}
+Pendant trois ans, l'IA de pointe a signifié API fermées : GPT, Claude, Gemini. Les entreprises échangeaient leur souveraineté numérique contre la performance — chaque prompt traité par un tiers, facturé au token, soumis à des juridictions étrangères et aux politiques de rétention du fournisseur.
+
+Ce compromis est en train de disparaître. Artificial Analysis ([artificialanalysis.ai](https://artificialanalysis.ai)), qui évalue les modèles en continu, montre la convergence des modèles ouverts vers les propriétaires :
+
+- **Intelligence** : sur l'AA Intelligence Index v4.1.1 (début 2026), les meilleurs modèles ouverts — Kimi K3 (59,7), GLM-5.3 (59,5) — sont à ~3 points des meilleurs modèles fermés (Claude Opus 5 à 63,1 ; GPT-5.6 Sol et Grok 4.6 à ~60,9). L'écart était deux fois plus grand il y a deux ans.
+- **Agents de code** : sur l'AA Coding Agent Index v1.4, le modèle ouvert Kimi K3 piloté par un CLI obtient 0,63 contre 0,68 pour Claude Code + Opus 5 — quasi-parité sur des tâches réelles d'ingénierie logicielle.
+- **Économie** : les tendances d'efficacité d'AA montrent que le prix d'un niveau d'intelligence donné chute de plusieurs ordres de grandeur par an, tandis que la vitesse augmente. L'intelligence devient une commodité.
+- **Architecture** : l'écosystème ouvert s'est consolidé autour des architectures Mixture-of-Experts (MoE) — un total de paramètres énorme pour un petit nombre actif par token — rendant exécutable sur une simple station de travail des modèles très performants.
+
+Parallèlement, les capitaux dépensés en infrastructure IA par les hyperscalers (des centaines de milliards de dollars par an, suivis par AA) concentrent le calcul entre les mains de quelques laboratoires américains et chinois. Pour les organisations européennes, cette concentration est elle-même un risque de gouvernance.
+
+**Pourquoi l'IA locale gagne en gouvernance et souveraineté :**
+
+- **Aucun sous-traitant** : prompts, documents et corpus ne quittent jamais votre périmètre — pas de contrat d'Art. 28, pas d'analyse de transfert international (Chap. V RGPD), pas de réutilisation par le fournisseur.
+- **Auditabilité** : vous savez exactement quels poids, quelle version, quelle quantification ont répondu. Les poids se hachent, se versionnent et s'archivent comme tout actif informatique.
+- **Pas d'obsolescence imposée** : les modèles d'API sont retirés ; votre modèle affûté continue de fonctionner.
+- **Sortie du lock-in** : les poids ouverts tournent sous llama.cpp, vLLM, Ollama, LM Studio — changez de runtime sans changer de modèle.
+- **Option européenne** : des modèles ouverts de laboratoires UE (ex. Mistral, France) réduisent l'exposition à des juridictions extra-européennes.
+
+L'objection historique — la qualité — ne tient plus pour le travail métier : un modèle ouvert de taille intermédiaire affûté bat une API généraliste sur des tâches étroites, à coût marginal nul, hors ligne.
+:::
+
+::: {.en}

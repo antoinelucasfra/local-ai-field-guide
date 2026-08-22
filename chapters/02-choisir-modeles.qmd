@@ -1,0 +1,116 @@
+## The open-model landscape, ranked {#landscape}
+:::
+
+::: {.fr}
+## Le paysage des modèles ouverts, classé {#landscape}
+:::
+
+::: {.en}
+Snapshot from [artificialanalysis.ai](https://artificialanalysis.ai) (early 2026, AA Intelligence Index v4.1.1 — higher is better):
+
+| Rank | Model | License | AA Index |
+|---|---|---|---|
+| 1 | Claude Opus 5 (max) | Proprietary | 63.1 |
+| 2 | Claude Fable 5 | Proprietary | 62.1 |
+| 3 | GPT-5.6 Sol (max) | Proprietary | 60.9 |
+| 3 | Grok 4.6 (high) | Proprietary | 60.9 |
+| 5 | **Kimi K3 (max)** | **Open weights** | **59.7** |
+| 6 | **GLM-5.3 (max)** | **Open weights** | **59.5** |
+| 7 | Muse Spark 1.2 (xhigh) | Open weights | 56.8 |
+| 8 | Gemini 3.7 Flash (high) | Proprietary | 56.0 |
+| 9 | **DeepSeek V4 Pro** | **Open weights** | **53.2** |
+
+And for agentic coding (AA Coding Agent Index v1.4, composite of DeepSWE, Terminal-Bench v2.1, SWE-Atlas-QnA; 0–1):
+
+| Harness + model | Type | Index |
+|---|---|---|
+| Claude Code + Opus 5 | Closed | 0.68 |
+| Claude Code + Fable 5 | Closed | 0.67 |
+| Codex + GPT-5.6 Sol | Closed | 0.65 |
+| Grok Build + Grok 4.5 | Closed | 0.64 |
+| **Kimi Code CLI + Kimi K3** | **Open** | **0.63** |
+| Opencode + Gemini 3.7 Flash | Closed | 0.60 |
+| Codex + DeepSeek V4 Flash | **Open** | 0.50 |
+| Claude Code + GLM-5.2 | **Open** | 0.43 |
+
+[Reading:]{fg="#b22222"} rankings move monthly. Re-check [artificialanalysis.ai/models](https://artificialanalysis.ai/models) and [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) before committing to a model; the *method* below outlives any specific ranking.
+:::
+
+::: {.fr}
+Instantané de [artificialanalysis.ai](https://artificialanalysis.ai) (début 2026, AA Intelligence Index v4.1.1 — plus c'est haut, mieux c'est) :
+
+| Rang | Modèle | Licence | AA Index |
+|---|---|---|---|
+| 1 | Claude Opus 5 (max) | Propriétaire | 63,1 |
+| 2 | Claude Fable 5 | Propriétaire | 62,1 |
+| 3 | GPT-5.6 Sol (max) | Propriétaire | 60,9 |
+| 3 | Grok 4.6 (high) | Propriétaire | 60,9 |
+| 5 | **Kimi K3 (max)** | **Poids ouverts** | **59,7** |
+| 6 | **GLM-5.3 (max)** | **Poids ouverts** | **59,5** |
+| 7 | Muse Spark 1.2 (xhigh) | Poids ouverts | 56,8 |
+| 8 | Gemini 3.7 Flash (high) | Propriétaire | 56,0 |
+| 9 | **DeepSeek V4 Pro** | **Poids ouverts** | **53,2** |
+
+Et pour le codage agentique (AA Coding Agent Index v1.4, composite de DeepSWE, Terminal-Bench v2.1, SWE-Atlas-QnA ; 0–1) :
+
+| Harnais + modèle | Type | Index |
+|---|---|---|
+| Claude Code + Opus 5 | Fermé | 0,68 |
+| Claude Code + Fable 5 | Fermé | 0,67 |
+| Codex + GPT-5.6 Sol | Fermé | 0,65 |
+| Grok Build + Grok 4.5 | Fermé | 0,64 |
+| **Kimi Code CLI + Kimi K3** | **Ouvert** | **0,63** |
+| Opencode + Gemini 3.7 Flash | Fermé | 0,60 |
+| Codex + DeepSeek V4 Flash | **Ouvert** | 0,50 |
+| Claude Code + GLM-5.2 | **Ouvert** | 0,43 |
+
+[Lecture :]{fg="#b22222"} les classements bougent chaque mois. Revérifiez [artificialanalysis.ai/models](https://artificialanalysis.ai/models) et [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) avant de choisir ; la *méthode* ci-dessous survit à tout classement particulier.
+:::
+
+## Which model for which use case {#usecases}
+
+::: {.en}
+Practical selection guide, crossing AA rankings with what Unsloth supports and typical workstation hardware (quantised 4-bit sizes):
+
+| Use case | Recommended open models | Why | Hardware (inference, 4-bit) |
+|---|---|---|---|
+| Best possible on-prem reasoning/agentic | Kimi K3, GLM-5.3 | Top of the open rankings, near-closed parity | Multi-GPU server or 128 GB+ unified memory |
+| Coding assistant / local coding agent | Qwen3.5/3.8 Coder, Gemma 4 26B-A4B, GLM-5.x | Strong tool-calling, trained for code; Gemma 4 26B-A4B runs on a 24 GB machine | 24 GB GPU / Apple silicon |
+| General-purpose departmental assistant | Qwen3.8 27B, Gemma 4, Muse Glimmer 30B | Balanced quality/speed, good multilingual (French included) | 1× 24 GB GPU |
+| High-volume / edge / laptop | Qwen3.5 4B class, small Gemma | Sub-second latency, tiny footprint | CPU or 8 GB GPU |
+| Documents & RAG-heavy workflows | Long-context Qwen/GLM variants + embedding models | Large context windows now median >100k tokens (AA architecture trends) | 24 GB GPU |
+| Vision (image understanding) | Gemma / Qwen vision variants | Multimodal fine-tuning supported by Unsloth | 16–24 GB GPU |
+| Image/video generation | FLUX, Z-Image, LTX, Wan, MiniMax-H3 | Runnable and LoRA-trainable in Unsloth Studio | 16–24 GB GPU |
+| Voice | TTS/STT models supported by Unsloth | Fine-tunable voices, on-prem | 8–16 GB GPU |
+| French/EU preference | Mistral open models | EU lab, permissive licenses, strong French | Size-dependent |
+
+Rules of thumb:
+
+- **Prefer recent MoE "AxB" models** (e.g. 26B-A4B: 26B total, ~4B active) — frontier-adjacent quality at small-model speed.
+- **Instruct over base** for fine-tuning: chat templates work out of the box, less data needed.
+- **Quantisation naming**: `unsloth/…-UD-Q4_K_XL` GGUFs are Unsloth *Dynamic* quants — they recover most accuracy lost to standard 4-bit; prefer them over plain Q4.
+- **Train in the precision you serve**: 4-bit serving pairs with QLoRA 4-bit training.
+:::
+
+::: {.fr}
+Guide de sélection pratique, croisant les classements AA avec ce qu'Unsloth prend en charge et le matériel courant (tailles quantifiées 4-bit) :
+
+| Cas d'usage | Modèles ouverts recommandés | Pourquoi | Matériel (inférence, 4-bit) |
+|---|---|---|---|
+| Meilleur raisonnement/agétique sur site | Kimi K3, GLM-5.3 | Tête du classement ouvert, quasi-parité avec le fermé | Serveur multi-GPU ou mémoire unifiée 128 Go+ |
+| Assistant de code / agent local | Qwen3.5/3.8 Coder, Gemma 4 26B-A4B, GLM-5.x | Appels d'outils solides, entraînés au code ; Gemma 4 26B-A4B tient sur une machine 24 Go | GPU 24 Go / Apple silicon |
+| Assistant départemental polyvalent | Qwen3.8 27B, Gemma 4, Muse Glimmer 30B | Équilibre qualité/vitesse, bon multilingue (français inclus) | 1 GPU 24 Go |
+| Fort volume / edge / portable | Qwen3.5 4B et petits Gemma | Latence sub-seconde, empreinte minime | CPU ou GPU 8 Go |
+| Documents & workflows RAG | Variantes long-contexte Qwen/GLM + modèles d'embeddings | Fenêtres de contexte désormais >100k tokens en médiane (tendances AA) | GPU 24 Go |
+| Vision (compréhension d'image) | Gemma / Qwen vision | Fine-tuning multimodal pris en charge par Unsloth | GPU 16–24 Go |
+| Génération image/vidéo | FLUX, Z-Image, LTX, Wan, MiniMax-H3 | Exécutables et entraînables en LoRA dans Unsloth Studio | GPU 16–24 Go |
+| Voix | Modèles TTS/STT pris en charge par Unsloth | Voix affûtables, sur site | GPU 8–16 Go |
+| Préférence française/UE | Modèles ouverts Mistral | Laboratoire UE, licences permissives, excellent français | Selon taille |
+
+Règles pratiques :
+
+- **Privilégier les MoE récents « AxB »** (ex. 26B-A4B : 26B au total, ~4B actifs) — qualité proche du front à vitesse de petit modèle.
+- **Instruct plutôt que base** pour le fine-tuning : templates de chat prêts à l'emploi, moins de données nécessaires.
+- **Nomenclature de quantification** : les GGUF `unsloth/…-UD-Q4_K_XL` sont les quants *Dynamic* d'Unsloth — ils récupèrent l'essentiel de la précision perdue par un 4-bit standard ; préférez-les.
+- **Entraînez dans la précision servie** : un service en 4-bit s'apparie à un entraînement QLoRA 4-bit.
+:::

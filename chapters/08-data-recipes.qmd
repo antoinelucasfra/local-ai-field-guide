@@ -1,0 +1,27 @@
+## Data Recipes: datasets from your documents {#data}
+
+::: {.en}
+[Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe) solves the hardest part of fine-tuning: getting a clean dataset. It is a visual graph-node workflow (powered by NVIDIA NeMo Data Designer) that turns raw documents into training data:
+
+1. Open the Recipes page; create a blank recipe or start from a guided template.
+2. Add blocks: seed data (your PDFs, CSVs, JSON) + generation blocks (synthesise QA pairs, classifications, conversations in your target schema).
+3. **Validate** the graph to catch configuration errors early.
+4. **Preview** sample rows, iterate on prompts/blocks.
+5. **Run** the full build; monitor progress in the graph or Executions view.
+6. Select the resulting dataset directly in the training screen and fine-tune.
+
+Typical sovereign-AI pattern: feed internal documentation (procedures, tickets, contracts) → generate instruction/output pairs locally → fine-tune a model that answers in your organisation's vocabulary — with no document ever leaving the building.
+:::
+
+::: {.fr}
+[Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe) résout la partie la plus dure du fine-tuning : obtenir un jeu de données propre. C'est un workflow visuel en nœuds (propulsé par NVIDIA NeMo Data Designer) qui transforme des documents bruts en données d'entraînement :
+
+1. Ouvrez la page Recipes ; recette vierge ou modèle guidé.
+2. Ajoutez des blocs : données sources (vos PDF, CSV, JSON) + blocs de génération (synthèse de paires QA, classifications, conversations dans votre schéma cible).
+3. **Validate** pour détecter tôt les erreurs de configuration.
+4. **Preview** des lignes d'exemple, itérez sur prompts/blocs.
+5. **Run** de la construction complète ; suivi dans le graphe ou la vue Executions.
+6. Sélectionnez le jeu résultant directement dans l'écran d'entraînement et lancez le fine-tuning.
+
+Schéma type d'IA souveraine : injecter la documentation interne (procédures, tickets, contrats) → générer localement des paires instruction/sortie → affûter un modèle qui répond dans le vocabulaire de l'organisation — sans qu'aucun document ne quitte les lieux.
+:::

@@ -1,0 +1,28 @@
+## Evaluate before you trust {#evaluate}
+:::
+
+::: {.fr}
+## Évaluer avant de faire confiance {#evaluate}
+:::
+
+::: {.en}
+Never deploy a model on institutional work without a measurement. Three layers:
+
+1. **Public benchmarks for shortlisting** — [AA Intelligence Index](https://artificialanalysis.ai/models) and [Coding Agent Index](https://artificialanalysis.ai/agents/coding-agents) rank candidates; Unsloth's GGUF benchmark pages report perplexity/KL-divergence per quantisation. Shortlist, never conclude: public scores are averages, your domain is not.
+2. **Your own golden set** — collect 50–200 real tasks from the target workflow (with reference answers where possible), keep them out of any training data, and score pass@1 before and after every model, quantisation or fine-tune change. This is the acceptance gate referenced in the strategy paper (Chap. 15).
+3. **Side-by-side inspection** — Model Arena in Studio Chat: same prompt to base and candidate model; a 15-minute structured read of divergences catches failure modes no aggregate metric shows.
+
+Quantisation rule: prefer `UD-*` (Unsloth Dynamic) quants — they recover most accuracy lost by standard formats; when in doubt, compare candidate quant vs higher precision on your golden set rather than trusting the label.
+:::
+
+::: {.fr}
+Ne déployez jamais un modèle sur un travail institutionnel sans mesure. Trois niveaux :
+
+1. **Benchmarks publics pour présélectionner** — l'[AA Intelligence Index](https://artificialanalysis.ai/models) et le [Coding Agent Index](https://artificialanalysis.ai/agents/coding-agents) classent les candidats ; les pages de benchmarks GGUF d'Unsloth rapportent perplexité/KL par quantification. Présélectionnez, ne concluez jamais : les scores publics sont des moyennes, votre domaine non.
+2. **Votre propre jeu de référence** — collectez 50–200 tâches réelles du flux visé (avec réponses de référence si possible), gardez-les hors de tout entraînement, et scorez le pass@1 avant/après chaque changement de modèle, quantification ou fine-tune. C'est la porte d'acceptation citée dans la note stratégique (chap. 15).
+3. **Inspection côte à côte** — le Model Arena du Studio Chat : même prompt aux modèles base et candidat ; 15 minutes de lecture structurée des divergences révèlent des modes d'échec qu'aucune métrique agrégée ne montre.
+
+Règle de quantification : préférez les quants `UD-*` (Unsloth Dynamic) — ils récupèrent l'essentiel de la précision perdue par les formats standards ; en cas de doute, comparez la quant candidate à une précision supérieure sur votre jeu de référence plutôt que de vous fier à l'étiquette.
+:::
+
+::: {.en}

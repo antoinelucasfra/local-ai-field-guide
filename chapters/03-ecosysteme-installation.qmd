@@ -1,0 +1,80 @@
+## The Unsloth ecosystem: Core, Studio, Desktop {#ecosystem}
+
+::: {.en}
+Three layers, one project ([github.com/unslothai/unsloth](https://github.com/unslothai/unsloth)):
+
+| Layer | What it is | For whom |
+|---|---|---|
+| **Unsloth Core** | Python library (`pip install unsloth`). Kernel-level optimisations: ~2× faster training, ~70 % less VRAM, no accuracy loss. Apache-2.0. | Engineers scripting pipelines |
+| **Unsloth Studio** | Open-source, no-code **web UI** (beta) wrapping the whole lifecycle: chat, dataset building, training, evaluation, export. Runs locally, powered by llama.cpp for inference. | Anyone who trains/runs models without writing code |
+| **Unsloth Desktop** | Native desktop app (Mac/Windows/Linux) bundling Studio + model hub + media generation. Simplest install. | Everyone else |
+
+Capabilities shared across the stack:
+
+- Run **GGUF**, MLX (Mac) and safetensors models, text, vision, audio/TTS, embeddings, diffusion image/video.
+- Train 500+ models with QLoRA/LoRA/full fine-tuning, RL (GRPO, DPO), continued pretraining.
+- **Self-healing tool calling**: repairs malformed tool calls, reported 30–80 % higher tool-call accuracy and ~50 % fewer broken calls vs vanilla llama.cpp tool parsing.
+- **Advanced web search** (DuckDuckGo-based, visits and reads pages, not just summaries) and **sandboxed Bash/Python code execution**.
+- **Model Arena**: run two models side-by-side on the same prompt — ideal for comparing base vs fine-tuned.
+- **Privacy posture**: no usage telemetry (only minimal hardware info for compatibility), 100 % offline operation, password + JWT authentication, revocable API keys stored as hashes.
+- Licensing: core Apache-2.0; Studio UI AGPL-3.0.
+:::
+
+::: {.fr}
+Trois couches, un projet ([github.com/unslothai/unsloth](https://github.com/unslothai/unsloth)) :
+
+| Couche | Qu'est-ce ? | Pour qui |
+|---|---|---|
+| **Unsloth Core** | Bibliothèque Python (`pip install unsloth`). Optimisations au niveau des kernels : ~2× plus rapide, ~70 % de VRAM en moins, sans perte de précision. Apache-2.0. | Ingénieurs qui scriptent |
+| **Unsloth Studio** | **Interface web** open source sans code (bêta) couvrant tout le cycle : chat, construction de jeux de données, entraînement, évaluation, export. 100 % local, inférence via llama.cpp. | Tous ceux qui entraînent/exécutent sans coder |
+| **Unsloth Desktop** | Application native (Mac/Windows/Linux) embarquant Studio + hub de modèles + génération média. Installation la plus simple. | Tout le reste |
+
+Capacités communes :
+
+- Exécution de modèles **GGUF**, MLX (Mac) et safetensors : texte, vision, audio/TTS, embeddings, diffusion image/vidéo.
+- Entraînement de 500+ modèles : QLoRA/LoRA/full fine-tuning, RL (GRPO, DPO), pré-entraînement continu.
+- **Appels d'outils auto-réparateurs** : corrige les appels malformés, +30 à 80 % de précision et ~50 % d'appels cassés en moins face au parsing standard de llama.cpp.
+- **Recherche web avancée** (basée DuckDuckGo, visite et lit les pages, pas seulement des résumés) et **exécution Bac à sable Bash/Python**.
+- **Model Arena** : deux modèles côte à côte sur le même prompt — idéal comparer base vs affûté.
+- **Posture privacy** : aucune télémétrie d'usage (seulement le matériel minimum pour la compatibilité), fonctionnement 100 % hors ligne, mot de passe + JWT, clés API révocables stockées hachées.
+- Licences : cœur Apache-2.0 ; UI Studio AGPL-3.0.
+:::
+
+## Setup and installation {#setup}
+
+### Install
+
+```bash
+# macOS / Linux / WSL
+curl -fsSL https://unsloth.ai/install.sh | sh
+
+# Windows PowerShell
+irm https://unsloth.ai/install.ps1 | iex
+```
+
+Or download the **Unsloth Desktop** app from [unsloth.ai/download](https://unsloth.ai/download) (Mac, Windows, Linux). Re-run the install command to update.
+
+### Launch
+
+```bash
+unsloth studio -H 0.0.0.0 -p 8888   # LAN-accessible, port 8888
+unsloth studio --secure             # free Cloudflare HTTPS tunnel
+```
+
+Open `http://127.0.0.1:8888`, create the admin password on first launch (JWT-based sessions). `--secure` exposes the same UI over HTTPS via a Cloudflare tunnel — useful for remote access without a VPN.
+
+::: {.en}
+**Installing on a remote Linux server:** SSH into the box, run the install script above, and launch with `unsloth studio -H 0.0.0.0 -p 8888`. Reach it either by port-forwarding (`ssh -L 8888:localhost:8888 user@server`) or with `unsloth studio --secure` for a public HTTPS URL.
+:::
+
+::: {.fr}
+**Installation sur un serveur Linux distant :** connectez-vous en SSH, lancez le script d'installation ci-dessus, puis démarrez avec `unsloth studio -H 0.0.0.0 -p 8888`. Accédez-y par transfert de port (`ssh -L 8888:localhost:8888 user@serveur`) ou avec `unsloth studio --secure` pour une URL HTTPS publique.
+:::
+
+::: {.en}
+Hardware support: **chat + Data Recipes run on CPU alone** (no GPU needed); **training** works on NVIDIA, AMD, Intel GPUs and Apple Silicon (MLX). A free Google Colab notebook lets you test the full Studio on a T4. No GPU is required to follow this guide's inference sections.
+:::
+
+::: {.fr}
+Support matériel : **le chat + Data Recipes fonctionnent sur CPU seul** (sans GPU) ; **l'entraînement** fonctionne sur GPU NVIDIA, AMD, Intel et Apple Silicon (MLX). Un notebook Google Colab gratuit permet de tester tout le Studio sur un T4. Aucun GPU n'est requis pour les sections d'inférence de ce guide.
+:::

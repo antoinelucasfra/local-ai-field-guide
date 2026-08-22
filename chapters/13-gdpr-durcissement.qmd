@@ -1,0 +1,70 @@
+## GDPR mapping {#gdpr}
+:::
+
+::: {.fr}
+## Correspondance RGPD {#gdpr}
+:::
+
+::: {.en}
+How a local Unsloth-based stack maps to core GDPR principles:
+
+| GDPR principle | Article | Local deployment answer |
+|---|---|---|
+| Data minimisation | Art. 5(1)(c) | Fine-tune on the minimum necessary corpus; Data Recipes generates synthetic/anonymised training pairs locally |
+| Purpose limitation | Art. 5(1)(b) | One model per documented purpose; YAML configs make each purpose explicit and reproducible |
+| Storage limitation | Art. 5(1)(e) | Adapters, datasets and checkpoints versioned and purged on a schedule |
+| Security of processing | Art. 32 | Full-disk encryption, access control, VLAN-isolated GPU host; Studio adds password + JWT auth and hashed, revocable API keys |
+| Accountability | Arts. 5(2), 30 | Records = dataset provenance, YAML run configs, training metrics history, model cards |
+| Data protection by design | Art. 25 | On-premise inference and training is a privacy-by-design architecture; no usage telemetry leaves the box |
+| DPIA | Art. 35 | Required for large-scale sensitive-data processing; local hosting lowers but does not cancel the risk |
+| Transfers outside EU | Ch. V | None: compute, storage, telemetry stay under your control; web search is the only optional egress — disable it for strict regimes |
+
+[Important:]{fg="#b22222"} local execution removes the *processor* risk, not your responsibilities as *controller*. Models can memorise personal data present in the training corpus — treat every corpus as a processing activity and document it.
+:::
+
+::: {.fr}
+Comment une stack locale basée sur Unsloth répond aux principes clés du RGPD :
+
+| Principe RGPD | Article | Réponse du déploiement local |
+|---|---|---|
+| Minimisation des données | Art. 5(1)(c) | Fine-tuner sur le corpus strictement nécessaire ; Data Recipes génère localement des paires synthétiques/anonymisées |
+| Limitation des finalités | Art. 5(1)(b) | Un modèle par finalité documentée ; les configs YAML rendent chaque finalité explicite et reproductible |
+| Limitation de la conservation | Art. 5(1)(e) | Adaptateurs, jeux de données et checkpoints versionnés et purgés selon calendrier |
+| Sécurité du traitement | Art. 32 | Chiffrement disque, contrôle d'accès, hôte GPU isolé (VLAN) ; le Studio ajoute mot de passe + JWT et clés API hachées révocables |
+| Responsabilisation | Art. 5(2), 30 | Registre = provenance des données, configs YAML des runs, historique de métriques, model cards |
+| Protection dès la conception | Art. 25 | Inférence et entraînement sur site = privacy by design ; aucune télémétrie d'usage ne sort de la machine |
+| AIPD | Art. 35 | Obligatoire pour un traitement sensible à grande échelle ; l'hébergement local réduit le risque sans le supprimer |
+| Transferts hors UE | Chap. V | Aucun : calcul, stockage et télémétrie restent sous contrôle ; la recherche web est le seul flux sortant optionnel — désactivez-la en régime strict |
+
+[Important :]{fg="#b22222"} l'exécution locale supprime le risque lié au *sous-traitant*, pas vos responsabilités de *responsable de traitement*. Le modèle peut mémoriser des données personnelles du corpus — traitez chaque corpus comme une activité de traitement et documentez-le.
+:::
+
+::: {.en}
+## Hardening checklist {#hardening}
+:::
+
+::: {.fr}
+## Liste de durcissement {#hardening}
+:::
+
+::: {.en}
+- Disable agent telemetry and the attribution header as shown in [Local models for coding agents](#agents); Unsloth itself collects no usage telemetry.
+- Block egress from the GPU host except your package mirrors; web search is opt-in per message — leave it off for sensitive workspaces.
+- Treat `sk-unsloth-*` API keys like passwords: rotate, revoke, never commit.
+- Log prompts minimally; define retention; never log raw personal data by default.
+- Restrict access: authentication in front of every endpoint; per-team models; `-H 0.0.0.0` only on trusted networks, `--secure` (HTTPS) elsewhere.
+- Evaluate for memorisation and bias before production (Model Arena helps compare against base); keep the evaluation report.
+- Version everything: dataset hash, YAML config, adapter checkpoint — reproducibility is auditability.
+:::
+
+::: {.fr}
+- Désactiver la télémétrie des agents et le header d'attribution comme indiqué dans [Modèles locaux pour agents de code](#agents) ; Unsloth lui-même ne collecte aucune télémétrie d'usage.
+- Bloquer les flux sortants de l'hôte GPU sauf miroirs de paquets ; la recherche web est opt-in par message — laissez-la coupée pour les espaces sensibles.
+- Traiter les clés `sk-unsloth-*` comme des mots de passe : rotation, révocation, jamais de commit.
+- Journaliser les prompts avec parcimonie ; définir une conservation ; ne jamais journaliser de données personnelles brutes par défaut.
+- Restreindre l'accès : authentification devant chaque endpoint ; modèles par équipe ; `-H 0.0.0.0` seulement sur réseau de confiance, `--secure` (HTTPS) sinon.
+- Évaluer mémorisation et biais avant production (le Model Arena aide à comparer à la base) ; conserver le rapport d'évaluation.
+- Tout versionner : hash du dataset, config YAML, checkpoint d'adaptateur — la reproductibilité est l'auditabilité.
+:::
+
+::: {.en}

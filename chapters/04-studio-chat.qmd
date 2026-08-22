@@ -1,0 +1,33 @@
+## Running models: Studio Chat {#chat}
+
+::: {.en}
+The Chat page runs models 100 % offline:
+
+1. **Select model** dropdown → search Hugging Face or pick a local file. Choose the quantisation matching your RAM/VRAM (recommended default: `UD-Q4_K_XL`).
+2. Download happens automatically; previously downloaded GGUFs (HF cache, LM Studio folders) are auto-detected.
+3. Chat. Upload images, audio, PDFs, DOCX, code files as context. Toggle thinking and web search per message.
+
+Built-in superstructure, all optional per-message:
+
+- **Auto inference settings**: temperature/top-p/top-k pre-tuned per model family; context managed automatically by llama.cpp smart auto-context. What those knobs actually do → [§ Inference parameters](#params).
+- **Self-healing tool calling** + **sandboxed code execution** (Bash and Python): the model can run real code to verify answers; malformed tool calls are repaired instead of crashing the turn.
+- **Web search / deep research**: private DuckDuckGo search that reads actual pages; deep research plans, searches, and produces cited reports.
+- **Model Arena**: compare base vs fine-tuned (or any two models) on the same prompt.
+- **Providers**: connect OpenAI/Anthropic/Ollama/vLLM endpoints and use them in the same interface — useful for gradual migration from cloud to local.
+:::
+
+::: {.fr}
+La page Chat exécute les modèles 100 % hors ligne :
+
+1. Menu **Select model** → recherche Hugging Face ou fichier local. Choisissez la quantification adaptée à votre RAM/VRAM (défaut recommandé : `UD-Q4_K_XL`).
+2. Téléchargement automatique ; les GGUF déjà présents (cache HF, dossiers LM Studio) sont détectés automatiquement.
+3. Discutez. Joignez images, audio, PDF, DOCX, fichiers de code. Activez thinking et recherche web par message.
+
+Surcouche intégrée, tout est optionnel par message :
+
+- **Réglages d'inférence auto** : temperature/top-p/top-k pré-réglés par famille de modèles ; contexte géré automatiquement par le smart auto-context de llama.cpp. Ce que font réellement ces boutons → [§ Paramètres d'inférence](#params).
+- **Appels d'outils auto-réparateurs** + **exécution de code en bac à sable** (Bash et Python) : le modèle peut exécuter du vrai code pour vérifier ses réponses ; les appels malformés sont réparés au lieu de casser le tour.
+- **Recherche web / recherche approfondie** : recherche privée DuckDuckGo qui lit les vraies pages ; la recherche approfondie planifie, cherche et produit des rapports sourcés.
+- **Model Arena** : comparer base vs affûté (ou deux modèles quelconques) sur le même prompt.
+- **Fournisseurs** : connectez des endpoints OpenAI/Anthropic/Ollama/vLLM dans la même interface — utile pour migrer progressivement du cloud vers le local.
+:::

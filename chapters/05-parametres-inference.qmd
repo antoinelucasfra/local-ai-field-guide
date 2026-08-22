@@ -1,0 +1,95 @@
+## Inference parameters, precisely {#params}
+
+::: {.en}
+A language model generates one token at a time. At each step it outputs a probability for every token in its vocabulary; the sampling parameters decide how the software picks the next token from that distribution. Everything below is just different ways of reshaping — or refusing to reshape — that distribution.
+
+### The sampling knobs
+
+| Parameter | Mechanical effect | Raise it → | Lower it → | Sensible range |
+|---|---|---|---|---|
+| **Temperature** | Divides the logits by *T* before softmax | Flatter distribution: more variety, more surprise, more factual errors | Sharper: near-deterministic, repetitive, safest for facts | 0–0.2 code/extraction · 0.3–0.5 factual Q&A · 0.7–1.0 writing |
+| **Top-p** (nucleus) | Keep the smallest set of tokens whose cumulative probability ≥ p, renormalise, sample | Wider candidate pool | Only high-confidence candidates survive; near-greedy at p→0 | 0.9–0.95; tune temperature *or* top-p, not both blindly |
+| **Top-k** | Hard cutoff: only the k most likely tokens can be sampled | More diversity | Fewer candidates; k=1 equals greedy decoding | 20–60 when used at all; min-p is usually better |
+| **Min-p** | Dynamic cutoff relative to the top token's probability | Keeps tails alive when temperature is high | Prunes implausible tokens even at high temperature | 0.05–0.1; pairs well with temp 0.7–1.2 |
+| **Repeat / frequency penalty** | Down-weights logits of already-generated tokens (frequency penalty scales with count) | Less repetition but degraded grammar and broken code if extreme | Natural text, possible loops on weak models | ≤ 1.1–1.2; fix looping with better models, not huge penalties |
+| **Seed** | Fixes the random generator | — | Same seed + same params + same binary ⇒ reproducible output | Set it whenever you need to reproduce a result |
+| **Max tokens** | Hard stop on generation length | Longer answers possible | Truncates long reasoning mid-step; does **not** make anything faster | Task-dependent; leave headroom for thinking modes |
+| **Stop sequences** | Generation halts when the string appears | — | Clean machine-readable output for parsing | Use for structured pipelines |
+
+The system prompt is a parameter too: it is prepended to every conversation and steers tone, format and constraints. Because engines cache the computation of an unchanged prefix (the **KV cache**), a stable system prompt also makes responses faster and cheaper.
+
+### The context window: the most expensive parameter
+
+The context window (`n_ctx`) is the total token budget for one request: system prompt + attached documents + conversation history + generated answer. Everything must fit; exceed it and the engine either errors or silently truncates the oldest content.
+
+**Memory cost.** During generation the model keeps a key/value tensor per layer per past token — the KV cache. For a Llama-style 8B model (32 layers, grouped-query attention) it costs ≈128 KB *per token* at 16-bit: ≈1 GB at 8k tokens, **4 GB at 32k, 16 GB at 128k — on top of the weights**. Two levers cut that: KV-cache quantisation (`q8_0` halves it with negligible quality loss, `q4_0` quarters it) and flash attention (shrinks activation memory and speeds up long prompts).
+
+**Speed cost.** Generation has two phases:
+
+- *Prefill* (reading your prompt): parallel, compute-bound — hundreds to thousands of tokens/s. A 10k-token document takes seconds on a GPU, minutes on CPU.
+- *Decode* (producing the answer): strictly sequential and **memory-bandwidth-bound** — each new token requires reading every weight once. Approximate ceiling: `tokens/s ≈ memory bandwidth / model size in bytes`. A Q4 8B model (~4.5 GB) on a card with 1 TB/s bandwidth tops out around ~200 t/s; on CPU DDR5 (~60 GB/s shared) expect 10–20 t/s.
+
+Context length barely affects decode speed but inflates prefill time super-linearly (attention is O(n²) in sequence length). Practical consequence: don't stuff whole books into context “just in case” — retrieval of the right 2k tokens beats 100k tokens of padding on speed *and* accuracy.
+
+**Quality cost.** Beyond a model's trained window, providers apply RoPE/YaRN extrapolation — usable but degraded. Even inside the window, recall is not uniform (“lost in the middle”: models read best what sits early or late). Long contexts also dilute instructions. Bigger `n_ctx` never improves a task that fits in less.
+
+Studio's auto-context manages this budget automatically; when you drive llama-server or the API yourself, you own these numbers.
+
+### What tokens/s to expect (orders of magnitude)
+
+| Hardware class | Decode speed, 8B model @ Q4 |
+|---|---|
+| Laptop CPU | 5–15 t/s |
+| Apple Silicon (M-series, unified RAM) | 20–60 t/s |
+| Consumer GPU 24 GB (RTX 3090/4090) | 100–140 t/s |
+| Data-center GPU (A100/H100) | 130–200+ t/s |
+
+For MoE models, speed tracks the *active* parameters, not total — a 26B-A4B behaves like a 4B dense model at similar quality. Quantisation also changes speed: smaller weights = fewer bytes to move = faster decode, which is why Q4 beats Q8 beats FP16 on throughput.
+:::
+
+::: {.fr}
+Un modèle de langage génère un token à la fois. À chaque étape il produit une probabilité pour chaque token de son vocabulaire ; les paramètres d'échantillonnage décident comment le logiciel choisit le token suivant dans cette distribution. Tout ce qui suit n'est que différentes façons de remodeler — ou de ne pas remodeler — cette distribution.
+
+### Les boutons d'échantillonnage
+
+| Paramètre | Effet mécanique | Augmenter → | Diminuer → | Plages raisonnables |
+|---|---|---|---|---|
+| **Température** | Divise les logits par *T* avant le softmax | Distribution plus plate : variété, surprise, plus d'erreurs factuelles | Plus nette : quasi déterministe, répétitif, plus sûr pour les faits | 0–0,2 code/extraction · 0,3–0,5 Q&A factuel · 0,7–1,0 rédaction |
+| **Top-p** (noyau) | Conserver le plus petit ensemble de tokens dont la probabilité cumulée ≥ p, renormaliser, échantillonner | Réservoir de candidats plus large | Seuls les candidats sûrs survivent ; quasi glouton quand p→0 | 0,9–0,95 ; régler la température *ou* le top-p, pas les deux aveuglément |
+| **Top-k** | Coupure franche : seuls les k tokens les plus probables peuvent sortir | Plus de diversité | Moins de candidats ; k=1 = décodage glouton | 20–60 si utilisé ; min-p est généralement meilleur |
+| **Min-p** | Coupure dynamique relative à la probabilité du token de tête | Garde les queues vivantes à haute température | Écarte les tokens implausibles même à haute température | 0,05–0,1 ; se marie bien avec temp. 0,7–1,2 |
+| **Pénalité de répétition / fréquence** | Abaisse les logits des tokens déjà générés (la pénalité de fréquence croît avec le nombre) | Moins de répétitions mais grammaire dégradée et code cassé si extrême | Texte naturel, boucles possibles sur modèles faibles | ≤ 1,1–1,2 ; contre les boucles, changez de modèle plutôt que d'exagérer |
+| **Graine (seed)** | Fixe le générateur aléatoire | — | Même graine + mêmes paramètres + même binaire ⇒ sortie reproductible | À fixer dès qu'un résultat doit être reproduit |
+| **Tokens max** | Arrêt brutal de la longueur générée | Réponses longues possibles | Tronque un raisonnement en plein milieu ; ne rend **rien** plus rapide | Selon tâche ; gardez de la marge pour les modes thinking |
+| **Séquences d'arrêt** | La génération s'interrompt à l'apparition de la chaîne | — | Sortie propre et analysable pour les pipelines | À utiliser pour les sorties structurées |
+
+Le prompt système est lui aussi un paramètre : il précède chaque conversation et pilote ton, format et contraintes. Comme les moteurs mettent en cache le calcul d'un préfixe inchangé (**KV cache**), un prompt système stable rend aussi les réponses plus rapides et moins coûteuses.
+
+### La fenêtre de contexte : le paramètre le plus coûteux
+
+La fenêtre de contexte (`n_ctx`) est le budget total de tokens d'une requête : prompt système + documents joints + historique + réponse générée. Tout doit tenir ; au-delà, le moteur échoue ou tronque silencieusement le contenu le plus ancien.
+
+**Coût mémoire.** Pendant la génération, le modèle conserve un tenseur clé/valeur par couche et par token passé — le KV cache. Pour un modèle 8B style Llama (32 couches, grouped-query attention), cela coûte ≈128 Ko *par token* en 16 bits : ≈1 Go à 8k tokens, **4 Go à 32k, 16 Go à 128k — en plus des poids**. Deux leviers réduisent la note : la quantification du KV cache (`q8_0` divise par deux sans perte notable, `q4_0` par quatre) et le flash attention (réduit la mémoire d'activations et accélère les longs prompts).
+
+**Coût vitesse.** La génération a deux phases :
+
+- *Prefill* (lecture du prompt) : parallèle, limitée par le calcul — centaines à milliers de tokens/s. Un document de 10k tokens prend des secondes sur GPU, des minutes sur CPU.
+- *Decode* (production de la réponse) : strictement séquentiel et **limité par la bande passante mémoire** — chaque nouveau token impose de relire tous les poids. Plafond approximatif : `tokens/s ≈ bande passante / taille du modèle en octets`. Un 8B Q4 (~4,5 Go) sur une carte à 1 To/s plafonne vers ~200 t/s ; sur CPU DDR5 (~60 Go/s partagés), visez 10–20 t/s.
+
+La longueur de contexte affecte peu le decode mais gonfle le prefill de façon super-linéaire (l'attention est en O(n²)). Conséquence pratique : ne fourrez pas des livres entiers dans le contexte « au cas où » — récupérer les bons 2k tokens bat 100k tokens de remplissage, en vitesse comme en exactitude.
+
+**Coût qualité.** Au-delà de la fenêtre entraînée, on applique une extrapolation RoPE/YaRN — utilisable mais dégradée. Même dans la fenêtre, le rappel n'est pas uniforme (« lost in the middle » : les modèles lisent mieux ce qui est tôt ou tard). Les longs contextes diluent aussi les instructions. Augmenter `n_ctx` n'améliore jamais une tâche qui tient dans moins.
+
+L'auto-contexte du Studio gère ce budget automatiquement ; si vous pilotez llama-server ou l'API vous-même, ces nombres sont les vôtres.
+
+### Vitesse attendue (ordres de grandeur)
+
+| Classe matérielle | Decode, modèle 8B @ Q4 |
+|---|---|
+| CPU portable | 5–15 t/s |
+| Apple Silicon (M, RAM unifiée) | 20–60 t/s |
+| GPU grand public 24 Go (RTX 3090/4090) | 100–140 t/s |
+| GPU datacenter (A100/H100) | 130–200+ t/s |
+
+Pour les MoE, la vitesse suit les paramètres *actifs*, pas le total — un 26B-A4B se comporte comme un dense 4B à qualité proche. La quantification change aussi la vitesse : poids plus petits = moins d'octets à déplacer = decode plus rapide ; c'est pourquoi Q4 bat Q8 qui bat FP16 en débit.
+:::

@@ -1,0 +1,37 @@
+## Export and deployment {#export}
+
+::: {.en}
+Export screen: pick a training run → pick a checkpoint → choose the target:
+
+| Export type | Produces | Use with |
+|---|---|---|
+| **Merged model** | 16-bit weights with adapter merged | vLLM, further training, sharing |
+| **LoRA only** | Adapter weights alone | Reusable on the same base, tiny files |
+| **GGUF** | Quantised llama.cpp format | Unsloth, Ollama, LM Studio, llama-server |
+
+Save locally or push to the Hugging Face Hub (write token needed). Deployment options from there:
+
+- **Chat inside Studio** — instant, nothing to deploy.
+- **Ollama**: `ollama create assistant -f Modelfile` from the exported GGUF, then `ollama serve`.
+- **llama-server / vLLM**: OpenAI-compatible HTTP endpoints for apps.
+- **Unsloth as API server**: `unsloth run --model unsloth/qwen3.8-27B-GGUF-GGUF:UD-Q4_K_XL --temp 1.0 --top-p 0.95` — serves the loaded model with sampling settings, context sizing, GPU layers configurable.
+- **Remote access**: `-H 0.0.0.0` on LAN, or `unsloth studio --secure` for HTTPS via Cloudflare tunnel.
+:::
+
+::: {.fr}
+Écran Export : choisissez un run d'entraînement → un checkpoint → la cible :
+
+| Type d'export | Produit | Compatible avec |
+|---|---|---|
+| **Modèle fusionné** | Poids 16-bit avec adaptateur fusionné | vLLM, poursuite d'entraînement, partage |
+| **LoRA seul** | Adaptateur seul | Réutilisable sur la même base, fichiers minuscules |
+| **GGUF** | Format quantifié llama.cpp | Unsloth, Ollama, LM Studio, llama-server |
+
+Sauvegarde locale ou publication sur le Hub Hugging Face (token d'écriture requis). Options de déploiement ensuite :
+
+- **Chat dans le Studio** — immédiat, rien à déployer.
+- **Ollama** : `ollama create assistant -f Modelfile` depuis le GGUF exporté, puis `ollama serve`.
+- **llama-server / vLLM** : endpoints HTTP compatibles OpenAI pour vos applications.
+- **Unsloth comme serveur d'API** : `unsloth run --model unsloth/qwen3.8-27B-GGUF-GGUF:UD-Q4_K_XL --temp 1.0 --top-p 0.95` — sert le modèle chargé avec échantillonnage, contexte, couches GPU configurables.
+- **Accès distant** : `-H 0.0.0.0` sur le LAN, ou `unsloth studio --secure` pour du HTTPS via tunnel Cloudflare.
+:::

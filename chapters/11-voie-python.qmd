@@ -1,0 +1,36 @@
+## The Python path: Unsloth Core {#core}
+
+When the GUI is not enough, the same engine is scriptable:
+
+```python
+from unsloth import FastLanguageModel
+from trl import SFTTrainer
+from datasets import load_dataset
+
+model, tokenizer = FastLanguageModel.from_pretrained(
+    model_name="unsloth/Meta-Llama-3.1-8B-Instruct-bnb-4bit",
+    max_seq_length=2048,
+    load_in_4bit=True,          # QLoRA
+)
+model = FastLanguageModel.get_peft_model(
+    model, r=16,
+    target_modules=["q_proj", "k_proj", "v_proj", "o_proj"],
+)
+trainer = SFTTrainer(
+    model=model, tokenizer=tokenizer,
+    train_dataset=load_dataset("json", data_files="internal_corpus.jsonl")["train"],
+    max_seq_length=2048,
+)
+trainer.train()
+model.save_pretrained_gguf("gguf/", tokenizer)
+```
+
+::: {.en}
+CLI equivalents exist for automation: `unsloth train`, `unsloth inference`, `unsloth export`, `unsloth list-checkpoints`. Studio configs saved as YAML can be replayed headlessly — CI-friendly.
+:::
+
+::: {.fr}
+Des équivalents CLI existent pour l'automatisation : `unsloth train`, `unsloth inference`, `unsloth export`, `unsloth list-checkpoints`. Les configs YAML du Studio se rejouent sans interface — compatible CI.
+:::
+
+::: {.en}
