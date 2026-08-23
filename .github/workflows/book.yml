@@ -19,11 +19,11 @@ jobs:
       version: ${{ github.ref_name }}
     steps:
       # actions pinned to SHAs (supply-chain hygiene); bump deliberately
-      - uses: actions/checkout@f548e57e544e # v4
-      - uses: actions/setup-python@751276eafca5 # v6
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
+      - uses: actions/setup-python@751276eafca55f10f252026015f43c488f2322ba # v6
         with:
           python-version: '3.12'
-      - uses: quarto-dev/quarto-actions/setup@91dabb203fce # v2
+      - uses: quarto-dev/quarto-actions/setup@91dabb203fce7f899d10ef8e482d94b00f397cbc # v2
         with:
           version: 1.8.24
       - name: Render EN (CI check)
@@ -40,11 +40,11 @@ jobs:
           touch _site/.nojekyll
           cp -r _render/en/. _site/en/
           cp -r _render/fr/. _site/fr/
-      - uses: actions/upload-pages-artifact@98ef48e41587 # v3
+      - uses: actions/upload-pages-artifact@98ef48e41587a300b82de4cf298aa98b57b2faae # v3
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
           path: _site
-      - uses: actions/upload-artifact@043fb46d1a93 # v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v4
         if: startsWith(github.ref, 'refs/tags/v')
         with:
           name: site
@@ -62,7 +62,7 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - id: deployment
-        uses: actions/deploy-pages@5e98f10ce206 # v4
+        uses: actions/deploy-pages@5e98f10ce206463e411e82ac66ef0f2df79c5499 # v4
 
   release:
     if: startsWith(github.ref, 'refs/tags/v')
@@ -71,7 +71,7 @@ jobs:
     permissions:
       contents: write   # create release + upload assets
     steps:
-      - uses: actions/download-artifact@484a0b528fb4 # v4
+      - uses: actions/download-artifact@484a0b528fb4d7bd804637ccb632e47a0e638317 # v4
         with:
           name: site
           path: _site
