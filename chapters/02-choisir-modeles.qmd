@@ -1,9 +1,43 @@
+::: {.en}
 ## The open-model landscape, ranked {#landscape}
 :::
 
 ::: {.fr}
 ## Le paysage des modèles ouverts, classé {#landscape}
 :::
+
+::: {.en}
+### A method, not a ranking {#method}
+
+**Models are perishable; methods are not.** New state-of-the-art models — open and closed — now ship weekly, and leaderboard positions reshuffle just as fast. Every model name in this book is an *illustration from an early-2026 snapshot*, not a recommendation frozen in time. What stays valid is the selection method:
+
+1. **Define the use first.** Task, context size, language mix, privacy level, latency, hardware (Chap. 5) — the context decides, never the hype.
+2. **Shortlist on trusted, independent sources**, checked *at decision time*:
+   - [LMArena](https://lmarena.ai) — crowdsourced blind head-to-head battles (text, webdev, vision arenas); good for perceived quality, immune to benchmark gaming;
+   - [ArtificialAnalysis.ai](https://artificialanalysis.ai) — independent composite indices (intelligence, coding agents), price/speed per band, open-vs-proprietary tracking;
+   - vendor benchmarks only as a starting hint — they select their own tests.
+3. **Validate on your own golden set** before committing (Chap. 16): 50–200 real tasks scored pass@1. This final gate is yours; no leaderboard replaces it.
+4. **Re-check at every re-decision.** A model pinned in a policy document ages like milk; pin the *method* instead.
+
+Keep the list of named models in your infrastructure **short and swappable**: one small/fast, one strong generalist, one specialist if the domain demands it — behind standard interfaces (Chap. 9, 15) so swapping is a config line, not a project.
+:::
+
+::: {.fr}
+### Une méthode, pas un classement {#method}
+
+**Les modèles sont périssables ; les méthodes ne le sont pas.** De nouveaux modèles state-of-the-art — ouverts comme fermés — sortent désormais chaque semaine, et les leaderboards se mélangent aussi vite. Chaque nom de modèle dans ce livre est une *illustration d'un instantané début 2026*, pas une recommandation figée. Ce qui reste valide, c'est la méthode de sélection :
+
+1. **Définissez d'abord l'usage.** Tâche, taille de contexte, mélange linguistique, niveau de confidentialité, latence, matériel (chap. 5) — c'est le contexte qui décide, jamais la mode.
+2. **Présélectionnez sur des sources indépendantes de confiance**, consultées *au moment de décider* :
+   - [LMArena](https://lmarena.ai) — duels à l'aveugle arbitrés par la foule (arenas texte, webdev, vision) ; bon pour la qualité perçue, immunisé contre le triche aux benchmarks ;
+   - [ArtificialAnalysis.ai](https://artificialanalysis.ai) — indices composites indépendants (intelligence, agents de code), prix/vitesse par bande, suivi ouvert vs propriétaire ;
+   - les benchmarks des vendeurs ne servent que d'indice de départ — ils choisissent leurs propres tests.
+3. **Validez sur votre propre jeu doré** avant d'engager (chap. 16) : 50–200 tâches réelles scorées en pass@1. Cette porte finale est la vôtre ; aucun leaderboard ne la remplace.
+4. **Revérifiez à chaque re-décision.** Un modèle épinglé dans un document de stratégie vieillit mal ; épinglez la *méthode*, pas le modèle.
+
+Gardez la liste des modèles nommés dans votre infrastructure **courte et remplaçable** : un petit/rapide, un généraliste solide, un spécialiste si le domaine l'exige — derrière des interfaces standards (chap. 9, 15) pour que l'échange soit une ligne de configuration, pas un projet.
+:::
+
 
 ::: {.en}
 Snapshot from [artificialanalysis.ai](https://artificialanalysis.ai) (early 2026, AA Intelligence Index v4.1.1 — higher is better):
@@ -67,10 +101,16 @@ Et pour le codage agentique (AA Coding Agent Index v1.4, composite de DeepSWE, T
 [Lecture :]{fg="#b22222"} les classements bougent chaque mois. Revérifiez [artificialanalysis.ai/models](https://artificialanalysis.ai/models) et [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) avant de choisir ; la *méthode* ci-dessous survit à tout classement particulier.
 :::
 
-## Which model for which use case {#usecases}
+::: {.en}
+## 2. Which model for which use case {#usecases}
+:::
+
+::: {.fr}
+## 2. Quel modèle pour quel usage {#usecases}
+:::
 
 ::: {.en}
-Practical selection guide, crossing AA rankings with what Unsloth supports and typical workstation hardware (quantised 4-bit sizes):
+Illustrative pairings **as of the early-2026 snapshot** — treat the *shape* of each answer (size class, capability, hardware) as durable, the names as replaceable: cross live rankings with day-zero Unsloth support and your actual hardware (4-bit sizes below):
 
 | Use case | Recommended open models | Why | Hardware (inference, 4-bit) |
 |---|---|---|---|
@@ -93,7 +133,7 @@ Rules of thumb:
 :::
 
 ::: {.fr}
-Guide de sélection pratique, croisant les classements AA avec ce qu'Unsloth prend en charge et le matériel courant (tailles quantifiées 4-bit) :
+Appariements illustratifs **à l'instantané début 2026** — traitez la *forme* de chaque réponse (classe de taille, capacité, matériel) comme durable et les noms comme remplaçables : croisez les classements vivants avec le support day-zero d'Unsloth et votre matériel réel (tailles 4-bit ci-dessous) :
 
 | Cas d'usage | Modèles ouverts recommandés | Pourquoi | Matériel (inférence, 4-bit) |
 |---|---|---|---|
@@ -113,4 +153,8 @@ Règles pratiques :
 - **Instruct plutôt que base** pour le fine-tuning : templates de chat prêts à l'emploi, moins de données nécessaires.
 - **Nomenclature de quantification** : les GGUF `unsloth/…-UD-Q4_K_XL` sont les quants *Dynamic* d'Unsloth — ils récupèrent l'essentiel de la précision perdue par un 4-bit standard ; préférez-les.
 - **Entraînez dans la précision servie** : un service en 4-bit s'apparie à un entraînement QLoRA 4-bit.
+:::
+
+::: {.notes}
+Have the audience read the tables themselves: ask 'which model would YOU pick for a 16 GB laptop?' Tables are snapshots — teach the method, not the ranking. / Faites lire les tableaux par la salle : « quel modèle choisiriez-vous pour un portable 16 Go ? ». Les tableaux sont des instantanés — enseignez la méthode, pas le classement.
 :::

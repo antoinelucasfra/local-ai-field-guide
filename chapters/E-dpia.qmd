@@ -1,0 +1,91 @@
+::: {.en}
+## Appendix E. DPIA template for local AI {#dpia}
+
+A data protection impact assessment (GDPR art. 35) is required when processing is likely to result in high risk — large-scale personal-data processing, or any AI-based decisions about people. Copy this template per use case; it follows the CNIL/PIA structure. Local deployment makes several answers *easy* — the template makes them *explicit*.
+
+### 1. Processing description
+
+- Controller / department / contact:
+- Use case (one paragraph, plain language):
+- Model(s) used, version and source (`model-id`, quantisation):
+- Hosting: hardware location, who has physical access:
+- Data flow diagram attached? yes/no
+
+### 2. Data categories
+
+- Personal data processed (types; special categories under art. 9?):
+- Volume (number of people concerned):
+- Sources (provided by users / imported corpora / generated):
+- Retention: prompts kept? conversation history? where, how long?
+
+### 3. Necessity & proportionality
+
+- Why is a language model necessary at all?
+- Why local rather than an API provider (data volume, secrecy, cost)?
+- Why this model size — could a smaller model do the job?
+- Is the data strictly necessary for the purpose?
+
+### 4. Risks and measures
+
+| Risk | Likelihood | Severity | Measure | Residual |
+|---|---|---|---|---|
+| Re-identification from prompts in logs | | | no prompt logging by default (Chap. 15) | |
+| Model output leaks training data | | | golden-set + canary-string tests (Chap. 16) | |
+| Unauthorised access to the server | | | SSO gateway, disk encryption, no direct ports | |
+| Telemetry/phone-home in tools | | | offline verification checklist (Chap. 17) | |
+| Wrong or biased output affecting people | | | human review before external effect; citations shown (Chap. 13) | |
+
+### 5. Residual risk & sign-off
+
+- Overall residual risk (low/medium/high) and justification:
+- Consulted: DPO opinion, date:
+- Approved by (name/role/date):
+
+*Local-first note*: items that are nightmares with cloud APIs (data leaving the EU, sub-processors, retention you don't control) collapse into verifiable one-liners here — that is a genuine administrative advantage of the architecture this book recommends.
+:::
+
+::: {.fr}
+## Annexe E. Modèle d'AIPD pour l'IA locale {#dpia}
+
+Une analyse d'impact relative à la protection des données (RGPD art. 35) est requise lorsque le traitement est susceptible d'engendrer un risque élevé — traitement à grande échelle de données personnelles, ou décisions automatisées concernant des personnes. Copiez ce modèle par cas d'usage ; il suit la structure CNIL/PIA. Le déploiement local rend plusieurs réponses *faciles* — le modèle les rend *explicites*.
+
+### 1. Description du traitement
+
+- Responsable de traitement / service / contact :
+- Cas d'usage (un paragraphe en langage clair) :
+- Modèle(s) utilisé(s), version et source (`model-id`, quantification) :
+- Hébergement : localisation matérielle, qui a accès physique :
+- Diagramme de flux joint ? oui/non
+
+### 2. Catégories de données
+
+- Données personnelles traitées (types ; catégories sensibles art. 9 ?) :
+- Volume (nombre de personnes concernées) :
+- Sources (fournies par les utilisateurs / corpus importés / générées) :
+- Conservation : prompts conservés ? historique des conversations ? où, combien de temps ?
+
+### 3. Nécessité et proportionnalité
+
+- Pourquoi un modèle de langage est-il nécessaire ?
+- Pourquoi local plutôt qu'un fournisseur d'API (volume, secret, coût) ?
+- Pourquoi cette taille de modèle — un plus petit suffirait-il ?
+- Les données sont-elles strictement nécessaires à la finalité ?
+
+### 4. Risques et mesures
+
+| Risque | Vraisemblance | Gravité | Mesure | Résiduel |
+|---|---|---|---|---|
+| Réidentification depuis des logs de prompts | | | pas de journalisation des prompts par défaut (chap. 15) | |
+| Fuite de données d'entraînement dans les sorties | | | jeu doré + tests chaînes-canaris (chap. 16) | |
+| Accès non autorisé au serveur | | | passerelle SSO, chiffrement disque, aucun port direct | |
+| Télémétrie/phone-home des outils | | | liste de vérification hors ligne (chap. 17) | |
+| Sortie erronée ou biaisée affectant des personnes | | | relecture humaine avant effet externe ; citations affichées (chap. 13) | |
+
+### 5. Risque résiduel & validation
+
+- Risque résiduel global (faible/moyen/élevé) et justification :
+- Consulté : avis du DPO, date :
+- Validé par (nom/fonction/date) :
+
+*Note locale d'abord* : les points qui sont des cauchemars avec les API cloud (données quittant l'UE, sous-traitants, conservation hors de contrôle) se réduisent ici à des lignes vérifiables — c'est un véritable avantage administratif de l'architecture que ce livre recommande.
+:::

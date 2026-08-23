@@ -1,4 +1,10 @@
-## Local models for coding agents {#agents}
+::: {.en}
+## 10. Local models for coding agents {#agents}
+:::
+
+::: {.fr}
+## 10. Modèles locaux pour les agents de code {#agents}
+:::
 
 ::: {.en}
 Coding agents (Claude Code, Codex, OpenCode…) accept custom endpoints — so they can drive **your** local model, keeping code and prompts on-premise. Unsloth wires this up in one command:

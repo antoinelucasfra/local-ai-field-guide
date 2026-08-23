@@ -1,8 +1,9 @@
-## GDPR mapping {#gdpr}
+::: {.en}
+## 17. GDPR mapping {#gdpr}
 :::
 
 ::: {.fr}
-## Correspondance RGPD {#gdpr}
+## 17. Correspondance RGPD {#gdpr}
 :::
 
 ::: {.en}
@@ -66,5 +67,3 @@ Comment une stack locale basée sur Unsloth répond aux principes clés du RGPD 
 - Évaluer mémorisation et biais avant production (le Model Arena aide à comparer à la base) ; conserver le rapport d'évaluation.
 - Tout versionner : hash du dataset, config YAML, checkpoint d'adaptateur — la reproductibilité est l'auditabilité.
 :::
-
-::: {.en}

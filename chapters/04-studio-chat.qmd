@@ -1,4 +1,10 @@
-## Running models: Studio Chat {#chat}
+::: {.en}
+## 4. Running models: Studio Chat {#chat}
+:::
+
+::: {.fr}
+## 4. Exécuter des modèles : Studio Chat {#chat}
+:::
 
 ::: {.en}
 The Chat page runs models 100 % offline:
@@ -30,4 +36,8 @@ Surcouche intégrée, tout est optionnel par message :
 - **Recherche web / recherche approfondie** : recherche privée DuckDuckGo qui lit les vraies pages ; la recherche approfondie planifie, cherche et produit des rapports sourcés.
 - **Model Arena** : comparer base vs affûté (ou deux modèles quelconques) sur le même prompt.
 - **Fournisseurs** : connectez des endpoints OpenAI/Anthropic/Ollama/vLLM dans la même interface — utile pour migrer progressivement du cloud vers le local.
+:::
+
+::: {.notes}
+Demo script: open Studio, load a Q4 model, run one prompt with web search off then on. Point out everything stays local. / Scénario de démo : ouvrir Studio, charger un modèle Q4, un prompt avec recherche web off puis on. Souligner que tout reste local.
 :::

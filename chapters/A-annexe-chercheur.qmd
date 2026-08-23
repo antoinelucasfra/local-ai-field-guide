@@ -41,7 +41,13 @@ La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialana
 - **Reproductibilité** : la version exacte du modèle utilisée peut être enregistrée, archivée et citée comme toute autre dépendance logicielle.
 :::
 
+::: {.en}
 ## Five things to try first
+:::
+
+::: {.fr}
+## Cinq choses à essayer tout de suite
+:::
 
 ::: {.en}
 | Task | Prompt pattern | Model size needed |
@@ -114,15 +120,15 @@ Ouvrez ensuite l'interface web locale, choisissez un petit modèle (ex. un modè
 ::: {.en}
 ## Going further
 
-- **Parts I–IV** — setup, running models, inference parameters, fine-tuning and deployment
-- **Chapter 14** — costs, risks and a 90-day pilot plan for lab directors
-- **Chapter 15** — sovereignty, regulation and investment scenarios for institute leadership
+- **Chapters 1–15 (Parts I–IV)** — setup, running models, inference parameters, fine-tuning and deployment
+- **Chapter 18** — costs, risks and a 90-day pilot plan for lab directors
+- **Chapter 19** — sovereignty, regulation and investment scenarios for institute leadership
 :::
 
 ::: {.fr}
 ## Pour aller plus loin
 
-- **Parties I–IV** — installation, exécution des modèles, paramètres d'inférence, fine-tuning et déploiement
-- **Chapitre 14** — coûts, risques et plan pilote de 90 jours pour directeurs de laboratoire
-- **Chapitre 15** — souveraineté, régulation et scénarios d'investissement pour la direction d'institut
+- **Chapitres 1–15 (Parties I–IV)** - installation, exécution des modèles, paramètres d'inférence, fine-tuning et déploiement
+- **Chapitre 18** — coûts, risques et plan pilote de 90 jours pour directeurs de laboratoire
+- **Chapitre 19** — souveraineté, régulation et scénarios d'investissement pour la direction d'institut
 :::

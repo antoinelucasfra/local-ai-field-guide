@@ -1,26 +1,11 @@
----
-date: today
-filters:
-  - highlight-text
-  - langsel
-title: "doc"
-title-en: "Local AI as Institutional Strategy"
-title-fr: "L'IA locale comme stratégie d'institution"
-subtitle-en: "Sovereignty, regulation and investment scenarios for science leadership"
-subtitle-fr: "Souveraineté, régulation et scénarios d'investissement pour la direction scientifique"
-format-links: false
-format:
-  html:
-    output-file: strategy-paper.html
-    toc: true
-    theme: cosmo
-  typst:
-    output-file: strategy-paper.pdf
-    papersize: a4
-    margin:
-      x: 2cm
-      y: 2cm
----
+::: {.en}
+## 19. Local AI as Institutional Strategy {#strategy}
+:::
+
+::: {.fr}
+## 19. L'IA locale comme stratégie d'institution {#strategy}
+:::
+
 
 ::: {.en}
 ## Strategic context: a consolidating landscape
@@ -139,7 +124,7 @@ Sequencing matters more than size: each scenario starts with the same 90-day pil
 | Recommandé | Serveur GPU partagé (multi-GPU), ingénieur plateforme ~0,5 ETP, programme de formation, pack gouvernance complet | Milieu de six chiffres sur 3 ans, personnel inclus | Capacité à l'échelle de l'institut, prête pour la conformité |
 | Ambitieux | Cluster + programme d'affûtage de modèles métier (science francophone, corpora institutionnels), model cards publiés | Sept chiffres, pluriannuel | Capacité de référence régionale ; possible production scientifique sur l'adaptation de domaines |
 
-Le séquençage compte plus que la taille : chaque scénario démarre par le même pilote de 90 jours (voir dossier économique) et ne monte en puissance que sur preuves.
+Le séquençage compte plus que la taille : chaque scénario démarre par le même pilote de 90 jours (chap. 14) et ne monte en puissance que sur preuves.
 :::
 
 ::: {.en}

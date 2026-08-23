@@ -1,8 +1,9 @@
-## The rise of local AI: why now {#why}
+::: {.en}
+## 1. The rise of local AI: why now {#why}
 :::
 
 ::: {.fr}
-## L'essor de l'IA locale : pourquoi maintenant {#why}
+## 1. L'essor de l'IA locale : pourquoi maintenant {#why}
 :::
 
 ::: {.en}
@@ -51,4 +52,6 @@ Parallèlement, les capitaux dépensés en infrastructure IA par les hyperscaler
 L'objection historique — la qualité — ne tient plus pour le travail métier : un modèle ouvert de taille intermédiaire affûté bat une API généraliste sur des tâches étroites, à coût marginal nul, hors ligne.
 :::
 
-::: {.en}
+::: {.notes}
+Pitch angle: sovereignty is not ideology here — it is cost, privacy law and capability convergence (3–4 points gap and closing). / Angle de pitch : la souveraineté n'est pas de l'idéologie — c'est le coût, le droit et le rattrapage des modèles ouverts (3–4 points, écart qui se referme).
+:::

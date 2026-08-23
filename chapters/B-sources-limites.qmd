@@ -1,3 +1,4 @@
+::: {.en}
 ## Sources {#sources}
 :::
 
@@ -7,11 +8,13 @@
 
 ::: {.en}
 - Unsloth documentation: [studio overview](https://unsloth.ai/docs/new/studio), [getting started](https://unsloth.ai/docs/new/studio/start), [installation](https://unsloth.ai/docs/new/studio/install), [chat](https://unsloth.ai/docs/new/studio/chat), [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe), [export](https://unsloth.ai/docs/new/studio/export), [API endpoint](https://unsloth.ai/docs/basics/api), [Claude Code](https://unsloth.ai/docs/basics/claude-code), [Codex](https://unsloth.ai/docs/basics/codex), [fine-tuning guide](https://unsloth.ai/docs/get-started/fine-tuning-llms-guide), [Desktop](https://unsloth.ai/docs/desktop)
+- LMArena: [leaderboard](https://lmarena.ai) (crowdsourced blind battles: text, webdev, vision) — consult at decision time
 - Artificial Analysis: [models leaderboard](https://artificialanalysis.ai/models), [coding agents](https://artificialanalysis.ai/agents/coding-agents), [AI trends](https://artificialanalysis.ai/trends) (Intelligence Index v4.1.1, Coding Agent Index v1.4; snapshot early 2026)
 :::
 
 ::: {.fr}
 - Documentation Unsloth : [présentation Studio](https://unsloth.ai/docs/new/studio), [prise en main](https://unsloth.ai/docs/new/studio/start), [installation](https://unsloth.ai/docs/new/studio/install), [chat](https://unsloth.ai/docs/new/studio/chat), [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe), [export](https://unsloth.ai/docs/new/studio/export), [endpoint API](https://unsloth.ai/docs/basics/api), [Claude Code](https://unsloth.ai/docs/basics/claude-code), [Codex](https://unsloth.ai/docs/basics/codex), [guide de fine-tuning](https://unsloth.ai/docs/get-started/fine-tuning-llms-guide), [Desktop](https://unsloth.ai/docs/desktop)
+- LMArena : [classement](https://lmarena.ai) (duels à l'aveugle arbitrés par la foule : texte, webdev, vision) — à consulter au moment de décider
 - Artificial Analysis : [classement des modèles](https://artificialanalysis.ai/models), [agents de code](https://artificialanalysis.ai/agents/coding-agents), [tendances IA](https://artificialanalysis.ai/trends) (Intelligence Index v4.1.1, Coding Agent Index v1.4 ; instantané début 2026)
 :::
 
@@ -24,7 +27,8 @@
 :::
 
 ::: {.en}
-- Rankings quoted here are a snapshot; model leadership shifts monthly — re-check artificialanalysis.ai before decisions.
+- Model leadership shifts **weekly**: every ranking here is a dated snapshot of a moving field. Before any decision, re-check live sources (artificialanalysis.ai, lmarena.ai) and apply the selection method of Chapter 2 — adapted to your use case and context, validated on your own golden set.
+- Same for harness+model pairs in coding agents: benchmark the pair you plan to run on your own tasks rather than trusting any published table.
 - A fine-tuned mid-size model is near-SOTA **on its domain**, not a frontier generalist; route hard general questions accordingly.
 - Hallucinations remain possible — keep a human in the loop for decisions affecting individuals (Art. 22 restricts fully automated decisions).
 - Quantisation (4-bit) still costs some accuracy; benchmark UD quants vs higher precision before choosing.
@@ -32,7 +36,8 @@
 :::
 
 ::: {.fr}
-- Les classements cités sont un instantané ; le leadership change chaque mois — revérifiez artificialanalysis.ai avant décision.
+- Le leadership des modèles évolue **chaque semaine** : chaque classement ici est l'instantané daté d'un domaine mouvant. Avant toute décision, revérifiez les sources vivantes (artificialanalysis.ai, lmarena.ai) et appliquez la méthode de sélection du chapitre 2 — adaptée à votre usage et à votre contexte, validée sur votre propre jeu doré.
+- Même chose pour les paires harnais+modèle des agents de code : benchmarkez la paire que vous comptez exécuter sur vos propres tâches plutôt que de faire confiance à un tableau publié.
 - Un modèle intermédiaire affûté est quasi-SOTA **sur son domaine**, pas un généraliste de pointe ; orientez les questions générales difficiles en conséquence.
 - Les hallucinations restent possibles — gardez un humain dans la boucle pour les décisions affectant des personnes (l'art. 22 encadre les décisions entièrement automatisées).
 - La quantification (4-bit) coûte encore un peu de précision ; benchmarkez les quants UD vs précisions supérieures avant de choisir.

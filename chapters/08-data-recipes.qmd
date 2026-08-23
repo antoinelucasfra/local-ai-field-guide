@@ -1,4 +1,10 @@
-## Data Recipes: datasets from your documents {#data}
+::: {.en}
+## 8. Data Recipes: datasets from your documents {#data}
+:::
+
+::: {.fr}
+## 8. Data Recipes : des jeux de données depuis vos documents {#data}
+:::
 
 ::: {.en}
 [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe) solves the hardest part of fine-tuning: getting a clean dataset. It is a visual graph-node workflow (powered by NVIDIA NeMo Data Designer) that turns raw documents into training data:

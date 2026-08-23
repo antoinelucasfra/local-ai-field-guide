@@ -1,4 +1,10 @@
-## The Unsloth ecosystem: Core, Studio, Desktop {#ecosystem}
+::: {.en}
+## 3. The Unsloth ecosystem: Core, Studio, Desktop {#ecosystem}
+:::
+
+::: {.fr}
+## 3. L'écosystème Unsloth : Core, Studio, Desktop {#ecosystem}
+:::
 
 ::: {.en}
 Three layers, one project ([github.com/unslothai/unsloth](https://github.com/unslothai/unsloth)):
@@ -40,9 +46,21 @@ Capacités communes :
 - Licences : cœur Apache-2.0 ; UI Studio AGPL-3.0.
 :::
 
+::: {.en}
 ## Setup and installation {#setup}
+:::
 
+::: {.fr}
+## Installation et configuration {#setup}
+:::
+
+::: {.en}
 ### Install
+:::
+
+::: {.fr}
+### Installation
+:::
 
 ```bash
 # macOS / Linux / WSL
@@ -54,7 +72,13 @@ irm https://unsloth.ai/install.ps1 | iex
 
 Or download the **Unsloth Desktop** app from [unsloth.ai/download](https://unsloth.ai/download) (Mac, Windows, Linux). Re-run the install command to update.
 
+::: {.en}
 ### Launch
+:::
+
+::: {.fr}
+### Lancement
+:::
 
 ```bash
 unsloth studio -H 0.0.0.0 -p 8888   # LAN-accessible, port 8888
@@ -77,4 +101,84 @@ Hardware support: **chat + Data Recipes run on CPU alone** (no GPU needed); **tr
 
 ::: {.fr}
 Support matériel : **le chat + Data Recipes fonctionnent sur CPU seul** (sans GPU) ; **l'entraînement** fonctionne sur GPU NVIDIA, AMD, Intel et Apple Silicon (MLX). Un notebook Google Colab gratuit permet de tester tout le Studio sur un T4. Aucun GPU n'est requis pour les sections d'inférence de ce guide.
+:::
+
+::: {.en}
+### Try a model in your browser, zero install {#browser}
+
+Impatient? The widget below runs a small language model **inside this web page** using [WebLLM](https://github.com/mlc-ai/web-llm) and your GPU via WebGPU — no account, no server, no install. First load downloads ~500 MB once (then cached); works in Chrome/Edge/Safari on any recent machine.
+
+```{=html}
+<div id="webllm-demo" style="border:1px solid #8888;border-radius:8px;padding:1em;max-width:44rem">
+  <p><strong>Zero-install demo.</strong> Loads a 0.5B model (~500 MB, cached in your browser) via WebGPU. Nothing is sent anywhere — the model runs <em>in this page</em>.</p>
+  <button id="wl-load" style="padding:.4em 1em">Load model</button>
+  <progress id="wl-prog" value="0" max="100" style="width:100%;display:none"></progress>
+  <div id="wl-status" style="opacity:.7;font-size:.9em"></div>
+  <div id="wl-chat" style="display:none;margin-top:.5em">
+    <input id="wl-in" placeholder="Ask something…" style="width:70%;padding:.4em"/>
+    <button id="wl-send" style="padding:.4em 1em">Send</button>
+    <pre id="wl-out" style="white-space:pre-wrap;background:#8881;padding:.6em;border-radius:4px;min-height:3em"></pre>
+  </div>
+</div>
+<script type="module">
+const btn=document.getElementById('wl-load'), prog=document.getElementById('wl-prog'),
+      st=document.getElementById('wl-status'), chat=document.getElementById('wl-chat');
+btn.onclick=async()=>{
+  btn.disabled=true; prog.style.display='inline';
+  const {CreateMLCEngine}=await import("https://esm.run/@mlc-ai/web-llm");
+  const eng=await CreateMLCEngine("Qwen2.5-0.5B-Instruct-q4f16_1-MLC",{initProgressCallback:p=>{
+    prog.value=p.progress*100; st.textContent=p.text;}});
+  st.textContent="Ready (offline from cache)."; prog.style.display='none'; chat.style.display='block';
+  document.getElementById('wl-send').onclick=async()=>{
+    const q=document.getElementById('wl-in'); if(!q.value)return;
+    document.getElementById('wl-out').textContent="…";
+    const r=await eng.chat.completions.create({messages:[{role:"user",content:q.value}]});
+    document.getElementById('wl-out').textContent=r.choices[0].message.content;
+  };
+};
+</script>
+```
+It is of course a tiny model — the point is to *feel* that weights are just files executing locally. For real work, follow the two commands below.
+:::
+
+::: {.fr}
+### Essayer un modèle dans le navigateur, sans rien installer {#browser}
+
+Pressé·e ? Le widget ci-dessous fait tourner un petit modèle de langage **dans cette page web** grâce à [WebLLM](https://github.com/mlc-ai/web-llm) et à votre GPU via WebGPU — sans compte, sans serveur, sans installation. Le premier chargement télécharge ~500 Mo une seule fois (mis en cache ensuite) ; fonctionne dans Chrome/Edge/Safari sur toute machine récente.
+
+```{=html}
+<div id="webllm-demo" style="border:1px solid #8888;border-radius:8px;padding:1em;max-width:44rem">
+  <p><strong>Zero-install demo.</strong> Loads a 0.5B model (~500 MB, cached in your browser) via WebGPU. Nothing is sent anywhere — the model runs <em>in this page</em>.</p>
+  <button id="wl-load" style="padding:.4em 1em">Load model</button>
+  <progress id="wl-prog" value="0" max="100" style="width:100%;display:none"></progress>
+  <div id="wl-status" style="opacity:.7;font-size:.9em"></div>
+  <div id="wl-chat" style="display:none;margin-top:.5em">
+    <input id="wl-in" placeholder="Ask something…" style="width:70%;padding:.4em"/>
+    <button id="wl-send" style="padding:.4em 1em">Send</button>
+    <pre id="wl-out" style="white-space:pre-wrap;background:#8881;padding:.6em;border-radius:4px;min-height:3em"></pre>
+  </div>
+</div>
+<script type="module">
+const btn=document.getElementById('wl-load'), prog=document.getElementById('wl-prog'),
+      st=document.getElementById('wl-status'), chat=document.getElementById('wl-chat');
+btn.onclick=async()=>{
+  btn.disabled=true; prog.style.display='inline';
+  const {CreateMLCEngine}=await import("https://esm.run/@mlc-ai/web-llm");
+  const eng=await CreateMLCEngine("Qwen2.5-0.5B-Instruct-q4f16_1-MLC",{initProgressCallback:p=>{
+    prog.value=p.progress*100; st.textContent=p.text;}});
+  st.textContent="Ready (offline from cache)."; prog.style.display='none'; chat.style.display='block';
+  document.getElementById('wl-send').onclick=async()=>{
+    const q=document.getElementById('wl-in'); if(!q.value)return;
+    document.getElementById('wl-out').textContent="…";
+    const r=await eng.chat.completions.create({messages:[{role:"user",content:q.value}]});
+    document.getElementById('wl-out').textContent=r.choices[0].message.content;
+  };
+};
+</script>
+```
+C'est évidemment un tout petit modèle — le but est de *ressentir* que les poids ne sont que des fichiers exécutés localement. Pour du travail réel, suivez les deux commandes ci-dessous.
+:::
+
+::: {.notes}
+Live-demo the two install commands if network allows; otherwise show the browser widget above — zero setup, always works. / Démontrez les deux commandes d'installation en direct si le réseau le permet ; sinon montrez le widget navigateur ci-dessus — zéro installation, fonctionne toujours.
 :::

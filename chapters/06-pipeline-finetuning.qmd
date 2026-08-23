@@ -1,4 +1,10 @@
-## Fine-tuning in Studio: the no-code pipeline {#finetune}
+::: {.en}
+## 6. Fine-tuning in Studio: the no-code pipeline {#finetune}
+:::
+
+::: {.fr}
+## 6. Le fine-tuning dans le Studio : le pipeline sans code {#finetune}
+:::
 
 ::: {.en}
 The Studio home screen walks through four areas. Underlying concepts (from the [Unsloth fine-tuning guide](https://unsloth.ai/docs/get-started/fine-tuning-llms-guide)):
@@ -48,4 +54,8 @@ Le fine-tuning injecte connaissances *et* comportement — il peut répliquer ce
 4. **Entraînement & config** — Save/Upload/Reset de toute la config en **YAML** (`{modèle}_{méthode}_{dataset}_{horodatage}.yaml`) — reproductible et versionnable. Start Training valide en ligne (ex. eval steps sans split d'éval).
 
 **Observabilité pendant l'entraînement :** perte live (brute + lissée EMA + moyenne), courbe de LR, norme de gradient, perte d'éval ; moniteur GPU (util. %, °C, VRAM, watts) rafraîchi toutes les quelques secondes ; ETA et tokens/s ; consultable depuis un téléphone. Stop & Save pour checkpointer à tout moment.
+:::
+
+::: {.notes}
+Walk through an actual training of ~10 min on a rented GPU or shared server; stop at the loss curves. / Déroulez un vrai entraînement de ~10 min sur un GPU loué ou partagé ; arrêtez-vous sur les courbes de perte.
 :::

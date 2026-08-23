@@ -19,6 +19,20 @@ local function pick(meta, key, suffix)
   return v
 end
 
+-- Builder renames the second (FR) occurrence of a shared {#id} to {#id-fr}
+-- so pandoc never warns about duplicates; restore canonical ids after
+-- filtering so anchors and internal links stay language-independent.
+local function fix_ids(blocks)
+  for _, b in ipairs(blocks) do
+    if b.t == 'Header' then
+      b.attr.identifier = b.attr.identifier:gsub('%-fr$', '')
+    end
+    if b.t == 'Div' or b.t == 'BlockQuote' or b.t == 'Figure' then
+      fix_ids(b.content)
+    end
+  end
+end
+
 function Pandoc(doc)
   local lang = pandoc.utils.stringify(doc.meta.lang or 'en')
 
@@ -33,5 +47,6 @@ function Pandoc(doc)
       table.insert(blocks, b)
     end
   end
+  fix_ids(blocks)
   return pandoc.Pandoc(blocks, doc.meta)
 end

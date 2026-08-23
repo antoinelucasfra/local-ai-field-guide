@@ -1,0 +1,91 @@
+::: {.en}
+## 13. The RAG cookbook: your documents, with receipts {#rag}
+
+Fine-tuning (Chap. 6) bakes a *skill* into weights; **RAG** (Retrieval-Augmented Generation) answers questions *about specific documents* by retrieving the right passages at query time and letting the model cite them. Rule of thumb: behaviour → fine-tune; knowledge that changes → RAG.
+
+### A fully local stack in four parts
+
+1. **Embeddings** — a small model turns text chunks into vectors. Use a multilingual model so French and English land in the same space: `bge-m3` or `multilingual-e5-base` run on CPU in milliseconds.
+2. **Chunking** — split documents into ~300–800 token pieces with ~15% overlap. Split on structure (headings, paragraphs) before splitting on count.
+3. **Vector store** — for a lab, `sqlite-vec` (a file) is enough up to ~1M chunks; `pgvector` if you already run PostgreSQL; Qdrant when you need filtering and replication.
+4. **Generation** — any model from Chap. 2 receives the question + top-k chunks and must answer *from them*.
+
+Minimal working pipeline:
+
+```python
+# pip install sentence-transformers sqlite-vec llama-cpp-python
+import sqlite_vec, sqlite3
+from sentence_transformers import SentenceTransformer
+
+emb = SentenceTransformer("BAAI/bge-m3")
+db = sqlite3.connect("docs.db")
+db.enable_load_extension(True); sqlite_vec.load(db)
+db.execute("CREATE VIRTUAL TABLE v USING vec0(embedding float[1024], chunk text)")
+
+def index(chunks):                       # chunks: list[str]
+    db.executemany("INSERT INTO v(embedding, chunk) VALUES (?, ?)",
+                   [(emb.encode(c).tobytes(), c) for c in chunks])
+
+def ask(question, k=5):
+    q = emb.encode(question)
+    rows = db.execute("""SELECT chunk FROM v WHERE embedding MATCH ?
+                       ORDER BY distance LIMIT ?""", (q.tobytes(), k)).fetchall()
+    return "\n---\n".join(r[0] for r in rows)
+# then: answer = llm(f"Answer only from these excerpts:\n{ask(q)}\n\nQ: {q}")
+```
+
+Studio Chat's web search and document features use the same mechanics internally (Chap. 4); Data Recipes can *generate* training data from those same sources when you decide a skill must move into weights (Chap. 8).
+
+### Retrieval quality is the whole game
+
+- **Hybrid search beats pure vectors**: add BM25 keyword scoring (SQLite FTS5) and fuse rankings — acronyms, part numbers and names are where embeddings fail.
+- **Respect lost-in-the-middle**: put the best chunks first and last (Chap. 5); 20 chunks help less than 6 good ones.
+- **Evaluate retrieval separately** from generation: does the golden set (Chap. 16)'s reference passage appear in top-k? Fix retrieval before blaming the model.
+- **Show citations**: force the model to quote chunk ids — reviewers verify instead of trusting, which is also your GDPR transparency story (Chap. 17).
+:::
+
+::: {.fr}
+## 13. Le livre de recettes RAG : vos documents, avec justificatifs {#rag}
+
+Le fine-tuning (chap. 6) incorpore une *compétence* dans les poids ; le **RAG** (*Retrieval-Augmented Generation*) répond aux questions *sur des documents précis* en récupérant les bons passages au moment de la requête et en laissant le modèle les citer. Règle simple : comportement → fine-tune ; connaissance qui évolue → RAG.
+
+### Une stack entièrement locale en quatre pièces
+
+1. **Embeddings** — un petit modèle transforme des morceaux de texte en vecteurs. Choisissez un modèle multilingue pour que français et anglais partagent le même espace : `bge-m3` ou `multilingual-e5-base` tournent sur CPU en millisecondes.
+2. **Découpage** — coupez en morceaux de ~300 à 800 jetons avec ~15 % de chevauchement. Coupez d'abord selon la structure (titres, paragraphes), puis selon la taille.
+3. **Base vectorielle** — pour un laboratoire, `sqlite-vec` (un fichier) suffit jusqu'à ~1 M de morceaux ; `pgvector` si vous avez déjà PostgreSQL ; Qdrant pour le filtrage et la réplication.
+4. **Génération** — n'importe quel modèle du chap. 2 reçoit la question + les k meilleurs morceaux et doit répondre *à partir d'eux*.
+
+Pipeline minimal fonctionnel :
+
+```python
+# pip install sentence-transformers sqlite-vec llama-cpp-python
+import sqlite_vec, sqlite3
+from sentence_transformers import SentenceTransformer
+
+emb = SentenceTransformer("BAAI/bge-m3")
+db = sqlite3.connect("docs.db")
+db.enable_load_extension(True); sqlite_vec.load(db)
+db.execute("CREATE VIRTUAL TABLE v USING vec0(embedding float[1024], chunk text)")
+
+def index(chunks):                       # chunks : list[str]
+    db.executemany("INSERT INTO v(embedding, chunk) VALUES (?, ?)",
+                   [(emb.encode(c).tobytes(), c) for c in chunks])
+
+def ask(question, k=5):
+    q = emb.encode(question)
+    rows = db.execute("""SELECT chunk FROM v WHERE embedding MATCH ?
+                       ORDER BY distance LIMIT ?""", (q.tobytes(), k)).fetchall()
+    return "\n---\n".join(r[0] for r in rows)
+# puis : reponse = llm(f"Réponds uniquement à partir de ces extraits :\n{ask(q)}\n\nQ : {q}")
+```
+
+La recherche web et les fonctions documentaires du Studio Chat reposent sur les mêmes mécanismes (chap. 4) ; Data Recipes peut *générer* des données d'entraînement depuis ces mêmes sources quand vous décidez qu'une compétence doit passer dans les poids (chap. 8).
+
+### La qualité de la récupération fait tout
+
+- **La recherche hybride bat les vecteurs seuls** : ajoutez un score BM25 par mots-clés (SQLite FTS5) et fusionnez les classements — acronymes, références et noms propres sont l'angle mort des embeddings.
+- **Respectez le lost-in-the-middle** : placez les meilleurs morceaux au début et à la fin (chap. 5) ; 20 morceaux servent moins que 6 bons.
+- **Évaluez la récupération séparément** de la génération : le passage de référence de votre jeu doré (chap. 16) apparaît-il dans le top-k ? Corrigez la récupération avant de blâmer le modèle.
+- **Affichez les citations** : obligez le modèle à citer les identifiants de morceaux — les relecteurs vérifient au lieu de faire confiance, ce qui nourrit aussi votre transparence RGPD (chap. 17).
+:::

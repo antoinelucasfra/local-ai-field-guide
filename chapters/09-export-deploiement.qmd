@@ -1,4 +1,10 @@
-## Export and deployment {#export}
+::: {.en}
+## 9. Export and deployment {#export}
+:::
+
+::: {.fr}
+## 9. Export et déploiement {#export}
+:::
 
 ::: {.en}
 Export screen: pick a training run → pick a checkpoint → choose the target:

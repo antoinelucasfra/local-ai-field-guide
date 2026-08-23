@@ -1,4 +1,10 @@
-## Training hyperparameters, explained {#hyper}
+::: {.en}
+## 7. Training hyperparameters, explained {#hyper}
+:::
+
+::: {.fr}
+## 7. Hyperparamètres d'entraînement, expliqués {#hyper}
+:::
 
 ::: {.en}
 The Studio pre-fills sane defaults (rank 16 / alpha 32 / dropout 0.05, LR 2e-4, 3 epochs, batch 4 × grad-accum 8, AdamW 8-bit, linear schedule, warmup 5, seed 3407). Here is what each actually does, so you know when to deviate.
@@ -72,4 +78,8 @@ Le Studio pré-remplit des défauts sains (rang 16 / alpha 32 / dropout 0,05, LR
 - **Perte éval** : doit suivre la perte train vers le bas puis s'aplatir. Divergence entre les deux = début de surapprentissage = heure de Stop & Save.
 - **Norme de gradient** : des pics occasionnels sont normaux ; des pics répétés signifient LR trop haut ou données sales (un exemple malformé).
 - **Moniteur GPU** : utilisation collée vers 100 % = limité par le calcul (bien). Utilisation faible = goulot de chargement de données. Gardez la mémoire sous la limite de la carte avec de la marge pour les pics de contexte ; surveillez la température — >85 °C soutenus bridant vos tokens/s.
+:::
+
+::: {.notes}
+Common question: 'why not just crank epochs?' Show the eval-loss U-turn. Second: 'is more LoRA rank better?' No — overfitting + memory. / Question fréquente : « pourquoi pas plus d'époques ? » Montrez le U de la perte d'éval. Puis : « un rang LoRA plus grand ? » Non — surapprentissage + mémoire.
 :::

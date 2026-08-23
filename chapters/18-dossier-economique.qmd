@@ -1,9 +1,9 @@
 ::: {.en}
-## The Business Case for Local AI {#bizcase}
+## 18. The Business Case for Local AI {#bizcase}
 :::
 
 ::: {.fr}
-## Le dossier économique de l'IA locale {#bizcase}
+## 18. Le dossier économique de l'IA locale {#bizcase}
 :::
 
 
@@ -12,7 +12,7 @@
 
 Open-weight language models now sit within ~3 points of the best closed models on independent benchmarks ([Artificial Analysis](https://artificialanalysis.ai), early 2026) — and they run on hardware you can buy. For a research organisation this flips the default: sensitive workloads that could never use cloud APIs (unpublished results, personal data, grant material) become automatable **inside your perimeter**, at a cost structure you own.
 
-This chapter gives you the cost model, the risk picture, and a 90-day pilot design with explicit go/no-go criteria. It sits in Part V alongside the strategy paper (Chap. 15); researchers new to the topic can start with Appendix A.
+This chapter gives you the cost model, the risk picture, and a 90-day pilot design with explicit go/no-go criteria. It sits in Part V alongside the strategy paper (Chap. 19); researchers new to the topic can start with Appendix A.
 :::
 
 ::: {.fr}
@@ -20,7 +20,7 @@ This chapter gives you the cost model, the risk picture, and a 90-day pilot desi
 
 Les modèles à poids ouverts sont désormais à ~3 points des meilleurs modèles fermés sur les benchmarks indépendants ([Artificial Analysis](https://artificialanalysis.ai), début 2026) — et ils tournent sur du matériel achetable. Pour un organisme de recherche, cela inverse la logique : les travaux sensibles qui n'auraient jamais pu passer par des API cloud (résultats non publiés, données personnelles, dossiers de subvention) deviennent automatisables **dans votre périmètre**, avec une structure de coûts que vous possédez.
 
-Ce chapitre fournit le modèle de coût, la lecture des risques et un pilote de 90 jours avec critères go/no-go explicites. Il s'inscrit dans la Partie V aux côtés de la note stratégique (chap. 15) ; les chercheurs nouveaux sur le sujet peuvent commencer par l'annexe A.
+Ce chapitre fournit le modèle de coût, la lecture des risques et un pilote de 90 jours avec critères go/no-go explicites. Il s'inscrit dans la Partie V aux côtés de la note stratégique (chap. 19) ; les chercheurs nouveaux sur le sujet peuvent commencer par l'annexe A.
 :::
 
 ::: {.en}

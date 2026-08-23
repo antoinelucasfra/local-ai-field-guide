@@ -1,4 +1,10 @@
-## Inference parameters, precisely {#params}
+::: {.en}
+## 5. Inference parameters, precisely {#params}
+:::
+
+::: {.fr}
+## 5. Les paramètres d'inférence, précisément {#params}
+:::
 
 ::: {.en}
 A language model generates one token at a time. At each step it outputs a probability for every token in its vocabulary; the sampling parameters decide how the software picks the next token from that distribution. Everything below is just different ways of reshaping — or refusing to reshape — that distribution.
@@ -92,4 +98,8 @@ L'auto-contexte du Studio gère ce budget automatiquement ; si vous pilotez llam
 | GPU datacenter (A100/H100) | 130–200+ t/s |
 
 Pour les MoE, la vitesse suit les paramètres *actifs*, pas le total — un 26B-A4B se comporte comme un dense 4B à qualité proche. La quantification change aussi la vitesse : poids plus petits = moins d'octets à déplacer = decode plus rapide ; c'est pourquoi Q4 bat Q8 qui bat FP16 en débit.
+:::
+
+::: {.notes}
+Best live exercise: set temperature to 0 vs 1.5 on the same prompt, three runs each. The KV-cache numbers justify hardware budgets to management. / Exercice live : température 0 vs 1,5 sur le même prompt, trois essais chacun. Les chiffres KV-cache justifient les budgets matériel devant la direction.
 :::

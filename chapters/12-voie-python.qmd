@@ -1,4 +1,10 @@
-## The Python path: Unsloth Core {#core}
+::: {.en}
+## 12. The Python path: Unsloth Core {#core}
+:::
+
+::: {.fr}
+## 12. La voie Python : Unsloth Core {#core}
+:::
 
 When the GUI is not enough, the same engine is scriptable:
 
@@ -32,5 +38,3 @@ CLI equivalents exist for automation: `unsloth train`, `unsloth inference`, `uns
 ::: {.fr}
 Des équivalents CLI existent pour l'automatisation : `unsloth train`, `unsloth inference`, `unsloth export`, `unsloth list-checkpoints`. Les configs YAML du Studio se rejouent sans interface — compatible CI.
 :::
-
-::: {.en}

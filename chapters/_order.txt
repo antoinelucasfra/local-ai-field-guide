@@ -1,25 +1,33 @@
-# order manifest — tools/build_book.py reads this
-PART | Part I — Foundations | Partie I — Fondations
+# PART|EN|FR  then FILE lines, in book order
+PART|Foundations|Fondations
 FILE 00-bienvenue.qmd
+PART|Part I — Foundations|Partie I — Fondations
 FILE 01-pourquoi.qmd
 FILE 02-choisir-modeles.qmd
-PART | Part II — Running models | Partie II — Exécuter
+PART|Part II — Running models|Partie II — Exécuter des modèles
 FILE 03-ecosysteme-installation.qmd
 FILE 04-studio-chat.qmd
 FILE 05-parametres-inference.qmd
-PART | Part III — Training | Partie III — Entraîner
+PART|Part III — Training models|Partie III — Entraîner des modèles
 FILE 06-pipeline-finetuning.qmd
 FILE 07-hyperparametres-entrainement.qmd
 FILE 08-data-recipes.qmd
-PART | Part IV — Deploying | Partie IV — Déployer
+PART|Part IV — Developing & deploying|Partie IV — Développer et déployer
 FILE 09-export-deploiement.qmd
 FILE 10-agents-code-locaux.qmd
-FILE 11-voie-python.qmd
-FILE 12-evaluer.qmd
-PART | Part V — Governing | Partie V — Gouverner
-FILE 13-gdpr-durcissement.qmd
-FILE 14-dossier-economique.qmd
-FILE 15-note-strategique.qmd
-PART | Appendices | Annexes
+FILE 11-harnais-agents.qmd
+FILE 12-voie-python.qmd
+FILE 13-rag.qmd
+FILE 14-multimodal.qmd
+FILE 15-serving.qmd
+PART|Part V — Governing|Partie V — Gouverner
+FILE 16-evaluer.qmd
+FILE 17-gdpr-durcissement.qmd
+FILE 18-dossier-economique.qmd
+FILE 19-note-strategique.qmd
+PART|Appendices|Annexes
 FILE A-annexe-chercheur.qmd
 FILE B-sources-limites.qmd
+FILE C-projets.qmd
+FILE D-materiel.qmd
+FILE E-dpia.qmd

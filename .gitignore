@@ -1,7 +1,8 @@
 .quarto/
 _render/
+.book.qmd
+.ch-*.qmd
+.chh-*.qmd
 
 /.quarto/
 **/*.quarto_ipynb
-
-/.luarc.json
