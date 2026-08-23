@@ -14,8 +14,17 @@ Run automatically as project pre-render; manual: python3 tools/build_book.py
 
 import os
 import re
+import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+
+def _open(path, mode="r"):
+        # generator inputs must fail loud — but with a readable message
+        try:
+                return open(path, mode)
+        except OSError as e:
+                sys.exit(f"build_book: {e}")
 CH = os.path.join(ROOT, "chapters")
 
 FRONT = """---
@@ -41,6 +50,7 @@ BOOK_FMT = """  html:
     theme:
       light: [cosmo, al-brand-light, al-brand-book]
       dark: [cosmo, al-brand-dark, al-brand-book]
+    include-in-header: tools/book-head.html
     embed-resources: true
   epub:
     output-file: book.epub
@@ -84,6 +94,7 @@ DOC_FMT = """  typst:
     theme:
       light: [cosmo, al-brand-light, al-brand-book]
       dark: [cosmo, al-brand-dark, al-brand-book]
+    include-in-header: tools/book-head.html
     embed-resources: true"""
 
 YML = """project:
@@ -98,7 +109,7 @@ profile:
 
 def order():
         out = []
-        with open(os.path.join(CH, "_order.txt")) as f:
+        with _open(os.path.join(CH, "_order.txt")) as f:
                 for line in f:
                         line = line.strip()
                         if line and not line.startswith("#"):
@@ -160,7 +171,7 @@ def main():
                 elif raw.startswith("FILE"):
                         slug = raw.split()[1][:-4]
                         slugs.append(slug)
-                        with open(os.path.join(CH, slug + ".qmd")) as f:
+                        with _open(os.path.join(CH, slug + ".qmd")) as f:
                                 slug_body = dedup_ids(f.read().rstrip())
                         # presenter notes are for slide decks only — never in the merged volume
                         body = re.sub(
@@ -186,7 +197,7 @@ def main():
                                 "ten": ten.replace('"', "'"),
                                 "tfr": tfr.replace('"', "'"),
                         }
-                        with open(os.path.join(ROOT, f".ch-{slug}.qmd"), "w") as f:
+                        with _open(os.path.join(ROOT, f".ch-{slug}.qmd"), "w") as f:
                                 f.write(
                                         FRONT.format(
                                                 fmt=SLIDES_FMT.format(slug=slug), **meta
@@ -202,7 +213,7 @@ def main():
                                         ).rstrip()
                                         + "\n"
                                 )
-                        with open(os.path.join(ROOT, f".chh-{slug}.qmd"), "w") as f:
+                        with _open(os.path.join(ROOT, f".chh-{slug}.qmd"), "w") as f:
                                 f.write(
                                         FRONT.format(
                                                 fmt=DOC_FMT.format(slug=slug), **meta
@@ -211,7 +222,7 @@ def main():
                                         + "\n"
                                 )
 
-        with open(os.path.join(ROOT, ".book.qmd"), "w") as f:
+        with _open(os.path.join(ROOT, ".book.qmd"), "w") as f:
                 f.write(
                         FRONT.format(
                                 ten="Sovereign Local AI — The Reference Guide",
@@ -220,7 +231,7 @@ def main():
                         )
                         + "".join(book)
                 )
-        with open(os.path.join(ROOT, "_quarto.yml"), "w") as f:
+        with _open(os.path.join(ROOT, "_quarto.yml"), "w") as f:
                 f.write(
                         YML.replace(
                                 "{entries}",

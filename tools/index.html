@@ -3,9 +3,15 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>
-      Sovereign Local AI — Le guide de référence / The Reference Guide
-    </title>
+    <title>Sovereign Local AI — The Reference Guide / Le guide de référence</title>
+    <meta
+      name="description"
+      content="Sovereign Local AI — open bilingual reference guide: run, tune and ship local LLMs. Run locally, tune, deploy: 19 chapters, 5 parts, slides, PDF, EPUB."
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛰️</text></svg>"
+    />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -22,162 +28,415 @@
         --muted: #8b949e;
         --sky: #38bdf8;
         --sky-light: #7dd3fc;
+        --teal: #2dd4bf;
       }
       * {
         box-sizing: border-box;
       }
+      html {
+        scroll-behavior: smooth;
+      }
       body {
         margin: 0;
-        padding: 0 1.5rem;
         background:
-          radial-gradient(
-            60rem 30rem at 80% -10%,
-            rgba(56, 189, 248, 0.08),
-            transparent 60%
-          ),
+          radial-gradient(70rem 34rem at 85% -12%, rgba(56, 189, 248, 0.1), transparent 60%),
+          radial-gradient(50rem 26rem at -10% 30%, rgba(45, 212, 191, 0.05), transparent 55%),
           var(--void);
         color: var(--ink);
         font-family: "DM Sans", system-ui, sans-serif;
-        line-height: 1.6;
+        line-height: 1.65;
+      }
+      ::selection {
+        background: rgba(56, 189, 248, 0.35);
+      }
+      :focus-visible {
+        outline: 2px solid var(--sky);
+        outline-offset: 3px;
+        border-radius: 4px;
+      }
+
+      /* ── layout ── */
+      .wrap {
+        max-width: 62rem;
+        margin: 0 auto;
+        padding: 0 1.5rem;
       }
       main {
-        max-width: 44rem;
-        margin: 0 auto;
-        padding: 4rem 0 3rem;
+        padding-bottom: 3rem;
+      }
+
+      /* ── top bar ── */
+      .topbar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        backdrop-filter: blur(10px);
+        background: rgba(15, 17, 23, 0.75);
+        border-bottom: 1px solid var(--border);
+      }
+      .topbar .wrap {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        height: 3.25rem;
+      }
+      .brand {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 700;
+        letter-spacing: -0.01em;
+        color: var(--ink);
+        text-decoration: none;
+        white-space: nowrap;
+      }
+      .brand em {
+        color: var(--sky);
+        font-style: normal;
+      }
+      .topbar nav {
+        margin-left: auto;
+        display: flex;
+        gap: 1.1rem;
+        align-items: center;
+      }
+      .topbar nav a {
+        color: var(--muted);
+        text-decoration: none;
+        font-size: 0.92rem;
+      }
+      .topbar nav a:hover {
+        color: var(--sky);
+      }
+
+      /* ── hero ── */
+      .hero {
+        text-align: center;
+        padding: 4.5rem 0 2.5rem;
+      }
+      .kicker {
+        display: inline-block;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.78rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--teal);
+        border: 1px solid rgba(45, 212, 191, 0.35);
+        background: rgba(45, 212, 191, 0.08);
+        border-radius: 999px;
+        padding: 0.28rem 0.9rem;
+        margin-bottom: 1.4rem;
       }
       h1 {
         font-family: "Space Grotesk", sans-serif;
-        font-size: clamp(1.8rem, 5vw, 2.6rem);
-        letter-spacing: -0.02em;
-        margin: 0 0 0.25rem;
+        font-size: clamp(2.1rem, 6vw, 3.4rem);
+        letter-spacing: -0.03em;
+        line-height: 1.12;
+        margin: 0 auto 1rem;
+        max-width: 46rem;
       }
-      h1 .accent {
-        color: var(--sky);
+      h1 .grad {
+        background: linear-gradient(92deg, var(--sky), var(--teal));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
       }
-      p.sub {
+      .hero p.sub {
         color: var(--muted);
-        margin-top: 0;
-        font-size: 1.05rem;
+        font-size: 1.12rem;
+        max-width: 40rem;
+        margin: 0 auto 2rem;
       }
-      code {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.85em;
-        background: var(--surface);
-        border: 1px solid var(--border);
-        border-radius: 4px;
-        padding: 0.1em 0.35em;
-        color: #79c0ff;
+      .cta-row {
+        display: flex;
+        gap: 0.9rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 2.4rem;
       }
-      .cards {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 1rem;
-        margin: 2.5rem 0;
+      .cta {
+        font-family: "Space Grotesk", sans-serif;
+        font-weight: 500;
+        font-size: 1rem;
+        text-decoration: none;
+        padding: 0.7rem 1.7rem;
+        border-radius: 10px;
+        transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
       }
-      a.card {
+      .cta.primary {
+        color: #06202e;
+        background: linear-gradient(92deg, var(--sky), var(--sky-light));
+        box-shadow: 0 0 0 rgba(56, 189, 248, 0);
+      }
+      .cta.primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 28px rgba(56, 189, 248, 0.35);
+      }
+      .cta.ghost {
+        color: var(--sky-light);
+        border: 1px solid rgba(56, 189, 248, 0.4);
+        background: rgba(56, 189, 248, 0.07);
+      }
+      .cta.ghost:hover {
+        background: rgba(56, 189, 248, 0.16);
+        transform: translateY(-2px);
+      }
+
+      /* ── stats ── */
+      .stats {
+        display: flex;
+        justify-content: center;
+        gap: clamp(1.2rem, 5vw, 3.5rem);
+        flex-wrap: wrap;
+        padding: 1.4rem 0;
+        border-top: 1px solid var(--border);
+        border-bottom: 1px solid var(--border);
+      }
+      .stat b {
         display: block;
-        padding: 1.5rem;
-        border-radius: 12px;
-        background: var(--surface);
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.5rem;
+        color: var(--sky);
+        letter-spacing: -0.01em;
+      }
+      .stat span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      /* ── features ── */
+      .features-label {
+        text-align: center;
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin: 2.8rem 0 1.2rem;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+        gap: 1rem;
+      }
+      a.tile {
+        display: block;
+        padding: 1.3rem 1.4rem;
+        border-radius: 14px;
+        background: linear-gradient(var(--surface), var(--surface)) padding-box,
+          linear-gradient(120deg, rgba(56, 189, 248, 0), rgba(56, 189, 248, 0)) border-box;
         border: 1px solid var(--border);
         text-decoration: none;
         color: inherit;
-        transition:
-          transform 0.15s ease,
-          border-color 0.15s ease;
+        transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
       }
-      a.card:hover {
-        transform: translateY(-3px);
-        border-color: var(--sky);
+      a.tile:hover {
+        transform: translateY(-4px);
+        border-color: rgba(56, 189, 248, 0.55);
+        box-shadow: 0 12px 32px rgba(56, 189, 248, 0.12);
       }
-      a.card b {
+      .tile .ico {
+        font-size: 1.5rem;
+        display: inline-grid;
+        place-items: center;
+        width: 2.6rem;
+        height: 2.6rem;
+        border-radius: 9px;
+        background: rgba(56, 189, 248, 0.1);
+        border: 1px solid rgba(56, 189, 248, 0.22);
+        margin-bottom: 0.8rem;
+      }
+      .tile b {
         font-family: "Space Grotesk", sans-serif;
-        font-size: 1.15rem;
         display: block;
-        margin-bottom: 0.35rem;
+        margin-bottom: 0.25rem;
+        font-weight: 500;
       }
-      a.card span {
+      .tile span {
         color: var(--muted);
         font-size: 0.92rem;
       }
-      a {
+      .tile .arrow {
+        float: right;
+        color: var(--sky);
+        opacity: 0;
+        transition: opacity 0.18s ease;
+      }
+      .tile:hover .arrow {
+        opacity: 1;
+      }
+
+      /* ── formats strip ── */
+      .formats {
+        margin: 2.8rem 0 0;
+        padding: 1.4rem;
+        border-radius: 14px;
+        background: rgba(56, 189, 248, 0.05);
+        border: 1px solid rgba(56, 189, 248, 0.18);
+        display: flex;
+        gap: 1rem;
+        align-items: center;
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
+      }
+      .formats p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 0.95rem;
+      }
+      .chip {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.78rem;
+        color: var(--sky-light);
+        border: 1px solid rgba(125, 211, 252, 0.35);
+        background: rgba(56, 189, 248, 0.09);
+        border-radius: 999px;
+        padding: 0.22rem 0.8rem;
+        text-decoration: none;
+        transition: background 0.15s ease;
+      }
+      .chip:hover {
+        background: rgba(56, 189, 248, 0.2);
+        color: var(--sky);
+      }
+
+      footer {
+        margin-top: 3rem;
+        padding: 1.25rem 0 0;
+        border-top: 1px solid var(--border);
+        font-size: 0.85rem;
+        color: var(--muted);
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      footer a {
         color: var(--sky-light);
         text-decoration-color: rgba(125, 211, 252, 0.35);
       }
-      a:hover {
+      footer a:hover {
         color: var(--sky);
       }
-      ul {
-        padding-left: 1.2rem;
-        color: var(--muted);
+      a {
+        color: var(--sky-light);
       }
-      ul li::marker {
-        color: var(--sky);
-      }
-      footer {
-        margin-top: 3rem;
-        font-size: 0.85rem;
-        color: var(--muted);
-        border-top: 1px solid var(--border);
-        padding-top: 1.25rem;
-      }
-      @media (max-width: 34rem) {
-        .cards {
-          grid-template-columns: 1fr;
+
+      /* ── entrance animation (a11y safe) ── */
+      @media (prefers-reduced-motion: no-preference) {
+        .rise {
+          opacity: 0;
+          transform: translateY(14px);
+          animation: rise 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+        }
+        .rise:nth-child(2) { animation-delay: 0.07s; }
+        .rise:nth-child(3) { animation-delay: 0.14s; }
+        @keyframes rise {
+          to {
+            opacity: 1;
+            transform: none;
+          }
         }
       }
     </style>
   </head>
   <body>
-    <main>
-      <h1>Sovereign <span class="accent">Local AI</span></h1>
-      <p class="sub">
-        L'IA locale souveraine — le guide de référence · the reference guide —
-        19 chapters, 5 parts, bilingual.
-      </p>
+    <header class="topbar">
+      <div class="wrap">
+        <a class="brand" href="./">Sovereign <em>Local AI</em></a>
+        <nav>
+          <a href="https://github.com/antoinelucasfra/localai-review">GitHub</a>
+          <a href="fr/book.html">FR</a>
+          <a href="en/book.html">EN</a>
+        </nav>
+      </div>
+    </header>
 
-      <div class="cards">
-        <a class="card" href="fr/book.html"
-          ><b>🇫🇷 Lire en français</b
-          ><span>L'IA locale souveraine — livre complet</span></a
-        >
-        <a class="card" href="en/book.html"
-          ><b>🇬🇧 Read in English</b
-          ><span>Sovereign Local AI — full book</span></a
-        >
+    <main class="wrap">
+      <section class="hero">
+        <span class="kicker rise">open · bilingual · self-hosted first</span>
+        <h1 class="rise">
+          Run AI on your own machine.<br />
+          <span class="grad">No cloud required.</span>
+        </h1>
+        <p class="sub rise">
+          The reference guide for sovereign local AI — choose models, master inference,
+          fine-tune, build agents and RAG, serve, evaluate and stay GDPR-proof.
+          En français comme en anglais.
+        </p>
+        <div class="cta-row rise">
+          <a class="cta primary" href="en/book.html">📖 Read the book — English</a>
+          <a class="cta ghost" href="fr/book.html">Lire en français</a>
+        </div>
+
+        <div class="stats rise">
+          <div class="stat"><b>19</b><span>chapters</span></div>
+          <div class="stat"><b>5</b><span>parts</span></div>
+          <div class="stat"><b>2</b><span>languages</span></div>
+          <div class="stat"><b>4</b><span>formats / chapter</span></div>
+        </div>
+      </section>
+
+      <p class="features-label">What's inside</p>
+      <div class="grid">
+        <a class="tile" href="en/book.html#core">
+          <span class="ico">🧭</span><span class="arrow">→</span>
+          <b>Choosing models</b>
+          <span>Quantization, licences, hardware fit — pick the right local LLM.</span>
+        </a>
+        <a class="tile" href="en/book.html#ecosystem">
+          <span class="ico">⚡</span><span class="arrow">→</span>
+          <b>WebLLM demo inside</b>
+          <span>Zero-install LLM running in your browser, live in the ecosystem chapter.</span>
+        </a>
+        <a class="tile" href="en/book.html#params">
+          <span class="ico">🎚️</span><span class="arrow">→</span>
+          <b>Inference parameters</b>
+          <span>Temperature, sampling, context — tame generation quality.</span>
+        </a>
+        <a class="tile" href="en/book.html#finetune">
+          <span class="ico">🛠️</span><span class="arrow">→</span>
+          <b>Fine-tuning pipeline</b>
+          <span>LoRA recipes, data preparation and hyperparameters that matter.</span>
+        </a>
+        <a class="tile" href="en/book.html#rag">
+          <span class="ico">🔍</span><span class="arrow">→</span>
+          <b>RAG &amp; evaluation</b>
+          <span>Ground answers in your documents, then measure what works.</span>
+        </a>
+        <a class="tile" href="en/book.html#agents">
+          <span class="ico">🤖</span><span class="arrow">→</span>
+          <b>Local coding agents</b>
+          <span>Harnesses, tool use and agent loops running fully offline.</span>
+        </a>
+        <a class="tile" href="en/book.html#dpia">
+          <span class="ico">⚖️</span><span class="arrow">→</span>
+          <b>DPIA &amp; GDPR hardening</b>
+          <span>Compliance playbook when data must never leave the building.</span>
+        </a>
+        <a class="tile" href="en/book.html#bizcase">
+          <span class="ico">💶</span><span class="arrow">→</span>
+          <b>Economics dossier</b>
+          <span>TCO math: GPU boxes vs API bills, serving costs at scale.</span>
+        </a>
       </div>
 
-      <p>
-        Chaque édition contient aussi, chapitre par chapitre :
-        <em>slides</em> reveal.js, PDF et HTML autonome (liens de téléchargement
-        en fin de chapitre). Les versions complètes (PDF / EPUB / DOCX + site
-        entier) sont disponibles dans les
-        <a href="https://github.com/antoinelucasfra/localai-review/releases"
-          >releases GitHub</a
-        >.
-      </p>
-
-      <ul>
-        <li>
-          Chapitre phare :
-          <a href="en/book.html#agents">local coding agents &amp; harnesses</a>
-          · démo WebLLM zéro-install dans le
-          <a href="en/book.html#ecosysteme">chapitre écosystème</a>
-        </li>
-        <li>
-          Sources :
-          <a href="https://github.com/antoinelucasfra/localai-review"
-            >github.com/antoinelucasfra/localai-review</a
-          >
-        </li>
-      </ul>
+      <div class="formats">
+        <p>Every chapter ships as</p>
+        <span class="chip">slides</span><span class="chip">HTML</span>
+        <span class="chip">PDF</span>
+        <p>· full book also as</p>
+        <span class="chip">EPUB</span><span class="chip">DOCX</span>
+        <a class="chip" href="https://github.com/antoinelucasfra/localai-review/releases">releases ⤓</a>
+      </div>
 
       <footer>
-        Rendered with Quarto · themed with
-        <a href="https://github.com/antoinelucasfra/quarto-al-brand"
-          >al-brand</a
-        >
-        · deployed on every push to <code>main</code>.
+        <span>
+          Rendered with <a href="https://quarto.org">Quarto</a> · themed with
+          <a href="https://github.com/antoinelucasfra/quarto-al-brand">al-brand</a>
+        </span>
+        <span style="margin-left:auto">deployed on every push to <code>main</code></span>
       </footer>
     </main>
   </body>

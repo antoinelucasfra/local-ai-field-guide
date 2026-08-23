@@ -1,0 +1,73 @@
+<!-- book UX layer: reading progress, back-to-top, sky selection -->
+<style>
+  html {
+    scroll-behavior: smooth;
+  }
+  ::selection {
+    background: rgba(56, 189, 248, 0.35);
+  }
+  :focus-visible {
+    outline: 2px solid #38bdf8;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  #al-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    z-index: 9999;
+    background: linear-gradient(90deg, #38bdf8, #2dd4bf);
+    pointer-events: none;
+  }
+  #al-top {
+    position: fixed;
+    right: 1.25rem;
+    bottom: 1.25rem;
+    z-index: 9999;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    border: 1px solid rgba(56, 189, 248, 0.45);
+    background: rgba(22, 27, 34, 0.9);
+    color: #38bdf8;
+    font-size: 1.15rem;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(8px);
+    pointer-events: none;
+    transition: opacity 0.2s ease, transform 0.2s ease;
+    box-shadow: 0 4px 18px rgba(15, 17, 23, 0.5);
+  }
+  #al-top.show {
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+  }
+  #al-top:hover {
+    background: rgba(56, 189, 248, 0.2);
+  }
+</style>
+<div id="al-progress" aria-hidden="true"></div>
+<button id="al-top" aria-label="Back to top">↑</button>
+<script>
+  (function () {
+    var bar = document.getElementById("al-progress"),
+      btn = document.getElementById("al-top"),
+      doc = document.documentElement;
+    addEventListener(
+      "scroll",
+      function () {
+        var max = doc.scrollHeight - doc.clientHeight;
+        if (max <= 0) return;
+        bar.style.width = (doc.scrollTop / max) * 100 + "%";
+        btn.classList.toggle("show", doc.scrollTop > 800);
+      },
+      { passive: true }
+    );
+    btn.addEventListener("click", function () {
+      scrollTo({ top: 0, behavior: "smooth" });
+    });
+  })();
+</script>
