@@ -37,7 +37,9 @@
     opacity: 0;
     transform: translateY(8px);
     pointer-events: none;
-    transition: opacity 0.2s ease, transform 0.2s ease;
+    transition:
+      opacity 0.2s ease,
+      transform 0.2s ease;
     box-shadow: 0 4px 18px rgba(15, 17, 23, 0.5);
   }
   #al-top.show {
@@ -64,7 +66,7 @@
         bar.style.width = (doc.scrollTop / max) * 100 + "%";
         btn.classList.toggle("show", doc.scrollTop > 800);
       },
-      { passive: true }
+      { passive: true },
     );
     btn.addEventListener("click", function () {
       scrollTo({ top: 0, behavior: "smooth" });

@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="400" viewBox="0 0 720 400" role="img" font-family="DM Sans, sans-serif">
+<rect width="720" height="400" rx="12" fill="#ffffff"/>
+<line x1="70" y1="344.0" x2="680" y2="344.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="62" y="348.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">€0</text>
+<line x1="70" y1="268.0" x2="680" y2="268.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="62" y="272.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">1k</text>
+<line x1="70" y1="192.0" x2="680" y2="192.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="62" y="196.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">3k</text>
+<line x1="70" y1="116.0" x2="680" y2="116.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="62" y="120.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">4k</text>
+<line x1="70" y1="40.0" x2="680" y2="40.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="62" y="44.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">6k</text>
+<line x1="171.66666666666666" y1="344" x2="171.66666666666666" y2="349" stroke="#57606a" stroke-width="1"/>
+<text x="171.66666666666666" y="364" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">M6</text>
+<line x1="273.3333333333333" y1="344" x2="273.3333333333333" y2="349" stroke="#57606a" stroke-width="1"/>
+<text x="273.3333333333333" y="364" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">M12</text>
+<line x1="375.0" y1="344" x2="375.0" y2="349" stroke="#57606a" stroke-width="1"/>
+<text x="375.0" y="364" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">M18</text>
+<line x1="476.66666666666663" y1="344" x2="476.66666666666663" y2="349" stroke="#57606a" stroke-width="1"/>
+<text x="476.66666666666663" y="364" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">M24</text>
+<line x1="578.3333333333334" y1="344" x2="578.3333333333334" y2="349" stroke="#57606a" stroke-width="1"/>
+<text x="578.3333333333334" y="364" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">M30</text>
+<line x1="680.0" y1="344" x2="680.0" y2="349" stroke="#57606a" stroke-width="1"/>
+<text x="680.0" y="364" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">M36</text>
+<path d="M 70 339 L 87 334 L 104 329 L 121 323 L 138 317 L 155 311 L 172 305 L 189 298 L 206 291 L 222 283 L 239 276 L 256 267 L 273 259 L 290 250 L 307 240 L 324 230 L 341 220 L 358 209 L 375 197 L 392 185 L 409 172 L 426 159 L 443 145 L 460 130 L 477 114 L 494 98 L 511 81 L 528 63 L 544 44 L 561 24 L 578 3 L 595 -18 L 612 -41 L 629 -65 L 646 -91 L 663 -117 L 680 -145" fill="none" stroke="#f97316" stroke-width="3"/><path d="M 70 131 L 87 130 L 104 129 L 121 128 L 138 128 L 155 127 L 172 126 L 189 125 L 206 124 L 222 123 L 239 122 L 256 121 L 273 120 L 290 119 L 307 118 L 324 118 L 341 117 L 358 116 L 375 115 L 392 114 L 409 113 L 426 112 L 443 111 L 460 110 L 477 109 L 494 108 L 511 107 L 528 107 L 544 106 L 561 105 L 578 104 L 595 103 L 612 102 L 629 101 L 646 100 L 663 99 L 680 98" fill="none" stroke="#14b8a6" stroke-width="3"/><circle cx="494" cy="108" r="6" fill="#24292f"/><text x="503.6111111111111" y="98.4" font-size="11.5" fill="#24292f" text-anchor="start" font-weight="normal" font-family="DM Sans, sans-serif">break-even</text>
+<text x="578.3333333333334" y="-8.59526861356256" font-size="12" fill="#f97316" text-anchor="middle" font-weight="500" font-family="DM Sans, sans-serif">cloud API rental</text>
+<text x="595.2777777777778" y="124.928" font-size="12" fill="#14b8a6" text-anchor="middle" font-weight="500" font-family="DM Sans, sans-serif">local box</text>
+<text x="375.0" y="386" font-size="12" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="DM Sans, sans-serif">months of a 5-seat team running a 30 B-class model daily</text>
+<text x="16" y="192.0" font-size="12" fill="#57606a" text-anchor="middle" transform="rotate(-90 16 192.0)">cumulative cost</text></svg>

@@ -96,6 +96,25 @@ table {
   }
 }
 
+// ── Figures: white plates get a quiet frame; captions muted ─────────
+figure {
+  margin: 2rem 0;
+}
+
+figure img,
+img.quarto-figure {
+  border-radius: 12px;
+  border: 1px solid rgba(139, 148, 158, 0.28);
+  box-shadow: 0 4px 20px rgba(15, 17, 23, 0.06);
+}
+
+figcaption {
+  color: #8b949e;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: 0.7rem;
+}
+
 // ── Inline code + kbd keep JetBrains Mono identity ──────────────────────
 code, kbd {
   font-family: "JetBrains Mono", monospace;

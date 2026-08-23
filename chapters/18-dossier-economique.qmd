@@ -40,6 +40,8 @@ Two structural trends favour acting now rather than later ([AA trends](https://a
 
 1. **Price per unit of intelligence keeps collapsing** — but so does the value of paying it, because open weights close the quality gap every quarter.
 2. **Hardware capability per euro keeps rising** — MoE architectures mean a 26B-total/4B-active model delivers frontier-adjacent quality on a single 24 GB card.
+
+![Cumulative cost: API rental vs buying local. The local line starts at the purchase (≈ €4k) and grows slowly (electricity); the API curve starts at zero but compounds with usage. Break-even lands around month 14 for a 5-seat team — every month after that widens the gap in the local box's favour. Illustrative; substitute your own numbers.](chapters/figures/fig-tco.svg){#fig-tco width=100%}
 :::
 
 ::: {.fr}
@@ -59,6 +61,8 @@ Deux tendances structurelles plaident pour agir maintenant ([tendances AA](https
 
 1. **Le prix par unité d'intelligence s'effondre** — mais sa valeur aussi, car les poids ouverts comblent l'écart de qualité chaque trimestre.
 2. **La capacité matérielle par euro monte** — les architectures MoE font qu'un modèle 26B total / 4B actifs offre une qualité proche du front sur une seule carte 24 Go.
+
+![Coût cumulé : location API vs achat local. La droite locale démarre à l'achat (≈ 4 k€) puis croît lentement (électricité) ; la courbe API part de zéro mais croît de façon composée avec l'usage. Point d'équilibre ≈ mois 14 pour une équipe de 5 personnes — ensuite, chaque mois creuse l'avance du local. Illustratif ; remplacez par vos propres chiffres.](chapters/figures/fig-tco.svg){#fig-tco-fr width=100%}
 :::
 
 ::: {.en}

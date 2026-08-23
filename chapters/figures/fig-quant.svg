@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="380" viewBox="0 0 700 380" role="img" font-family="DM Sans, sans-serif">
+<rect width="700" height="380" rx="12" fill="#ffffff"/>
+<line x1="64" y1="36.0" x2="664" y2="36.0" stroke="#e4e8ee" stroke-width="1"/>
+<line x1="64" y1="138.85714285714286" x2="664" y2="138.85714285714286" stroke="#e4e8ee" stroke-width="1"/>
+<line x1="64" y1="241.71428571428572" x2="664" y2="241.71428571428572" stroke="#e4e8ee" stroke-width="1"/>
+<rect x="78" y="61" width="44" height="263" rx="5" fill="#0ea5e9" opacity="0.85"/><text x="100.0" y="53.68571428571431" font-size="11" fill="#24292f" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">64</text>
+<text x="100.0" y="344" font-size="12" fill="#24292f" text-anchor="middle" font-weight="500" font-family="JetBrains Mono, monospace">FP16</text>
+<rect x="164" y="184" width="44" height="140" rx="5" fill="#0ea5e9" opacity="0.85"/><text x="185.71428571428572" y="177.11428571428573" font-size="11" fill="#24292f" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">34</text>
+<text x="185.71428571428572" y="344" font-size="12" fill="#24292f" text-anchor="middle" font-weight="500" font-family="JetBrains Mono, monospace">Q8</text>
+<line x1="100" y1="65" x2="186" y2="71" stroke="#14b8a6" stroke-width="2.5"/><rect x="249" y="217" width="44" height="107" rx="5" fill="#0ea5e9" opacity="0.85"/><text x="271.42857142857144" y="210.0285714285714" font-size="11" fill="#24292f" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">26</text>
+<text x="271.42857142857144" y="344" font-size="12" fill="#24292f" text-anchor="middle" font-weight="500" font-family="JetBrains Mono, monospace">Q6</text>
+<line x1="186" y1="71" x2="271" y2="76" stroke="#14b8a6" stroke-width="2.5"/><rect x="335" y="233" width="44" height="91" rx="5" fill="#0ea5e9" opacity="0.85"/><text x="357.1428571428571" y="226.4857142857143" font-size="11" fill="#24292f" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">22</text>
+<text x="357.1428571428571" y="344" font-size="12" fill="#24292f" text-anchor="middle" font-weight="500" font-family="JetBrains Mono, monospace">Q5</text>
+<line x1="271" y1="76" x2="357" y2="82" stroke="#14b8a6" stroke-width="2.5"/><rect x="421" y="250" width="44" height="74" rx="5" fill="#0ea5e9" opacity="0.85"/><text x="442.85714285714283" y="242.94285714285715" font-size="11" fill="#24292f" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">18</text>
+<text x="442.85714285714283" y="344" font-size="12" fill="#24292f" text-anchor="middle" font-weight="500" font-family="JetBrains Mono, monospace">Q4</text>
+<line x1="357" y1="82" x2="443" y2="94" stroke="#14b8a6" stroke-width="2.5"/><rect x="507" y="266" width="44" height="58" rx="5" fill="#f97316" opacity="0.85"/><text x="528.5714285714286" y="259.4" font-size="11" fill="#24292f" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">14</text>
+<text x="528.5714285714286" y="344" font-size="12" fill="#24292f" text-anchor="middle" font-weight="500" font-family="JetBrains Mono, monospace">Q3</text>
+<line x1="443" y1="94" x2="529" y2="134" stroke="#14b8a6" stroke-width="2.5"/><rect x="592" y="279" width="44" height="45" rx="5" fill="#f97316" opacity="0.85"/><text x="614.2857142857142" y="271.74285714285713" font-size="11" fill="#24292f" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">11</text>
+<text x="614.2857142857142" y="344" font-size="12" fill="#24292f" text-anchor="middle" font-weight="500" font-family="JetBrains Mono, monospace">Q2</text>
+<line x1="529" y1="134" x2="614" y2="209" stroke="#14b8a6" stroke-width="2.5"/><circle cx="100" cy="65" r="4" fill="#fff" stroke="#14b8a6" stroke-width="2.5"/><text x="112.0" y="78.8" font-size="10.5" fill="#14b8a6" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">100%</text>
+<circle cx="186" cy="71" r="4" fill="#fff" stroke="#14b8a6" stroke-width="2.5"/><text x="197.71428571428572" y="62.56" font-size="10.5" fill="#14b8a6" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">99%</text>
+<circle cx="271" cy="76" r="4" fill="#fff" stroke="#14b8a6" stroke-width="2.5"/><text x="283.42857142857144" y="68.32000000000001" font-size="10.5" fill="#14b8a6" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">98%</text>
+<circle cx="357" cy="82" r="4" fill="#fff" stroke="#14b8a6" stroke-width="2.5"/><text x="369.1428571428571" y="74.08" font-size="10.5" fill="#14b8a6" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">97%</text>
+<circle cx="443" cy="94" r="4" fill="#fff" stroke="#14b8a6" stroke-width="2.5"/><text x="454.85714285714283" y="85.6" font-size="10.5" fill="#14b8a6" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">95%</text>
+<circle cx="529" cy="134" r="4" fill="#fff" stroke="#14b8a6" stroke-width="2.5"/><text x="540.5714285714286" y="125.92000000000002" font-size="10.5" fill="#14b8a6" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">88%</text>
+<circle cx="614" cy="209" r="4" fill="#fff" stroke="#14b8a6" stroke-width="2.5"/><text x="626.2857142857142" y="200.79999999999998" font-size="10.5" fill="#14b8a6" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">75%</text>
+<text x="64" y="20" font-size="12.5" fill="#24292f" text-anchor="start" font-weight="500" font-family="DM Sans, sans-serif">32 B model on disk, GB (bars) · task-quality retained (line)</text>
+<text x="364.0" y="366" font-size="12" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="DM Sans, sans-serif">GGUF quantization level</text>
+</svg>

@@ -25,6 +25,8 @@ def _open(path, mode="r"):
                 return open(path, mode)
         except OSError as e:
                 sys.exit(f"build_book: {e}")
+
+
 CH = os.path.join(ROOT, "chapters")
 
 FRONT = """---

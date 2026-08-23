@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="700" height="360" viewBox="0 0 700 360" role="img" font-family="DM Sans, sans-serif">
+<rect width="700" height="360" rx="12" fill="#ffffff"/>
+<rect x="222" y="54" width="24" height="10" rx="5" fill="#7dd3fc" opacity="0.5"/><circle cx="234" cy="59" r="7" fill="#0ea5e9"/><text x="198" y="63.0" font-size="12" fill="#24292f" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">laptop CPU · 8 B Q4</text>
+<text x="245.88888888888889" y="63.0" font-size="11" fill="#57606a" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">10 t/s</text>
+<rect x="246" y="100" width="24" height="10" rx="5" fill="#7dd3fc" opacity="0.5"/><circle cx="258" cy="105" r="7" fill="#0ea5e9"/><text x="198" y="109.0" font-size="12" fill="#24292f" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">Mac M-Pro 64 GB · 32 B Q4</text>
+<text x="269.77777777777777" y="109.0" font-size="11" fill="#57606a" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">20 t/s</text>
+<rect x="425" y="146" width="96" height="10" rx="5" fill="#7dd3fc" opacity="0.5"/><circle cx="473" cy="151" r="7" fill="#0ea5e9"/><text x="198" y="155.0" font-size="12" fill="#24292f" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">RTX 3090 · 8 B Q4</text>
+<text x="484.77777777777777" y="155.0" font-size="11" fill="#57606a" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">110 t/s</text>
+<rect x="270" y="192" width="36" height="10" rx="5" fill="#7dd3fc" opacity="0.5"/><circle cx="289" cy="197" r="7" fill="#0ea5e9"/><text x="198" y="201.0" font-size="12" fill="#24292f" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">RTX 3090 · 32 B Q4</text>
+<text x="300.8333333333333" y="201.0" font-size="11" fill="#57606a" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">33 t/s</text>
+<rect x="497" y="238" width="119" height="10" rx="5" fill="#7dd3fc" opacity="0.5"/><circle cx="556" cy="243" r="7" fill="#0ea5e9"/><text x="198" y="247.0" font-size="12" fill="#24292f" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">RTX 4090 · 8 B Q4</text>
+<text x="568.3888888888889" y="247.0" font-size="11" fill="#57606a" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">145 t/s</text>
+<rect x="239" y="284" width="19" height="10" rx="5" fill="#7dd3fc" opacity="0.5"/><circle cx="248" cy="289" r="7" fill="#0ea5e9"/><text x="198" y="293.0" font-size="12" fill="#24292f" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">2×3090 server · 70 B Q4</text>
+<text x="260.22222222222223" y="293.0" font-size="11" fill="#57606a" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">16 t/s</text>
+<text x="246" y="20" font-size="1" fill="#57606a" text-anchor="start" font-weight="normal" font-family="DM Sans, sans-serif"></text>
+<text x="350.0" y="348" font-size="12" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="DM Sans, sans-serif">decode speed, tokens/s (typical range ◁—●)</text>
+</svg>

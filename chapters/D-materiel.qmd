@@ -23,6 +23,10 @@ Speed expectations per tier were given in Chapter 5; this annex is the buying gu
 - **Clusters don't help decode**: splitting one LLM across Ethernet kills token speed (interconnect latency ≫ bandwidth rule of Chap. 5). One big GPU > four small ones for inference; clusters matter for *training* only.
 - **Don't forget the humans**: one shared server (Tier 4) + Tier 0–1 client machines covers most labs better than everyone buying Tier 3 desktops — that's exactly the TCO argument of Chap. 18.
 
+![Decode speed by tier, from the ladder above. The gap to internalize: hardware buys roughly an order of magnitude, quantization buys back most of the model size at ~95% quality (Q4).](chapters/figures/fig-throughput.svg){#fig-throughput width=100%}
+
+![A 32 B model on disk across GGUF quantization levels — size (bars) vs retained task quality (line). Q4_K is the community default because it halves memory twice over FP16 while keeping ~95% of quality; below Q3 the curve falls off a cliff. Illustrative averages; UD-Dynamic quants recover part of the gap.](chapters/figures/fig-quant.svg){#fig-quant width=100%}
+
 ### You already have an institute cluster? Use it
 
 Most public labs already own the hardware. A classic HPC setup: **login nodes** (internet, no GPU), **GPU compute nodes** behind a scheduler (SLURM), a **shared filesystem** (`/home`, `/scratch` or Lustre), **compute nodes with blocked internet egress**, and Apptainer for containers. That is everything local AI needs — three recipes:

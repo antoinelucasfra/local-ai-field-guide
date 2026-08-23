@@ -68,6 +68,8 @@ And for agentic coding (AA Coding Agent Index v1.4, composite of DeepSWE, Termin
 | Claude Code + GLM-5.2 | **Open** | 0.43 |
 
 [Reading:]{fg="#b22222"} rankings move monthly. Re-check [artificialanalysis.ai/models](https://artificialanalysis.ai/models) and [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) before committing to a model; the *method* below outlives any specific ranking.
+
+![The same snapshot seen as a map — composite intelligence vs blended API price. Open weights now cluster in the value zone: near-frontier quality at roughly an order of magnitude lower cost. Illustrative: prices are typical blended rates, indices from the tables above.](chapters/figures/fig-quality-price.svg){#fig-landscape width=100%}
 :::
 
 ::: {.fr}
@@ -99,6 +101,8 @@ Et pour le codage agentique (AA Coding Agent Index v1.4, composite de DeepSWE, T
 | Claude Code + GLM-5.2 | **Ouvert** | 0,43 |
 
 [Lecture :]{fg="#b22222"} les classements bougent chaque mois. Revérifiez [artificialanalysis.ai/models](https://artificialanalysis.ai/models) et [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) avant de choisir ; la *méthode* ci-dessous survit à tout classement particulier.
+
+![Le même instantané vu en carte — intelligence composite vs prix API moyen. Les poids ouverts se regroupent dans la zone du rapport qualité/prix : qualité proche du front pour un coût environ dix fois moindre. Illustratif : tarifs moyens typiques, indices issus des tableaux ci-dessus.](chapters/figures/fig-quality-price.svg){#fig-landscape-fr width=100%}
 :::
 
 ::: {.en}

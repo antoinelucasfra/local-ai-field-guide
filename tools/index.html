@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Sovereign Local AI — The Reference Guide / Le guide de référence</title>
+    <title>Sovereign Local AI — a field guide / un guide de terrain</title>
     <meta
       name="description"
-      content="Sovereign Local AI — open bilingual reference guide: run, tune and ship local LLMs. Run locally, tune, deploy: 19 chapters, 5 parts, slides, PDF, EPUB."
+      content="An open, bilingual field guide to running language models on your own hardware: choosing models, inference, fine-tuning, agents, RAG, serving, evaluation and GDPR. Disponible en français."
     />
     <link
       rel="icon"
@@ -22,13 +22,11 @@
       :root {
         --void: #0f1117;
         --surface: #161b22;
-        --surface-mid: #1c2128;
         --border: #30363d;
         --ink: #e6edf3;
         --muted: #8b949e;
         --sky: #38bdf8;
         --sky-light: #7dd3fc;
-        --teal: #2dd4bf;
       }
       * {
         box-sizing: border-box;
@@ -39,12 +37,11 @@
       body {
         margin: 0;
         background:
-          radial-gradient(70rem 34rem at 85% -12%, rgba(56, 189, 248, 0.1), transparent 60%),
-          radial-gradient(50rem 26rem at -10% 30%, rgba(45, 212, 191, 0.05), transparent 55%),
+          radial-gradient(64rem 30rem at 85% -10%, rgba(56, 189, 248, 0.07), transparent 60%),
           var(--void);
         color: var(--ink);
         font-family: "DM Sans", system-ui, sans-serif;
-        line-height: 1.65;
+        line-height: 1.7;
       }
       ::selection {
         background: rgba(56, 189, 248, 0.35);
@@ -54,39 +51,31 @@
         outline-offset: 3px;
         border-radius: 4px;
       }
-
-      /* ── layout ── */
       .wrap {
-        max-width: 62rem;
+        max-width: 58rem;
         margin: 0 auto;
         padding: 0 1.5rem;
       }
-      main {
-        padding-bottom: 3rem;
-      }
 
-      /* ── top bar ── */
+      /* topbar */
       .topbar {
         position: sticky;
         top: 0;
         z-index: 10;
         backdrop-filter: blur(10px);
-        background: rgba(15, 17, 23, 0.75);
+        background: rgba(15, 17, 23, 0.78);
         border-bottom: 1px solid var(--border);
       }
       .topbar .wrap {
         display: flex;
         align-items: center;
-        gap: 1rem;
         height: 3.25rem;
       }
       .brand {
         font-family: "Space Grotesk", sans-serif;
         font-weight: 700;
-        letter-spacing: -0.01em;
         color: var(--ink);
         text-decoration: none;
-        white-space: nowrap;
       }
       .brand em {
         color: var(--sky);
@@ -95,8 +84,7 @@
       .topbar nav {
         margin-left: auto;
         display: flex;
-        gap: 1.1rem;
-        align-items: center;
+        gap: 1.2rem;
       }
       .topbar nav a {
         color: var(--muted);
@@ -107,236 +95,169 @@
         color: var(--sky);
       }
 
-      /* ── hero ── */
-      .hero {
-        text-align: center;
-        padding: 4.5rem 0 2.5rem;
-      }
-      .kicker {
-        display: inline-block;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.78rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--teal);
-        border: 1px solid rgba(45, 212, 191, 0.35);
-        background: rgba(45, 212, 191, 0.08);
-        border-radius: 999px;
-        padding: 0.28rem 0.9rem;
-        margin-bottom: 1.4rem;
+      /* hero — editorial, left-aligned */
+      header.hero {
+        padding: 4.5rem 0 3rem;
+        max-width: 44rem;
       }
       h1 {
         font-family: "Space Grotesk", sans-serif;
-        font-size: clamp(2.1rem, 6vw, 3.4rem);
+        font-size: clamp(1.9rem, 4.6vw, 2.8rem);
         letter-spacing: -0.03em;
-        line-height: 1.12;
-        margin: 0 auto 1rem;
-        max-width: 46rem;
+        line-height: 1.15;
+        margin: 0 0 1.1rem;
       }
-      h1 .grad {
-        background: linear-gradient(92deg, var(--sky), var(--teal));
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-      .hero p.sub {
-        color: var(--muted);
-        font-size: 1.12rem;
-        max-width: 40rem;
-        margin: 0 auto 2rem;
-      }
-      .cta-row {
-        display: flex;
-        gap: 0.9rem;
-        justify-content: center;
-        flex-wrap: wrap;
-        margin-bottom: 2.4rem;
-      }
-      .cta {
-        font-family: "Space Grotesk", sans-serif;
-        font-weight: 500;
-        font-size: 1rem;
-        text-decoration: none;
-        padding: 0.7rem 1.7rem;
-        border-radius: 10px;
-        transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
-      }
-      .cta.primary {
-        color: #06202e;
-        background: linear-gradient(92deg, var(--sky), var(--sky-light));
-        box-shadow: 0 0 0 rgba(56, 189, 248, 0);
-      }
-      .cta.primary:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 28px rgba(56, 189, 248, 0.35);
-      }
-      .cta.ghost {
-        color: var(--sky-light);
-        border: 1px solid rgba(56, 189, 248, 0.4);
-        background: rgba(56, 189, 248, 0.07);
-      }
-      .cta.ghost:hover {
-        background: rgba(56, 189, 248, 0.16);
-        transform: translateY(-2px);
-      }
-
-      /* ── stats ── */
-      .stats {
-        display: flex;
-        justify-content: center;
-        gap: clamp(1.2rem, 5vw, 3.5rem);
-        flex-wrap: wrap;
-        padding: 1.4rem 0;
-        border-top: 1px solid var(--border);
-        border-bottom: 1px solid var(--border);
-      }
-      .stat b {
-        display: block;
-        font-family: "Space Grotesk", sans-serif;
-        font-size: 1.5rem;
+      h1 em {
         color: var(--sky);
-        letter-spacing: -0.01em;
+        font-style: normal;
       }
-      .stat span {
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.72rem;
-        letter-spacing: 0.1em;
-        text-transform: uppercase;
+      header.hero p {
         color: var(--muted);
+        font-size: 1.08rem;
+        margin: 0 0 1.6rem;
       }
-
-      /* ── features ── */
-      .features-label {
-        text-align: center;
-        font-family: "JetBrains Mono", monospace;
-        font-size: 0.75rem;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        color: var(--muted);
-        margin: 2.8rem 0 1.2rem;
+      header.hero p strong {
+        color: var(--ink);
+        font-weight: 500;
       }
-      .grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+      .lang-links {
+        display: flex;
         gap: 1rem;
+        flex-wrap: wrap;
       }
-      a.tile {
+      a.lang {
         display: block;
-        padding: 1.3rem 1.4rem;
-        border-radius: 14px;
-        background: linear-gradient(var(--surface), var(--surface)) padding-box,
-          linear-gradient(120deg, rgba(56, 189, 248, 0), rgba(56, 189, 248, 0)) border-box;
+        min-width: 15rem;
+        padding: 1rem 1.3rem;
+        border-radius: 12px;
+        background: var(--surface);
         border: 1px solid var(--border);
         text-decoration: none;
         color: inherit;
-        transition: transform 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+        transition: transform 0.16s ease, border-color 0.16s ease;
       }
-      a.tile:hover {
-        transform: translateY(-4px);
+      a.lang:hover {
+        transform: translateY(-2px);
         border-color: rgba(56, 189, 248, 0.55);
-        box-shadow: 0 12px 32px rgba(56, 189, 248, 0.12);
       }
-      .tile .ico {
-        font-size: 1.5rem;
-        display: inline-grid;
-        place-items: center;
-        width: 2.6rem;
-        height: 2.6rem;
-        border-radius: 9px;
-        background: rgba(56, 189, 248, 0.1);
-        border: 1px solid rgba(56, 189, 248, 0.22);
-        margin-bottom: 0.8rem;
-      }
-      .tile b {
+      a.lang b {
         font-family: "Space Grotesk", sans-serif;
-        display: block;
-        margin-bottom: 0.25rem;
         font-weight: 500;
+        display: flex;
+        justify-content: space-between;
+        align-items: baseline;
       }
-      .tile span {
-        color: var(--muted);
-        font-size: 0.92rem;
-      }
-      .tile .arrow {
-        float: right;
+      a.lang b span {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.72rem;
         color: var(--sky);
-        opacity: 0;
-        transition: opacity 0.18s ease;
+        font-weight: 400;
       }
-      .tile:hover .arrow {
-        opacity: 1;
+      a.lang small {
+        color: var(--muted);
+        font-size: 0.88rem;
       }
 
-      /* ── formats strip ── */
-      .formats {
-        margin: 2.8rem 0 0;
-        padding: 1.4rem;
-        border-radius: 14px;
-        background: rgba(56, 189, 248, 0.05);
-        border: 1px solid rgba(56, 189, 248, 0.18);
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        flex-wrap: wrap;
-        justify-content: center;
-        text-align: center;
+      /* table of contents — the book's real structure */
+      .toc-label {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.05rem;
+        margin: 3.2rem 0 1.1rem;
+        color: var(--ink);
       }
-      .formats p {
+      .parts {
+        border-top: 1px solid var(--border);
+      }
+      .part {
+        display: grid;
+        grid-template-columns: 14rem 1fr;
+        gap: 1rem 2rem;
+        padding: 1.15rem 0;
+        border-bottom: 1px solid var(--border);
+      }
+      .part > p {
+        grid-column: 1;
         margin: 0;
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 0.95rem;
+        color: var(--sky-light);
+      }
+      .part > p small {
+        display: block;
+        color: var(--muted);
+        font-family: "DM Sans", sans-serif;
+        font-weight: 400;
+        font-size: 0.85rem;
+      }
+      .chapters {
+        grid-column: 2;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .chapters li {
+        margin: 0;
+      }
+      .chapters a {
+        color: var(--ink);
+        text-decoration: none;
+        display: inline-block;
+        padding: 0.18rem 0;
+        border-bottom: 1px solid transparent;
+      }
+      .chapters a:hover {
+        color: var(--sky-light);
+        border-bottom-color: rgba(125, 211, 252, 0.4);
+      }
+      .chapters .no {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.75rem;
+        color: var(--muted);
+        width: 1.7rem;
+        display: inline-block;
+      }
+
+      /* formats + footer */
+      .formats {
+        margin-top: 2.2rem;
         color: var(--muted);
         font-size: 0.95rem;
       }
-      .chip {
+      code {
         font-family: "JetBrains Mono", monospace;
-        font-size: 0.78rem;
-        color: var(--sky-light);
-        border: 1px solid rgba(125, 211, 252, 0.35);
-        background: rgba(56, 189, 248, 0.09);
-        border-radius: 999px;
-        padding: 0.22rem 0.8rem;
-        text-decoration: none;
-        transition: background 0.15s ease;
+        font-size: 0.84em;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.08em 0.32em;
+        color: #79c0ff;
       }
-      .chip:hover {
-        background: rgba(56, 189, 248, 0.2);
-        color: var(--sky);
-      }
-
       footer {
         margin-top: 3rem;
-        padding: 1.25rem 0 0;
+        padding-top: 1.25rem;
         border-top: 1px solid var(--border);
         font-size: 0.85rem;
         color: var(--muted);
         display: flex;
-        gap: 0.5rem;
+        gap: 0.6rem;
         flex-wrap: wrap;
       }
-      footer a {
+      footer a,
+      .formats a {
         color: var(--sky-light);
         text-decoration-color: rgba(125, 211, 252, 0.35);
       }
-      footer a:hover {
+      footer a:hover,
+      .formats a:hover {
         color: var(--sky);
       }
-      a {
-        color: var(--sky-light);
-      }
-
-      /* ── entrance animation (a11y safe) ── */
-      @media (prefers-reduced-motion: no-preference) {
-        .rise {
-          opacity: 0;
-          transform: translateY(14px);
-          animation: rise 0.55s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+      @media (max-width: 40rem) {
+        .part {
+          grid-template-columns: 1fr;
+          gap: 0.4rem;
         }
-        .rise:nth-child(2) { animation-delay: 0.07s; }
-        .rise:nth-child(3) { animation-delay: 0.14s; }
-        @keyframes rise {
-          to {
-            opacity: 1;
-            transform: none;
-          }
+        .part > p small {
+          display: inline;
         }
       }
     </style>
@@ -347,96 +268,109 @@
         <a class="brand" href="./">Sovereign <em>Local AI</em></a>
         <nav>
           <a href="https://github.com/antoinelucasfra/localai-review">GitHub</a>
-          <a href="fr/book.html">FR</a>
-          <a href="en/book.html">EN</a>
+          <a href="#contents">Contents</a>
         </nav>
       </div>
     </header>
 
     <main class="wrap">
-      <section class="hero">
-        <span class="kicker rise">open · bilingual · self-hosted first</span>
-        <h1 class="rise">
-          Run AI on your own machine.<br />
-          <span class="grad">No cloud required.</span>
-        </h1>
-        <p class="sub rise">
-          The reference guide for sovereign local AI — choose models, master inference,
-          fine-tune, build agents and RAG, serve, evaluate and stay GDPR-proof.
-          En français comme en anglais.
+      <header class="hero">
+        <h1>A field guide to running language models <em>on your own machine</em>.</h1>
+        <p>
+          Most of what you can do with a hosted API, you can do on a workstation under
+          your desk — privately, offline, and for less money than you'd expect.
+          This book walks through the whole path: <strong>picking a model</strong>,
+          running it well, fine-tuning it on your data, building agents and RAG on top,
+          serving it to a team, and staying on the right side of the GDPR.
         </p>
-        <div class="cta-row rise">
-          <a class="cta primary" href="en/book.html">📖 Read the book — English</a>
-          <a class="cta ghost" href="fr/book.html">Lire en français</a>
+        <p>
+          Written for researchers and engineers; no cloud account required.
+        </p>
+        <div class="lang-links">
+          <a class="lang" href="en/book.html">
+            <b>Read in English <span>→</span></b>
+            <small>The complete book, single page · ~2 h read</small>
+          </a>
+          <a class="lang" href="fr/book.html">
+            <b>Lire en français <span>→</span></b>
+            <small>Le livre complet, une seule page · ~2 h de lecture</small>
+          </a>
         </div>
+      </header>
 
-        <div class="stats rise">
-          <div class="stat"><b>19</b><span>chapters</span></div>
-          <div class="stat"><b>5</b><span>parts</span></div>
-          <div class="stat"><b>2</b><span>languages</span></div>
-          <div class="stat"><b>4</b><span>formats / chapter</span></div>
-        </div>
-      </section>
-
-      <p class="features-label">What's inside</p>
-      <div class="grid">
-        <a class="tile" href="en/book.html#core">
-          <span class="ico">🧭</span><span class="arrow">→</span>
-          <b>Choosing models</b>
-          <span>Quantization, licences, hardware fit — pick the right local LLM.</span>
-        </a>
-        <a class="tile" href="en/book.html#ecosystem">
-          <span class="ico">⚡</span><span class="arrow">→</span>
-          <b>WebLLM demo inside</b>
-          <span>Zero-install LLM running in your browser, live in the ecosystem chapter.</span>
-        </a>
-        <a class="tile" href="en/book.html#params">
-          <span class="ico">🎚️</span><span class="arrow">→</span>
-          <b>Inference parameters</b>
-          <span>Temperature, sampling, context — tame generation quality.</span>
-        </a>
-        <a class="tile" href="en/book.html#finetune">
-          <span class="ico">🛠️</span><span class="arrow">→</span>
-          <b>Fine-tuning pipeline</b>
-          <span>LoRA recipes, data preparation and hyperparameters that matter.</span>
-        </a>
-        <a class="tile" href="en/book.html#rag">
-          <span class="ico">🔍</span><span class="arrow">→</span>
-          <b>RAG &amp; evaluation</b>
-          <span>Ground answers in your documents, then measure what works.</span>
-        </a>
-        <a class="tile" href="en/book.html#agents">
-          <span class="ico">🤖</span><span class="arrow">→</span>
-          <b>Local coding agents</b>
-          <span>Harnesses, tool use and agent loops running fully offline.</span>
-        </a>
-        <a class="tile" href="en/book.html#dpia">
-          <span class="ico">⚖️</span><span class="arrow">→</span>
-          <b>DPIA &amp; GDPR hardening</b>
-          <span>Compliance playbook when data must never leave the building.</span>
-        </a>
-        <a class="tile" href="en/book.html#bizcase">
-          <span class="ico">💶</span><span class="arrow">→</span>
-          <b>Economics dossier</b>
-          <span>TCO math: GPU boxes vs API bills, serving costs at scale.</span>
-        </a>
+      <p class="toc-label" id="contents">What's in the book</p>
+      <div class="parts">
+        <section class="part">
+          <p>Foundations<small>Fondations</small></p>
+          <ul class="chapters">
+            <li><a href="en/book.html#audience"><span class="no">00</span>Who this book is for</a></li>
+            <li><a href="en/book.html#why"><span class="no">01</span>Why local, why now</a></li>
+            <li><a href="en/book.html#landscape"><span class="no">02</span>The open-model landscape, ranked</a></li>
+          </ul>
+        </section>
+        <section class="part">
+          <p>Running models<small>Exécuter des modèles</small></p>
+          <ul class="chapters">
+            <li><a href="en/book.html#ecosystem"><span class="no">03</span>Ecosystem &amp; installation</a></li>
+            <li><a href="en/book.html#chat"><span class="no">04</span>Chat studios &amp; front-ends</a></li>
+            <li><a href="en/book.html#params"><span class="no">05</span>Inference parameters</a></li>
+          </ul>
+        </section>
+        <section class="part">
+          <p>Training models<small>Entraîner des modèles</small></p>
+          <ul class="chapters">
+            <li><a href="en/book.html#finetune"><span class="no">06</span>The fine-tuning pipeline</a></li>
+            <li><a href="en/book.html#hyper"><span class="no">07</span>Training hyperparameters</a></li>
+            <li><a href="en/book.html#data"><span class="no">08</span>Data recipes</a></li>
+          </ul>
+        </section>
+        <section class="part">
+          <p>Developing &amp; deploying<small>Développer &amp; déployer</small></p>
+          <ul class="chapters">
+            <li><a href="en/book.html#export"><span class="no">09</span>Export &amp; deployment</a></li>
+            <li><a href="en/book.html#agents"><span class="no">10</span>Local coding agents</a></li>
+            <li><a href="en/book.html#harness"><span class="no">11</span>Agent harnesses</a></li>
+            <li><a href="en/book.html#core"><span class="no">12</span>The Python path</a></li>
+            <li><a href="en/book.html#rag"><span class="no">13</span>RAG</a></li>
+            <li><a href="en/book.html#multimodal"><span class="no">14</span>Multimodal</a></li>
+            <li><a href="en/book.html#serving"><span class="no">15</span>Serving a team</a></li>
+          </ul>
+        </section>
+        <section class="part">
+          <p>Governing<small>Gouverner</small></p>
+          <ul class="chapters">
+            <li><a href="en/book.html#evaluate"><span class="no">16</span>Evaluation</a></li>
+            <li><a href="en/book.html#gdpr"><span class="no">17</span>GDPR hardening</a></li>
+            <li><a href="en/book.html#bizcase"><span class="no">18</span>The business case</a></li>
+            <li><a href="en/book.html#strategy"><span class="no">19</span>Strategic note</a></li>
+          </ul>
+        </section>
+        <section class="part">
+          <p>Appendices<small>Annexes</small></p>
+          <ul class="chapters">
+            <li><a href="en/book.html#primer"><span class="no">A</span>Researcher's primer</a></li>
+            <li><a href="en/book.html#sources"><span class="no">B</span>Sources &amp; limits</a></li>
+            <li><a href="en/book.html#projects"><span class="no">C</span>Projects</a></li>
+            <li><a href="en/book.html#hardware"><span class="no">D</span>Hardware buying guide</a></li>
+            <li><a href="en/book.html#dpia"><span class="no">E</span>DPIA template</a></li>
+          </ul>
+        </section>
       </div>
 
-      <div class="formats">
-        <p>Every chapter ships as</p>
-        <span class="chip">slides</span><span class="chip">HTML</span>
-        <span class="chip">PDF</span>
-        <p>· full book also as</p>
-        <span class="chip">EPUB</span><span class="chip">DOCX</span>
-        <a class="chip" href="https://github.com/antoinelucasfra/localai-review/releases">releases ⤓</a>
-      </div>
+      <p class="formats">
+        Every chapter also ships as slides, PDF and standalone HTML — links at the end of
+        each chapter. The full book is available as
+        <a href="https://github.com/antoinelucasfra/localai-review/releases">EPUB and DOCX in the releases</a>.
+        Model benchmarks quoted throughout come from
+        <a href="https://artificialanalysis.ai">artificialanalysis.ai</a>; rankings move monthly, so the book teaches the method, not the leaderboard.
+      </p>
 
       <footer>
         <span>
-          Rendered with <a href="https://quarto.org">Quarto</a> · themed with
+          Rendered with <a href="https://quarto.org">Quarto</a>, themed with
           <a href="https://github.com/antoinelucasfra/quarto-al-brand">al-brand</a>
         </span>
-        <span style="margin-left:auto">deployed on every push to <code>main</code></span>
+        <span style="margin-left:auto">open source · deployed on every push to <code>main</code></span>
       </footer>
     </main>
   </body>

@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="720" height="420" viewBox="0 0 720 420" role="img" font-family="DM Sans, sans-serif">
+<rect width="720" height="420" rx="12" fill="#ffffff"/>
+<line x1="64" y1="310.0" x2="680" y2="310.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="56" y="314.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">30</text>
+<line x1="64" y1="256.0" x2="680" y2="256.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="56" y="260.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">40</text>
+<line x1="64" y1="202.0" x2="680" y2="202.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="56" y="206.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">50</text>
+<line x1="64" y1="148.0" x2="680" y2="148.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="56" y="152.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">60</text>
+<line x1="64" y1="94.0" x2="680" y2="94.0" stroke="#e4e8ee" stroke-width="1"/>
+<text x="56" y="98.0" font-size="11" fill="#57606a" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">70</text>
+<line x1="64.0" y1="364" x2="64.0" y2="369" stroke="#57606a" stroke-width="1"/>
+<text x="64.0" y="384" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">0.1</text>
+<line x1="269.3333333333333" y1="364" x2="269.3333333333333" y2="369" stroke="#57606a" stroke-width="1"/>
+<text x="269.3333333333333" y="384" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">1</text>
+<line x1="474.66666666666663" y1="364" x2="474.66666666666663" y2="369" stroke="#57606a" stroke-width="1"/>
+<text x="474.66666666666663" y="384" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">10</text>
+<line x1="680.0" y1="364" x2="680.0" y2="369" stroke="#57606a" stroke-width="1"/>
+<text x="680.0" y="384" font-size="11" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="JetBrains Mono, monospace">$100</text>
+<path d="M 331.1448257763375 29.2 Q 634.4470567454415 50.8 680.0 94.0 L 680.0 18.4 Z" fill="#7dd3fc" opacity="0.18"/>
+<text x="572.6355643024374" y="34.6" font-size="11" fill="#0ea5e9" text-anchor="middle" font-weight="normal" font-family="DM Sans, sans-serif">closed frontier</text>
+<circle cx="491" cy="132" r="6" fill="#f97316" opacity="0.9"/><text x="480.92521585511236" y="125.80000000000001" font-size="11" fill="#24292f" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">Claude Opus 5</text>
+<circle cx="475" cy="137" r="6" fill="#f97316" opacity="0.9"/><text x="462.66666666666663" y="153.2" font-size="11" fill="#24292f" text-anchor="end" font-weight="normal" font-family="DM Sans, sans-serif">Claude Fable 5</text>
+<circle cx="465" cy="143" r="6" fill="#f97316" opacity="0.9"/><text x="477.2711286048747" y="142.6" font-size="11" fill="#24292f" text-anchor="start" font-weight="normal" font-family="DM Sans, sans-serif">GPT-5.6 Sol</text>
+<circle cx="443" cy="143" r="6" fill="#f97316" opacity="0.9"/><text x="454.8601308829274" y="156.6" font-size="11" fill="#24292f" text-anchor="start" font-weight="normal" font-family="DM Sans, sans-serif">Grok 4.6</text>
+<circle cx="224" cy="170" r="6" fill="#f97316" opacity="0.9"/><text x="235.78039007877484" y="181.6" font-size="11" fill="#24292f" text-anchor="start" font-weight="normal" font-family="DM Sans, sans-serif">Gemini 3.7 Flash</text>
+<circle cx="260" cy="148" r="6" fill="#14b8a6" opacity="0.9"/><text x="247.9377952715414" y="144.0" font-size="11" fill="#24292f" text-anchor="end" font-weight="normal" font-family="JetBrains Mono, monospace">Kimi K3</text>
+<circle cx="238" cy="153" r="6" fill="#14b8a6" opacity="0.9"/><text x="249.52679754959408" y="151.39999999999998" font-size="11" fill="#24292f" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">GLM-5.3</text>
+<circle cx="176" cy="164" r="6" fill="#14b8a6" opacity="0.9"/><text x="163.71530510658994" y="182.2" font-size="11" fill="#24292f" text-anchor="end" font-weight="normal" font-family="JetBrains Mono, monospace">Muse Spark 1.2</text>
+<circle cx="198" cy="186" r="6" fill="#14b8a6" opacity="0.9"/><text x="210.12630282853723" y="193.8" font-size="11" fill="#24292f" text-anchor="start" font-weight="normal" font-family="JetBrains Mono, monospace">DeepSeek V4 Pro</text>
+<text x="372.0" y="406" font-size="12" fill="#57606a" text-anchor="middle" font-weight="normal" font-family="DM Sans, sans-serif">blended API price, $ / M tokens (log scale)</text>
+<text x="16" y="202.0" font-size="12" fill="#57606a" text-anchor="middle" transform="rotate(-90 16 202.0)">composite intelligence index</text><circle cx="76" cy="386" r="5" fill="#14b8a6"/><text x="86" y="390" font-size="11" fill="#57606a" text-anchor="start" font-weight="normal" font-family="DM Sans, sans-serif">open weights</text>
+<circle cx="194" cy="386" r="5" fill="#f97316"/><text x="204" y="390" font-size="11" fill="#57606a" text-anchor="start" font-weight="normal" font-family="DM Sans, sans-serif">closed (reference)</text>
+</svg>
