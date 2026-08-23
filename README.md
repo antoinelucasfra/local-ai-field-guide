@@ -3,7 +3,7 @@
 One Quarto project → **a single coherent book** (19 chapters in 5 parts + 2 annexes), rendered in **French or English**, delivered as:
 
 | Deliverable | Files |
-|---|---|
+| --- | --- |
 | Full book | `book.html` (self-contained) · `book.pdf` · `book.docx` · `book.epub` |
 | Per chapter ×24 | `<slug>-slides.html` (reveal deck, self-contained, shareable numbered URLs) · `<slug>.pdf` · `<slug>.html` |
 
@@ -15,6 +15,7 @@ Download links appear at the end of every chapter inside the book.
 quarto render --profile fr     # French  (~5 min, everything)
 quarto render --profile en     # English
 ```
+
 Plain `quarto render` works too (defaults to English). All outputs land in `_render/<lang>/`, nothing is written to the repo root. The generated sources are hidden dotfiles (`.book.qmd`, `.ch-*.qmd`, `.chh-*.qmd`) — `ls` stays clean and git ignores them.
 
 ## CI · Pages · Releases
@@ -22,7 +23,7 @@ Plain `quarto render` works too (defaults to English). All outputs land in `_ren
 One workflow (`.github/workflows/book.yml`) drives everything:
 
 | Event | What runs |
-|---|---|
+| --- | --- |
 | push / PR | `quarto render --profile en` — build check |
 | push `main` | EN + FR render → site assembled (`index.html` + `en/` + `fr/`) → GitHub Pages |
 | tag `v*` | EN + FR render → release assets (`localai-book-vX.Y.Z-en.zip` = PDF+EPUB+DOCX per lang, full site zip) → GitHub Release |
