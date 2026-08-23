@@ -50,8 +50,8 @@ BOOK_FMT = """  html:
     toc: true
     toc-depth: 3
     theme:
-      light: [cosmo, al-brand-light, al-brand-book]
-      dark: [cosmo, al-brand-dark, al-brand-book]
+      light: [cosmo, al-brand-light, al-brand-book.scss]
+      dark: [cosmo, al-brand-dark, al-brand-book.scss]
     include-in-header: tools/book-head.html
     embed-resources: true
   epub:
@@ -94,8 +94,8 @@ DOC_FMT = """  typst:
     toc: true
     toc-depth: 2
     theme:
-      light: [cosmo, al-brand-light, al-brand-book]
-      dark: [cosmo, al-brand-dark, al-brand-book]
+      light: [cosmo, al-brand-light, al-brand-book.scss]
+      dark: [cosmo, al-brand-dark, al-brand-book.scss]
     include-in-header: tools/book-head.html
     embed-resources: true"""
 

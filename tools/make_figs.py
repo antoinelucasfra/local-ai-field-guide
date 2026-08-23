@@ -28,7 +28,9 @@ def svg_open(w, h):
     )
 
 
-def text(x, y, s, size: float = 13, fill=INK, anchor="start", weight="normal", mono=False):
+def text(
+    x, y, s, size: float = 13, fill=INK, anchor="start", weight="normal", mono=False
+):
     fam = "JetBrains Mono, monospace" if mono else "DM Sans, sans-serif"
     return (
         f'<text x="{x}" y="{y}" font-size="{size}" fill="{fill}" '
@@ -111,13 +113,22 @@ def fig_quality_price():
     for name, p, q, is_open in pts:
         cx, cy = px(p), py(q)
         col = TEAL if is_open else CORAL
-        s.append(f'<circle cx="{cx:.0f}" cy="{cy:.0f}" r="6" fill="{col}" opacity="0.9"/>')
-        dx, dy, anc = offs[name]
         s.append(
-            text(cx + dx, cy + dy + 4, name, 11, INK, anc, mono=is_open)
+            f'<circle cx="{cx:.0f}" cy="{cy:.0f}" r="6" fill="{col}" opacity="0.9"/>'
         )
+        dx, dy, anc = offs[name]
+        s.append(text(cx + dx, cy + dy + 4, name, 11, INK, anc, mono=is_open))
 
-    s.append(text(L + pw / 2, H - 14, "blended API price, $ / M tokens (log scale)", 12, MUTED, "middle"))
+    s.append(
+        text(
+            L + pw / 2,
+            H - 14,
+            "blended API price, $ / M tokens (log scale)",
+            12,
+            MUTED,
+            "middle",
+        )
+    )
     s.append(
         f'<text x="16" y="{T + ph / 2}" font-size="12" fill="{MUTED}" text-anchor="middle" '
         f'transform="rotate(-90 16 {T + ph / 2})">composite intelligence index</text>'
@@ -159,18 +170,45 @@ def fig_quant():
         x = bx(i)
         h = bh(sz)
         col = SKY if i <= 4 else CORAL
-        s.append(f'<rect x="{x:.0f}" y="{T + ph - h:.0f}" width="44" height="{h:.0f}" rx="5" fill="{col}" opacity="0.85"/>')
+        s.append(
+            f'<rect x="{x:.0f}" y="{T + ph - h:.0f}" width="44" height="{h:.0f}" rx="5" fill="{col}" opacity="0.85"/>'
+        )
         s.append(text(x + 22, T + ph - h - 7, str(sz), 11, INK, "middle", mono=True))
-        s.append(text(x + 22, T + ph + 20, lv, 12, INK, "middle", weight="500", mono=True))
+        s.append(
+            text(x + 22, T + ph + 20, lv, 12, INK, "middle", weight="500", mono=True)
+        )
         if i:
             px_, py_ = bx(i - 1) + 22, qy(qual[i - 1])
             cx, cy = x + 22, qy(qual[i])
-            s.append(f'<line x1="{px_:.0f}" y1="{py_:.0f}" x2="{cx:.0f}" y2="{cy:.0f}" stroke="{TEAL}" stroke-width="2.5"/>')
+            s.append(
+                f'<line x1="{px_:.0f}" y1="{py_:.0f}" x2="{cx:.0f}" y2="{cy:.0f}" stroke="{TEAL}" stroke-width="2.5"/>'
+            )
     for i in range(len(levels)):
-        s.append(f'<circle cx="{bx(i) + 22:.0f}" cy="{qy(qual[i]):.0f}" r="4" fill="#fff" stroke="{TEAL}" stroke-width="2.5"/>')
-        s.append(text(bx(i) + 34, qy(qual[i]) + (14 if i == 0 else -8), f"{qual[i]}%", 10.5, TEAL, "start", mono=True))
+        s.append(
+            f'<circle cx="{bx(i) + 22:.0f}" cy="{qy(qual[i]):.0f}" r="4" fill="#fff" stroke="{TEAL}" stroke-width="2.5"/>'
+        )
+        s.append(
+            text(
+                bx(i) + 34,
+                qy(qual[i]) + (14 if i == 0 else -8),
+                f"{qual[i]}%",
+                10.5,
+                TEAL,
+                "start",
+                mono=True,
+            )
+        )
 
-    s.append(text(L, 20, "32 B model on disk, GB (bars) · task-quality retained (line)", 12.5, INK, weight="500"))
+    s.append(
+        text(
+            L,
+            20,
+            "32 B model on disk, GB (bars) · task-quality retained (line)",
+            12.5,
+            INK,
+            weight="500",
+        )
+    )
     s.append(text(L + pw / 2, H - 14, "GGUF quantization level", 12, MUTED, "middle"))
     save("fig-quant.svg", "".join(s))
 
@@ -196,12 +234,23 @@ def fig_throughput():
         bw = mid / mx * pw
         lo, hi = rng
         xlo, xhi = lo / mx * pw, hi / mx * pw
-        s.append(f'<rect x="{L + xlo:.0f}" y="{y - 5:.0f}" width="{xhi - xlo:.0f}" height="10" rx="5" fill="{SKY_SOFT}" opacity="0.5"/>')
+        s.append(
+            f'<rect x="{L + xlo:.0f}" y="{y - 5:.0f}" width="{xhi - xlo:.0f}" height="10" rx="5" fill="{SKY_SOFT}" opacity="0.5"/>'
+        )
         s.append(f'<circle cx="{L + bw:.0f}" cy="{y:.0f}" r="7" fill="{SKY}"/>')
         s.append(text(L - 12, y + 4, lab, 12, INK, "end", mono=False))
         s.append(text(L + bw + 12, y + 4, f"{mid} t/s", 11, MUTED, "start", mono=True))
     s.append(text(T + L, 20, "", 1, MUTED))
-    s.append(text(W / 2, H - 12, "decode speed, tokens/s (typical range ◁—●)", 12, MUTED, "middle"))
+    s.append(
+        text(
+            W / 2,
+            H - 12,
+            "decode speed, tokens/s (typical range ◁—●)",
+            12,
+            MUTED,
+            "middle",
+        )
+    )
     save("fig-throughput.svg", "".join(s))
 
 
@@ -221,7 +270,9 @@ def fig_tco():
     s = [svg_open(W, H)]
     for g in range(0, ymax + 1, 1500):
         s.append(line(L, py(g), L + pw, py(g)))
-        s.append(text(L - 8, py(g) + 4, f"{g // 1000}k" if g else "€0", 11, MUTED, "end"))
+        s.append(
+            text(L - 8, py(g) + 4, f"{g // 1000}k" if g else "€0", 11, MUTED, "end")
+        )
     for m in [6, 12, 18, 24, 30, 36]:
         s.append(line(px(m), T + ph, px(m), T + ph + 5, MUTED))
         s.append(text(px(m), T + ph + 20, f"M{m}", 11, MUTED, "middle", mono=True))
@@ -230,30 +281,53 @@ def fig_tco():
     api_pts, loc_pts = [], []
     api_cost = 0.0
     for m in range(months + 1):
-        api_cost += 95 * (1.05 ** m)
+        api_cost += 95 * (1.05**m)
         api_pts.append((m, api_cost))
         loc_pts.append((m, 4200 + 18 * m))
 
     def path(pts, color, dash="", width=3):
         d = f" M {px(pts[0][0]):.0f} {py(pts[0][1]):.0f}".join([""][:0]) or ""
-        d = f'M {px(pts[0][0]):.0f} {py(pts[0][1]):.0f}'
+        d = f"M {px(pts[0][0]):.0f} {py(pts[0][1]):.0f}"
         for m, c in pts[1:]:
             d += f" L {px(m):.0f} {py(c):.0f}"
         dd = f' stroke-dasharray="{dash}"' if dash else ""
-        return f'<path d="{d}" fill="none" stroke="{color}" stroke-width="{width}"{dd}/>'
+        return (
+            f'<path d="{d}" fill="none" stroke="{color}" stroke-width="{width}"{dd}/>'
+        )
 
     s.append(path(api_pts, CORAL))
     s.append(path(loc_pts, TEAL))
-    beak = next(
-        m
-        for (m, a), (_, loc) in zip(api_pts, loc_pts, strict=True)
-        if a > loc
+    beak = next(m for (m, a), (_, loc) in zip(api_pts, loc_pts, strict=True) if a > loc)
+    s.append(
+        f'<circle cx="{px(beak):.0f}" cy="{py(4200 + 18 * beak):.0f}" r="6" fill="{INK}"/>'
     )
-    s.append(f'<circle cx="{px(beak):.0f}" cy="{py(4200 + 18 * beak):.0f}" r="6" fill="{INK}"/>')
-    s.append(text(px(beak) + 10, py(4200 + 18 * beak) - 10, "break-even", 11.5, INK, "start"))
-    s.append(text(px(30), py(api_pts[30][1]) - 12, "cloud API rental", 12, CORAL, "middle", "500"))
-    s.append(text(px(31), py(loc_pts[31][1]) + 22, "local box", 12, TEAL, "middle", "500"))
-    s.append(text(L + pw / 2, H - 14, "months of a 5-seat team running a 30 B-class model daily", 12, MUTED, "middle"))
+    s.append(
+        text(px(beak) + 10, py(4200 + 18 * beak) - 10, "break-even", 11.5, INK, "start")
+    )
+    s.append(
+        text(
+            px(30),
+            py(api_pts[30][1]) - 12,
+            "cloud API rental",
+            12,
+            CORAL,
+            "middle",
+            "500",
+        )
+    )
+    s.append(
+        text(px(31), py(loc_pts[31][1]) + 22, "local box", 12, TEAL, "middle", "500")
+    )
+    s.append(
+        text(
+            L + pw / 2,
+            H - 14,
+            "months of a 5-seat team running a 30 B-class model daily",
+            12,
+            MUTED,
+            "middle",
+        )
+    )
     s.append(
         f'<text x="16" y="{T + ph / 2}" font-size="12" fill="{MUTED}" text-anchor="middle" '
         f'transform="rotate(-90 16 {T + ph / 2})">cumulative cost</text>'

@@ -37,7 +37,11 @@
       body {
         margin: 0;
         background:
-          radial-gradient(64rem 30rem at 85% -10%, rgba(56, 189, 248, 0.07), transparent 60%),
+          radial-gradient(
+            64rem 30rem at 85% -10%,
+            rgba(56, 189, 248, 0.07),
+            transparent 60%
+          ),
           var(--void);
         color: var(--ink);
         font-family: "DM Sans", system-ui, sans-serif;
@@ -134,7 +138,9 @@
         border: 1px solid var(--border);
         text-decoration: none;
         color: inherit;
-        transition: transform 0.16s ease, border-color 0.16s ease;
+        transition:
+          transform 0.16s ease,
+          border-color 0.16s ease;
       }
       a.lang:hover {
         transform: translateY(-2px);
@@ -275,17 +281,18 @@
 
     <main class="wrap">
       <header class="hero">
-        <h1>A field guide to running language models <em>on your own machine</em>.</h1>
+        <h1>
+          A field guide to running language models <em>on your own machine</em>.
+        </h1>
         <p>
-          Most of what you can do with a hosted API, you can do on a workstation under
-          your desk — privately, offline, and for less money than you'd expect.
-          This book walks through the whole path: <strong>picking a model</strong>,
-          running it well, fine-tuning it on your data, building agents and RAG on top,
-          serving it to a team, and staying on the right side of the GDPR.
+          Most of what you can do with a hosted API, you can do on a workstation
+          under your desk — privately, offline, and for less money than you'd
+          expect. This book walks through the whole path:
+          <strong>picking a model</strong>, running it well, fine-tuning it on
+          your data, building agents and RAG on top, serving it to a team, and
+          staying on the right side of the GDPR.
         </p>
-        <p>
-          Written for researchers and engineers; no cloud account required.
-        </p>
+        <p>Written for researchers and engineers; no cloud account required.</p>
         <div class="lang-links">
           <a class="lang" href="en/book.html">
             <b>Read in English <span>→</span></b>
@@ -303,74 +310,181 @@
         <section class="part">
           <p>Foundations<small>Fondations</small></p>
           <ul class="chapters">
-            <li><a href="en/book.html#audience"><span class="no">00</span>Who this book is for</a></li>
-            <li><a href="en/book.html#why"><span class="no">01</span>Why local, why now</a></li>
-            <li><a href="en/book.html#landscape"><span class="no">02</span>The open-model landscape, ranked</a></li>
+            <li>
+              <a href="en/book.html#audience"
+                ><span class="no">00</span>Who this book is for</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#why"
+                ><span class="no">01</span>Why local, why now</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#landscape"
+                ><span class="no">02</span>The open-model landscape, ranked</a
+              >
+            </li>
           </ul>
         </section>
         <section class="part">
           <p>Running models<small>Exécuter des modèles</small></p>
           <ul class="chapters">
-            <li><a href="en/book.html#ecosystem"><span class="no">03</span>Ecosystem &amp; installation</a></li>
-            <li><a href="en/book.html#chat"><span class="no">04</span>Chat studios &amp; front-ends</a></li>
-            <li><a href="en/book.html#params"><span class="no">05</span>Inference parameters</a></li>
+            <li>
+              <a href="en/book.html#ecosystem"
+                ><span class="no">03</span>Ecosystem &amp; installation</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#chat"
+                ><span class="no">04</span>Chat studios &amp; front-ends</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#params"
+                ><span class="no">05</span>Inference parameters</a
+              >
+            </li>
           </ul>
         </section>
         <section class="part">
           <p>Training models<small>Entraîner des modèles</small></p>
           <ul class="chapters">
-            <li><a href="en/book.html#finetune"><span class="no">06</span>The fine-tuning pipeline</a></li>
-            <li><a href="en/book.html#hyper"><span class="no">07</span>Training hyperparameters</a></li>
-            <li><a href="en/book.html#data"><span class="no">08</span>Data recipes</a></li>
+            <li>
+              <a href="en/book.html#finetune"
+                ><span class="no">06</span>The fine-tuning pipeline</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#hyper"
+                ><span class="no">07</span>Training hyperparameters</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#data"
+                ><span class="no">08</span>Data recipes</a
+              >
+            </li>
           </ul>
         </section>
         <section class="part">
-          <p>Developing &amp; deploying<small>Développer &amp; déployer</small></p>
+          <p>
+            Developing &amp; deploying<small>Développer &amp; déployer</small>
+          </p>
           <ul class="chapters">
-            <li><a href="en/book.html#export"><span class="no">09</span>Export &amp; deployment</a></li>
-            <li><a href="en/book.html#agents"><span class="no">10</span>Local coding agents</a></li>
-            <li><a href="en/book.html#harness"><span class="no">11</span>Agent harnesses</a></li>
-            <li><a href="en/book.html#core"><span class="no">12</span>The Python path</a></li>
-            <li><a href="en/book.html#rag"><span class="no">13</span>RAG</a></li>
-            <li><a href="en/book.html#multimodal"><span class="no">14</span>Multimodal</a></li>
-            <li><a href="en/book.html#serving"><span class="no">15</span>Serving a team</a></li>
+            <li>
+              <a href="en/book.html#export"
+                ><span class="no">09</span>Export &amp; deployment</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#agents"
+                ><span class="no">10</span>Local coding agents</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#harness"
+                ><span class="no">11</span>Agent harnesses</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#core"
+                ><span class="no">12</span>The Python path</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#rag"><span class="no">13</span>RAG</a>
+            </li>
+            <li>
+              <a href="en/book.html#multimodal"
+                ><span class="no">14</span>Multimodal</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#serving"
+                ><span class="no">15</span>Serving a team</a
+              >
+            </li>
           </ul>
         </section>
         <section class="part">
           <p>Governing<small>Gouverner</small></p>
           <ul class="chapters">
-            <li><a href="en/book.html#evaluate"><span class="no">16</span>Evaluation</a></li>
-            <li><a href="en/book.html#gdpr"><span class="no">17</span>GDPR hardening</a></li>
-            <li><a href="en/book.html#bizcase"><span class="no">18</span>The business case</a></li>
-            <li><a href="en/book.html#strategy"><span class="no">19</span>Strategic note</a></li>
+            <li>
+              <a href="en/book.html#evaluate"
+                ><span class="no">16</span>Evaluation</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#gdpr"
+                ><span class="no">17</span>GDPR hardening</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#bizcase"
+                ><span class="no">18</span>The business case</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#strategy"
+                ><span class="no">19</span>Strategic note</a
+              >
+            </li>
           </ul>
         </section>
         <section class="part">
           <p>Appendices<small>Annexes</small></p>
           <ul class="chapters">
-            <li><a href="en/book.html#primer"><span class="no">A</span>Researcher's primer</a></li>
-            <li><a href="en/book.html#sources"><span class="no">B</span>Sources &amp; limits</a></li>
-            <li><a href="en/book.html#projects"><span class="no">C</span>Projects</a></li>
-            <li><a href="en/book.html#hardware"><span class="no">D</span>Hardware buying guide</a></li>
-            <li><a href="en/book.html#dpia"><span class="no">E</span>DPIA template</a></li>
+            <li>
+              <a href="en/book.html#primer"
+                ><span class="no">A</span>Researcher's primer</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#sources"
+                ><span class="no">B</span>Sources &amp; limits</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#projects"
+                ><span class="no">C</span>Projects</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#hardware"
+                ><span class="no">D</span>Hardware buying guide</a
+              >
+            </li>
+            <li>
+              <a href="en/book.html#dpia"
+                ><span class="no">E</span>DPIA template</a
+              >
+            </li>
           </ul>
         </section>
       </div>
 
       <p class="formats">
-        Every chapter also ships as slides, PDF and standalone HTML — links at the end of
-        each chapter. The full book is available as
-        <a href="https://github.com/antoinelucasfra/localai-review/releases">EPUB and DOCX in the releases</a>.
-        Model benchmarks quoted throughout come from
-        <a href="https://artificialanalysis.ai">artificialanalysis.ai</a>; rankings move monthly, so the book teaches the method, not the leaderboard.
+        Every chapter also ships as slides, PDF and standalone HTML — links at
+        the end of each chapter. The full book is available as
+        <a href="https://github.com/antoinelucasfra/localai-review/releases"
+          >EPUB and DOCX in the releases</a
+        >. Model benchmarks quoted throughout come from
+        <a href="https://artificialanalysis.ai">artificialanalysis.ai</a>;
+        rankings move monthly, so the book teaches the method, not the
+        leaderboard.
       </p>
 
       <footer>
         <span>
           Rendered with <a href="https://quarto.org">Quarto</a>, themed with
-          <a href="https://github.com/antoinelucasfra/quarto-al-brand">al-brand</a>
+          <a href="https://github.com/antoinelucasfra/quarto-al-brand"
+            >al-brand</a
+          >
         </span>
-        <span style="margin-left:auto">open source · deployed on every push to <code>main</code></span>
+        <span style="margin-left: auto"
+          >open source · deployed on every push to <code>main</code></span
+        >
       </footer>
     </main>
   </body>

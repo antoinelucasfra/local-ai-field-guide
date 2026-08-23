@@ -9,6 +9,95 @@
 $al-sky: #38BDF8;
 $al-teal: #2DD4BF;
 
+// ── Long-form reading rhythm ────────────────────────────────────────────
+body {
+  line-height: 1.68;
+}
+
+p {
+  text-wrap: pretty;
+  margin-block: 0.9em;
+}
+
+h1, h2, h3, h4 {
+  text-wrap: balance;
+}
+
+// chapters are h2 here: give each real breathing room
+h2 {
+  margin-top: 3.5rem;
+}
+h3 {
+  margin-top: 2.2rem;
+}
+
+// anchored headings never hide under nothing sticky, but land softly
+[id] {
+  scroll-margin-top: 1.25rem;
+}
+
+// links: quiet sky, honest underline
+main a:not(.dl-strip a):not(#TOC a) {
+  color: $al-sky;
+  text-decoration-color: rgba(56, 189, 248, 0.4);
+  text-underline-offset: 3px;
+
+  &:hover {
+    text-decoration-color: $al-sky;
+  }
+}
+
+// ── Code blocks: calm surfaces, not neon boxes ──────────────────────
+div.sourceCode {
+  border-radius: 10px;
+  border: 1px solid rgba(139, 148, 158, 0.18);
+}
+
+pre {
+  font-size: 0.86em;
+  line-height: 1.55;
+}
+
+code:not(pre code) {
+  font-size: 0.85em;
+  padding: 0.1em 0.35em;
+  border-radius: 5px;
+  background: rgba(139, 148, 158, 0.12);
+}
+
+// ── Tables: roomy cells, quiet zebra ──────────────────────────────
+table {
+  font-size: 0.93rem;
+  margin-block: 1.4rem;
+}
+
+th, td {
+  padding: 0.55rem 0.75rem;
+}
+
+table tbody tr:nth-child(even) {
+  background: rgba(139, 148, 158, 0.05);
+}
+
+// ── Lists breathe like paragraphs ──────────────────────────────
+ul, ol {
+  margin-block: 0.9em;
+
+  li {
+    margin-block: 0.35em;
+  }
+}
+
+// ── TOC sidebar: dense but legible ──────────────────────────────
+#TOC {
+  font-size: 0.86rem;
+  line-height: 1.45;
+
+  ul ul {
+    font-size: 0.94em;
+  }
+}
+
 // ── Part dividers (h1.unnumbered from _order.txt PART lines) ────────────
 h1.unnumbered {
   font-family: "Space Grotesk", sans-serif;
