@@ -15,8 +15,23 @@ Download links appear at the end of every chapter inside the book.
 quarto render --profile fr     # French  (~5 min, everything)
 quarto render --profile en     # English
 ```
-
 Plain `quarto render` works too (defaults to English). All outputs land in `_render/<lang>/`, nothing is written to the repo root. The generated sources are hidden dotfiles (`.book.qmd`, `.ch-*.qmd`, `.chh-*.qmd`) — `ls` stays clean and git ignores them.
+
+## CI · Pages · Releases
+
+One workflow (`.github/workflows/book.yml`) drives everything:
+
+| Event | What runs |
+|---|---|
+| push / PR | `quarto render --profile en` — build check |
+| push `main` | EN + FR render → site assembled (`index.html` + `en/` + `fr/`) → GitHub Pages |
+| tag `v*` | EN + FR render → release assets (`localai-book-vX.Y.Z-en.zip` = PDF+EPUB+DOCX per lang, full site zip) → GitHub Release |
+
+Pages is live after the first push to `main`: Settings → Pages → Source **GitHub Actions**. Cut a release with:
+
+```bash
+git tag v1.0.0 && git push origin main v1.0.0
+```
 
 ## Book structure
 

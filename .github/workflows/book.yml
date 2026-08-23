@@ -1,0 +1,93 @@
+name: book
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions: {}
+    outputs:
+      version: ${{ github.ref_name }}
+    steps:
+      # actions pinned to SHAs (supply-chain hygiene); bump deliberately
+      - uses: actions/checkout@f548e57e544e # v4
+      - uses: actions/setup-python@751276eafca5 # v6
+        with:
+          python-version: '3.12'
+      - uses: quarto-dev/quarto-actions/setup@91dabb203fce # v2
+        with:
+          version: 1.8.24
+      - name: Render EN (CI check)
+        run: quarto render --profile en
+      # FR only when the render actually gets shipped, not on every PR
+      - name: Render FR
+        if: github.event_name == 'push'
+        run: quarto render --profile fr
+      - name: Assemble site
+        if: github.event_name == 'push'
+        run: |
+          mkdir -p _site/en _site/fr
+          cp tools/index.html _site/index.html
+          touch _site/.nojekyll
+          cp -r _render/en/. _site/en/
+          cp -r _render/fr/. _site/fr/
+      - uses: actions/upload-pages-artifact@98ef48e41587 # v3
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        with:
+          path: _site
+      - uses: actions/upload-artifact@043fb46d1a93 # v4
+        if: startsWith(github.ref, 'refs/tags/v')
+        with:
+          name: site
+          path: _site
+
+  deploy-pages:
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@5e98f10ce206 # v4
+
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write   # create release + upload assets
+    steps:
+      - uses: actions/download-artifact@484a0b528fb4 # v4
+        with:
+          name: site
+          path: _site
+      - name: Package release assets
+        run: |
+          V="${GITHUB_REF_NAME}"
+          cd _site
+          for L in en fr; do
+            zip -q "../localai-book-$V-$L.zip" "$L/book.pdf" "$L/book.epub" "$L/book.docx"
+          done
+          zip -qr "../localai-site-$V.zip" .
+      - name: Create GitHub release
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            --repo "$GITHUB_REPOSITORY" \
+            --generate-notes \
+            localai-book-*.zip localai-site-*.zip
