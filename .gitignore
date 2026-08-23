@@ -6,3 +6,4 @@ _render/
 
 /.quarto/
 **/*.quarto_ipynb
+.pi/

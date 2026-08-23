@@ -1,7 +1,0 @@
-[typst]: Compiling .book.typ to .book.pdf...warning: unknown font family: dm sans
-[91mERROR: NotFound: No such file or directory (os error 2): readfile '/home/tonio/.local/opt/quarto-1.10.18/share/formats/revealjs/themes/al-brand-slides.scss'
-    at async runPandoc (file:///home/tonio/.local/opt/quarto-1.10.18/bin/quarto.js:129395:56)
-    at async renderPandoc (file:///home/tonio/.local/opt/quarto-1.10.18/bin/quarto.js:131107:24)
-render-exit=0
-ls: cannot access '_render/en/00-bienvenue-slides.html': No such file or directory
-_render/en/book.html

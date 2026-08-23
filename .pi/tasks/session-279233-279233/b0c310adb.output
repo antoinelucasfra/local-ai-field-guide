@@ -1,2 +1,0 @@
-exit=0
-{"conclusion":"success","jobs":[{"conclusion":"success","name":"build"},{"conclusion":"success","name":"deploy-pages"},{"conclusion":"skipped","name":"release"}],"status":"completed"}
