@@ -27,6 +27,10 @@ Meanwhile, hyperscaler capital expenditure on AI infrastructure (hundreds of bil
 - **European option**: open models from EU labs (e.g. Mistral, France) reduce exposure to extra-EU jurisdiction.
 
 The historical objection — quality — no longer holds for domain-specific work: a fine-tuned mid-size open model beats a generic frontier API on narrow tasks, at zero marginal cost, offline.
+
+::: {.al-take}
+**Our take.** We are not missionaries: we still send the hardest, least sensitive reasoning tasks to frontier APIs when the gap matters. What changed our practice is the middle of the distribution — drafting, summarising, extraction, first-pass code — which quietly migrated local in our own workflow and never went back. Go hybrid on purpose, not by dogma either way.
+:::
 :::
 
 ::: {.fr}
@@ -50,6 +54,10 @@ Parallèlement, les capitaux dépensés en infrastructure IA par les hyperscaler
 - **Option européenne** : des modèles ouverts de laboratoires UE (ex. Mistral, France) réduisent l'exposition à des juridictions extra-européennes.
 
 L'objection historique — la qualité — ne tient plus pour le travail métier : un modèle ouvert de taille intermédiaire affûté bat une API généraliste sur des tâches étroites, à coût marginal nul, hors ligne.
+
+::: {.al-take}
+**Notre avis.** Nous ne sommes pas missionnaires : nous envoyons encore les tâches de raisonnement les plus dures et les moins sensibles vers des API de pointe quand l'écart compte. Ce qui a changé notre pratique, c'est le milieu de la distribution — rédaction, synthèse, extraction, premier jet de code — qui a migré en local dans notre flux de travail sans jamais revenir. L'hybride, oui — mais par décision, pas par dogme dans un sens ni dans l'autre.
+:::
 :::
 
 ::: {.notes}

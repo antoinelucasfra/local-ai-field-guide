@@ -74,6 +74,10 @@ Or download the **Unsloth Desktop** app from [unsloth.ai/download](https://unslo
 
 ::: {.en}
 ### Launch
+
+::: {.al-take}
+**Our take.** Pick *one* entry point — Desktop if you want the least friction, Core if you script — and resist the urge to install every runtime you read about. We wasted more hours juggling tooling in our first month than we ever saved switching between them; the model matters, the wrapper barely does.
+:::
 :::
 
 ::: {.fr}
@@ -93,6 +97,10 @@ Open `http://127.0.0.1:8888`, create the admin password on first launch (JWT-bas
 
 ::: {.fr}
 **Installation sur un serveur Linux distant :** connectez-vous en SSH, lancez le script d'installation ci-dessus, puis démarrez avec `unsloth studio -H 0.0.0.0 -p 8888`. Accédez-y par transfert de port (`ssh -L 8888:localhost:8888 user@serveur`) ou avec `unsloth studio --secure` pour une URL HTTPS publique.
+
+::: {.al-take}
+**Notre avis.** Choisissez *un* point d'entrée — Desktop pour le moins de friction, Core si vous scriptez — et résistez à l'envie d'installer tous les runtimes dont vous lirez la critique. Nous avons perdu plus d'heures à jongler entre outils notre premier mois que nous en avons jamais gagné à switcher ; c'est le modèle qui compte, pas l'habillage.
+:::
 :::
 
 ::: {.en}

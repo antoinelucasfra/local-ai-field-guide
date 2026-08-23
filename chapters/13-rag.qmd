@@ -42,6 +42,10 @@ Studio Chat's web search and document features use the same mechanics internally
 - **Respect lost-in-the-middle**: put the best chunks first and last (Chap. 5); 20 chunks help less than 6 good ones.
 - **Evaluate retrieval separately** from generation: does the golden set (Chap. 16)'s reference passage appear in top-k? Fix retrieval before blaming the model.
 - **Show citations**: force the model to quote chunk ids — reviewers verify instead of trusting, which is also your GDPR transparency story (Chap. 17).
+
+::: {.al-take}
+**Our take.** Every RAG disappointment we have ever debugged was a retrieval failure wearing a model's costume. Spend the week on chunking, hybrid search and a 50-question golden set before you spend a single euro on a bigger model — a mediocre model fed the right 6 chunks beats an excellent one fed 20 wrong ones, every time we have measured it.
+:::
 :::
 
 ::: {.fr}
@@ -88,4 +92,8 @@ La recherche web et les fonctions documentaires du Studio Chat reposent sur les 
 - **Respectez le lost-in-the-middle** : placez les meilleurs morceaux au début et à la fin (chap. 5) ; 20 morceaux servent moins que 6 bons.
 - **Évaluez la récupération séparément** de la génération : le passage de référence de votre jeu doré (chap. 16) apparaît-il dans le top-k ? Corrigez la récupération avant de blâmer le modèle.
 - **Affichez les citations** : obligez le modèle à citer les identifiants de morceaux — les relecteurs vérifient au lieu de faire confiance, ce qui nourrit aussi votre transparence RGPD (chap. 17).
+
+::: {.al-take}
+**Notre avis.** Toutes les déceptions RAG que nous avons déboguées étaient un échec de récupération déguisé en modèle. Passez la semaine sur le découpage, la recherche hybride et un jeu doré de 50 questions avant de dépenser un euro dans un modèle plus gros — un modèle médiocre nourri des 6 bons morceaux bat un excellent nourri de 20 mauvais, à chaque mesure que nous avons faite.
+:::
 :::

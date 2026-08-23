@@ -23,6 +23,10 @@ Speed expectations per tier were given in Chapter 5; this annex is the buying gu
 - **Clusters don't help decode**: splitting one LLM across Ethernet kills token speed (interconnect latency ≫ bandwidth rule of Chap. 5). One big GPU > four small ones for inference; clusters matter for *training* only.
 - **Don't forget the humans**: one shared server (Tier 4) + Tier 0–1 client machines covers most labs better than everyone buying Tier 3 desktops — that's exactly the TCO argument of Chap. 18.
 
+::: {.al-take}
+**Our take.** Buy VRAM, not benchmarks: a used 3090 has outlived two generations of "faster" cards we skipped, and the money we did not spend on a flagship bought the second one. Skip the CPU-only detour entirely — it teaches you the concepts and nothing else; if budget allows exactly one machine, make it 24 GB and shared.
+:::
+
 ![Decode speed by tier, from the ladder above. The gap to internalize: hardware buys roughly an order of magnitude, quantization buys back most of the model size at ~95% quality (Q4).](chapters/figures/fig-throughput.svg){#fig-throughput width=100%}
 
 ![A 32 B model on disk across GGUF quantization levels — size (bars) vs retained task quality (line). Q4_K is the community default because it halves memory twice over FP16 while keeping ~95% of quality; below Q3 the curve falls off a cliff. Illustrative averages; UD-Dynamic quants recover part of the gap.](chapters/figures/fig-quant.svg){#fig-quant width=100%}
@@ -97,6 +101,10 @@ Les vitesses attendues par palier sont au chapitre 5 ; cette annexe est le guide
 - **Disque** : les modèles font 5–60 Go pièce ; un NVMe pour les modèles actifs, du SATA bon marché pour l'archive. Charger depuis le SSD prend des secondes.
 - **Puissance & bruit** : une 3090 tire ~350 W en pointe (l'undervolting coupe ~20 % pour ~5 % de vitesse) ; un serveur de labo va en salle machines, pas dans un bureau.
 - **Les clusters n'aident pas le décodage** : éclater un LLM sur Ethernet tue la vitesse de génération (la latence réseau ≫ règle de bande passante du chap. 5). Un gros GPU > quatre petits pour l'inférence ; les clusters servent à l'*entraînement* seulement.
+
+::: {.al-take}
+**Notre avis.** Achetez de la VRAM, pas des benchmarks : notre 3090 d'occasion a survécu à deux générations de cartes « plus rapides » que nous avons sautées, et l'argent non dépensé en flagship a financé la seconde 3090. Sautez complètement l'étape CPU-seul — elle fait comprendre les concepts, rien d'autre ; si le budget permet exactement une machine, qu'elle fasse 24 Go et qu'elle soit partagée.
+:::
 - **N'oubliez pas les humains** : un serveur partagé (palier 4) + des postes palier 0–1 couvre la plupart des labos mieux que chacun avec un fixe palier 3 — c'est exactement l'argument TCO du chap. 18.
 
 ### Vous avez déjà un cluster institutionnel ? Servez-vous-en

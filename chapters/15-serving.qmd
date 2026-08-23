@@ -35,6 +35,10 @@ You get: one stable OpenAI-compatible URL for the whole lab, **API keys per user
 ### Sizing sanity check
 
 Concurrent users × average context ≈ KV memory (Chap. 5). A single RTX 4090 comfortably absorbs a 15-person lab on an 8–9 B Q4 model with 16 k contexts; a used A100/H100 or 2×4090 handles 27–32 B class for the same crowd. Start smaller than you think: utilisation data from the gateway tells you exactly when to buy.
+
+::: {.al-take}
+**Our take.** Put the gateway in on day one, even for three users — retrofitting auth and quotas after people have built habits is a political project, not an IT one. And resist the urge to give everyone the biggest model: in our lab, moving 90 % of traffic to a small fast model felt like an upgrade, because latency dropped and nobody missed the parameters.
+:::
 :::
 
 ::: {.fr}
@@ -74,4 +78,8 @@ Vous obtenez : une URL unique compatible OpenAI pour tout le laboratoire, des **
 ### Vérification de dimensionnement
 
 Utilisateurs simultanés × contexte moyen ≈ mémoire KV (chap. 5). Une seule RTX 4090 absorbe confortablement un labo de 15 personnes sur un modèle 8–9 B Q4 avec des contextes 16 k ; une A100/H100 d'occasion ou 2×4090 gèrent du 27–32 B pour le même monde. Commencez plus petit que prévu : les données d'utilisation de la passerelle vous disent exactement quand acheter.
+
+::: {.al-take}
+**Notre avis.** Installez la passerelle dès le premier jour, même pour trois utilisateurs — ajouter auth et quotas après que les gens ont pris leurs habitudes est un projet politique, pas informatique. Et résistez à l'envie de donner le plus gros modèle à tout le monde : dans notre labo, basculer 90 % du trafic sur un petit modèle rapide a été vécu comme une amélioration — la latence a chuté et personne n'a réclamé les paramètres manquants.
+:::
 :::

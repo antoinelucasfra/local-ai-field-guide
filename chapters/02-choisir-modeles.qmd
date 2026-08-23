@@ -134,6 +134,10 @@ Rules of thumb:
 - **Instruct over base** for fine-tuning: chat templates work out of the box, less data needed.
 - **Quantisation naming**: `unsloth/…-UD-Q4_K_XL` GGUFs are Unsloth *Dynamic* quants — they recover most accuracy lost to standard 4-bit; prefer them over plain Q4.
 - **Train in the precision you serve**: 4-bit serving pairs with QLoRA 4-bit training.
+
+::: {.al-take}
+**Our take.** We stopped chasing the top of the rankings months ago: the crown changes hands weekly and re-plumbing a fleet costs more than the two index points gained. In practice we standardise on one 24-GB-class workhorse per year, run Chapter 16 evals on our own tasks, and only revisit when those numbers — not AA's — say so. Boring, cheap, and it has never let us down.
+:::
 :::
 
 ::: {.fr}
@@ -157,6 +161,10 @@ Règles pratiques :
 - **Instruct plutôt que base** pour le fine-tuning : templates de chat prêts à l'emploi, moins de données nécessaires.
 - **Nomenclature de quantification** : les GGUF `unsloth/…-UD-Q4_K_XL` sont les quants *Dynamic* d'Unsloth — ils récupèrent l'essentiel de la précision perdue par un 4-bit standard ; préférez-les.
 - **Entraînez dans la précision servie** : un service en 4-bit s'apparie à un entraînement QLoRA 4-bit.
+
+::: {.al-take}
+**Notre avis.** Nous avons cessé de courir après la tête des classements depuis des mois : la couronne change de main chaque semaine et refondre toute une flotte coûte plus cher que les deux points d'indice gagnés. En pratique, nous standardisons un cheval de trait par an (classe 24 Go), passons les évals du chapitre 16 sur nos propres tâches, et ne revisitions que quand ces chiffres — pas ceux d'AA — le demandent. Ennuyeux, peu coûteux, et jamais pris en défaut.
+:::
 :::
 
 ::: {.notes}

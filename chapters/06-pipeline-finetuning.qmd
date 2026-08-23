@@ -21,6 +21,10 @@ The Studio home screen walks through four areas. Underlying concepts (from the [
 
 Fine-tuning can inject knowledge *and* behaviour — it can replicate what RAG does, not vice versa. Loss around 0.5–1.0 is typically healthy; loss ≈ 0 means overfitting — check eval loss.
 
+::: {.al-take}
+**Our take.** Fine-tuning is the most fun part of this book and the one we recommend least often. In our experience, 8 out of 10 "we need to fine-tune" requests dissolve once the team writes a real system prompt, a few good few-shot examples, or a small RAG loop. Train when you need *behaviour* the base model refuses to adopt — format discipline, domain tone, tool-calling style — not when you merely need it to know things.
+:::
+
 **The four Studio areas:**
 
 1. **Model & method** — pick modality (text/vision/audio/embeddings), method pill (QLoRA/LoRA/Full), type any HF model name. Gated models (Llama, Gemma) need an HF token, validated inline. Defaults are pre-filled automatically. GGUF files are inference-only — training needs safetensors.
@@ -45,6 +49,10 @@ L'écran d'accueil du Studio parcourt quatre zones. Concepts sous-jacents (d'apr
 | **RL : GRPO / DPO** | Apprentissage par récompenses ou paires de préférence | — | Comportements d'outils, raisonnement, alignement |
 
 Le fine-tuning injecte connaissances *et* comportement — il peut répliquer ce que fait le RAG, pas l'inverse. Une perte autour de 0,5–1,0 est généralement saine ; perte ≈ 0 = surapprentissage — vérifiez la perte d'éval.
+
+::: {.al-take}
+**Notre avis.** Le fine-tuning est la partie la plus amusante de ce livre et celle que nous recommandons le moins souvent. D'expérience, 8 demandes de fine-tuning sur 10 se dissolvent une fois l'équipe dotée d'un vrai prompt système, de quelques bons exemples few-shot ou d'une petite boucle RAG. Entraînez quand vous avez besoin d'un *comportement* que le modèle de base refuse d'adopter — discipline de format, ton métier, style d'appels d'outils — pas quand il suffit qu'il sache des choses.
+:::
 
 **Les quatre zones du Studio :**
 
