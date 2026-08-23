@@ -83,12 +83,26 @@ SLIDES_FMT = """  revealjs:
     highlight-style: github
     embed-resources: true"""
 
+BOOK_SLIDES_FMT = """  revealjs:
+    output-file: book-slides.html
+    theme: [default, al-brand-slides.scss]
+    slide-number: c/t
+    hash-type: number
+    progress: true
+    scrollable: true
+    smaller: true
+    highlight-style: github
+    embed-resources: true"""
+
 DOC_FMT = """  typst:
     output-file: {slug}.pdf
     papersize: a4
     margin:
       x: 1.8cm
       y: 1.8cm
+  docx:
+    output-file: {slug}.docx
+    toc: true
   html:
     output-file: {slug}.html
     toc: true
@@ -148,6 +162,29 @@ def chapter_titles(body, slug):
         return (ten or slug), (tfr or slug)
 
 
+def demote_sections(body, keep):
+        """In the merged volume, demote every heading except the chapter's own
+        EN/FR titles one level, so sections nest under their chapter (pandoc
+        TOC + PDF outline follow suit)."""
+        out = []
+        for line in body.split("\n"):
+                m = re.match(r"^#{2,4} .*?\{#([\w-]+)\}", line)
+                if m and m.group(1) not in keep:
+                        line = "#" + line
+                out.append(line)
+        return "\n".join(out)
+
+
+def title_ids(body):
+        """Ids of the two chapter-title headings (first per language block);
+        None when the fragment has no ## titles (e.g. welcome page)."""
+        ids = []
+        for m in re.finditer(r'::: \{\.(en|fr)\}\n## .*?\{#([\w-]+)\}', body):
+                if len(ids) < 2:
+                        ids.append(m.group(2))
+        return set(ids) if len(ids) == 2 else None
+
+
 def rewrite_foreign_links(body, ids):
         def sub(m):
                 return (
@@ -162,7 +199,7 @@ def rewrite_foreign_links(body, ids):
 
 
 def main():
-        slugs, book = [], []
+        slugs, book, slides = [], [], []
         for raw in order():
                 if raw.startswith("PART"):
                         _, en, fr = (x.strip() for x in raw.split("|"))
@@ -170,6 +207,7 @@ def main():
                                 f"::: {{.en}}\n# {en} {{.unnumbered}}\n:::\n\n"
                                 f"::: {{.fr}}\n# {fr} {{.unnumbered}}\n:::\n\n"
                         )
+                        slides.append(f"# {en} {{.unnumbered}}\n\n# {fr} {{.unnumbered}}\n\n")
                 elif raw.startswith("FILE"):
                         slug = raw.split()[1][:-4]
                         slugs.append(slug)
@@ -182,6 +220,9 @@ def main():
                                 slug_body,
                                 flags=re.S,
                         )
+                        keep = None if slug == "00-bienvenue" else title_ids(body)
+                        if keep:
+                                body = demote_sections(body, keep)
                         strip = (
                                 f"\n\n:::: {{.dl-strip}}\n::: {{.en}}\nThis chapter standalone: "
                                 f"[slides]({slug}-slides.html) · [PDF]({slug}.pdf) · "
@@ -215,6 +256,13 @@ def main():
                                         ).rstrip()
                                         + "\n"
                                 )
+                        slides.append(
+                                rewrite_foreign_links(
+                                        slug_body,
+                                        set(re.findall(r"\{#([\w-]+)\}", slug_body)),
+                                ).rstrip()
+                                + "\n\n"
+                        )
                         with _open(os.path.join(ROOT, f".chh-{slug}.qmd"), "w") as f:
                                 f.write(
                                         FRONT.format(
@@ -233,17 +281,29 @@ def main():
                         )
                         + "".join(book)
                 )
+        with _open(os.path.join(ROOT, ".book-slides.qmd"), "w") as f:
+                f.write(
+                        FRONT.format(
+                                ten="Sovereign Local AI — Slides",
+                                tfr="L'IA locale souveraine — Diapositives",
+                                fmt=BOOK_SLIDES_FMT,
+                        )
+                        + "".join(slides)
+                )
         with _open(os.path.join(ROOT, "_quarto.yml"), "w") as f:
                 f.write(
                         YML.replace(
                                 "{entries}",
-                                "".join(
+                                "\n    - .book-slides.qmd"
+                                + "".join(
                                         f"\n    - .ch-{s}.qmd\n    - .chh-{s}.qmd"
                                         for s in slugs
                                 ),
                         )
                 )
-        print(f"built .book.qmd + {len(slugs)}x(.ch,.chh).qmd + _quarto.yml")
+        print(
+                f"built .book.qmd + .book-slides.qmd + {len(slugs)}x(.ch,.chh).qmd + _quarto.yml"
+        )
 
 
 if __name__ == "__main__":

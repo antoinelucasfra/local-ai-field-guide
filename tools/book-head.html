@@ -50,6 +50,120 @@
   #al-top:hover {
     background: rgba(56, 189, 248, 0.2);
   }
+
+  /* ── sidebar: chapters as collapsible groups ─────────────────── */
+  #TOC {
+    font-size: 0.86rem;
+    border-left: none;
+    padding-left: 0;
+  }
+  #toc-title {
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.75rem;
+    opacity: 0.65;
+  }
+  #TOC ul,
+  #TOC li {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+  /* part dividers */
+  .al-toc-part {
+    margin: 1.1em 0 0.35em;
+    padding-bottom: 0.3em;
+    border-bottom: 1px solid rgba(56, 189, 248, 0.18);
+    font-family: "Space Grotesk", system-ui, sans-serif;
+    font-size: 0.72rem !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #38bdf8 !important;
+  }
+  .al-toc-part:first-child {
+    margin-top: 0;
+  }
+  /* front-matter items outside any chapter group */
+  #TOC > ul > li > a.nav-link {
+    display: block;
+    padding: 0.22rem 0.5rem;
+    border-left: 2px solid transparent;
+  }
+  /* collapsible chapter */
+  .al-toc-ch {
+    margin-top: 0.15rem;
+  }
+  .al-toc-ch > summary {
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+    padding: 0.32rem 0.5rem;
+    cursor: pointer;
+    border-left: 2px solid transparent;
+    border-radius: 0 6px 6px 0;
+    font-weight: 600;
+    line-height: 1.3;
+    user-select: none;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease;
+  }
+  .al-toc-ch > summary::-webkit-details-marker {
+    display: none;
+  }
+  .al-toc-ch > summary::before {
+    content: "›";
+    flex: none;
+    width: 0.8em;
+    color: rgba(56, 189, 248, 0.7);
+    transform: rotate(0deg);
+    transition: transform 0.18s ease;
+  }
+  .al-toc-ch[open] > summary::before {
+    transform: rotate(90deg);
+  }
+  .al-toc-ch > summary:hover {
+    background: rgba(56, 189, 248, 0.09);
+    border-left-color: rgba(56, 189, 248, 0.4);
+  }
+  .al-toc-ch.al-here > summary {
+    color: #38bdf8;
+    border-left-color: #38bdf8;
+  }
+  /* sections inside a chapter */
+  .al-toc-ch > ul {
+    padding: 0.1rem 0 0.25rem 1.55rem;
+  }
+  .al-toc-ch > ul a.nav-link {
+    display: block;
+    padding: 0.16rem 0.5rem;
+    border-left: 2px solid transparent;
+    border-radius: 0 6px 6px 0;
+    line-height: 1.35;
+    opacity: 0.82;
+    transition:
+      background 0.15s ease,
+      border-color 0.15s ease,
+      opacity 0.15s ease;
+  }
+  .al-toc-ch > ul a.nav-link:hover {
+    background: rgba(56, 189, 248, 0.09);
+    opacity: 1;
+  }
+  a.nav-link.active,
+  .al-toc-ch > ul a.nav-link.active {
+    color: #38bdf8 !important;
+    border-left-color: #38bdf8;
+    opacity: 1;
+    background: rgba(56, 189, 248, 0.07);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #TOC * {
+      transition: none !important;
+    }
+  }
 </style>
 <div id="al-progress" aria-hidden="true"></div>
 <button id="al-top" aria-label="Back to top">↑</button>
@@ -70,6 +184,112 @@
     );
     btn.addEventListener("click", function () {
       scrollTo({ top: 0, behavior: "smooth" });
+    });
+  })();
+
+  // ── nest the flat TOC: parts as dividers, chapters as collapsible groups ──
+  (function () {
+    var nav = document.getElementById("TOC");
+    if (!nav) return;
+    var links = [].slice.call(nav.querySelectorAll("li > a.nav-link"));
+    if (!links.length) return;
+
+    var level = {};
+    links.forEach(function (a) {
+      var t = document.getElementById(
+        decodeURIComponent(a.getAttribute("href").slice(1)),
+      );
+      var lv = t
+        ? /(^|\s)level([123])(\s|$)/.test(t.className)
+          ? RegExp.$2
+          : t.tagName.replace("H", "")
+        : "3";
+      level[a] = +lv < 3 ? +lv : 3;
+    });
+
+    function link(a) {
+      var li = document.createElement("li");
+      li.appendChild(a.cloneNode(true));
+      return li;
+    }
+
+    var out = document.createElement("ul");
+    var cur = null, // open chapter <details>
+      curList = null,
+      curWrap = null,
+      hadChild = false;
+
+    function closeGroup() {
+      if (!cur) return;
+      if (!hadChild) {
+        // childless group -> plain link, no collapsible chrome
+        var li = document.createElement("li");
+        var src = cur.querySelector("summary");
+        var a = links.filter(function (x) {
+          return x.textContent === src.textContent;
+        })[0];
+        if (a) li.appendChild(a.cloneNode(true));
+        else li.textContent = src.textContent;
+        curWrap.replaceWith(li);
+      }
+      cur = curList = curWrap = null;
+      hadChild = false;
+    }
+
+    links.forEach(function (a) {
+      var lv = level[a];
+      if (cur && lv < 3) closeGroup();
+      if (lv === 1) {
+        var p = document.createElement("li");
+        p.className = "al-toc-part";
+        p.textContent = a.textContent.replace(/\s*\{#[^}]*\}\s*/, "");
+        out.appendChild(p);
+        cur = curList = null;
+      } else if (lv === 2) {
+        var det = document.createElement("details");
+        det.className = "al-toc-ch";
+        var sum = document.createElement("summary");
+        sum.textContent = a.textContent;
+        var ul = document.createElement("ul");
+        det.appendChild(sum);
+        det.appendChild(ul);
+        var wrap = document.createElement("li");
+        wrap.appendChild(det);
+        out.appendChild(wrap);
+        cur = det;
+        curList = ul;
+        curWrap = wrap;
+        hadChild = false;
+      } else if (cur) {
+        curList.appendChild(link(a).firstChild);
+        hadChild = true;
+      } else if (lv === 2) {
+        out.appendChild(link(a)); // childless chapter shown flat
+      } else {
+        out.appendChild(link(a)); // front matter before first chapter
+      }
+    });
+    closeGroup();
+    nav.replaceChild(out, nav.querySelector("ul"));
+
+    // keep the chapter holding the active section open + highlighted
+    function sync() {
+      var act = nav.querySelector("a.nav-link.active");
+      if (!act) return;
+      nav.querySelectorAll("details.al-toc-ch").forEach(function (d) {
+        d.classList.remove("al-here");
+      });
+      var d = act.closest("details.al-toc-ch");
+      if (d) {
+        d.open = true;
+        d.classList.add("al-here");
+      }
+    }
+    sync();
+    new MutationObserver(sync).observe(nav, {
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["class"],
     });
   })();
 </script>
