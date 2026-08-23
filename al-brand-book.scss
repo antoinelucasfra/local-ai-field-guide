@@ -1,0 +1,108 @@
+// al-brand-book — book-specific layer on top of the AL Brand extension.
+// Same identity (sky accent, Space Grotesk / DM Sans / JetBrains Mono),
+// tuned for long-form reading: part dividers, chapter accents, download
+// pills, reading-width TOC polish. Loaded after al-brand-light/dark so
+// these rules win.
+
+/*-- scss:rules --*/
+
+$al-sky: #38BDF8;
+$al-teal: #2DD4BF;
+
+// ── Part dividers (h1.unnumbered from _order.txt PART lines) ────────────
+h1.unnumbered {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 2.1rem;
+  letter-spacing: -0.02em;
+  margin-top: 4rem;
+  padding-bottom: 0.6rem;
+  border-bottom: none;
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 5.5rem;
+    height: 3px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, $al-sky, transparent);
+  }
+}
+
+// ── Chapter headings: quiet sky bar instead of heavy rule ───────────────
+h2 {
+  font-family: "Space Grotesk", sans-serif;
+  letter-spacing: -0.01em;
+}
+
+// ── Chapter download strip → pill buttons ───────────────────────────────
+.dl-strip {
+  margin: 2.25rem 0;
+  padding: 0.9rem 1.1rem;
+  background: rgba(56, 189, 248, 0.06);
+  border: 1px solid rgba(56, 189, 248, 0.25);
+  border-left: 3px solid $al-sky;
+  border-radius: 10px;
+  font-size: 0.92rem;
+
+  p {
+    margin-bottom: 0;
+
+    // label text before first link stays muted
+    &:first-line { color: inherit; }
+  }
+
+  a {
+    display: inline-block;
+    margin: 0.15rem 0.35rem 0.15rem 0;
+    padding: 0.18rem 0.75rem;
+    border-radius: 999px;
+    font-family: "JetBrains Mono", monospace;
+    font-size: 0.8rem;
+    text-decoration: none;
+    color: $al-sky;
+    background: rgba(56, 189, 248, 0.12);
+    border: 1px solid rgba(56, 189, 248, 0.35);
+    transition: background 0.15s ease, transform 0.15s ease;
+
+    &:hover {
+      background: rgba(56, 189, 248, 0.22);
+      transform: translateY(-1px);
+      color: $al-sky;
+    }
+  }
+}
+
+// ── TOC: sky active marker ──────────────────────────────────────────────
+#TOC ul li a {
+  border-left: 2px solid transparent;
+
+  &:hover,
+  &.active {
+    color: $al-sky;
+    border-left-color: $al-sky;
+  }
+}
+
+// ── Tables: subtle header band matching brand surfaces ──────────────────
+table {
+  thead th {
+    background: rgba(139, 148, 158, 0.08);
+    font-family: "Space Grotesk", sans-serif;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+  }
+}
+
+// ── Inline code + kbd keep JetBrains Mono identity ──────────────────────
+code, kbd {
+  font-family: "JetBrains Mono", monospace;
+}
+
+// ── Blockquote: teal left rail (brand info color) for research notes ────
+blockquote {
+  border-left: 3px solid $al-teal;
+  font-style: normal;
+}

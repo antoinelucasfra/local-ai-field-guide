@@ -1,0 +1,19 @@
+{
+  "id": "b72bcb202",
+  "name": "render EN final",
+  "command": "cd /home/tonio/project/localai-review && rm -rf _render/en && quarto render --profile en > /tmp/render-en.log 2>&1; echo \"exit=$?\"; ls _render/en/book.html _render/en/00-bienvenue-slides.html && grep -c \"dl-strip\" _render/en/book.html",
+  "status": "completed",
+  "outputPath": ".pi/tasks/session-279233-279233/b72bcb202.output",
+  "cwd": "/home/tonio/project/localai-review",
+  "startTime": 1787496935630,
+  "endTime": 1787497403287,
+  "exitCode": 0,
+  "signal": null,
+  "pid": 364527,
+  "bytesWritten": 67,
+  "isAgent": false,
+  "notified": true,
+  "notifyOnCompletion": true,
+  "triggerOnCompletion": true,
+  "timeoutSeconds": 1800
+}

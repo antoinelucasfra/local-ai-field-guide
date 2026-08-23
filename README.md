@@ -68,6 +68,7 @@ Write each language variant inside its div (`::: {.en}` / `::: {.fr}`); keep hea
 ## Conventions
 
 - Slide decks follow slidecrafting defaults: numbered hash URLs (`#/3`), progress bar, scrollable overflow for wide tables, `smaller` density, github highlighting.
+- **Branding**: `_extensions/antoinelucasfra/al-brand` (personal Quarto brand extension) supplies palette + typography (light/dark). `al-brand-book.scss` layers book-specific styling on top (part dividers, download pills, TOC/table polish); `al-brand-slides.scss` ports the identity to revealjs decks.
 - **Speaker notes**: chapters 1–7 carry bilingual presenter notes in `::: {.notes}` blocks — visible in reveal's presenter view (`S`), automatically stripped from book/pdf/html by the builder.
 - Chapter 3 embeds a **WebLLM zero-install demo** (model runs in the browser via WebGPU); serve `_render/<lang>/` over HTTP for it to load.
 - Benchmarks/product facts are an early-2026 snapshot (sources in Annex B); method chapters (5, 7, 13, 16) are durable.

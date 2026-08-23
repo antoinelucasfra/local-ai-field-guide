@@ -1,46 +1,184 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Sovereign Local AI — Le guide de référence / The Reference Guide</title>
-<style>
-  :root { color-scheme: light dark; }
-  body {
-    font-family: system-ui, -apple-system, sans-serif;
-    max-width: 44rem; margin: 0 auto; padding: 3rem 1.5rem;
-    line-height: 1.6;
-  }
-  h1 { font-size: 1.6rem; margin-bottom: .25rem; }
-  p.sub { opacity: .7; margin-top: 0; }
-  .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0; }
-  a.card {
-    display: block; padding: 1.5rem; border-radius: 12px;
-    border: 1px solid #8884; text-decoration: none; color: inherit;
-  }
-  a.card:hover { border-color: currentColor; }
-  a.card b { font-size: 1.2rem; }
-  ul { padding-left: 1.2rem; }
-  footer { margin-top: 3rem; font-size: .85rem; opacity: .6; }
-  @media (max-width: 34rem) { .cards { grid-template-columns: 1fr; } }
-</style>
-</head>
-<body>
-<h1>Sovereign Local AI</h1>
-<p class="sub">L'IA locale souveraine — le guide de référence · the reference guide — 19 chapters, 5 parts, bilingual.</p>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>
+      Sovereign Local AI — Le guide de référence / The Reference Guide
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=DM+Sans:ital,wght@0,400;0,500;1,400&family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --void: #0f1117;
+        --surface: #161b22;
+        --surface-mid: #1c2128;
+        --border: #30363d;
+        --ink: #e6edf3;
+        --muted: #8b949e;
+        --sky: #38bdf8;
+        --sky-light: #7dd3fc;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        padding: 0 1.5rem;
+        background:
+          radial-gradient(
+            60rem 30rem at 80% -10%,
+            rgba(56, 189, 248, 0.08),
+            transparent 60%
+          ),
+          var(--void);
+        color: var(--ink);
+        font-family: "DM Sans", system-ui, sans-serif;
+        line-height: 1.6;
+      }
+      main {
+        max-width: 44rem;
+        margin: 0 auto;
+        padding: 4rem 0 3rem;
+      }
+      h1 {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: clamp(1.8rem, 5vw, 2.6rem);
+        letter-spacing: -0.02em;
+        margin: 0 0 0.25rem;
+      }
+      h1 .accent {
+        color: var(--sky);
+      }
+      p.sub {
+        color: var(--muted);
+        margin-top: 0;
+        font-size: 1.05rem;
+      }
+      code {
+        font-family: "JetBrains Mono", monospace;
+        font-size: 0.85em;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        border-radius: 4px;
+        padding: 0.1em 0.35em;
+        color: #79c0ff;
+      }
+      .cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        margin: 2.5rem 0;
+      }
+      a.card {
+        display: block;
+        padding: 1.5rem;
+        border-radius: 12px;
+        background: var(--surface);
+        border: 1px solid var(--border);
+        text-decoration: none;
+        color: inherit;
+        transition:
+          transform 0.15s ease,
+          border-color 0.15s ease;
+      }
+      a.card:hover {
+        transform: translateY(-3px);
+        border-color: var(--sky);
+      }
+      a.card b {
+        font-family: "Space Grotesk", sans-serif;
+        font-size: 1.15rem;
+        display: block;
+        margin-bottom: 0.35rem;
+      }
+      a.card span {
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      a {
+        color: var(--sky-light);
+        text-decoration-color: rgba(125, 211, 252, 0.35);
+      }
+      a:hover {
+        color: var(--sky);
+      }
+      ul {
+        padding-left: 1.2rem;
+        color: var(--muted);
+      }
+      ul li::marker {
+        color: var(--sky);
+      }
+      footer {
+        margin-top: 3rem;
+        font-size: 0.85rem;
+        color: var(--muted);
+        border-top: 1px solid var(--border);
+        padding-top: 1.25rem;
+      }
+      @media (max-width: 34rem) {
+        .cards {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main>
+      <h1>Sovereign <span class="accent">Local AI</span></h1>
+      <p class="sub">
+        L'IA locale souveraine — le guide de référence · the reference guide —
+        19 chapters, 5 parts, bilingual.
+      </p>
 
-<div class="cards">
-  <a class="card" href="fr/book.html"><b>🇫🇷 Lire en français</b><br>L'IA locale souveraine — livre complet</a>
-  <a class="card" href="en/book.html"><b>🇬🇧 Read in English</b><br>Sovereign Local AI — full book</a>
-</div>
+      <div class="cards">
+        <a class="card" href="fr/book.html"
+          ><b>🇫🇷 Lire en français</b
+          ><span>L'IA locale souveraine — livre complet</span></a
+        >
+        <a class="card" href="en/book.html"
+          ><b>🇬🇧 Read in English</b
+          ><span>Sovereign Local AI — full book</span></a
+        >
+      </div>
 
-<p>Chaque édition contient aussi, chapitre par chapitre : <em>slides</em> reveal.js, PDF et HTML autonome (liens de téléchargement en fin de chapitre). Les versions complètes (PDF / EPUB / DOCX + site entier) sont disponibles dans les <a href="https://github.com/antoinelucasfra/localai-review/releases">releases GitHub</a>.</p>
+      <p>
+        Chaque édition contient aussi, chapitre par chapitre :
+        <em>slides</em> reveal.js, PDF et HTML autonome (liens de téléchargement
+        en fin de chapitre). Les versions complètes (PDF / EPUB / DOCX + site
+        entier) sont disponibles dans les
+        <a href="https://github.com/antoinelucasfra/localai-review/releases"
+          >releases GitHub</a
+        >.
+      </p>
 
-<ul>
-  <li>Chapitre phare : <a href="en/book.html#agents">local coding agents &amp; harnesses</a> · démo WebLLM zéro-install dans le <a href="en/book.html#ecosysteme">chapitre écosystème</a></li>
-  <li>Sources : <a href="https://github.com/antoinelucasfra/localai-review">github.com/antoinelucasfra/localai-review</a></li>
-</ul>
+      <ul>
+        <li>
+          Chapitre phare :
+          <a href="en/book.html#agents">local coding agents &amp; harnesses</a>
+          · démo WebLLM zéro-install dans le
+          <a href="en/book.html#ecosysteme">chapitre écosystème</a>
+        </li>
+        <li>
+          Sources :
+          <a href="https://github.com/antoinelucasfra/localai-review"
+            >github.com/antoinelucasfra/localai-review</a
+          >
+        </li>
+      </ul>
 
-<footer>Rendered with Quarto · deployed automatically on every push to <code>main</code>.</footer>
-</body>
+      <footer>
+        Rendered with Quarto · themed with
+        <a href="https://github.com/antoinelucasfra/quarto-al-brand"
+          >al-brand</a
+        >
+        · deployed on every push to <code>main</code>.
+      </footer>
+    </main>
+  </body>
 </html>

@@ -1,0 +1,20 @@
+{
+  "id": "b6fe4aba5",
+  "name": "render EN full brand",
+  "command": "cd /home/tonio/project/localai-review && rm -rf _render/en && quarto render --profile en 2>&1 | grep -iE \"error|warn|output to|pandoc\" | head -30; echo \"render-exit=$?\"; ls _render/en/book.html _render/en/00-bienvenue-slides.html",
+  "status": "failed",
+  "outputPath": ".pi/tasks/session-279233-279233/b6fe4aba5.output",
+  "cwd": "/home/tonio/project/localai-review",
+  "startTime": 1787495664384,
+  "endTime": 1787495746581,
+  "exitCode": 2,
+  "signal": null,
+  "pid": 303303,
+  "bytesWritten": 553,
+  "isAgent": false,
+  "error": "Exited with code 2",
+  "notified": true,
+  "notifyOnCompletion": true,
+  "triggerOnCompletion": true,
+  "timeoutSeconds": 900
+}

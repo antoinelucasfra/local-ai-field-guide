@@ -1,0 +1,19 @@
+{
+  "id": "b0071ec42",
+  "name": "render EN brand test",
+  "command": "cd /home/tonio/project/localai-review && rm -rf _render/en && quarto render --profile en 2>&1 | tail -15",
+  "status": "killed",
+  "outputPath": ".pi/tasks/session-279233-279233/b0071ec42.output",
+  "cwd": "/home/tonio/project/localai-review",
+  "startTime": 1787495249816,
+  "endTime": 1787495645700,
+  "exitCode": null,
+  "signal": "SIGTERM",
+  "pid": 299742,
+  "bytesWritten": 0,
+  "isAgent": false,
+  "notified": true,
+  "notifyOnCompletion": true,
+  "triggerOnCompletion": true,
+  "timeoutSeconds": 900
+}

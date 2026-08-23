@@ -3,7 +3,7 @@ name: book
 on:
   push:
     branches: [main]
-    tags: ['v*']
+    tags: ["v*"]
   pull_request:
   workflow_dispatch:
 
@@ -22,10 +22,10 @@ jobs:
       - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
       - uses: actions/setup-python@751276eafca55f10f252026015f43c488f2322ba # v6
         with:
-          python-version: '3.12'
+          python-version: "3.12"
       - uses: quarto-dev/quarto-actions/setup@91dabb203fce7f899d10ef8e482d94b00f397cbc # v2
         with:
-          version: 1.8.24
+          version: 1.10.18
       - name: Render EN (CI check)
         run: quarto render --profile en
       # FR only when the render actually gets shipped, not on every PR
@@ -69,7 +69,7 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     permissions:
-      contents: write   # create release + upload assets
+      contents: write # create release + upload assets
     steps:
       - uses: actions/download-artifact@484a0b528fb4d7bd804637ccb632e47a0e638317 # v4
         with:
