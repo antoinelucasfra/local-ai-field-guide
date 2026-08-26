@@ -311,8 +311,7 @@ def main():
                                                 ext_filters=EXT_FILTERS,
                                                 **meta,
                                         )
-                                        + sbody.rstrip()
-                                        + f"\n\n---\n\n::: {{.en}}\n*Found an error or something outdated? [Suggest an edit to this chapter]({REPO_SRC}{slug}.qmd) on GitHub.*\n:::\n\n::: {{.fr}}\n*Une erreur ou un passage dépassé ? [Proposez une modification de ce chapitre]({REPO_SRC}{slug}.qmd) sur GitHub.*\n:::\n"
+                                        + add_standalone_links(sbody, slug).rstrip()
                                         + "\n"
                                 )
 
