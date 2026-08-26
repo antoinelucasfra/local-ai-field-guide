@@ -211,10 +211,15 @@ img.quarto-figure {
 }
 
 figcaption {
-  color: #8b949e;
+  /* AA: 6.3:1 on white; dark mode keeps the lighter muted gray (7:1 on near-black) */
+  color: #57606a;
   font-size: 0.9rem;
   line-height: 1.5;
   margin-top: 0.7rem;
+}
+
+[data-bs-theme="dark"] figcaption {
+  color: #8b949e;
 }
 
 // ── Inline code + kbd keep JetBrains Mono identity ──────────────────────

@@ -20,8 +20,59 @@ Save locally or push to the Hugging Face Hub (write token needed). Deployment op
 - **Chat inside Studio** — instant, nothing to deploy.
 - **Ollama**: `ollama create assistant -f Modelfile` from the exported GGUF, then `ollama serve`.
 - **llama-server / vLLM**: OpenAI-compatible HTTP endpoints for apps.
-- **Unsloth as API server**: `unsloth run --model unsloth/qwen3.8-27B-GGUF-GGUF:UD-Q4_K_XL --temp 1.0 --top-p 0.95` — serves the loaded model with sampling settings, context sizing, GPU layers configurable.
+- **Unsloth as API server**: `unsloth run --model unsloth/qwen3.8-27B-GGUF-GGUF:UD-Q4_K_XL --temp 1.0 --top-p 0.95` — serves the loaded model with configurable sampling settings, context size and GPU layers.
 - **Remote access**: `-H 0.0.0.0` on LAN, or `unsloth studio --secure` for HTTPS via Cloudflare tunnel.
+
+### Quantisation cheat-sheet {#export-quants}
+
+Not all GGUF quantisations are equal. Sizes are approximate fractions of the 16-bit original[^ch09-quants]:
+
+| Quant | Size | Quality | When |
+|---|---|---|---|
+| `Q2_K` | ~20 % | noticeably degraded | emergency CPU-only fits; avoid for production |
+| `Q3_K_M` | ~25 % | usable, lossy | tight VRAM ceilings |
+| `Q4_K_M` | ~31 % | sweet spot | the classic default |
+| **`UD-Q4_K_XL`** | ~32 % | recovers most 4-bit loss | **recommended default** (Unsloth Dynamic) |
+| `Q5_K_M` | ~36 % | near-transparent | quality-critical single-user serving |
+| `Q6_K` | ~41 % | very close to fp16 | reference comparisons |
+| `Q8_0` | ~53 % | effectively lossless | A/B baseline to judge lower quants against |
+
+Rule: pick the largest quant your hardware serves at acceptable speed, then verify on your golden set ([§ Evaluate](#evaluate)) — labels lie less than averages do.
+
+### Serving from the GGUF {#export-serving}
+
+Ollama wrapper with a baked-in persona and sampling:
+
+```bash
+cat > Modelfile <<'EOF'
+FROM ./assistant-UD-Q4_K_XL.gguf
+PARAMETER temperature 0.7
+SYSTEM """You answer internal IT questions. Cite the procedure name. Refuse anything else."""
+EOF
+ollama create assistant -f Modelfile && ollama serve
+```
+
+Raw llama.cpp for full control:
+
+```bash
+llama-server -m assistant-UD-Q4_K_XL.gguf -c 32768 -ngl 99 --port 8080
+```
+
+`-ngl 99` pushes every layer to GPU; `-c` is the context window — size it to your worst-case prompt, not your average one ([§ Inference parameters](#params)).
+
+### Choosing the target {#export-choice}
+
+| Situation | Target |
+|---|---|
+| You alone, iterating | Studio chat — nothing to deploy |
+| Team of ≤ 10 on one machine | Ollama or llama-server on the GPU box |
+| Application backend | llama-server / Unsloth API server (OpenAI-compatible) |
+| Many concurrent users, high throughput | vLLM on merged 16-bit weights — [§ Team serving](#serving) |
+| Air-gapped distribution | GGUF file + Modelfile in a versioned archive |
+
+::: {.al-take}
+**Our take.** The GGUF with a UD quantisation is the portable currency of this whole stack: it runs everywhere, survives tool churn, and drops into Ollama, llama.cpp or Studio unchanged. We keep merged 16-bit masters archived like source code and treat exported GGUFs as build artefacts — rebuildable, disposable, versioned by dataset hash and recipe version, never hand-edited.
+:::
 :::
 
 ::: {.fr}
@@ -40,4 +91,57 @@ Sauvegarde locale ou publication sur le Hub Hugging Face (token d'écriture requ
 - **llama-server / vLLM** : endpoints HTTP compatibles OpenAI pour vos applications.
 - **Unsloth comme serveur d'API** : `unsloth run --model unsloth/qwen3.8-27B-GGUF-GGUF:UD-Q4_K_XL --temp 1.0 --top-p 0.95` — sert le modèle chargé avec échantillonnage, contexte, couches GPU configurables.
 - **Accès distant** : `-H 0.0.0.0` sur le LAN, ou `unsloth studio --secure` pour du HTTPS via tunnel Cloudflare.
+
+### Aide-mémoire des quantifications {#export-quants}
+
+Toutes les quantifications GGUF ne se valent pas. Tailles en fractions approximatives du modèle 16-bit d'origine[^ch09-quants] :
+
+| Quant | Taille | Qualité | Quand |
+|---|---|---|---|
+| `Q2_K` | ~20 % | nettement dégradée | dépannage CPU-only ; à éviter en production |
+| `Q3_K_M` | ~25 % | utilisable, perte sensible | plafonds VRAM serrés |
+| `Q4_K_M` | ~31 % | compromis classique | le choix par défaut classique |
+| **`UD-Q4_K_XL`** | ~32 % | récupère l'essentiel de la perte 4-bit | **par défaut recommandé** (Unsloth Dynamic) |
+| `Q5_K_M` | ~36 % | quasi transparente | service mono-utilisateur exigeant |
+| `Q6_K` | ~41 % | très proche du fp16 | comparaisons de référence |
+| `Q8_0` | ~53 % | quasi sans perte | base A/B pour juger les quants inférieurs |
+
+Règle : prenez la plus grande quant que votre matériel peut servir à vitesse acceptable, puis vérifiez sur votre jeu de référence ([§ Évaluer](#evaluate)) — les étiquettes mentent moins que les moyennes.
+
+### Servir depuis le GGUF {#export-serving}
+
+Wrapper Ollama avec persona et échantillonnage intégrés :
+
+```bash
+cat > Modelfile <<'EOF'
+FROM ./assistant-UD-Q4_K_XL.gguf
+PARAMETER temperature 0.7
+SYSTEM """Tu réponds aux questions IT internes. Cite le nom de la procédure. Refuse le reste."""
+EOF
+ollama create assistant -f Modelfile && ollama serve
+```
+
+llama.cpp brut pour un contrôle total :
+
+```bash
+llama-server -m assistant-UD-Q4_K_XL.gguf -c 32768 -ngl 99 --port 8080
+```
+
+`-ngl 99` pousse toutes les couches sur GPU ; `-c` est la fenêtre de contexte — dimensionnez-la sur votre pire prompt, pas sur votre moyenne ([§ Paramètres d'inférence](#params)).
+
+### Choisir la cible {#export-choice}
+
+| Situation | Cible |
+|---|---|
+| Vous seul, en itération | Chat Studio — rien à déployer |
+| Équipe ≤ 10 sur une machine | Ollama ou llama-server sur le poste GPU |
+| Backend d'application | llama-server / serveur API Unsloth (compatible OpenAI) |
+| Nombreux utilisateurs simultanés, haut débit | vLLM sur poids fusionnés 16-bit — [§ Service en équipe](#serving) |
+| Distribution hors ligne | fichier GGUF + Modelfile dans une archive versionnée |
+
+::: {.al-take}
+**Notre avis.** Le GGUF en quantification UD est le dénominateur commun de toute cette stack : il tourne partout, survit à l'évolution des outils, et se dépose tel quel dans Ollama, llama.cpp ou le Studio. Nous archivons les maîtres fusionnés 16-bit comme du code source et traitons les GGUF exportés comme des artefacts de build — reconstruisibles, jetables, versionnés par hash de dataset et version de recette, jamais retouchés à la main.
 :::
+:::
+
+[^ch09-quants]: Measured bits-per-weight on Llama-3.1-8B from the llama.cpp quantization reference (github.com/ggml-org/llama.cpp, tools/quantize/README.md): Q4_K_M 4.89 bpw ≈ 31 % of F16, Q6_K 6.56 ≈ 41 %, Q8_0 8.50 ≈ 53 %, Q2_K 3.16 ≈ 20 %. Fractions vary by model architecture; always check the actual file size.

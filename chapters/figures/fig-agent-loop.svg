@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="250" viewBox="0 0 760 250" role="img" font-family="DM Sans, sans-serif">
+<title>Coding agent harness loop: the harness sends conversation and tool results to the local model endpoint, receives tool calls, executes them against files, shell and git on-premise, and loops until done — code never leaves the machine</title>
+<rect width="760" height="250" rx="12" fill="#ffffff"/>
+<defs>
+<marker id="aa" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#57606a"/></marker>
+<marker id="ao" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#f97316"/></marker>
+</defs>
+<!-- trust boundary -->
+<rect x="420" y="40" width="310" height="180" rx="14" fill="none" stroke="#14b8a6" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="575" y="62" font-size="12" fill="#14b8a6" text-anchor="middle" font-weight="700" letter-spacing="1">ON-PREMISE</text>
+<!-- agent harness -->
+<g stroke="#24292f" stroke-width="1.5"><rect x="40" y="80" width="170" height="70" rx="10" fill="#fff4ec"/></g>
+<g font-size="13" fill="#24292f" text-anchor="middle" font-weight="600">
+<text x="125" y="108">Agent harness</text><text x="125" y="126" font-weight="normal" fill="#57606a" font-size="11.5">pi · Claude Code · OpenCode</text>
+</g>
+<!-- endpoint -->
+<g stroke="#24292f" stroke-width="1.5"><rect x="270" y="80" width="120" height="70" rx="10" fill="#f97316" opacity="0.16"/></g>
+<g font-size="12.5" fill="#24292f" text-anchor="middle" font-weight="600">
+<text x="330" y="105">Local endpoint</text><text x="330" y="121" font-weight="normal" fill="#57606a" font-size="11">OpenAI / Anthropic API</text><text x="330" y="136" font-weight="normal" fill="#57606a" font-size="11">localhost:8888</text>
+</g>
+<!-- tools -->
+<g stroke="#24292f" stroke-width="1.5">
+<rect x="460" y="84" width="110" height="42" rx="10" fill="#eef1f6"/>
+<rect x="460" y="138" width="110" height="42" rx="10" fill="#eef1f6"/>
+<rect x="600" y="84" width="110" height="42" rx="10" fill="#eef1f6"/>
+<rect x="600" y="138" width="110" height="42" rx="10" fill="#14b8a6" opacity="0.16"/>
+</g>
+<g font-size="12" fill="#24292f" text-anchor="middle" font-weight="600">
+<text x="515" y="109">read / edit files</text><text x="515" y="163">run shell</text>
+<text x="655" y="109">git</text><text x="655" y="163">tests</text>
+</g>
+<!-- arrows -->
+<path d="M 210 104 C 235 98 245 98 266 102" fill="none" stroke="#57606a" stroke-width="1.6" marker-end="url(#aa)"/>
+<text x="238" y="88" font-size="11" fill="#57606a" text-anchor="middle">prompt + context</text>
+<path d="M 266 128 C 245 134 235 133 214 127" fill="none" stroke="#f97316" stroke-width="1.6" marker-end="url(#ao)"/>
+<text x="239" y="148" font-size="11" fill="#f97316" text-anchor="middle">tool calls</text>
+<path d="M 390 115 C 420 115 430 110 456 106" fill="none" stroke="#57606a" stroke-width="1.6" marker-end="url(#aa)"/>
+<path d="M 460 160 C 435 175 415 165 392 145" fill="none" stroke="#f97316" stroke-width="1.6" marker-end="url(#ao)"/>
+<text x="425" y="196" font-size="11" fill="#f97316" text-anchor="middle">results back into context → loop until done</text>
+<text x="575" y="236" font-size="11.5" fill="#14b8a6" text-anchor="middle" font-weight="600">code, prompts and diffs never cross the dashed line</text>
+</svg>

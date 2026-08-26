@@ -33,8 +33,86 @@ model.save_pretrained_gguf("gguf/", tokenizer)
 
 ::: {.en}
 CLI equivalents exist for automation: `unsloth train`, `unsloth inference`, `unsloth export`, `unsloth list-checkpoints`. Studio configs saved as YAML can be replayed headlessly — CI-friendly.
+
+### Installing {#core-install}
+
+Linux or WSL2 with a CUDA 12.x driver:
+
+```bash
+pip install unsloth
+```
+
+Pin the version in your project (`pip freeze | grep unsloth`) — the stack moves fast and reproducibility beats novelty. No GPU on the machine that writes the code? The same script runs unchanged on a rented GPU box; only data must be copied there, never the other way round if the corpus is sensitive.
+
+### From snippet to production run {#core-walkthrough}
+
+The listing above is the skeleton. A production run adds four things:
+
+1. **A real dataset file** — JSONL with one instruction/output pair per line, produced by [§ Data Recipes](#data) or hand-curated. Hash it and record the hash next to the config: `sha256sum internal_corpus.jsonl > corpus.sha256`.
+2. **Deliberate hyperparameters** — `r=16` is a starting point, not a decision; learning rate, epochs and rank rationale live in [§ Hyperparameters](#hyper).
+3. **Evaluation before promotion** — score pass@1 against your golden set before the adapter goes anywhere near production ([§ Evaluate](#evaluate)):
+
+```python
+FastLanguageModel.for_inference(model)
+for task in load_dataset("json", data_files="golden_set.jsonl")["train"]:
+    out = generate(task["instruction"])   # score against task["reference"]
+```
+
+4. **Versioned export** — `save_pretrained_gguf` output plus the YAML config and dataset hash in one archive ([§ Export](#export)).
+
+### Common failures {#core-failures}
+
+| Symptom | Usual cause | Fix |
+|---|---|---|
+| CUDA out of memory | sequence length × batch too big for VRAM | lower `max_seq_length`, batch to 1 + gradient accumulation |
+| Loss is 0 or NaN | learning rate too high, or broken chat template | drop LR an order of magnitude; verify tokenizer template |
+| Gibberish after merge/export | template mismatch between train and inference | train and serve with the *same* template; test before deploying |
+| Training crawls | gradient checkpointing / flash attention off | enable both; check layer offloading (`-ngl` on llama.cpp) at inference |
+
+::: {.al-take}
+**Our take.** Stay on the Studio GUI until you retrain weekly — then the Python path pays for itself in one afternoon of automation. The moment training becomes a script, it also becomes CI: dataset hash in, evaluated adapter out, no human clicking through screens at midnight before a deadline. That last part is where sovereign AI actually gets boring — which is the compliment.
+:::
 :::
 
 ::: {.fr}
-Des équivalents CLI existent pour l'automatisation : `unsloth train`, `unsloth inference`, `unsloth export`, `unsloth list-checkpoints`. Les configs YAML du Studio se rejouent sans interface — compatible CI.
+Des équivalents CLI existent pour l'automatisation : `unsloth train`, `unsloth inference`, `unsloth export`, `unsloth list-checkpoints`. Les configs YAML du Studio se rejouent en headless — idéal en CI.
+
+### Installation {#core-install}
+
+Linux ou WSL2 avec pilote CUDA 12.x :
+
+```bash
+pip install unsloth
+```
+
+Figez la version dans votre projet (`pip freeze | grep unsloth`) — la stack avance vite et la reproductibilité bat la nouveauté. Pas de GPU sur la machine qui écrit le code ? Le même script tourne à l'identique sur un GPU loué ; seules les données y sont copiées, jamais l'inverse si le corpus est sensible.
+
+### De l'extrait au run de production {#core-walkthrough}
+
+Le listing ci-dessus est le squelette. Un run de production ajoute quatre choses :
+
+1. **Un vrai fichier de données** — JSONL avec une paire instruction/sortie par ligne, produit par [§ Data Recipes](#data) ou curé à la main. Hashez-le et consignez le hash près de la config : `sha256sum internal_corpus.jsonl > corpus.sha256`.
+2. **Des hyperparamètres choisis** — `r=16` est un point de départ, pas une décision ; taux d'apprentissage, époques et logique du rang vivent au [§ Hyperparamètres](#hyper).
+3. **Évaluation avant promotion** — scorez le pass@1 sur votre jeu de référence avant de pousser l'adaptateur vers la production ([§ Évaluer](#evaluate)) :
+
+```python
+FastLanguageModel.for_inference(model)
+for task in load_dataset("json", data_files="golden_set.jsonl")["train"]:
+    out = generate(task["instruction"])   # score contre task["reference"]
+```
+
+4. **Export versionné** — sortie de `save_pretrained_gguf` plus la config YAML et le hash du dataset dans une même archive ([§ Export](#export)).
+
+### Échecs courants {#core-failures}
+
+| Symptôme | Cause habituelle | Remède |
+|---|---|---|
+| CUDA out of memory | longueur de séquence × batch trop grand pour la VRAM | baissez `max_seq_length`, batch à 1 + accumulation de gradient |
+| Perte à 0 ou NaN | taux d'apprentissage trop élevé, ou template cassé | divisez le LR par dix ; vérifiez le template du tokenizer |
+| Charabia après fusion/export | template différent entre entraînement et inférence | entraînez et servez avec le *même* template ; testez avant de déployer |
+| Entraînement au ralenti | gradient checkpointing / flash attention désactivés | activez les deux ; vérifiez l'offload de couches côté inférence |
+
+::: {.al-take}
+**Notre avis.** Restez sur l'interface du Studio tant que vous n'affûtez pas chaque semaine — ensuite la voie Python se rembourse en un après-midi d'automatisation. Dès que l'entraînement devient un script, il devient aussi du CI : hash de dataset en entrée, adaptateur évalué en sortie, plus personne ne clique dans des écrans à minuit avant une échéance. C'est là que l'IA souveraine devient vraiment ennuyeuse — et c'est un compliment.
+:::
 :::

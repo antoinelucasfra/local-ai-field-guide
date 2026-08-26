@@ -17,12 +17,37 @@
 6. Select the resulting dataset directly in the training screen and fine-tune.
 
 Typical sovereign-AI pattern: feed internal documentation (procedures, tickets, contracts) → generate instruction/output pairs locally → fine-tune a model that answers in your organisation's vocabulary — with no document ever leaving the building.
+
+### A worked recipe {#data-example}
+
+Goal: a model that answers staff questions about internal IT procedures (a folder of 60 PDFs).
+
+1. **Seed block** — upload the PDF folder; Recipes extracts text per document.
+2. **Generation block 1** — "write one realistic question an employee would ask about this document".
+3. **Generation block 2** — "answer strictly using the source extract; refuse anything not grounded in it".
+4. **Filter block** — drop duplicates and rows where the answer is a verbatim copy of the question.
+5. **Validate → Preview → Run** — read 20 random preview rows *before* the full run; fix prompt wording while it is cheap.
+
+One afternoon of graph-building typically yields 1–3k usable pairs from a corpus that size — enough for a first LoRA ([§ Fine-tuning pipeline](#finetune)).
+
+### Failure modes {#data-pitfalls}
+
+| Failure | Symptom | Counter |
+|---|---|---|
+| Hallucinated pairs | model invents confident answers at inference time | grounding instruction in the generation block + manual sample review before training |
+| Personal data in seeds | PII memorised by the fine-tuned model | anonymise upstream — [§ GDPR mapping](#gdpr) treats the corpus as a processing activity |
+| Near-duplicates | inflated dataset, overfit answers | dedup filter block; check with exact-match on normalised question text |
+| Schema drift between runs | retraining on inconsistent columns | lock the recipe version; export the dataset file and hash it alongside the config |
+
+::: {.al-take}
+**Our take.** Data Recipes gets you 80 % of a good dataset fast; the last 20 % is reading samples with your own eyes, and no metric substitutes for it. Budget one hour per thousand generated rows to skim them — we have caught leaked personal data, copy-pasted questions and confidently wrong answers in every synthetic corpus we have ever inspected, including our own[^ch08-collapse].
+:::
 :::
 
 ::: {.fr}
 [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe) résout la partie la plus dure du fine-tuning : obtenir un jeu de données propre. C'est un workflow visuel en nœuds (propulsé par NVIDIA NeMo Data Designer) qui transforme des documents bruts en données d'entraînement :
 
-1. Ouvrez la page Recipes ; recette vierge ou modèle guidé.
+1. Ouvrez la page Recipes ; créez une recette vierge ou partez d'un modèle guidé.
 2. Ajoutez des blocs : données sources (vos PDF, CSV, JSON) + blocs de génération (synthèse de paires QA, classifications, conversations dans votre schéma cible).
 3. **Validate** pour détecter tôt les erreurs de configuration.
 4. **Preview** des lignes d'exemple, itérez sur prompts/blocs.
@@ -30,4 +55,31 @@ Typical sovereign-AI pattern: feed internal documentation (procedures, tickets, 
 6. Sélectionnez le jeu résultant directement dans l'écran d'entraînement et lancez le fine-tuning.
 
 Schéma type d'IA souveraine : injecter la documentation interne (procédures, tickets, contrats) → générer localement des paires instruction/sortie → affûter un modèle qui répond dans le vocabulaire de l'organisation — sans qu'aucun document ne quitte les lieux.
+
+### Une recette concrète {#data-example}
+
+Objectif : un modèle qui répond aux questions du personnel sur les procédures IT internes (un dossier de 60 PDF).
+
+1. **Bloc seed** — téléversez le dossier de PDF ; Recipes extrait le texte par document.
+2. **Bloc génération 1** — « écris une question réaliste que se poserait un employé sur ce document ».
+3. **Bloc génération 2** — « réponds strictement à partir de l'extrait source ; refuse tout ce qui ne s'y trouve pas ».
+4. **Bloc filtre** — supprime les doublons et les lignes où la réponse copie la question mot pour mot.
+5. **Validate → Preview → Run** — lisez 20 lignes d'aperçu au hasard *avant* le run complet ; corrigez les prompts tant que c'est encore peu coûteux.
+
+Un après-midi de construction produit typiquement 1 à 3 k paires utilisables pour un corpus de cette taille — assez pour un premier LoRA ([§ Pipeline de fine-tuning](#finetune)).
+
+### Modes d'échec {#data-pitfalls}
+
+| Échec | Symptôme | Parade |
+|---|---|---|
+| Paires hallucinées | le modèle invente des réponses assurées en production | consigne d'ancrage dans le bloc de génération + revue manuelle d'échantillons avant entraînement |
+| Données personnelles dans les sources | la PII est mémorisée par le modèle affûté | anonymisez en amont — le [§ Correspondance RGPD](#gdpr) traite le corpus comme activité de traitement |
+| Quasi-doublons | jeu gonflé, réponses apprises par cœur | bloc de déduplication ; contrôle par correspondance exacte sur questions normalisées |
+| Dérive de schéma entre runs | ré-entraînement sur des colonnes incohérentes | figez la version de la recette ; exportez le fichier de données et hashez-le avec la config |
+
+::: {.al-take}
+**Notre avis.** Data Recipes vous donne 80 % d'un bon jeu de données vite ; les 20 % restants s'obtiennent en lisant des échantillons de vos propres yeux, et aucune métrique ne les remplace. Comptez une heure par millier de lignes générées pour les survoler — nous avons attrapé des fuites de données personnelles, des questions copiées-collées et des réponses fausses mais assurées dans tous les corpus synthétiques que nous ayons inspectés, y compris les nôtres[^ch08-collapse].
 :::
+:::
+
+[^ch08-collapse]: Unchecked synthetic data degrades models: Shumailov et al., *AI models collapse when trained on recursively generated data*, Nature 631, 2024. Human review of generated rows is the standard mitigation.

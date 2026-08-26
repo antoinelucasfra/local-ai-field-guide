@@ -9,6 +9,9 @@
 ::: {.en}
 How a local Unsloth-based stack maps to core GDPR principles:
 
+![Where personal data lives: users, auth gateway, GPU host and encrypted storage all sit inside the on-premise boundary; the only optional crossing is web search, which can be disabled entirely.](chapters/figures/fig-gdpr-flow.svg){#fig-gdpr width=100%}
+
+
 | GDPR principle | Article | Local deployment answer |
 |---|---|---|
 | Data minimisation | Art. 5(1)(c) | Fine-tune on the minimum necessary corpus; Data Recipes generates synthetic/anonymised training pairs locally |
@@ -16,35 +19,38 @@ How a local Unsloth-based stack maps to core GDPR principles:
 | Storage limitation | Art. 5(1)(e) | Adapters, datasets and checkpoints versioned and purged on a schedule |
 | Security of processing | Art. 32 | Full-disk encryption, access control, VLAN-isolated GPU host; Studio adds password + JWT auth and hashed, revocable API keys |
 | Accountability | Arts. 5(2), 30 | Records = dataset provenance, YAML run configs, training metrics history, model cards |
-| Data protection by design | Art. 25 | On-premise inference and training is a privacy-by-design architecture; no usage telemetry leaves the box |
+| Data protection by design | Art. 25 | On-premise inference and training form a privacy-by-design architecture; no usage telemetry leaves the box |
 | DPIA | Art. 35 | Required for large-scale sensitive-data processing; local hosting lowers but does not cancel the risk |
 | Transfers outside EU | Ch. V | None: compute, storage, telemetry stay under your control; web search is the only optional egress — disable it for strict regimes |
 
 [Important:]{fg="#b22222"} local execution removes the *processor* risk, not your responsibilities as *controller*. Models can memorise personal data present in the training corpus — treat every corpus as a processing activity and document it.
 
 ::: {.al-take}
-**Our take.** Do the DPIA before the pilot, not after the demo impresses someone — we have watched more local-AI projects die in retro-active compliance than ever died of technical failure, and the checklist above is a weekend of work if done early. Local hosting is the strongest privacy argument you will ever put in that document; write it down while it is still an architecture decision, not a fait accompli.
+**Our take.** Do the DPIA before the pilot, not after the demo impresses someone — we have watched more local-AI projects die of retroactive compliance work than ever died of technical failure, and the checklist above is a weekend of work if done early. Local hosting is the strongest privacy argument you will ever put in that document; write it down while it is still an architecture decision, not a fait accompli.
 :::
 :::
 
 ::: {.fr}
 Comment une stack locale basée sur Unsloth répond aux principes clés du RGPD :
 
+![Là où vivent les données personnelles : utilisateurs, passerelle d'authentification, hôte GPU et stockage chiffré restent dans la frontière sur site ; le seul franchissement optionnel est la recherche web, entièrement désactivable.](chapters/figures/fig-gdpr-flow.svg){#fig-gdpr-fr width=100%}
+
+
 | Principe RGPD | Article | Réponse du déploiement local |
 |---|---|---|
 | Minimisation des données | Art. 5(1)(c) | Fine-tuner sur le corpus strictement nécessaire ; Data Recipes génère localement des paires synthétiques/anonymisées |
 | Limitation des finalités | Art. 5(1)(b) | Un modèle par finalité documentée ; les configs YAML rendent chaque finalité explicite et reproductible |
-| Limitation de la conservation | Art. 5(1)(e) | Adaptateurs, jeux de données et checkpoints versionnés et purgés selon calendrier |
-| Sécurité du traitement | Art. 32 | Chiffrement disque, contrôle d'accès, hôte GPU isolé (VLAN) ; le Studio ajoute mot de passe + JWT et clés API hachées révocables |
+| Limitation de la conservation | Art. 5(1)(e) | Adaptateurs, jeux de données et checkpoints versionnés et purgés selon un calendrier défini |
+| Sécurité du traitement | Art. 32 | Chiffrement disque, contrôle d'accès, hôte GPU isolé (VLAN) ; le Studio ajoute mot de passe + JWT et clés API hachées et révocables |
 | Responsabilisation | Art. 5(2), 30 | Registre = provenance des données, configs YAML des runs, historique de métriques, model cards |
 | Protection dès la conception | Art. 25 | Inférence et entraînement sur site = privacy by design ; aucune télémétrie d'usage ne sort de la machine |
 | AIPD | Art. 35 | Obligatoire pour un traitement sensible à grande échelle ; l'hébergement local réduit le risque sans le supprimer |
-| Transferts hors UE | Chap. V | Aucun : calcul, stockage et télémétrie restent sous contrôle ; la recherche web est le seul flux sortant optionnel — désactivez-la en régime strict |
+| Transferts hors UE | Chap. V | Aucun : calcul, stockage et télémétrie restent sous contrôle ; la recherche web est le seul flux sortant optionnel — désactivez-la dans les régimes les plus stricts |
 
 [Important :]{fg="#b22222"} l'exécution locale supprime le risque lié au *sous-traitant*, pas vos responsabilités de *responsable de traitement*. Le modèle peut mémoriser des données personnelles du corpus — traitez chaque corpus comme une activité de traitement et documentez-le.
 
 ::: {.al-take}
-**Notre avis.** Faites l'AIPD avant le pilote, pas après que la démo a impressionné quelqu'un — nous avons vu plus de projets d'IA locale mourir d'une mise en conformité rétroactive que d'échec technique, et la liste ci-dessus tient en un week-end si elle est faite tôt. L'hébergement local est le meilleur argument privacy que vous inscrirez jamais dans ce document ; écrivez-le tant que c'est une décision d'architecture, pas un fait accompli.
+**Notre avis.** Faites l'AIPD avant le pilote, pas après que la démo a impressionné quelqu'un — nous avons vu plus de projets d'IA locale mourir d'une mise en conformité rétroactive que d'un échec technique, et la liste ci-dessus tient en un week-end si elle est faite tôt. L'hébergement local est le meilleur argument de confidentialité que vous inscrirez jamais dans ce document ; écrivez-le tant que c'est une décision d'architecture, pas un fait accompli.
 :::
 :::
 
@@ -56,6 +62,7 @@ Comment une stack locale basée sur Unsloth répond aux principes clés du RGPD 
 ## Liste de durcissement {#hardening}
 :::
 
+::: {.details summary="Expand the full hardening checklist"}
 ::: {.en}
 - Disable agent telemetry and the attribution header as shown in [Local models for coding agents](#agents); Unsloth itself collects no usage telemetry.
 - Block egress from the GPU host except your package mirrors; web search is opt-in per message — leave it off for sensitive workspaces.
@@ -65,7 +72,9 @@ Comment une stack locale basée sur Unsloth répond aux principes clés du RGPD 
 - Evaluate for memorisation and bias before production (Model Arena helps compare against base); keep the evaluation report.
 - Version everything: dataset hash, YAML config, adapter checkpoint — reproducibility is auditability.
 :::
+:::
 
+::: {.details summary="Déplier la liste de durcissement complète"}
 ::: {.fr}
 - Désactiver la télémétrie des agents et le header d'attribution comme indiqué dans [Modèles locaux pour agents de code](#agents) ; Unsloth lui-même ne collecte aucune télémétrie d'usage.
 - Bloquer les flux sortants de l'hôte GPU sauf miroirs de paquets ; la recherche web est opt-in par message — laissez-la coupée pour les espaces sensibles.
@@ -74,4 +83,5 @@ Comment une stack locale basée sur Unsloth répond aux principes clés du RGPD 
 - Restreindre l'accès : authentification devant chaque endpoint ; modèles par équipe ; `-H 0.0.0.0` seulement sur réseau de confiance, `--secure` (HTTPS) sinon.
 - Évaluer mémorisation et biais avant production (le Model Arena aide à comparer à la base) ; conserver le rapport d'évaluation.
 - Tout versionner : hash du dataset, config YAML, checkpoint d'adaptateur — la reproductibilité est l'auditabilité.
+:::
 :::

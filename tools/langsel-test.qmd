@@ -1,0 +1,37 @@
+---
+title-en: "English title"
+title-fr: "Titre français"
+filters: [langsel]
+---
+
+Regression fixture for `_extensions/langsel`. Rendered twice by
+`tools/test-langsel.sh` (once with `lang: en`, once with `lang: fr`).
+
+Catches the two failure modes seen so far:
+
+1. **Non-recursive filtering** — language divs nested inside other divs
+   (e.g. `::: {.en}` inside `:::: {.dl-strip}`) leaking into the wrong render.
+2. **Duplicate labels** — if both languages leak through, the two headings
+   below share a Typst label and the PDF build dies.
+
+:::: {.dl-strip}
+::: {.en}
+English nested pill.
+:::
+
+::: {.fr}
+Pastille française imbriquée.
+:::
+::::
+
+::: {.en}
+## Shared heading {#dup}
+
+English top-level paragraph.
+:::
+
+::: {.fr}
+## Titre partagé {#dup-fr}
+
+Paragraphe français de premier niveau.
+:::

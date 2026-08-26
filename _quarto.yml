@@ -3,6 +3,7 @@ project:
   pre-render: tools/build_book.py
   render:
     - .book.qmd
+    - .book-slides.qmd
     - .ch-00-bienvenue.qmd
     - .chh-00-bienvenue.qmd
     - .ch-01-pourquoi.qmd

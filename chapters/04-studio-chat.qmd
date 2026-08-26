@@ -20,6 +20,29 @@ Built-in superstructure, all optional per-message:
 - **Web search / deep research**: private DuckDuckGo search that reads actual pages; deep research plans, searches, and produces cited reports.
 - **Model Arena**: compare base vs fine-tuned (or any two models) on the same prompt.
 - **Providers**: connect OpenAI/Anthropic/Ollama/vLLM endpoints and use them in the same interface — useful for gradual migration from cloud to local.
+
+### Getting good answers {#chat-quality}
+
+- **System prompt**: set role, output format and refusal boundaries once per conversation; it persists across messages and models. Save recurring ones as presets.
+- **Thinking toggle**: leave on for maths, logic and code; switch off for short factual or stylistic requests — reasoning tokens cost latency even locally.
+- **Attachments**: images and audio need a vision/voice-capable model; PDFs, DOCX and code files are parsed to text and injected into context — on a 40-page document, ask section-by-section rather than "summarise everything".
+- **Web search off = sovereign mode**: toggle off, not a byte leaves the machine. This is the configuration you describe in the DPIA ([§ GDPR mapping](#gdpr)).
+
+### Practical recipes {#chat-recipes}
+
+| Task | Setup | Tip |
+|---|---|---|
+| Summarise a long report | attach PDF, thinking on | summarise section-by-section then a global synthesis — better than one giant pass |
+| Translate with house style | paste glossary into system prompt | the model fine-tuned in [§ Data Recipes](#data) already speaks your vocabulary |
+| Review a patch | paste diff, sandbox execution on | ask it to *run* the tests, not just read them |
+| Transcribe meeting audio | attach recording + voice model | demand speaker turns and action items in one prompt |
+| Compare two candidates | Model Arena, same prompt side-by-side | fastest qualitative [evaluation](#evaluate) you can run |
+
+**Studio chat vs API server**: Chat is for a human iterating alone; the moment an application or another team member needs the model, export it and serve it — [§ Export](#export) and [§ Team serving](#serving).
+
+::: {.al-take}
+**Our take.** The Chat page is the most underrated evaluation bench in the stack. Before writing any benchmark script, we spend fifteen minutes in Model Arena throwing our ugliest real prompts at the candidate — the failure modes that surface there (rambling, ignored constraints, timid hedging) predict benchmark results surprisingly well, and they are legible to non-technical stakeholders, which benchmarks never are.
+:::
 :::
 
 ::: {.fr}
@@ -29,13 +52,36 @@ La page Chat exécute les modèles 100 % hors ligne :
 2. Téléchargement automatique ; les GGUF déjà présents (cache HF, dossiers LM Studio) sont détectés automatiquement.
 3. Discutez. Joignez images, audio, PDF, DOCX, fichiers de code. Activez thinking et recherche web par message.
 
-Surcouche intégrée, tout est optionnel par message :
+Surcouche intégrée — tout est optionnel, à activer par message :
 
 - **Réglages d'inférence auto** : temperature/top-p/top-k pré-réglés par famille de modèles ; contexte géré automatiquement par le smart auto-context de llama.cpp. Ce que font réellement ces boutons → [§ Paramètres d'inférence](#params).
-- **Appels d'outils auto-réparateurs** + **exécution de code en bac à sable** (Bash et Python) : le modèle peut exécuter du vrai code pour vérifier ses réponses ; les appels malformés sont réparés au lieu de casser le tour.
+- **Appels d'outils auto-réparateurs** + **exécution de code en bac à sable** (Bash et Python) : le modèle peut exécuter du vrai code pour vérifier ses réponses ; les appels mal formés sont réparés au lieu de faire planter le tour.
 - **Recherche web / recherche approfondie** : recherche privée DuckDuckGo qui lit les vraies pages ; la recherche approfondie planifie, cherche et produit des rapports sourcés.
 - **Model Arena** : comparer base vs affûté (ou deux modèles quelconques) sur le même prompt.
 - **Fournisseurs** : connectez des endpoints OpenAI/Anthropic/Ollama/vLLM dans la même interface — utile pour migrer progressivement du cloud vers le local.
+
+### Obtenir de bonnes réponses {#chat-quality}
+
+- **Prompt système** : rôle, format de sortie et limites définis une fois par conversation ; ils persistent d'un message et d'un modèle à l'autre. Sauvegardez les récurrents en presets.
+- **Toggle thinking** : actif pour les maths, la logique et le code ; coupé pour les demandes factuelles ou stylistiques courtes — les jetons de raisonnement coûtent de la latence, même en local.
+- **Pièces jointes** : images et audio exigent un modèle vision/voix ; PDF, DOCX et fichiers de code sont analysés en texte et injectés dans le contexte — sur un document de 40 pages, demandez section par section plutôt que « résume tout ».
+- **Recherche web coupée = mode souverain** : toggle désactivé, pas un octet ne quitte la machine. C'est la configuration à décrire dans l'AIPD ([§ Correspondance RGPD](#gdpr)).
+
+### Recettes pratiques {#chat-recipes}
+
+| Tâche | Réglage | Astuce |
+|---|---|---|
+| Résumer un long rapport | PDF joint, thinking activé | résumez section par section puis synthèse globale — mieux qu'une seule passe géante |
+| Traduire avec votre style | collez le glossaire dans le prompt système | le modèle affûté du [§ Data Recipes](#data) connaît déjà votre vocabulaire |
+| Relire un patch | collez le diff, exécution bac à sable active | demandez-lui d'*exécuter* les tests, pas seulement de les lire |
+| Transcrire un audio de réunion | enregistrement joint + modèle voix | exigez tours de parole et actions dans un même prompt |
+| Comparer deux candidats | Model Arena, même prompt côte à côte | l'[évaluation](#evaluate) qualitative la plus rapide qui soit |
+
+**Chat Studio vs serveur d'API** : le Chat sert à un humain qui itère seul ; dès qu'une application ou un collègue a besoin du modèle, exportez-le et servez-le — [§ Export](#export) et [§ Service en équipe](#serving).
+
+::: {.al-take}
+**Notre avis.** La page Chat est le banc d'évaluation le plus sous-estimé de la stack. Avant d'écrire le moindre script de benchmark, nous passons quinze minutes dans le Model Arena à envoyer nos vrais prompts les plus tordus au candidat — les modes d'échec qui y apparaissent (divagations, contraintes ignorées, prudence excessive) prédisent étonnamment bien les scores, et ils sont lisibles par des non-techniciens, ce que les benchmarks ne seront jamais.
+:::
 :::
 
 ::: {.notes}

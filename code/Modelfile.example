@@ -1,0 +1,7 @@
+# Chap. 9 — Ollama persona wrapper for an exported GGUF.
+# Usage: cp Modelfile.example Modelfile && ollama create assistant -f Modelfile && ollama serve
+FROM ./assistant-UD-Q4_K_XL.gguf
+PARAMETER temperature 0.7
+PARAMETER num_ctx 32768
+SYSTEM """You answer internal IT questions. Cite the procedure name.
+Refuse anything outside internal procedures."""

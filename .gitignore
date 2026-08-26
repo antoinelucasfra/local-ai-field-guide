@@ -7,3 +7,12 @@ _render/
 /.quarto/
 **/*.quarto_ipynb
 .pi/
+
+# Local render artefacts (CI builds these into _render/)
+/[0-9][0-9]-*.*
+/book.*
+/.book-slides.qmd
+/.chh-*.typ
+/.chh-*_files/
+code/.ruff_cache/
+__pycache__/

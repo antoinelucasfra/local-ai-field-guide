@@ -25,17 +25,17 @@ Keep the list of named models in your infrastructure **short and swappable**: on
 ::: {.fr}
 ### Une méthode, pas un classement {#method}
 
-**Les modèles sont périssables ; les méthodes ne le sont pas.** De nouveaux modèles state-of-the-art — ouverts comme fermés — sortent désormais chaque semaine, et les leaderboards se mélangent aussi vite. Chaque nom de modèle dans ce livre est une *illustration d'un instantané début 2026*, pas une recommandation figée. Ce qui reste valide, c'est la méthode de sélection :
+**Les modèles sont périssables ; les méthodes ne le sont pas.** De nouveaux modèles state-of-the-art — ouverts comme fermés — sortent désormais chaque semaine, et les positions se redistribuent tout aussi vite. Chaque nom de modèle dans ce livre est une *illustration d'un instantané début 2026*, pas une recommandation figée. Ce qui reste valide, c'est la méthode de sélection :
 
 1. **Définissez d'abord l'usage.** Tâche, taille de contexte, mélange linguistique, niveau de confidentialité, latence, matériel (chap. 5) — c'est le contexte qui décide, jamais la mode.
 2. **Présélectionnez sur des sources indépendantes de confiance**, consultées *au moment de décider* :
-   - [LMArena](https://lmarena.ai) — duels à l'aveugle arbitrés par la foule (arenas texte, webdev, vision) ; bon pour la qualité perçue, immunisé contre le triche aux benchmarks ;
+   - [LMArena](https://lmarena.ai) — duels à l'aveugle arbitrés par la foule (arenas texte, webdev, vision) ; utile pour la qualité perçue, immunisé contre la triche aux benchmarks ;
    - [ArtificialAnalysis.ai](https://artificialanalysis.ai) — indices composites indépendants (intelligence, agents de code), prix/vitesse par bande, suivi ouvert vs propriétaire ;
    - les benchmarks des vendeurs ne servent que d'indice de départ — ils choisissent leurs propres tests.
 3. **Validez sur votre propre jeu doré** avant d'engager (chap. 16) : 50–200 tâches réelles scorées en pass@1. Cette porte finale est la vôtre ; aucun leaderboard ne la remplace.
-4. **Revérifiez à chaque re-décision.** Un modèle épinglé dans un document de stratégie vieillit mal ; épinglez la *méthode*, pas le modèle.
+4. **Revérifiez à chaque nouvelle décision.** Un modèle figé dans un document de politique interne vieillit mal ; épinglez la *méthode*, pas le modèle.
 
-Gardez la liste des modèles nommés dans votre infrastructure **courte et remplaçable** : un petit/rapide, un généraliste solide, un spécialiste si le domaine l'exige — derrière des interfaces standards (chap. 9, 15) pour que l'échange soit une ligne de configuration, pas un projet.
+Gardez la liste des modèles nommés dans votre infrastructure **courte et remplaçable** : un petit/rapide, un généraliste solide, un spécialiste si le domaine l'exige — derrière des interfaces standards (chap. 9, 15) pour que le remplacement tienne en une ligne de configuration, pas en un projet.
 :::
 
 
@@ -122,7 +122,7 @@ Illustrative pairings **as of the early-2026 snapshot** — treat the *shape* of
 | Coding assistant / local coding agent | Qwen3.5/3.8 Coder, Gemma 4 26B-A4B, GLM-5.x | Strong tool-calling, trained for code; Gemma 4 26B-A4B runs on a 24 GB machine | 24 GB GPU / Apple silicon |
 | General-purpose departmental assistant | Qwen3.8 27B, Gemma 4, Muse Glimmer 30B | Balanced quality/speed, good multilingual (French included) | 1× 24 GB GPU |
 | High-volume / edge / laptop | Qwen3.5 4B class, small Gemma | Sub-second latency, tiny footprint | CPU or 8 GB GPU |
-| Documents & RAG-heavy workflows | Long-context Qwen/GLM variants + embedding models | Large context windows now median >100k tokens (AA architecture trends) | 24 GB GPU |
+| Documents & RAG-heavy workflows | Long-context Qwen/GLM variants + embedding models | Large context windows now exceed 100k tokens at the median (AA architecture trends) | 24 GB GPU |
 | Vision (image understanding) | Gemma / Qwen vision variants | Multimodal fine-tuning supported by Unsloth | 16–24 GB GPU |
 | Image/video generation | FLUX, Z-Image, LTX, Wan, MiniMax-H3 | Runnable and LoRA-trainable in Unsloth Studio | 16–24 GB GPU |
 | Voice | TTS/STT models supported by Unsloth | Fine-tunable voices, on-prem | 8–16 GB GPU |
@@ -141,11 +141,11 @@ Rules of thumb:
 :::
 
 ::: {.fr}
-Appariements illustratifs **à l'instantané début 2026** — traitez la *forme* de chaque réponse (classe de taille, capacité, matériel) comme durable et les noms comme remplaçables : croisez les classements vivants avec le support day-zero d'Unsloth et votre matériel réel (tailles 4-bit ci-dessous) :
+Associations illustratives **à l'instantané début 2026** — traitez la *forme* de chaque réponse (classe de taille, capacité, matériel) comme durable et les noms comme remplaçables : croisez les classements vivants avec le support day-zero d'Unsloth et votre matériel réel (tailles 4-bit ci-dessous) :
 
 | Cas d'usage | Modèles ouverts recommandés | Pourquoi | Matériel (inférence, 4-bit) |
 |---|---|---|---|
-| Meilleur raisonnement/agétique sur site | Kimi K3, GLM-5.3 | Tête du classement ouvert, quasi-parité avec le fermé | Serveur multi-GPU ou mémoire unifiée 128 Go+ |
+| Meilleur raisonnement/agents sur site | Kimi K3, GLM-5.3 | Tête du classement ouvert, quasi-parité avec le fermé | Serveur multi-GPU ou mémoire unifiée 128 Go+ |
 | Assistant de code / agent local | Qwen3.5/3.8 Coder, Gemma 4 26B-A4B, GLM-5.x | Appels d'outils solides, entraînés au code ; Gemma 4 26B-A4B tient sur une machine 24 Go | GPU 24 Go / Apple silicon |
 | Assistant départemental polyvalent | Qwen3.8 27B, Gemma 4, Muse Glimmer 30B | Équilibre qualité/vitesse, bon multilingue (français inclus) | 1 GPU 24 Go |
 | Fort volume / edge / portable | Qwen3.5 4B et petits Gemma | Latence sub-seconde, empreinte minime | CPU ou GPU 8 Go |
@@ -163,7 +163,7 @@ Règles pratiques :
 - **Entraînez dans la précision servie** : un service en 4-bit s'apparie à un entraînement QLoRA 4-bit.
 
 ::: {.al-take}
-**Notre avis.** Nous avons cessé de courir après la tête des classements depuis des mois : la couronne change de main chaque semaine et refondre toute une flotte coûte plus cher que les deux points d'indice gagnés. En pratique, nous standardisons un cheval de trait par an (classe 24 Go), passons les évals du chapitre 16 sur nos propres tâches, et ne revisitions que quand ces chiffres — pas ceux d'AA — le demandent. Ennuyeux, peu coûteux, et jamais pris en défaut.
+**Notre avis.** Nous avons cessé de courir après la tête des classements depuis des mois : la couronne change de main chaque semaine et refondre toute une flotte coûte plus cher que les deux points d'indice gagnés. En pratique, nous standardisons un cheval de trait par an (classe 24 Go), passons les évals du chapitre 16 sur nos propres tâches, et nous ne revoyons notre copie que lorsque ces chiffres — pas ceux d'AA — l'exigent. Ennuyeux, peu coûteux, et jamais pris en défaut.
 :::
 :::
 

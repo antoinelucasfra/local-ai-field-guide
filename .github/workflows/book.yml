@@ -26,6 +26,8 @@ jobs:
       - uses: quarto-dev/quarto-actions/setup@91dabb203fce7f899d10ef8e482d94b00f397cbc # v2
         with:
           version: 1.10.18
+      - name: Langsel filter regression test
+        run: tools/test-langsel.sh
       - name: Render EN (CI check)
         run: quarto render --profile en
       # FR only when the render actually gets shipped, not on every PR
@@ -40,6 +42,7 @@ jobs:
           touch _site/.nojekyll
           cp -r _render/en/. _site/en/
           cp -r _render/fr/. _site/fr/
+          cp -r code/ _site/code/
       - uses: actions/upload-pages-artifact@98ef48e41587a300b82de4cf298aa98b57b2faae # v3
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:
@@ -82,6 +85,7 @@ jobs:
           for L in en fr; do
             zip -q "../localai-book-$V-$L.zip" "$L/book.pdf" "$L/book.epub" "$L/book.docx"
           done
+          zip -qr "../localai-code-$V.zip" code
           zip -qr "../localai-site-$V.zip" .
       - name: Create GitHub release
         env:

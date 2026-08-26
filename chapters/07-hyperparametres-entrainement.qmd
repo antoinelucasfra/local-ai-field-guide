@@ -11,17 +11,17 @@ The Studio pre-fills sane defaults (rank 16 / alpha 32 / dropout 0.05, LR 2e-4, 
 
 ### Capacity: what the adapter can learn
 
-- **LoRA rank** — the update to every frozen weight matrix is approximated by a product of two small matrices of rank *r*. Rank is the capacity dial: it bounds *how much new behaviour* the adapter can encode. Style, tone, output format → 8–16 is plenty. Dense domain knowledge, many new behaviours at once → 32–64. Above ~64 you mostly buy overfitting risk and slower convergence, not quality. VRAM cost grows slowly with rank (adapters are ~1 % of params).
-- **Alpha** — the adapter's contribution is scaled by α/r before being added to the base weights; with fixed rank, alpha is effectively an adapter learning-rate multiplier. Convention α = 2·r keeps that scale constant as you change rank — if you raise rank without touching alpha you silently weaken each direction. Keep the ratio unless you have a reason.
+- **LoRA rank** — the update to every frozen weight matrix is approximated by a product of two small matrices of rank *r*[^ch07-lora]. Rank is the capacity dial: it bounds *how much new behaviour* the adapter can encode. Style, tone, output format → 8–16 is plenty. Dense domain knowledge, many new behaviours at once → 32–64. Above ~64 you mostly buy overfitting risk and slower convergence, not quality. VRAM cost grows slowly with rank (adapters are ~1 % of params).
+- **Alpha** — the adapter's contribution is scaled by α/r before being added to the base weights; with fixed rank, alpha is effectively an adapter learning-rate multiplier. Convention α = 2·r keeps that scale constant as you change rank — if you raise rank without touching alpha, you silently weaken each direction. Keep the ratio unless you have a reason.
 - **Dropout** — randomly zeroes adapter activations during training (0.05 default): cheap insurance against memorising small datasets. Raise to 0.1 when eval loss climbs while train loss falls; set 0 only for quick throwaway runs.
 - **Target modules** — which weight matrices get adapters. All attention + MLP projections (the Studio default) strictly dominates attention-only: knowledge lives mostly in the MLP blocks.
 
 ### Speed of learning: getting to good weights safely
 
-- **Learning rate** — the single most sensitive knob. It sets the step size of gradient descent. Too high: loss spikes, gradient-norm explosions, catastrophic forgetting of general ability; too low: hundreds of wasted steps on a flat plateau. QLoRA/LoRA sweet spot ≈ 1e-4–3e-4 (2e-4 default); full fine-tuning needs ~10× less (1e-5–2e-5) because you move *all* weights.
+- **Learning rate** — the single most sensitive knob. It sets the step size of gradient descent. Too high: loss spikes, gradient-norm explosions, catastrophic forgetting of general ability; too low: hundreds of wasted steps on a flat plateau. QLoRA/LoRA sweet spot ≈ 1e-4–3e-4 (2e-4 default)[^ch07-lr]; full fine-tuning needs ~10× less (1e-5–2e-5) because you move *all* weights.
 - **Warmup** (steps or ratio) — starts training with tiny LR and ramps up. Needed because the Adam optimizer's momentum statistics are cold and wrong in the first steps; without warmup those bad steps can do real damage. 3–10 % of total steps is standard.
 - **LR scheduler** (linear/cosine decay) — big steps early when far from optimum, small steps late for fine settling. The LR chart in Studio lets you verify it fired correctly.
-- **Batch size × gradient accumulation** — effective batch = product of both (default 4 × 8 = 32). Bigger batches smooth the gradient estimate (more stable, slightly more generic results); smaller batches are noisier but sometimes generalise better. Memory scales with physical batch × sequence length — grad accumulation is how you simulate large batches on small GPUs, at zero quality cost, just wall-clock cost.
+- **Batch size × gradient accumulation** — effective batch = product of both (default 4 × 8 = 32). Bigger batches smooth the gradient estimate (more stable, slightly more generic results); smaller batches are noisier but sometimes generalise better. Memory scales with physical batch × sequence length — grad accumulation is how you simulate large batches on small GPUs — zero quality cost, only wall-clock cost.
 - **Epochs** — full passes over the dataset. 1–3 for SFT; beyond that the model memorises rather than learns (train loss keeps dropping, eval loss turns upward — the U-turn is your stop signal). When in doubt, train 1 epoch and look.
 - **Weight decay** — L2 penalty pulling unused weights toward zero; leave at default for LoRA (adapters are tiny; decay fights capacity you paid for).
 
@@ -30,9 +30,9 @@ The Studio pre-fills sane defaults (rank 16 / alpha 32 / dropout 0.05, LR 2e-4, 
 | Parameter | Default | Why this value |
 |---|---|---|
 | Max sequence length | 2048 | Must cover your longest example *including* prompt template; longer examples get silently truncated — the model never sees their answer end, and learns from broken pairs. Raising it costs memory quadratically (attention) unless flash attention is on (Unsloth enables it). |
-| Optimizer | AdamW 8-bit | AdamW = per-parameter adaptive step sizes; the workhorse of transformer training. 8-bit state shrinks optimizer memory ~75 % vs FP16 with no measurable quality loss — this is why QLoRA fits in small GPUs. |
+| Optimizer | AdamW 8-bit | AdamW = per-parameter adaptive step sizes; the workhorse of transformer training. 8-bit state shrinks optimizer memory ~75 % vs a standard 32-bit state with no measurable quality loss[^ch07-8bit] — this is why QLoRA fits in small GPUs. |
 | Gradient checkpointing | on | Recomputes activations instead of storing them: big VRAM savings for ~20–30 % slower steps. With Unsloth's implementation the penalty is much smaller. |
-| Seed | 3407 | Any fixed number makes runs reproducible; 3407 is an Unsloth community convention (from the joke paper "torch.manual_seed(3407) is all you need"). |
+| Seed | 3407 | Any fixed number makes runs reproducible; 3407 is an Unsloth community convention (from Picard's study "torch.manual_seed(3407) is all you need"[^ch07-seed]). |
 | Eval split & steps | optional | Enables the Eval-Loss chart — the only trustworthy overfitting signal. Always keep one for real projects. |
 
 ### Reading the training curves like an engineer
@@ -48,18 +48,18 @@ Le Studio pré-remplit des défauts sains (rang 16 / alpha 32 / dropout 0,05, LR
 
 ### Capacité : ce que l'adaptateur peut apprendre
 
-- **Rang LoRA** — la mise à jour de chaque matrice de poids gelée est approchée par le produit de deux petites matrices de rang *r*. Le rang est le cadran de capacité : il borne *combien de nouveau comportement* l'adaptateur peut encoder. Style, ton, format de sortie → 8–16 suffisent largement. Connaissance métier dense, plusieurs comportements à la fois → 32–64. Au-delà de ~64 vous achetez surtout du risque de surapprentissage et une convergence plus lente. La VRAM croît lentement avec le rang (adaptateurs ≈ 1 % des paramètres).
+- **Rang LoRA** — la mise à jour de chaque matrice de poids gelée est approchée par le produit de deux petites matrices de rang *r*[^ch07-lora]. Le rang est le cadran de capacité : il borne la quantité de nouveaux comportements que l'adaptateur peut encoder. Style, ton, format de sortie → 8–16 suffisent largement. Connaissance métier dense, plusieurs comportements à la fois → 32–64. Au-delà de ~64, vous achetez surtout du risque de surapprentissage et une convergence plus lente. La VRAM croît lentement avec le rang (adaptateurs ≈ 1 % des paramètres).
 - **Alpha** — la contribution de l'adaptateur est multipliée par α/r avant d'être ajoutée aux poids de base ; à rang fixé, alpha agit comme un multiplicateur de LR de l'adaptateur. Convention α = 2·r pour garder ce facteur constant quand on change le rang — augmenter le rang sans toucher alpha affaiblit silencieusement chaque direction. Gardez le ratio sauf raison.
 - **Dropout** — met à zéro aléatoirement des activations des adaptateurs pendant l'entraînement (0,05 par défaut) : assurance anti-mémorisation bon marché sur petits jeux de données. Passez à 0,1 si la perte d'éval monte pendant que celle d'entraînement baisse ; 0 seulement pour des jets rapides.
-- **Modules ciblés** — quelles matrices reçoivent des adaptateurs. Toutes les projections attention + MLP (défaut du Studio) domine strictement attention seule : la connaissance vit surtout dans les blocs MLP.
+- **Modules ciblés** — quelles matrices reçoivent des adaptateurs. Cibler toutes les projections attention + MLP (défaut du Studio) domine strictement le ciblage de la seule attention : la connaissance vit surtout dans les blocs MLP.
 
 ### Vitesse d'apprentissage : atteindre de bons poids sans casse
 
-- **Learning rate** — le bouton le plus sensible. Il fixe le pas de la descente de gradient. Trop haut : pertes qui explosent, normes de gradient en pic, oubli catastrophique des capacités générales ; trop bas : des centaines de steps gaspillés sur un plateau. Zone QLoRA/LoRA ≈ 1e-4–3e-4 (défaut 2e-4) ; le full fine-tuning exige ~10× moins (1e-5–2e-5) car on déplace *tous* les poids.
-- **Warmup** (steps ou ratio) — démarre avec un LR minuscule puis monte. Nécessaire car les statistiques de momentum d'Adam sont froides et fausses aux premiers pas ; sans warmup ces mauvais pas font des dégâts. 3–10 % du total est standard.
-- **Scheduler de LR** (linéaire/cosinus) — grands pas tôt, loin de l'optimum ; petits pas tard pour se poser finement. Le graphe LR du Studio permet de vérifier qu'il a bien opéré.
-- **Batch × accumulation de gradient** — batch effectif = produit des deux (défaut 4 × 8 = 32). Plus grand = gradient plus lissé (stable, résultats un peu plus génériques) ; plus petit = bruité mais parfois mieux généralisant. La mémoire suit le batch physique × longueur de séquence — l'accumulation simule de grands batchs sur petit GPU, sans coût qualité, seulement en temps mural.
-- **Epochs** — passes complètes sur le jeu de données. 1–3 en SFT ; au-delà le modèle mémorise au lieu d'apprendre (la perte train continue de baisser, celle d'éval remonte — le coude est votre signal d'arrêt). Dans le doute : 1 epoch, puis on regarde.
+- **Learning rate** — le bouton le plus sensible. Il fixe le pas de la descente de gradient. Trop haut : pertes qui explosent, normes de gradient en pic, oubli catastrophique des capacités générales ; trop bas : des centaines de steps gaspillés sur un plateau. Zone QLoRA/LoRA ≈ 1e-4–3e-4 (défaut 2e-4)[^ch07-lr] ; le full fine-tuning exige ~10× moins (1e-5–2e-5) car on déplace *tous* les poids.
+- **Warmup** (steps ou ratio) — démarre avec un LR minuscule puis monte. Nécessaire car les statistiques de momentum d'Adam sont froides et fausses aux premiers pas ; sans warmup, ces mauvais pas peuvent faire de vrais dégâts. 3–10 % du total est standard.
+- **Scheduler de LR** (linéaire/cosinus) — grands pas tôt, loin de l'optimum ; petits pas à la fin pour affiner. Le graphe LR du Studio permet de vérifier qu'il fonctionne comme prévu.
+- **Batch × accumulation de gradient** — batch effectif = produit des deux (défaut 4 × 8 = 32). Plus grand = gradient plus lissé (stable, résultats un peu plus génériques) ; plus petit = bruité mais qui généralise parfois mieux. La mémoire suit le batch physique × longueur de séquence — l'accumulation simule de grands batchs sur petit GPU, sans coût qualité, au prix d'un allongement du temps d'entraînement.
+- **Epochs** — passes complètes sur le jeu de données. 1–3 en SFT ; au-delà le modèle mémorise au lieu d'apprendre (la perte train continue de baisser, celle d'éval remonte — le retournement en U est votre signal d'arrêt). Dans le doute : 1 epoch, puis on regarde.
 - **Weight decay** — pénalité L2 tirant les poids inutilisés vers zéro ; laissez le défaut en LoRA (les adaptateurs sont minuscules ; le decay combat une capacité pour laquelle vous avez payé).
 
 ### Les autres défauts
@@ -67,19 +67,24 @@ Le Studio pré-remplit des défauts sains (rang 16 / alpha 32 / dropout 0,05, LR
 | Paramètre | Défaut | Pourquoi cette valeur |
 |---|---|---|
 | Longueur max de séquence | 2048 | Doit couvrir votre plus long exemple *avec* son gabarit de prompt ; les exemples trop longs sont tronqués silencieusement — le modèle ne voit jamais la fin de leur réponse et apprend sur des paires cassées. Augmenter coûte quadratiquement (attention) sans flash attention (activé par Unsloth). |
-| Optimiseur | AdamW 8-bit | AdamW = pas adaptatifs par paramètre ; le cheval de bataille des transformers. L'état 8-bit réduit la mémoire optimiseur ~75 % vs FP16 sans perte mesurable — c'est ce qui fait tenir QLoRA sur petits GPU. |
+| Optimiseur | AdamW 8-bit | AdamW = pas adaptatifs par paramètre ; le cheval de bataille des transformers. L'état 8-bit réduit la mémoire optimiseur ~75 % vs un état standard 32 bits sans perte mesurable[^ch07-8bit] — c'est ce qui fait tenir QLoRA sur petits GPU. |
 | Gradient checkpointing | activé | Recalcule les activations au lieu de les stocker : grosses économies VRAM pour ~20–30 % de steps plus lents ; l'implémentation Unsloth réduit fortement cette pénalité. |
-| Graine | 3407 | Tout nombre fixe rend les runs reproductibles ; 3407 est une convention communautaire Unsloth (de l'article blague « torch.manual_seed(3407) is all you need »). |
+| Graine | 3407 | Tout nombre fixe rend les runs reproductibles ; 3407 est une convention communautaire Unsloth (issue de l'étude de Picard « torch.manual_seed(3407) is all you need »[^ch07-seed]). |
 | Split & steps d'éval | optionnel | Active le graphe Eval-Loss — le seul signal fiable de surapprentissage. Gardez-en toujours un pour les vrais projets. |
 
 ### Lire les courbes comme un ingénieur
 
 - **Perte train** (la vue EMA existe parce que la perte brute est bruitée) : un SFT sain atterrit vers **0,5–1,0**. Perte ≈ 0 = mémorisation ; ligne plate près de la valeur initiale = LR trop bas ou données mal formatées.
-- **Perte éval** : doit suivre la perte train vers le bas puis s'aplatir. Divergence entre les deux = début de surapprentissage = heure de Stop & Save.
-- **Norme de gradient** : des pics occasionnels sont normaux ; des pics répétés signifient LR trop haut ou données sales (un exemple malformé).
-- **Moniteur GPU** : utilisation collée vers 100 % = limité par le calcul (bien). Utilisation faible = goulot de chargement de données. Gardez la mémoire sous la limite de la carte avec de la marge pour les pics de contexte ; surveillez la température — >85 °C soutenus bridant vos tokens/s.
+- **Perte éval** : doit suivre la perte train vers le bas puis s'aplatir. Divergence entre les deux = début de surapprentissage = moment de faire Stop & Save.
+- **Norme de gradient** : des pics occasionnels sont normaux ; des pics répétés signifient LR trop haut ou données sales (un exemple mal formé).
+- **Moniteur GPU** : utilisation collée vers 100 % = limité par le calcul (bien). Utilisation faible = goulot de chargement de données. Gardez la mémoire sous la limite de la carte avec de la marge pour les pics de contexte ; surveillez la température : au-delà de 85 °C soutenus, vos tokens/s sont bridés.
 :::
 
 ::: {.notes}
 Common question: 'why not just crank epochs?' Show the eval-loss U-turn. Second: 'is more LoRA rank better?' No — overfitting + memory. / Question fréquente : « pourquoi pas plus d'époques ? » Montrez le U de la perte d'éval. Puis : « un rang LoRA plus grand ? » Non — surapprentissage + mémoire.
 :::
+
+[^ch07-lora]: Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models*, 2021 (arXiv:2106.09685).
+[^ch07-lr]: Ranges follow the QLoRA paper's hyperparameter study (Dettmers et al., NeurIPS 2023, arXiv:2305.14314) and common LoRA practice; always sweep on your own data.
+[^ch07-8bit]: Dettmers et al., *8-bit Optimizers via Block-wise Quantization*, ICLR 2022 (arXiv:2110.02861): Adam stores two moments per parameter — 8 bytes at FP32, 2 bytes at 8-bit ⇒ ~75 % smaller.
+[^ch07-seed]: Picard, *"torch.manual_seed(3407) is all you need"*, 2021 (arXiv:2109.08203): seed choice shifts accuracy; outliers are easy to find.

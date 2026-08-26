@@ -19,6 +19,50 @@
 :::
 
 ::: {.en}
+## Scientific references {#sci-refs}
+:::
+
+::: {.fr}
+## Références scientifiques {#sci-refs}
+:::
+
+::: {.en}
+Peer-reviewed papers and primary technical sources backing the quantitative claims in this book (footnotes in chapters give context):
+
+- **LoRA** — Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models*, 2021 ([arXiv:2106.09685](https://arxiv.org/abs/2106.09685))
+- **QLoRA** — Dettmers, Pagnoni, Holtzman, Zettlemoyer, *QLoRA: Efficient Finetuning of Quantized LLMs*, NeurIPS 2023 ([arXiv:2305.14314](https://arxiv.org/abs/2305.14314))
+- **8-bit optimizers** — Dettmers et al., *8-bit Optimizers via Block-wise Quantization*, ICLR 2022 ([arXiv:2110.02861](https://arxiv.org/abs/2110.02861))
+- **Grouped-Query Attention** — Ainslie et al., 2023 ([arXiv:2305.13245](https://arxiv.org/abs/2305.13245))
+- **Inference memory/bandwidth analysis** — Kim et al., *Full Stack Optimization of Transformer Inference*, 2023 ([arXiv:2303.14005](https://arxiv.org/abs/2303.14005)); Sheng et al., *FlexGen*, 2023 ([arXiv:2303.06965](https://arxiv.org/abs/2303.06965))
+- **RAG** — Lewis et al., NeurIPS 2020 ([arXiv:2005.11401](https://arxiv.org/abs/2005.11401)); dense retrieval: Karpukhin et al., EMNLP 2020 ([arXiv:2004.04906](https://arxiv.org/abs/2004.04906))
+- **Multilingual embeddings** — Chen et al., *BGE M3-Embedding*, 2024 ([arXiv:2402.03216](https://arxiv.org/abs/2402.03216))
+- **LLM-as-judge** — Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023 ([arXiv:2306.05685](https://arxiv.org/abs/2306.05685))
+- **Synthetic-data degradation** — Shumailov et al., *AI models collapse when trained on recursively generated data*, Nature 631, 2024
+- **Random seeds** — Picard, *"torch.manual_seed(3407) is all you need"*, 2021 ([arXiv:2109.08203](https://arxiv.org/abs/2109.08203))
+- **GGUF quantisation sizes/perplexity** — llama.cpp quantization reference ([tools/quantize/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md)); k-quants: [PR #1684](https://github.com/ggml-org/llama.cpp/pull/1684)
+- **GDPR** — Regulation (EU) 2016/679, official text ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2016/679/oj)), in particular Art. 22 (automated decisions) and Art. 28 (processors)
+- **Unsloth performance figures** — vendor benchmarks from the [Unsloth repository](https://github.com/unslothai/unsloth) and [blog/changelog](https://unsloth.ai/blog); per-model results vary (1.5×–3×)
+:::
+
+::: {.fr}
+Articles évalués par les pairs et sources techniques primaires qui étayent les affirmations chiffrées de ce livre (les notes de bas de page des chapitres donnent le contexte) :
+
+- **LoRA** — Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models*, 2021 ([arXiv:2106.09685](https://arxiv.org/abs/2106.09685))
+- **QLoRA** — Dettmers, Pagnoni, Holtzman, Zettlemoyer, *QLoRA: Efficient Finetuning of Quantized LLMs*, NeurIPS 2023 ([arXiv:2305.14314](https://arxiv.org/abs/2305.14314))
+- **Optimiseurs 8 bits** — Dettmers et al., *8-bit Optimizers via Block-wise Quantization*, ICLR 2022 ([arXiv:2110.02861](https://arxiv.org/abs/2110.02861))
+- **Grouped-Query Attention** — Ainslie et al., 2023 ([arXiv:2305.13245](https://arxiv.org/abs/2305.13245))
+- **Analyse mémoire/bande passante en inférence** — Kim et al., *Full Stack Optimization of Transformer Inference*, 2023 ([arXiv:2303.14005](https://arxiv.org/abs/2303.14005)) ; Sheng et al., *FlexGen*, 2023 ([arXiv:2303.06965](https://arxiv.org/abs/2303.06965))
+- **RAG** — Lewis et al., NeurIPS 2020 ([arXiv:2005.11401](https://arxiv.org/abs/2005.11401)); récupération dense : Karpukhin et al., EMNLP 2020 ([arXiv:2004.04906](https://arxiv.org/abs/2004.04906))
+- **Embeddings multilingues** — Chen et al., *BGE M3-Embedding*, 2024 ([arXiv:2402.03216](https://arxiv.org/abs/2402.03216))
+- **LLM comme juge** — Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023 ([arXiv:2306.05685](https://arxiv.org/abs/2306.05685))
+- **Dégradation des données synthétiques** — Shumailov et al., *AI models collapse when trained on recursively generated data*, Nature 631, 2024
+- **Graines aléatoires** — Picard, *"torch.manual_seed(3407) is all you need"*, 2021 ([arXiv:2109.08203](https://arxiv.org/abs/2109.08203))
+- **Tailles/perplexité des quants GGUF** — référence de quantification llama.cpp ([tools/quantize/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md)) ; k-quants : [PR #1684](https://github.com/ggml-org/llama.cpp/pull/1684)
+- **RGPD** — Règlement (UE) 2016/679, texte officiel ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2016/679/oj)), notamment art. 22 (décisions automatisées) et art. 28 (sous-traitants)
+- **Chiffres de performance Unsloth** — benchmarks constructeur du [dépôt Unsloth](https://github.com/unslothai/unsloth) et du [blog/journal des versions](https://unsloth.ai/blog) ; résultats variables selon les modèles (1,5×–3×)
+:::
+
+::: {.en}
 ## Limits {#limits}
 :::
 
@@ -36,10 +80,10 @@
 :::
 
 ::: {.fr}
-- Le leadership des modèles évolue **chaque semaine** : chaque classement ici est l'instantané daté d'un domaine mouvant. Avant toute décision, revérifiez les sources vivantes (artificialanalysis.ai, lmarena.ai) et appliquez la méthode de sélection du chapitre 2 — adaptée à votre usage et à votre contexte, validée sur votre propre jeu doré.
+- Le leadership des modèles évolue **chaque semaine** : chaque classement ici est l'instantané daté d'un domaine mouvant. Avant toute décision, revérifiez les classements en ligne (artificialanalysis.ai, lmarena.ai) et appliquez la méthode de sélection du chapitre 2 — adaptée à votre usage et à votre contexte, validée sur votre propre jeu doré.
 - Même chose pour les paires harnais+modèle des agents de code : benchmarkez la paire que vous comptez exécuter sur vos propres tâches plutôt que de faire confiance à un tableau publié.
-- Un modèle intermédiaire affûté est quasi-SOTA **sur son domaine**, pas un généraliste de pointe ; orientez les questions générales difficiles en conséquence.
+- Un modèle intermédiaire affûté est quasi-SOTA **sur son domaine**, pas un généraliste de pointe ; redirigez les questions générales difficiles vers un modèle de pointe.
 - Les hallucinations restent possibles — gardez un humain dans la boucle pour les décisions affectant des personnes (l'art. 22 encadre les décisions entièrement automatisées).
 - La quantification (4-bit) coûte encore un peu de précision ; benchmarkez les quants UD vs précisions supérieures avant de choisir.
-- Le Studio est en bêta : fonctionnalités et défauts évoluent vite ; figez les versions en production.
+- Le Studio est en bêta : fonctionnalités et réglages par défaut évoluent vite ; figez les versions en production.
 :::

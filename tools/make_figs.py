@@ -240,7 +240,6 @@ def fig_throughput():
         s.append(f'<circle cx="{L + bw:.0f}" cy="{y:.0f}" r="7" fill="{SKY}"/>')
         s.append(text(L - 12, y + 4, lab, 12, INK, "end", mono=False))
         s.append(text(L + bw + 12, y + 4, f"{mid} t/s", 11, MUTED, "start", mono=True))
-    s.append(text(T + L, 20, "", 1, MUTED))
     s.append(
         text(
             W / 2,
@@ -286,7 +285,6 @@ def fig_tco():
         loc_pts.append((m, 4200 + 18 * m))
 
     def path(pts, color, dash="", width=3):
-        d = f" M {px(pts[0][0]):.0f} {py(pts[0][1]):.0f}".join([""][:0]) or ""
         d = f"M {px(pts[0][0]):.0f} {py(pts[0][1]):.0f}"
         for m, c in pts[1:]:
             d += f" L {px(m):.0f} {py(c):.0f}"

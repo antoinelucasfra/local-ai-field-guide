@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="280" viewBox="0 0 760 280" role="img" font-family="DM Sans, sans-serif">
+<title>GDPR data flow: users, the authenticated gateway, the GPU model host and encrypted storage all sit inside the on-premise trust boundary; only optional web search crosses it, and it can be disabled entirely</title>
+<rect width="760" height="280" rx="12" fill="#ffffff"/>
+<defs>
+<marker id="ga" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#57606a"/></marker>
+</defs>
+<!-- boundary -->
+<rect x="150" y="46" width="440" height="204" rx="14" fill="#14b8a6" opacity="0.05"/>
+<rect x="150" y="46" width="440" height="204" rx="14" fill="none" stroke="#14b8a6" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="370" y="70" font-size="12" fill="#14b8a6" text-anchor="middle" font-weight="700" letter-spacing="1">ON-PREMISE — controller's full control (Art. 5, 25, 32)</text>
+<!-- outside: users -->
+<g stroke="#24292f" stroke-width="1.5"><rect x="20" y="118" width="100" height="52" rx="10" fill="#eef1f6"/></g>
+<text x="70" y="140" font-size="12.5" fill="#24292f" text-anchor="middle" font-weight="600">Users</text><text x="70" y="157" font-size="11" fill="#57606a" text-anchor="middle">workstation</text>
+<!-- gateway -->
+<g stroke="#24292f" stroke-width="1.5"><rect x="185" y="112" width="120" height="64" rx="10" fill="#fff4ec"/></g>
+<text x="245" y="136" font-size="12.5" fill="#24292f" text-anchor="middle" font-weight="600">Auth gateway</text><text x="245" y="153" font-size="11" fill="#57606a" text-anchor="middle">JWT + API keys</text>
+<!-- gpu host -->
+<g stroke="#24292f" stroke-width="1.5"><rect x="345" y="112" width="110" height="64" rx="10" fill="#f97316" opacity="0.16"/></g>
+<text x="400" y="136" font-size="12.5" fill="#24292f" text-anchor="middle" font-weight="600">GPU host</text><text x="400" y="153" font-size="11" fill="#57606a" text-anchor="middle">inference + training</text>
+<!-- storage -->
+<g stroke="#24292f" stroke-width="1.5"><rect x="480" y="112" width="90" height="64" rx="10" fill="#eef1f6"/></g>
+<text x="525" y="136" font-size="12.5" fill="#24292f" text-anchor="middle" font-weight="600">Storage</text><text x="525" y="153" font-size="11" fill="#57606a" text-anchor="middle">encrypted, versioned</text>
+<g stroke="#57606a" stroke-width="1.6" marker-end="url(#ga)">
+<line x1="120" y1="144" x2="181" y2="144"/><line x1="305" y1="144" x2="341" y2="144"/><line x1="455" y1="144" x2="476" y2="144"/>
+</g>
+<!-- egress -->
+<path d="M 455 165 C 530 240 620 235 668 190" fill="none" stroke="#b22222" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#ga)"/>
+<g stroke="#b22222" stroke-width="1.5"><rect x="628" y="150" width="110" height="42" rx="10" fill="#fff" stroke-dasharray="4 3"/></g>
+<text x="683" y="167" font-size="11.5" fill="#b22222" text-anchor="middle" font-weight="600">Web search</text>
+<text x="683" y="183" font-size="10.5" fill="#b22222" text-anchor="middle">optional · off = zero egress</text>
+<text x="565" y="256" font-size="11.5" fill="#57606a" text-anchor="middle">no telemetry leaves the box; the only optional crossing can be disabled for strict regimes</text>
+<text x="370" y="30" font-size="15" fill="#24292f" text-anchor="middle" font-weight="700">Where personal data lives</text>
+</svg>

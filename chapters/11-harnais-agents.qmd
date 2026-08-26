@@ -1,7 +1,7 @@
 ::: {.en}
 ## 11. Coding agent harnesses {#harness}
 
-An **agent harness** is the loop wrapped around a language model: system prompt + tool definitions (read files, edit files, run shell commands), permission gates before destructive actions, context assembly between turns, and the interface you type into. The model is the engine; the harness is the chassis and cockpit. The same model scores visibly differently across harnesses — the Coding Agent Index (Chap. 2) measures *harness+model pairs*, not models alone.
+An **agent harness** is the loop wrapped around a language model: system prompt + tool definitions (read files, edit files, run shell commands), permission gates before destructive actions, context assembly between turns, and the interface you type into. The model is the engine; the harness is the chassis and cockpit. The same model performs visibly differently across harnesses — the Coding Agent Index (Chap. 2) measures *harness+model pairs*, not models alone.
 
 ### Why local models change the calculus
 
@@ -65,6 +65,8 @@ Honourable mention: **Claude Code** — closed source, but the reference UX; it 
 
 ### Local reality checklist
 
+![The agent loop: the harness exchanges prompts and tool calls with a localhost model endpoint; tools (files, shell, git, tests) run on-premise, and results feed back into context until done.](chapters/figures/fig-agent-loop.svg){#fig-agent width=100%}
+
 - **Measure the harness tax first.** System prompt + tool schemas can eat 10–20 k tokens before your code is even attached. On a 32 k-context model that is the whole budget: pick harnesses that trim, and check Chap. 5's KV-cache math.
 - **Tool-calling format matters more than size.** Use models trained for function calling (Qwen-Coder, GLM, Kimi) and serve them with `llama-server --jinja`. Unsloth Studio's self-healing tool calling repairs malformed calls (Chap. 4).
 - **Mind the KV-cache attribution trap** when pointing Claude-protocol clients at local servers — the fix is in Chap. 10.
@@ -76,7 +78,7 @@ Honourable mention: **Claude Code** — closed source, but the reference UX; it 
 ::: {.fr}
 ## 11. Les harnais d'agents de code {#harness}
 
-Un **harnais d'agent** est la boucle qui enveloppe un modèle de langage : prompt système + définitions d'outils (lire des fichiers, éditer, exécuter des commandes shell), portes de permission avant les actions destructrices, assemblage du contexte entre les tours, et l'interface dans laquelle vous tapez. Le modèle est le moteur ; le harnais est le châssis et le poste de pilotage. Le même modèle score visiblement différemment selon le harnais — l'indice Coding Agent (chap. 2) mesure des paires *harnais+modèle*, pas des modèles seuls.
+Un **harnais d'agent** est la boucle qui enveloppe un modèle de langage : prompt système + définitions d'outils (lire des fichiers, éditer, exécuter des commandes shell), des contrôles de permission avant les actions destructrices, assemblage du contexte entre les tours, et l'interface dans laquelle vous tapez. Le modèle est le moteur ; le harnais est le châssis et le poste de pilotage. Le même modèle obtient des scores visiblement différents selon le harnais — l'indice Coding Agent (chap. 2) mesure des paires *harnais+modèle*, pas des modèles seuls.
 
 ### Pourquoi les modèles locaux changent la donne
 
@@ -86,12 +88,12 @@ Un **harnais d'agent** est la boucle qui enveloppe un modèle de langage : promp
 
 ### Notre recommandation : pi
 
-[**pi**](https://pi.dev) est notre choix pour le travail agentique local d'abord :
+[**pi**](https://pi.dev) est notre choix pour le travail agentique local-first :
 
-- **Entièrement open source**, minimal par conception : quatre outils (`read`, `write`, `edit`, `bash`), sans sous-agents ni plan-mode que vous ne pourriez pas retirer. Vous adaptez pi à votre flux au lieu de le combattre.
+- **Entièrement open source**, minimal par conception : quatre outils (`read`, `write`, `edit`, `bash`), sans bloat de sous-agents ni de plan-mode : tout ce qui existe se retire. Vous adaptez pi à votre flux au lieu de le combattre.
 - **Agnostique du fournisseur dès l'origine** : tout endpoint compatible OpenAI ou Anthropic se déclare dans `~/.pi/agent/models.json` — llama-server, Ollama, vLLM, LM Studio, ou l'API Unsloth du chap. 4. Les options `compat` gèrent les serveurs qui refusent les rôles `developer` ou `reasoning_effort`.
-- **Extensible sans fork** : extensions TypeScript, skills, templates de prompts, thèmes, paquetages partageables ; plus les modes print/JSON, RPC et un SDK pour l'embarquer dans vos scripts ou votre CI.
-- **Compromis honnête** : minimaliste signifie que vous assemblez vous-même votre flux. C'est le but — rien ne vous est caché.
+- **Extensible sans fork** : extensions TypeScript, skills, templates de prompts, thèmes, paquets partageables ; plus les modes print/JSON, RPC et un SDK pour l'embarquer dans vos scripts ou votre CI.
+- **Compromis honnête** : le minimalisme suppose que vous assemblez vous-même votre flux. C'est le but — rien ne vous est caché.
 
 Démarrage rapide contre votre stack locale :
 
@@ -115,35 +117,37 @@ pi          # puis /model → choisissez votre entrée locale
 
 ### Le panorama entièrement ouvert
 
-| Harnais | Licence | Forme | Histoire avec les modèles locaux |
+| Harnais | Licence | Forme | Prise en charge des modèles locaux |
 |---|---|---|---|
 | **pi** | open source | TUI · print · RPC · SDK | tout endpoint via `models.json` ; conçu pour l'adaptation |
-| **OpenAI Codex CLI** | Apache-2.0 | TUI Rust | fournisseurs OSS configurables ; le plus fort avec les habitudes GPT |
+| **OpenAI Codex CLI** | Apache-2.0 | TUI Rust | fournisseurs OSS configurables ; le plus fort si vos habitudes viennent des modèles GPT |
 | **Aider** | Apache-2.0 | CLI Python | `--openai-api-base` / Ollama natif ; binômage git-native, repo map |
-| **OpenCode** | open source | TUI + LSP, client/serveur | multi-fournisseurs dont local ; contexte conscient du LSP |
+| **OpenCode** | open source | TUI + LSP, client/serveur | multi-fournisseurs dont local ; contexte tenant compte du LSP |
 | **Crush** | open source | TUI (Charm) | multi-fournisseurs ; UX terminal léchée |
 | **Goose** (Block) | Apache-2.0 | CLI + bureau | extensions MCP d'abord ; automatisation par recettes |
 | **Cline / Roo Code** | Apache-2.0 | extension VS Code | modes plan/act ; fournisseurs compatibles OpenAI |
 | **Continue.dev** | Apache-2.0 | assistant IDE | autocomplétion + chat + agent ; Ollama natif |
 | **OpenHands** | MIT | plateforme sandboxée | boucle de développement autonome complète ; lourde mais complète |
-| **Qwen Code** | Apache-2.0 | CLI (fork gemini-cli) | accordé aux modèles Qwen coder — binôme local naturel |
+| **Qwen Code** | Apache-2.0 | CLI (fork gemini-cli) | calibré pour les modèles Qwen coder — binôme local naturel |
 
 Mention honorable : **Claude Code** — closed source, mais l'UX de référence ; il fonctionne sur votre stack locale via `unsloth start claude` (chap. 10). Adopter son *flux* par-dessus un harnais ouvert comme pi vous donne l'essentiel de l'expérience avec une souveraineté totale.
 
-### Choisir en une ligne chacune
+### Chaque harnais en une ligne
 
 - Puriste du terminal qui veut garder la main → **pi**
 - Flux centrés sur les commits git → **Aider**
-- Vous vivez dans VS Code → **Cline / Continue.dev**
+- Vie quotidienne dans VS Code → **Cline / Continue.dev**
 - Pipelines autonomes et recettes → **Goose / OpenHands**
-- Standardisé sur Qwen en local → **Qwen Code**
+- Parc local standardisé sur Qwen → **Qwen Code**
 
-### La liste de réalité locale
+### La checklist du terrain local
 
-- **Mesurez d'abord la taxe du harnais.** Prompt système + schémas d'outils peuvent consommer 10–20 k jetons avant même que votre code soit joint. Sur un modèle 32 k de contexte, c'est tout le budget : choisissez des harnais qui rognent et revoyez la math KV du chap. 5.
+![La boucle d'agent : le harnais échange prompts et appels d'outils avec un endpoint de modèle sur localhost ; les outils (fichiers, shell, git, tests) tournent sur site, et les résultats reviennent dans le contexte jusqu'à la fin.](chapters/figures/fig-agent-loop.svg){#fig-agent-fr width=100%}
+
+- **Mesurez d'abord la taxe du harnais.** Prompt système + schémas d'outils peuvent consommer 10–20 k jetons avant même que votre code soit joint. Sur un modèle 32 k de contexte, c'est tout le budget : choisissez des harnais qui rognent et revoyez le calcul de cache KV du chap. 5.
 - **Le format d'appel d'outils compte plus que la taille.** Utilisez des modèles entraînés au function calling (Qwen-Coder, GLM, Kimi) et servez-les avec `llama-server --jinja`. Le self-healing tool calling du Studio répare les appels malformés (chap. 4).
 - **Attention au piège KV-cache de l'en-tête d'attribution** pour les clients parlant le protocole Claude vers des serveurs locaux — le correctif est au chap. 10.
-- **Verrouillez quand même les permissions.** Des jetons gratuits invitent aux longues exécutions autonomes ; faites tourner les agents sur des dépôts non fiables dans un conteneur.
-- **Calibrez les attentes avec le pass@1** : la meilleure paire entièrement ouverte ≈ 0,63 (Kimi Code CLI + Kimi K3) contre 0,68 pour la frontière fermée sur l'indice début 2026 — un écart assez faible pour que des relances locales illimitées et gratuites le comblent en pratique (chap. 2).
-- **Les classements de harnais bougent chaque semaine aussi.** Le Coding Agent Index suit des paires harnais+modèle précises ; pi lui-même n'y est pas encore classé séparément — son avantage est l'adaptabilité et l'agnosticisme du fournisseur, pas une place au leaderboard. Benchmarkez la *paire* que vous comptez exécuter sur vos propres tâches (chap. 16), et attendez-vous à changer de modèle sous le harnais au fil des sorties : avec le `models.json` de pi, c'est une ligne de configuration.
+- **Verrouillez quand même les permissions.** Des jetons gratuits incitent aux longues exécutions autonomes ; faites tourner les agents sur des dépôts non fiables dans un conteneur.
+- **Calibrez les attentes avec le pass@1** : la meilleure paire entièrement ouverte ≈ 0,63 (Kimi Code CLI + Kimi K3) contre 0,68 pour la frontière fermée sur l'indice début 2026 — un écart assez faible pour que des relances locales illimitées et gratuites le résorbent en pratique (chap. 2).
+- **Les classements de harnais bougent eux aussi chaque semaine.** Le Coding Agent Index suit des paires harnais+modèle précises ; pi lui-même n'y est pas encore classé séparément — son avantage est l'adaptabilité et l'indépendance vis-à-vis des fournisseurs, pas une place au leaderboard. Benchmarkez la *paire* que vous comptez exécuter sur vos propres tâches (chap. 16), et attendez-vous à changer de modèle sous le harnais au fil des nouvelles versions : avec le `models.json` de pi, c'est une ligne de configuration.
 :::

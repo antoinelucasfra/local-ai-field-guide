@@ -21,7 +21,7 @@ Frontier AI capability is concentrating. Artificial Analysis tracks hyperscaler 
 
 La capacité IA de pointe se concentre. Artificial Analysis recense des dépenses en capital de plusieurs centaines de milliards de dollars par an chez les hyperscalers, et son analyse par pays montre une production d'intelligence de pointe dominée par les laboratoires américains et chinois, l'Europe étant surtout présente via les poids ouverts (ex. Mistral, France). Deux conséquences pour un institut de recherche :
 
-1. **Risque de dépendance** : router le travail intellectuel institutionnel via un petit ensemble de plateformes commerciales étrangères soumet des processus de recherche fondamentaux à une juridiction, une tarification et des décisions produit étrangères.
+1. **Risque de dépendance** : faire transiter le travail intellectuel de l'institution par un petit ensemble de plateformes commerciales étrangères soumet des processus de recherche fondamentaux à une juridiction, une tarification et des décisions produit étrangères.
 2. **La parade existe** : les modèles à poids ouverts sont à ~3 points de la frontière fermée (AA Intelligence Index v4.1.1 : Kimi K3 59,7 / GLM-5.3 59,5 contre Claude Opus 5 63,1) et tournent sur du matériel standard. La souveraineté n'exige plus de sacrifier la capacité.
 :::
 
@@ -56,7 +56,7 @@ La posture « local d'abord » est un *arbitrage* réglementaire : l'inférence 
 
 Technology without governance creates risk; governance without technology creates nothing. Institute-level instruments needed:
 
-- **Model registry**: every deployed model recorded — version hash, source, licence, quantisation, intended purpose, evaluation report. Weights are assets; treat them like one.
+- **Model registry**: every deployed model recorded — version hash, source, licence, quantisation, intended purpose, evaluation report. Weights are assets; treat them as such.
 - **Acceptable-use policy**: permitted data classes per deployment zone; mandatory human review for outputs affecting individuals (GDPR Art. 22); prohibition on feeding personal data into models outside approved zones.
 - **Evaluation gate**: no model enters service without passing a domain-specific test set built from real institutional tasks (the practitioner guide's "Evaluate before you trust" section defines the protocol).
 - **Incident procedure**: hallucination-caused harm, data exposure suspicion and prompt-injection abuse all route to the existing IT-security incident process.
@@ -95,10 +95,10 @@ The default question shifts from "why not use the cloud?" to "what legally and s
 | Situation | Posture |
 |---|---|
 | Données personnelles, résultats non publiés, dossiers de subvention, matériel clinique/génomique | **Local uniquement** |
-| Tâches sur domaines publics, textes non sensibles, quand la qualité front est décisive et les contrats le permettent | Cloud acceptable |
+| Tâches sur domaines publics, textes non sensibles, quand la qualité de pointe est décisive et que les contrats le permettent | Cloud acceptable |
 | Traitements par lots à fort volume et échelle prévisible | Local (pas de limite de débit, coût marginal nul) |
 | Expérimentations individuelles | Petits modèles locaux sur portables |
-| Courses agentiques longues critiques exigeant le modèle mondial n°1 | Cloud si la politique le permet ; sinon meilleur modèle local + relecture humaine |
+| Exécutions agentiques longues et critiques exigeant le modèle mondial n°1 | Cloud si la politique le permet ; sinon meilleur modèle local + relecture humaine |
 
 La question par défaut passe de « pourquoi pas le cloud ? » à « qu'est-ce qui exige légalement et stratégiquement le cloud ? ».
 :::
@@ -120,11 +120,11 @@ Sequencing matters more than size: each scenario starts with the same 90-day pil
 
 | Scénario | Périmètre | Fourchette budgétaire indicative | Résultat |
 |---|---|---|---|
-| Minimal | 2–3 stations, pilote dans deux labos, registre des modèles tabulaire | Petit cinq chiffres (€) | Preuves et amorçage des compétences |
-| Recommandé | Serveur GPU partagé (multi-GPU), ingénieur plateforme ~0,5 ETP, programme de formation, pack gouvernance complet | Milieu de six chiffres sur 3 ans, personnel inclus | Capacité à l'échelle de l'institut, prête pour la conformité |
-| Ambitieux | Cluster + programme d'affûtage de modèles métier (science francophone, corpora institutionnels), model cards publiés | Sept chiffres, pluriannuel | Capacité de référence régionale ; possible production scientifique sur l'adaptation de domaines |
+| Minimal | 2–3 stations, pilote dans deux labos, registre central sous forme de tableur | Quelques dizaines de milliers d'€ | Démonstrations concrètes et compétences initiales |
+| Recommandé | Serveur GPU partagé (multi-GPU), ingénieur plateforme ~0,5 ETP, programme de formation, pack gouvernance complet | De l'ordre de quelques centaines de milliers d'€ sur 3 ans, personnel inclus | Capacité à l'échelle de l'institut, prête pour la conformité |
+| Ambitieux | Cluster + programme d'affûtage de modèles métier (science francophone, corpora institutionnels), model cards publiés | Sept chiffres, pluriannuel | Capacité de référence régionale ; éventuelle production scientifique sur l'adaptation aux domaines |
 
-Le séquençage compte plus que la taille : chaque scénario démarre par le même pilote de 90 jours (chap. 14) et ne monte en puissance que sur preuves.
+Le séquençage compte plus que la taille : chaque scénario démarre par le même pilote de 90 jours (chap. 18) et ne monte en puissance que sur preuves.
 :::
 
 ::: {.en}
@@ -142,7 +142,7 @@ The asymmetric risk is clearly on the side of inaction.
 
 **Agir avec prudence** : un peu d'ingénierie, des cycles de renouvellement matériel, le besoin de recruter/fidéliser un profil plateforme. Rien d'inhabituel.
 
-**Ne pas agir** : les charges sensibles restent non automatisées ou dérivent vers un usage fantôme d'outils grand public (le pire des deux mondes) ; la dette documentaire s'accumule face aux échéances AI Act de 2026 ; la dépendance à un ensemble restreint de plateformes étrangères s'accentue ; les instituts concurrents construisent capacité et attractivité.
+**Ne pas agir** : les charges sensibles restent non automatisées ou dérivent vers un usage fantôme d'outils grand public (le pire des deux mondes) ; la dette documentaire s'accumule face aux échéances AI Act de 2026 ; la dépendance à un ensemble restreint de plateformes étrangères s'accentue ; les instituts concurrents se dotent de capacités et attirent les talents.
 
 Le risque asymétrique est clairement du côté de l'inaction.
 :::

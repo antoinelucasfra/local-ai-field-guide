@@ -1,0 +1,80 @@
+# Monthly freshness audit: link rot + stale content.
+# Opens/updates one issue listing dead links and chapters untouched too long.
+# Book content rots faster than code — model landscape moves weekly.
+
+name: freshness
+
+on:
+  schedule:
+    - cron: "0 6 3 * *" # 3rd of each month, 06:00 UTC
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@f548e57e544e1ff5a4c46bf1e1b8685f8e4a348a # v4
+        with:
+          persist-credentials: false
+
+      - name: Check links in chapters
+        id: links
+        continue-on-error: true
+        uses: lycheeverse/lychee-action@82202e5e160770b59c17ba9a3d0298f80e0c1c98 # v2
+        with:
+          args: >-
+            --no-progress --max-retries 2 --timeout 20
+            --exclude 'localhost|127\.0\.0\.1|example\.'
+            'chapters/*.qmd' 'README.md'
+          output: /tmp/lychee-report.md
+
+      - name: Find stale chapters (> 6 months)
+        run: |
+          {
+            echo "## Chapters not touched in over 6 months"
+            echo ""
+            found=0
+            while IFS= read -r f; do
+              d=$(git log -1 --format=%cs -- "$f")
+              if [ -n "$d" ]; then
+                if [ "$(date -d "$d" +%s)" -lt "$(date -d '6 months ago' +%s)" ]; then
+                  echo "- \`$f\` — last substantive change **$d**"
+                  found=1
+                fi
+              fi
+            done < <(ls chapters/*.qmd | grep -v _order)
+            [ "$found" = 0 ] && echo "None — all chapters touched within 6 months."
+            echo ""
+            echo "_Model-landscape chapters to re-check first: 02-choisir-modeles, D-materiel._"
+          } > /tmp/stale-report.md
+          cat /tmp/stale-report.md
+
+      - name: Create or update freshness issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          {
+            echo "# Freshness audit — $(date +%Y-%m-%d)"
+            echo ""
+            if [ -s /tmp/lychee-report.md ] && grep -q "Issues found" /tmp/lychee-report.md; then
+              cat /tmp/lychee-report.md
+              echo ""
+            else
+              echo "## Link check" && echo "All links OK." && echo ""
+            fi
+            cat /tmp/stale-report.md
+          } > /tmp/body.md
+
+          existing=$(gh issue list --repo "$GITHUB_REPOSITORY" \
+            --label freshness --state open --json number --jq '.[0].number' || true)
+          if [ -n "$existing" ] && [ "$existing" != "null" ]; then
+            gh issue comment "$existing" --repo "$GITHUB_REPOSITORY" --body-file /tmp/body.md
+          else
+            gh issue create --repo "$GITHUB_REPOSITORY" \
+              --title "Freshness audit $(date +%Y-%m): links & stale chapters" \
+              --label freshness --body-file /tmp/body.md
+          fi

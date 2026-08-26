@@ -62,11 +62,11 @@ La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialana
 ::: {.fr}
 | Tâche | Forme du prompt | Taille de modèle |
 |---|---|---|
-| Résumer un article ou rapport | Joindre le PDF : « Résume méthodes et limites » | N'importe |
-| Tri de littérature | Coller 20 résumés : « Groupe par thème, signale les manques » | N'importe |
-| Aide au code | « Ce script R/Python échoue avec X — corrige et explique » | Petit suffit |
-| Traduction FR ⇄ EN de vos textes | « Traduis pour un public académique » | N'importe ; bon français |
-| Préparation de données | Joindre CSV : « Profil ce tableau, repère les incohérences » | Petit–moyen |
+| Résumer un article ou rapport | Joindre le PDF : « Résume méthodes et limites » | Peu importe |
+| Tri de littérature | Coller 20 résumés : « Groupe par thème, signale les manques » | Peu importe |
+| Aide au code | « Ce script R/Python échoue avec X — corrige et explique » | Un petit suffit |
+| Traduction FR ⇄ EN de vos textes | « Traduis pour un public académique » | Peu importe ; bon français requis |
+| Préparation de données | Joindre CSV : « Profil ce tableau, repère les incohérences » | Petit à moyen |
 :::
 
 ::: {.en}
@@ -80,7 +80,7 @@ La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialana
 ::: {.en}
 ## What it cannot do
 
-- Match the largest closed models on very long, multi-step expert missions — route those accordingly if available to you.
+- Match the largest closed models on very long, multi-step expert work — route those tasks elsewhere if you have access.
 - Guarantee correctness: hallucinations remain possible; keep a human decision-maker.
 - Replace statistical software: use R/Python for inference; LLMs help you *write* that code.
 :::
@@ -88,7 +88,7 @@ La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialana
 ::: {.fr}
 ## Ce qu'elle ne sait pas faire
 
-- Égaler les plus gros modèles fermés sur de très longues missions experts multi-étapes — orientez-les ailleurs si vous y avez accès.
+- Égaler les plus gros modèles fermés sur de très longues tâches expertes multi-étapes — confiez-les ailleurs si vous y avez accès.
 - Garantir l'exactitude : les hallucinations restent possibles ; l'humain décide.
 - Remplacer les logiciels statistiques : utilisez R/Python pour l'inférence ; les LLM vous aident à *écrire* ce code.
 :::
@@ -102,7 +102,7 @@ With admin rights, one command installs everything (Mac, Windows, Linux):
 curl -fsSL https://unsloth.ai/install.sh | sh
 ```
 
-Then open the local web interface, pick a small model (e.g. a Qwen3.5 4B class model) and start chatting. No GPU required for this. Your IT team can also deploy a shared server — point them at the companion guides below.
+Then open the local web interface, pick a small model (e.g. a Qwen3.5-class 4B) and start chatting. No GPU required. Your IT team can also deploy a shared server — point them at the chapters below.
 :::
 
 ::: {.fr}
@@ -114,7 +114,7 @@ Avec les droits administrateur, une commande installe tout (Mac, Windows, Linux)
 curl -fsSL https://unsloth.ai/install.sh | sh
 ```
 
-Ouvrez ensuite l'interface web locale, choisissez un petit modèle (ex. un modèle de classe Qwen3.5 4B) et discutez. Aucun GPU requis pour cela. Votre équipe IT peut aussi déployer un serveur partagé — orientez-la vers les guides compagnons ci-dessous.
+Ouvrez ensuite l'interface web locale, choisissez un petit modèle (ex. un Qwen3.5 4B) et discutez. Aucun GPU requis. Votre équipe IT peut aussi déployer un serveur partagé — orientez-la vers les chapitres ci-dessous.
 :::
 
 ::: {.en}
@@ -128,7 +128,7 @@ Ouvrez ensuite l'interface web locale, choisissez un petit modèle (ex. un modè
 ::: {.fr}
 ## Pour aller plus loin
 
-- **Chapitres 1–15 (Parties I–IV)** - installation, exécution des modèles, paramètres d'inférence, fine-tuning et déploiement
+- **Chapitres 1–15 (Parties I–IV)** — installation, exécution des modèles, paramètres d'inférence, fine-tuning et déploiement
 - **Chapitre 18** — coûts, risques et plan pilote de 90 jours pour directeurs de laboratoire
 - **Chapitre 19** — souveraineté, régulation et scénarios d'investissement pour la direction d'institut
 :::

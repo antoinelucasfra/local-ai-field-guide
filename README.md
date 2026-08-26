@@ -7,7 +7,11 @@ One Quarto project → **a single coherent book** (19 chapters in 5 parts + 2 an
 | Full book | `book.html` (self-contained) · `book.pdf` · `book.docx` · `book.epub` |
 | Per chapter ×24 | `<slug>-slides.html` (reveal deck, self-contained, shareable numbered URLs) · `<slug>.pdf` · `<slug>.html` |
 
-Download links appear at the end of every chapter inside the book.
+Download links appear at the end of every chapter inside the book — plus a *suggest an edit* link straight to the chapter source on GitHub.
+
+## Companion code
+
+`code/` holds runnable companions to the recipes (fine-tune script, evaluation gate, minimal RAG, Ollama Modelfile) — shipped with every release and served on Pages under `/code/`. See `code/README.md`.
 
 ## Render
 
@@ -26,7 +30,9 @@ One workflow (`.github/workflows/book.yml`) drives everything:
 | --- | --- |
 | push / PR | `quarto render --profile en` — build check |
 | push `main` | EN + FR render → site assembled (`index.html` + `en/` + `fr/`) → GitHub Pages |
-| tag `v*` | EN + FR render → release assets (`localai-book-vX.Y.Z-en.zip` = PDF+EPUB+DOCX per lang, full site zip) → GitHub Release |
+| tag `v*` | EN + FR render → release assets (`localai-book-vX.Y.Z-en.zip` = PDF+EPUB+DOCX per lang, `localai-code-vX.Y.Z.zip` = companion scripts, full site zip) → GitHub Release |
+
+A monthly **freshness audit** (`.github/workflows/freshness.yml`) checks every link in the chapters and lists chapters untouched for 6+ months, then reports in a `freshness`-labelled issue.
 
 Pages is live after the first push to `main`: Settings → Pages → Source **GitHub Actions**. Cut a release with:
 

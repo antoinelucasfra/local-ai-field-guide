@@ -29,26 +29,26 @@ Meanwhile, hyperscaler capital expenditure on AI infrastructure (hundreds of bil
 The historical objection — quality — no longer holds for domain-specific work: a fine-tuned mid-size open model beats a generic frontier API on narrow tasks, at zero marginal cost, offline.
 
 ::: {.al-take}
-**Our take.** We are not missionaries: we still send the hardest, least sensitive reasoning tasks to frontier APIs when the gap matters. What changed our practice is the middle of the distribution — drafting, summarising, extraction, first-pass code — which quietly migrated local in our own workflow and never went back. Go hybrid on purpose, not by dogma either way.
+**Our take.** We are not missionaries: we still send the hardest, least sensitive reasoning tasks to frontier APIs when the gap matters. What changed our practice is the middle of the distribution — drafting, summarising, extraction, first-pass code — which quietly migrated local in our own workflow and never went back. Go hybrid on purpose — not out of dogma in either direction.
 :::
 :::
 
 ::: {.fr}
-Pendant trois ans, l'IA de pointe a signifié API fermées : GPT, Claude, Gemini. Les entreprises échangeaient leur souveraineté numérique contre la performance — chaque prompt traité par un tiers, facturé au token, soumis à des juridictions étrangères et aux politiques de rétention du fournisseur.
+Pendant trois ans, l'IA de pointe était synonyme d'API fermées : GPT, Claude, Gemini. Les entreprises échangeaient leur souveraineté numérique contre la performance — chaque prompt traité par un tiers, facturé au token, soumis à des juridictions étrangères et aux politiques de rétention du fournisseur.
 
 Ce compromis est en train de disparaître. Artificial Analysis ([artificialanalysis.ai](https://artificialanalysis.ai)), qui évalue les modèles en continu, montre la convergence des modèles ouverts vers les propriétaires :
 
 - **Intelligence** : sur l'AA Intelligence Index v4.1.1 (début 2026), les meilleurs modèles ouverts — Kimi K3 (59,7), GLM-5.3 (59,5) — sont à ~3 points des meilleurs modèles fermés (Claude Opus 5 à 63,1 ; GPT-5.6 Sol et Grok 4.6 à ~60,9). L'écart était deux fois plus grand il y a deux ans.
 - **Agents de code** : sur l'AA Coding Agent Index v1.4, le modèle ouvert Kimi K3 piloté par un CLI obtient 0,63 contre 0,68 pour Claude Code + Opus 5 — quasi-parité sur des tâches réelles d'ingénierie logicielle.
 - **Économie** : les tendances d'efficacité d'AA montrent que le prix d'un niveau d'intelligence donné chute de plusieurs ordres de grandeur par an, tandis que la vitesse augmente. L'intelligence devient une commodité.
-- **Architecture** : l'écosystème ouvert s'est consolidé autour des architectures Mixture-of-Experts (MoE) — un total de paramètres énorme pour un petit nombre actif par token — rendant exécutable sur une simple station de travail des modèles très performants.
+- **Architecture** : l'écosystème ouvert s'est consolidé autour des architectures Mixture-of-Experts (MoE) — des totaux de paramètres énormes pour peu de paramètres actifs par token — qui rendent ces modèles exécutables sur une simple station de travail.
 
 Parallèlement, les capitaux dépensés en infrastructure IA par les hyperscalers (des centaines de milliards de dollars par an, suivis par AA) concentrent le calcul entre les mains de quelques laboratoires américains et chinois. Pour les organisations européennes, cette concentration est elle-même un risque de gouvernance.
 
 **Pourquoi l'IA locale gagne en gouvernance et souveraineté :**
 
 - **Aucun sous-traitant** : prompts, documents et corpus ne quittent jamais votre périmètre — pas de contrat d'Art. 28, pas d'analyse de transfert international (Chap. V RGPD), pas de réutilisation par le fournisseur.
-- **Auditabilité** : vous savez exactement quels poids, quelle version, quelle quantification ont répondu. Les poids se hachent, se versionnent et s'archivent comme tout actif informatique.
+- **Auditabilité** : vous savez exactement quels poids, quelle version, quelle quantification ont répondu. On peut hacher, versionner et archiver les poids comme tout autre actif informatique.
 - **Pas d'obsolescence imposée** : les modèles d'API sont retirés ; votre modèle affûté continue de fonctionner.
 - **Sortie du lock-in** : les poids ouverts tournent sous llama.cpp, vLLM, Ollama, LM Studio — changez de runtime sans changer de modèle.
 - **Option européenne** : des modèles ouverts de laboratoires UE (ex. Mistral, France) réduisent l'exposition à des juridictions extra-européennes.

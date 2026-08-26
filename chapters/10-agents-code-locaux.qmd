@@ -32,17 +32,49 @@ claude --settings '{"env":{"CLAUDE_CODE_ATTRIBUTION_HEADER":"0","CLAUDE_CODE_ENA
 ```
 
 Per the AA Coding Agent Index, expect open 26–30B-class models to handle routine refactors, tests and reviews well, while the largest closed models keep an edge on very long multi-file missions — route accordingly.
+
+### What local models do well {#agents-fit}
+
+| Task | Local fit | Why |
+|---|---|---|
+| Routine refactors, renames, boilerplate | ✓✓ | pattern-following, small blast radius |
+| Writing and fixing unit tests | ✓✓ | verifiable output — the agent runs the tests |
+| Code review comments, docstrings | ✓✓ | short-context, style-driven |
+| Feature work in 2–5 files | ✓ | fine with ≥ 64k context |
+| Long multi-file missions (30 min+) | △ | context pressure + compounding tool errors |
+| Novel architecture decisions | ✗ | route to your strongest model, local or not |
+
+### Budgeting the context window {#agents-context}
+
+Agent loops burn tokens fast: every tool result — file reads, shell output, diffs — lands in context and stays there. Practical guidance:
+
+- **32k** works for single-file edits and Q&A; agents start forgetting earlier instructions past that.
+- **64–128k** is the comfortable agentic range; prefer models rated for it rather than forcing a chat model beyond its training.
+- Watch for **KV-cache invalidation**: anything that rewrites the conversation prefix (the attribution header above, system-prompt churn) re-processes the whole window — the silent killer of local-agent latency.
+- Keep the harness disciplined: scoped file reads, truncated shell output. A 128k window fills in a dozen careless `cat`s.
+
+### Routing strategy {#agents-routing}
+
+Local-first escalation beats purism:
+
+1. Default endpoint = your local model. Code, prompts and diffs stay on-premise.
+2. Explicit escalation trigger for hard tasks: a per-session flag or second config that points at the cloud provider.
+3. Measure the split: log which tasks needed escalation; when the local pass-rate on routine work climbs (re-test with your golden set, [§ Evaluate](#evaluate)), lower the threshold again.
+
+::: {.al-take}
+**Our take.** The privacy win here is real and immediate — we run reviews of sensitive client code through a local model without ever asking permission from anyone's compliance team. But there is a productivity tax on the hardest 10 % of tasks, and pretending otherwise is how local-AI pilots get quietly abandoned. Hybrid routing is not a compromise; it is the honest architecture.
+:::
 :::
 
 ::: {.fr}
-Les agents de code (Claude Code, Codex, OpenCode…) acceptent des endpoints personnalisés — ils peuvent donc piloter **votre** modèle local, en gardant code et prompts sur site. Unsloth câble ça en une commande :
+Les agents de code (Claude Code, Codex, OpenCode…) acceptent des endpoints personnalisés — ils peuvent donc piloter **votre** modèle local, en gardant code et prompts sur site. Unsloth fait le câblage en une commande :
 
 ```bash
 unsloth start claude     # aussi : codex | hermes | openclaw | opencode
 unsloth start claude --continue
 ```
 
-Avec un modèle chargé dans le Studio, `unsloth start` règle endpoint, clé API, nom de modèle et longueur de contexte pour l'agent — votre configuration habituelle reste intacte. Équivalent manuel :
+Avec un modèle chargé dans le Studio, `unsloth start` règle l'endpoint, la clé API, le nom de modèle et la longueur de contexte pour l'agent — votre configuration habituelle reste intacte. Équivalent manuel :
 
 ```bash
 export ANTHROPIC_BASE_URL="http://localhost:8888"
@@ -53,11 +85,43 @@ claude --model unsloth/gemma-4-26B-A4B-it-GGUF
 
 L'endpoint Unsloth parle les deux dialectes sur un même port : Anthropic `/v1/messages` et OpenAI `/v1/chat/completions` + `/v1/responses`, avec streaming, appels d'outils et vision. Les clés (`sk-unsloth-…`) se créent dans Settings → API, affichées une fois, stockées hachées, révocables.
 
-[Correctif de performance critique pour Claude Code :]{fg="#b22222"} son header d'attribution (`x-anthropic-billing-header:`) change à chaque requête et invalide le cache KV du modèle local — jusqu'à 90 % d'inférence en plus. Désactivez-le :
+[Correctif de performance critique pour Claude Code :]{fg="#b22222"} son header d'attribution (`x-anthropic-billing-header:`) change à chaque requête et invalide le cache KV du modèle local — une inférence jusqu'à 90 % plus lente. Désactivez-le :
 
 ```bash
 claude --settings '{"env":{"CLAUDE_CODE_ATTRIBUTION_HEADER":"0","CLAUDE_CODE_ENABLE_TELEMETRY":"0","CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC":"1"}}'
 ```
 
-Selon l'AA Coding Agent Index, attendez-vous à ce que des modèles ouverts de classe 26–30B traitent bien refactors courants, tests et revues, tandis que les plus gros modèles fermés gardent l'avantage sur les très longues missions multi-fichiers — routez en conséquence.
+Selon l'AA Coding Agent Index, attendez-vous à ce que des modèles ouverts de classe 26–30B traitent bien les refactors courants, les tests et les revues, tandis que les plus gros modèles fermés gardent l'avantage sur les très longues missions multi-fichiers — routez en conséquence.
+
+### Ce que les modèles locaux font bien {#agents-fit}
+
+| Tâche | Ajustement local | Pourquoi |
+|---|---|---|
+| Refactors courants, renommages, boilerplate | ✓✓ | suivi de motifs, rayon d'impact réduit |
+| Écrire et corriger des tests unitaires | ✓✓ | sortie vérifiable — l'agent exécute les tests |
+| Commentaires de revue, docstrings | ✓✓ | contexte court, piloté par le style |
+| Fonctionnalités sur 2 à 5 fichiers | ✓ | confortable dès 64k de contexte |
+| Longues missions multi-fichiers (30 min+) | △ | pression sur le contexte + erreurs d'outils cumulées |
+| Décisions d'architecture inédites | ✗ | routez vers votre meilleur modèle, local ou non |
+
+### Budgéter la fenêtre de contexte {#agents-context}
+
+Les boucles d'agent brûlent les jetons : chaque résultat d'outil — lectures de fichiers, sorties shell, diffs — entre dans le contexte et y reste. Repères pratiques :
+
+- **32k** suffit pour des éditions mono-fichier et du Q&A ; au-delà, l'agent oublie ses instructions initiales.
+- **64–128k** est la zone agentique confortable ; préférez des modèles prévus pour cet usage, plutôt que de forcer un modèle de chat au-delà de son entraînement.
+- Surveillez l'**invalidation du cache KV** : tout ce qui réécrit le préfixe de conversation (header d'attribution ci-dessus, prompt système remanié) retraite toute la fenêtre — le tueur silencieux de latence.
+- Gardez le harnais discipliné : lectures ciblées, sorties shell tronquées. Une fenêtre de 128k se remplit en une douzaine de `cat` négligents.
+
+### Stratégie de routage {#agents-routing}
+
+Partir du local et escalader si besoin bat le purisme :
+
+1. Endpoint par défaut = votre modèle local. Code, prompts et diffs restent sur site.
+2. Déclencheur explicite d'escalade pour les tâches dures : un flag par session ou une seconde config qui pointe vers le fournisseur cloud.
+3. Mesurez la répartition : journalisez quelles tâches ont nécessité l'escalade ; quand le taux de réussite local monte sur le travail courant (re-testez avec votre jeu de référence, [§ Évaluer](#evaluate)), rabaissez à nouveau le seuil.
+
+::: {.al-take}
+**Notre avis.** Le gain privacy ici est réel et immédiat — nous faisons relire du code client sensible par un modèle local sans jamais demander la permission à une quelconque équipe conformité. Mais il y a une taxe de productivité sur les 10 % de tâches les plus dures ; la nier, c'est le meilleur moyen de voir un pilote d'IA locale abandonné en silence. Le routage hybride n'est pas un compromis ; c'est l'architecture honnête.
+:::
 :::

@@ -33,8 +33,14 @@ FRONT = """---
 author: "Support IA — LocalAI"
 date: today
 filters:
-  - highlight-text
-  - langsel
+  - langsel{ext_filters}
+  - at: post-quarto
+    path: _extensions/andrewheiss/wordcount/wordcount.lua
+extensions:
+  linkrot:
+    fail-on-error: false
+    timeout: 8
+    cache-results: true
 title: "doc"
 title-en: "{ten}"
 title-fr: "{tfr}"
@@ -45,6 +51,15 @@ format:
 
 """
 
+EXT_FILTERS = """
+  - include-code-files
+  - passage-xref
+  - details
+  - code-window
+  - lightbox
+  - linkrot
+  - wordcount"""
+
 BOOK_FMT = """  html:
     output-file: book.html
     toc: true
@@ -54,6 +69,7 @@ BOOK_FMT = """  html:
       dark: [cosmo, al-brand-dark, al-brand-book.scss]
     include-in-header: tools/book-head.html
     embed-resources: true
+    lightbox: auto
   epub:
     output-file: book.epub
     toc: true
@@ -111,7 +127,8 @@ DOC_FMT = """  typst:
       light: [cosmo, al-brand-light, al-brand-book.scss]
       dark: [cosmo, al-brand-dark, al-brand-book.scss]
     include-in-header: tools/book-head.html
-    embed-resources: true"""
+    embed-resources: true
+    lightbox: auto"""
 
 YML = """project:
   type: default
@@ -121,6 +138,9 @@ YML = """project:
 profile:
   default: [en]
 """
+
+
+REPO_SRC = "https://github.com/antoinelucasfra/localai-review/blob/main/chapters/"
 
 
 def order():
@@ -179,7 +199,7 @@ def title_ids(body):
         """Ids of the two chapter-title headings (first per language block);
         None when the fragment has no ## titles (e.g. welcome page)."""
         ids = []
-        for m in re.finditer(r'::: \{\.(en|fr)\}\n## .*?\{#([\w-]+)\}', body):
+        for m in re.finditer(r"::: \{\.(en|fr)\}\n## .*?\{#([\w-]+)\}", body):
                 if len(ids) < 2:
                         ids.append(m.group(2))
         return set(ids) if len(ids) == 2 else None
@@ -198,6 +218,34 @@ def rewrite_foreign_links(body, ids):
         return re.sub(r"\[([^\]]+)\]\(#([\w-]+)\)", sub, body)
 
 
+def add_standalone_links(body, slug):
+        """Links to this chapter's standalone formats, placed directly under
+        each language's chapter-title heading instead of the chapter tail."""
+        en = (
+                f"\n::: {{.dl-strip}}\nThis chapter standalone: "
+                f"[slides]({slug}-slides.html) · [PDF]({slug}.pdf) · "
+                f"[HTML]({slug}.html) · "
+                f"[suggest an edit]({REPO_SRC}{slug}.qmd)\n:::\n"
+        )
+        fr = (
+                f"\n::: {{.dl-strip}}\nCe chapitre seul : "
+                f"[diapositives]({slug}-slides.html) · [PDF]({slug}.pdf) · "
+                f"[HTML]({slug}.html) · "
+                f"[proposer une modification]({REPO_SRC}{slug}.qmd)\n:::\n"
+        )
+        out = re.sub(
+                r"(::: \{\.en\}\n#+[^\n]+\n)", lambda m: m.group(1) + en, body, count=1
+        )
+        hit_en = out != body
+        body2 = re.sub(
+                r"(::: \{\.fr\}\n#+[^\n]+\n)", lambda m: m.group(1) + fr, out, count=1
+        )
+        # no titled language blocks (welcome page): put strips at the very top
+        if not (hit_en and body2 != out):
+                return en + "\n" + fr + "\n" + body
+        return body2
+
+
 def main():
         slugs, book, slides = [], [], []
         for raw in order():
@@ -207,12 +255,22 @@ def main():
                                 f"::: {{.en}}\n# {en} {{.unnumbered}}\n:::\n\n"
                                 f"::: {{.fr}}\n# {fr} {{.unnumbered}}\n:::\n\n"
                         )
-                        slides.append(f"# {en} {{.unnumbered}}\n\n# {fr} {{.unnumbered}}\n\n")
+                        slides.append(
+                                f"# {en} {{.unnumbered}}\n\n# {fr} {{.unnumbered}}\n\n"
+                        )
                 elif raw.startswith("FILE"):
                         slug = raw.split()[1][:-4]
                         slugs.append(slug)
                         with _open(os.path.join(CH, slug + ".qmd")) as f:
-                                slug_body = dedup_ids(f.read().rstrip())
+                                # ponytail: single typo rule, replaces the search-replace
+                                # extension; (?<!\w) mirrors its %f[%w] frontier so
+                                # llama.cpp is untouched.
+                                src = re.sub(
+                                        r"(?<!\w)lama\.cpp",
+                                        "Llama.cpp",
+                                        f.read().rstrip(),
+                                )
+                                slug_body = dedup_ids(src)
                         # presenter notes are for slide decks only — never in the merged volume
                         body = re.sub(
                                 r"\n*::: \{\.notes\}.*?\n:::\n?",
@@ -223,15 +281,7 @@ def main():
                         keep = None if slug == "00-bienvenue" else title_ids(body)
                         if keep:
                                 body = demote_sections(body, keep)
-                        strip = (
-                                f"\n\n:::: {{.dl-strip}}\n::: {{.en}}\nThis chapter standalone: "
-                                f"[slides]({slug}-slides.html) · [PDF]({slug}.pdf) · "
-                                f"[HTML]({slug}.html)\n:::\n\n"
-                                f"::: {{.fr}}\nCe chapitre seul : "
-                                f"[diapositives]({slug}-slides.html) · [PDF]({slug}.pdf) · "
-                                f"[HTML]({slug}.html)\n:::\n::::\n"
-                        )
-                        book.append(body + strip + "\n\n")
+                        book.append(add_standalone_links(body, slug) + "\n\n")
                         ten, tfr = chapter_titles(body, slug)
                         ids = set(re.findall(r"\{#([\w-]+)\}", body))
                         sbody = rewrite_foreign_links(body, ids)
@@ -240,35 +290,29 @@ def main():
                                 "ten": ten.replace('"', "'"),
                                 "tfr": tfr.replace('"', "'"),
                         }
+                        sslug = rewrite_foreign_links(
+                                slug_body, set(re.findall(r"\{#([\w-]+)\}", slug_body))
+                        )
                         with _open(os.path.join(ROOT, f".ch-{slug}.qmd"), "w") as f:
                                 f.write(
                                         FRONT.format(
-                                                fmt=SLIDES_FMT.format(slug=slug), **meta
+                                                fmt=SLIDES_FMT.format(slug=slug),
+                                                ext_filters=EXT_FILTERS,
+                                                **meta,
                                         )
-                                        + rewrite_foreign_links(
-                                                slug_body,
-                                                set(
-                                                        re.findall(
-                                                                r"\{#([\w-]+)\}",
-                                                                slug_body,
-                                                        )
-                                                ),
-                                        ).rstrip()
+                                        + sslug.rstrip()
                                         + "\n"
                                 )
-                        slides.append(
-                                rewrite_foreign_links(
-                                        slug_body,
-                                        set(re.findall(r"\{#([\w-]+)\}", slug_body)),
-                                ).rstrip()
-                                + "\n\n"
-                        )
+                        slides.append(sslug.rstrip() + "\n\n")
                         with _open(os.path.join(ROOT, f".chh-{slug}.qmd"), "w") as f:
                                 f.write(
                                         FRONT.format(
-                                                fmt=DOC_FMT.format(slug=slug), **meta
+                                                fmt=DOC_FMT.format(slug=slug),
+                                                ext_filters=EXT_FILTERS,
+                                                **meta,
                                         )
                                         + sbody.rstrip()
+                                        + f"\n\n---\n\n::: {{.en}}\n*Found an error or something outdated? [Suggest an edit to this chapter]({REPO_SRC}{slug}.qmd) on GitHub.*\n:::\n\n::: {{.fr}}\n*Une erreur ou un passage dépassé ? [Proposez une modification de ce chapitre]({REPO_SRC}{slug}.qmd) sur GitHub.*\n:::\n"
                                         + "\n"
                                 )
 
@@ -278,6 +322,7 @@ def main():
                                 ten="Sovereign Local AI — The Reference Guide",
                                 tfr="L'IA locale souveraine — Le guide de référence",
                                 fmt=BOOK_FMT,
+                                ext_filters=EXT_FILTERS,
                         )
                         + "".join(book)
                 )
@@ -287,6 +332,7 @@ def main():
                                 ten="Sovereign Local AI — Slides",
                                 tfr="L'IA locale souveraine — Diapositives",
                                 fmt=BOOK_SLIDES_FMT,
+                                ext_filters=EXT_FILTERS,
                         )
                         + "".join(slides)
                 )

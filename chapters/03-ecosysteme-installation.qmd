@@ -11,7 +11,7 @@ Three layers, one project ([github.com/unslothai/unsloth](https://github.com/uns
 
 | Layer | What it is | For whom |
 |---|---|---|
-| **Unsloth Core** | Python library (`pip install unsloth`). Kernel-level optimisations: ~2× faster training, ~70 % less VRAM, no accuracy loss. Apache-2.0. | Engineers scripting pipelines |
+| **Unsloth Core** | Python library (`pip install unsloth`). Kernel-level optimisations: ~2× faster training, ~70 % less VRAM, no accuracy loss[^ch03-unsloth]. Apache-2.0. | Engineers scripting pipelines |
 | **Unsloth Studio** | Open-source, no-code **web UI** (beta) wrapping the whole lifecycle: chat, dataset building, training, evaluation, export. Runs locally, powered by llama.cpp for inference. | Anyone who trains/runs models without writing code |
 | **Unsloth Desktop** | Native desktop app (Mac/Windows/Linux) bundling Studio + model hub + media generation. Simplest install. | Everyone else |
 
@@ -19,7 +19,7 @@ Capabilities shared across the stack:
 
 - Run **GGUF**, MLX (Mac) and safetensors models, text, vision, audio/TTS, embeddings, diffusion image/video.
 - Train 500+ models with QLoRA/LoRA/full fine-tuning, RL (GRPO, DPO), continued pretraining.
-- **Self-healing tool calling**: repairs malformed tool calls, reported 30–80 % higher tool-call accuracy and ~50 % fewer broken calls vs vanilla llama.cpp tool parsing.
+- **Self-healing tool calling**: repairs malformed tool calls, reported 30–80 % higher tool-call accuracy and ~50 % fewer broken calls vs vanilla llama.cpp tool parsing[^ch03-tools].
 - **Advanced web search** (DuckDuckGo-based, visits and reads pages, not just summaries) and **sandboxed Bash/Python code execution**.
 - **Model Arena**: run two models side-by-side on the same prompt — ideal for comparing base vs fine-tuned.
 - **Privacy posture**: no usage telemetry (only minimal hardware info for compatibility), 100 % offline operation, password + JWT authentication, revocable API keys stored as hashes.
@@ -29,9 +29,9 @@ Capabilities shared across the stack:
 ::: {.fr}
 Trois couches, un projet ([github.com/unslothai/unsloth](https://github.com/unslothai/unsloth)) :
 
-| Couche | Qu'est-ce ? | Pour qui |
+| Couche | Description | Pour qui |
 |---|---|---|
-| **Unsloth Core** | Bibliothèque Python (`pip install unsloth`). Optimisations au niveau des kernels : ~2× plus rapide, ~70 % de VRAM en moins, sans perte de précision. Apache-2.0. | Ingénieurs qui scriptent |
+| **Unsloth Core** | Bibliothèque Python (`pip install unsloth`). Optimisations au niveau des kernels : ~2× plus rapide, ~70 % de VRAM en moins, sans perte de précision[^ch03-unsloth]. Apache-2.0. | Ingénieurs qui scriptent leurs pipelines |
 | **Unsloth Studio** | **Interface web** open source sans code (bêta) couvrant tout le cycle : chat, construction de jeux de données, entraînement, évaluation, export. 100 % local, inférence via llama.cpp. | Tous ceux qui entraînent/exécutent sans coder |
 | **Unsloth Desktop** | Application native (Mac/Windows/Linux) embarquant Studio + hub de modèles + génération média. Installation la plus simple. | Tout le reste |
 
@@ -39,10 +39,10 @@ Capacités communes :
 
 - Exécution de modèles **GGUF**, MLX (Mac) et safetensors : texte, vision, audio/TTS, embeddings, diffusion image/vidéo.
 - Entraînement de 500+ modèles : QLoRA/LoRA/full fine-tuning, RL (GRPO, DPO), pré-entraînement continu.
-- **Appels d'outils auto-réparateurs** : corrige les appels malformés, +30 à 80 % de précision et ~50 % d'appels cassés en moins face au parsing standard de llama.cpp.
-- **Recherche web avancée** (basée DuckDuckGo, visite et lit les pages, pas seulement des résumés) et **exécution Bac à sable Bash/Python**.
-- **Model Arena** : deux modèles côte à côte sur le même prompt — idéal comparer base vs affûté.
-- **Posture privacy** : aucune télémétrie d'usage (seulement le matériel minimum pour la compatibilité), fonctionnement 100 % hors ligne, mot de passe + JWT, clés API révocables stockées hachées.
+- **Appels d'outils auto-réparateurs** : corrige les appels mal formés, +30 à 80 % de précision et ~50 % d'appels cassés en moins face au parsing standard de llama.cpp[^ch03-tools].
+- **Recherche web avancée** (basée sur DuckDuckGo, elle visite et lit les pages, pas seulement des résumés) et **exécution en bac à sable du code Bash/Python**.
+- **Model Arena** : deux modèles côte à côte sur le même prompt — idéal pour comparer base vs affûté.
+- **Posture de confidentialité** : aucune télémétrie d'usage (seulement des informations matérielles minimales, pour la compatibilité), fonctionnement 100 % hors ligne, mot de passe + JWT, clés API révocables stockées sous forme de hachés.
 - Licences : cœur Apache-2.0 ; UI Studio AGPL-3.0.
 :::
 
@@ -62,7 +62,7 @@ Capacités communes :
 ### Installation
 :::
 
-```bash
+```{.bash .code-window}
 # macOS / Linux / WSL
 curl -fsSL https://unsloth.ai/install.sh | sh
 
@@ -99,7 +99,7 @@ Open `http://127.0.0.1:8888`, create the admin password on first launch (JWT-bas
 **Installation sur un serveur Linux distant :** connectez-vous en SSH, lancez le script d'installation ci-dessus, puis démarrez avec `unsloth studio -H 0.0.0.0 -p 8888`. Accédez-y par transfert de port (`ssh -L 8888:localhost:8888 user@serveur`) ou avec `unsloth studio --secure` pour une URL HTTPS publique.
 
 ::: {.al-take}
-**Notre avis.** Choisissez *un* point d'entrée — Desktop pour le moins de friction, Core si vous scriptez — et résistez à l'envie d'installer tous les runtimes dont vous lirez la critique. Nous avons perdu plus d'heures à jongler entre outils notre premier mois que nous en avons jamais gagné à switcher ; c'est le modèle qui compte, pas l'habillage.
+**Notre avis.** Choisissez *un* point d'entrée — Desktop si vous voulez le moins de friction, Core si vous scriptez — et résistez à l'envie d'installer tous les runtimes dont vous entendrez parler. Nous avons perdu plus d'heures, notre premier mois, à jongler entre outils que nous en avons jamais gagné à en changer ; c'est le modèle qui compte, pas l'habillage.
 :::
 :::
 
@@ -184,9 +184,12 @@ btn.onclick=async()=>{
 };
 </script>
 ```
-C'est évidemment un tout petit modèle — le but est de *ressentir* que les poids ne sont que des fichiers exécutés localement. Pour du travail réel, suivez les deux commandes ci-dessous.
+C'est évidemment un tout petit modèle — l'important est de *toucher du doigt* que les poids ne sont que des fichiers exécutés localement. Pour du travail réel, utilisez les deux commandes ci-dessous.
 :::
 
 ::: {.notes}
 Live-demo the two install commands if network allows; otherwise show the browser widget above — zero setup, always works. / Démontrez les deux commandes d'installation en direct si le réseau le permet ; sinon montrez le widget navigateur ci-dessus — zéro installation, fonctionne toujours.
 :::
+
+[^ch03-unsloth]: Vendor benchmark — Unsloth team, *Unsloth* repository README ("2× faster with 70% less VRAM", unsloth.ai/blog); per-model figures vary from 1.5× to 3×; verify on your own workload.
+[^ch03-tools]: Unsloth changelog v0.1.3-beta: "Tool calls for all models are now +30 % to +80 % more accurate" — github.com/unslothai/unsloth/releases.

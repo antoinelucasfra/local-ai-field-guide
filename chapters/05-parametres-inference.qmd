@@ -7,7 +7,7 @@
 :::
 
 ::: {.en}
-A language model generates one token at a time. At each step it outputs a probability for every token in its vocabulary; the sampling parameters decide how the software picks the next token from that distribution. Everything below is just different ways of reshaping — or refusing to reshape — that distribution.
+A language model generates one token at a time. At each step it outputs a probability for every token in its vocabulary; the sampling parameters decide how the software picks the next token from that distribution. Everything below is a different way of reshaping — or refusing to reshape — that distribution.
 
 ### The sampling knobs
 
@@ -32,12 +32,12 @@ The system prompt is a parameter too: it is prepended to every conversation and 
 
 The context window (`n_ctx`) is the total token budget for one request: system prompt + attached documents + conversation history + generated answer. Everything must fit; exceed it and the engine either errors or silently truncates the oldest content.
 
-**Memory cost.** During generation the model keeps a key/value tensor per layer per past token — the KV cache. For a Llama-style 8B model (32 layers, grouped-query attention) it costs ≈128 KB *per token* at 16-bit: ≈1 GB at 8k tokens, **4 GB at 32k, 16 GB at 128k — on top of the weights**. Two levers cut that: KV-cache quantisation (`q8_0` halves it with negligible quality loss, `q4_0` quarters it) and flash attention (shrinks activation memory and speeds up long prompts).
+**Memory cost.** During generation the model keeps a key/value tensor per layer per past token — the KV cache. For a Llama-style 8B model (32 layers, grouped-query attention[^ch05-gqa]) it costs ≈128 KB *per token* at 16-bit: ≈1 GB at 8k tokens, **4 GB at 32k, 16 GB at 128k — on top of the weights**. Two levers cut that: KV-cache quantisation (`q8_0` halves it with negligible quality loss, `q4_0` quarters it) and flash attention (shrinks activation memory and speeds up long prompts).
 
 **Speed cost.** Generation has two phases:
 
 - *Prefill* (reading your prompt): parallel, compute-bound — hundreds to thousands of tokens/s. A 10k-token document takes seconds on a GPU, minutes on CPU.
-- *Decode* (producing the answer): strictly sequential and **memory-bandwidth-bound** — each new token requires reading every weight once. Approximate ceiling: `tokens/s ≈ memory bandwidth / model size in bytes`. A Q4 8B model (~4.5 GB) on a card with 1 TB/s bandwidth tops out around ~200 t/s; on CPU DDR5 (~60 GB/s shared) expect 10–20 t/s.
+- *Decode* (producing the answer): strictly sequential and **memory-bandwidth-bound**[^ch05-bw] — each new token requires reading every weight once. Approximate ceiling: `tokens/s ≈ memory bandwidth / model size in bytes`. A Q4 8B model (~4.5 GB) on a card with 1 TB/s bandwidth tops out around ~200 t/s; on CPU DDR5 (~60 GB/s shared) expect 10–20 t/s.
 
 Context length barely affects decode speed but inflates prefill time super-linearly (attention is O(n²) in sequence length). Practical consequence: don't stuff whole books into context “just in case” — retrieval of the right 2k tokens beats 100k tokens of padding on speed *and* accuracy.
 
@@ -83,18 +83,18 @@ Le prompt système est lui aussi un paramètre : il précède chaque conversatio
 
 La fenêtre de contexte (`n_ctx`) est le budget total de tokens d'une requête : prompt système + documents joints + historique + réponse générée. Tout doit tenir ; au-delà, le moteur échoue ou tronque silencieusement le contenu le plus ancien.
 
-**Coût mémoire.** Pendant la génération, le modèle conserve un tenseur clé/valeur par couche et par token passé — le KV cache. Pour un modèle 8B style Llama (32 couches, grouped-query attention), cela coûte ≈128 Ko *par token* en 16 bits : ≈1 Go à 8k tokens, **4 Go à 32k, 16 Go à 128k — en plus des poids**. Deux leviers réduisent la note : la quantification du KV cache (`q8_0` divise par deux sans perte notable, `q4_0` par quatre) et le flash attention (réduit la mémoire d'activations et accélère les longs prompts).
+**Coût mémoire.** Pendant la génération, le modèle conserve un tenseur clé/valeur par couche et par token passé — le KV cache. Pour un modèle 8B style Llama (32 couches, grouped-query attention[^ch05-gqa]), cela coûte ≈128 Ko *par token* en 16 bits : ≈1 Go à 8k tokens, **4 Go à 32k, 16 Go à 128k — en plus des poids**. Deux leviers réduisent la note : la quantification du KV cache (`q8_0` divise par deux sans perte notable, `q4_0` par quatre) et le flash attention (réduit la mémoire d'activations et accélère les longs prompts).
 
 **Coût vitesse.** La génération a deux phases :
 
 - *Prefill* (lecture du prompt) : parallèle, limitée par le calcul — centaines à milliers de tokens/s. Un document de 10k tokens prend des secondes sur GPU, des minutes sur CPU.
-- *Decode* (production de la réponse) : strictement séquentiel et **limité par la bande passante mémoire** — chaque nouveau token impose de relire tous les poids. Plafond approximatif : `tokens/s ≈ bande passante / taille du modèle en octets`. Un 8B Q4 (~4,5 Go) sur une carte à 1 To/s plafonne vers ~200 t/s ; sur CPU DDR5 (~60 Go/s partagés), visez 10–20 t/s.
+- *Decode* (production de la réponse) : strictement séquentiel et **limité par la bande passante mémoire**[^ch05-bw] — chaque nouveau token impose de relire tous les poids. Plafond approximatif : `tokens/s ≈ bande passante / taille du modèle en octets`. Un 8B Q4 (~4,5 Go) sur une carte à 1 To/s plafonne vers ~200 t/s ; sur CPU DDR5 (~60 Go/s partagés), visez 10–20 t/s.
 
 La longueur de contexte affecte peu le decode mais gonfle le prefill de façon super-linéaire (l'attention est en O(n²)). Conséquence pratique : ne fourrez pas des livres entiers dans le contexte « au cas où » — récupérer les bons 2k tokens bat 100k tokens de remplissage, en vitesse comme en exactitude.
 
-**Coût qualité.** Au-delà de la fenêtre entraînée, on applique une extrapolation RoPE/YaRN — utilisable mais dégradée. Même dans la fenêtre, le rappel n'est pas uniforme (« lost in the middle » : les modèles lisent mieux ce qui est tôt ou tard). Les longs contextes diluent aussi les instructions. Augmenter `n_ctx` n'améliore jamais une tâche qui tient dans moins.
+**Coût qualité.** Au-delà de la fenêtre entraînée, on applique une extrapolation RoPE/YaRN — utilisable mais dégradée. Même dans la fenêtre, le rappel n'est pas uniforme (« lost in the middle » : les modèles lisent mieux ce qui apparaît au début ou à la fin). Les longs contextes diluent aussi les instructions. Augmenter `n_ctx` n'améliore jamais une tâche qui tient sur moins de contexte.
 
-L'auto-contexte du Studio gère ce budget automatiquement ; si vous pilotez llama-server ou l'API vous-même, ces nombres sont les vôtres.
+L'auto-contexte du Studio gère ce budget automatiquement ; si vous pilotez llama-server ou l'API vous-même, c'est vous qui fixez ces valeurs.
 
 ### Vitesse attendue (ordres de grandeur)
 
@@ -111,3 +111,6 @@ Pour les MoE, la vitesse suit les paramètres *actifs*, pas le total — un 26B-
 ::: {.notes}
 Best live exercise: set temperature to 0 vs 1.5 on the same prompt, three runs each. The KV-cache numbers justify hardware budgets to management. / Exercice live : température 0 vs 1,5 sur le même prompt, trois essais chacun. Les chiffres KV-cache justifient les budgets matériel devant la direction.
 :::
+
+[^ch05-gqa]: Grouped-Query Attention, Ainslie et al., 2023 (arXiv:2305.13245). Arithmetic check for Llama-3-8B: 2 tensors × 8 KV heads × 128 dims × 2 bytes × 32 layers = 128 KB/token at fp16.
+[^ch05-bw]: Decode is memory-bandwidth-bound in autoregressive inference; see Kim et al., *Full Stack Optimization of Transformer Inference*, 2023 (arXiv:2303.14005), and Sheng et al., *FlexGen*, 2023 (arXiv:2303.06965).

@@ -76,7 +76,7 @@ Une analyse d'impact relative à la protection des données (RGPD art. 35) est r
 | Risque | Vraisemblance | Gravité | Mesure | Résiduel |
 |---|---|---|---|---|
 | Réidentification depuis des logs de prompts | | | pas de journalisation des prompts par défaut (chap. 15) | |
-| Fuite de données d'entraînement dans les sorties | | | jeu doré + tests chaînes-canaris (chap. 16) | |
+| Fuite de données d'entraînement dans les sorties | | | jeu doré + chaînes canaris (chap. 16) | |
 | Accès non autorisé au serveur | | | passerelle SSO, chiffrement disque, aucun port direct | |
 | Télémétrie/phone-home des outils | | | liste de vérification hors ligne (chap. 17) | |
 | Sortie erronée ou biaisée affectant des personnes | | | relecture humaine avant effet externe ; citations affichées (chap. 13) | |
@@ -87,5 +87,5 @@ Une analyse d'impact relative à la protection des données (RGPD art. 35) est r
 - Consulté : avis du DPO, date :
 - Validé par (nom/fonction/date) :
 
-*Note locale d'abord* : les points qui sont des cauchemars avec les API cloud (données quittant l'UE, sous-traitants, conservation hors de contrôle) se réduisent ici à des lignes vérifiables — c'est un véritable avantage administratif de l'architecture que ce livre recommande.
+*Note « local-first »* : les points qui sont des cauchemars avec les API cloud (données quittant l'UE, sous-traitants, conservation hors de contrôle) se réduisent ici à quelques lignes vérifiables — c'est un véritable avantage administratif de l'architecture que ce livre recommande.
 :::

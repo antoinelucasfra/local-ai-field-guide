@@ -13,7 +13,7 @@ One workstation serves one researcher. A **lab server** serves thirty. The jump 
 
 Put **LiteLLM** (open source) in front of every backend:
 
-```yaml
+```{.yaml .code-window title="litellm.yaml"}
 model_list:
   - model_name: fast
     litellm_params: {model: openai/fast, api_base: http://gpu1:8080/v1}
@@ -49,7 +49,7 @@ Un poste sert un chercheur. Un **serveur de laboratoire** en sert trente. Le sau
 ### Le service parallèle
 
 - **llama-server** (`llama.cpp`) : `--parallel N --ctx-size …` répartit le budget de contexte entre créneaux simultanés — rappel de la math KV (chap. 5) : modèle 8 B, contexte 32 k, 4 créneaux ⇒ ~16 Go au-dessus des poids.
-- **vLLM** : batching continu, débit bien supérieur pour de nombreux utilisateurs simultanés ; exige de plus grosses cartes et parle l'API OpenAI nativement.
+- **vLLM** : batching continu, débit bien supérieur pour de nombreux utilisateurs simultanés ; exige de plus grosses cartes et expose l'API OpenAI nativement.
 - Règle : llama.cpp jusqu'à ~10 utilisateurs légers par GPU ; vLLM au-delà.
 
 ### La passerelle : LiteLLM
@@ -66,7 +66,7 @@ router_settings: {routing_strategy: usage-based-routing}
 general_settings: {max_budget: 100, budget_duration: 30d}
 ```
 
-Vous obtenez : une URL unique compatible OpenAI pour tout le laboratoire, des **clés API par utilisateur/équipe**, des quotas et budgets appliqués, un basculement automatique entre GPUs et un tableau de bord d'usage. Tous les outils de ce livre — connexions Studio Chat, `models.json` de pi, Aider, Cline — pointent la même passerelle.
+Vous obtenez : une URL unique compatible OpenAI pour tout le laboratoire, des **clés API par utilisateur/équipe**, des quotas et budgets appliqués, un basculement automatique entre GPUs et un tableau de bord d'usage. Tous les outils de ce livre — connexions Studio Chat, `models.json` de pi, Aider, Cline — pointent vers la même passerelle.
 
 ### Les points d'ancrage de gouvernance
 
@@ -77,7 +77,7 @@ Vous obtenez : une URL unique compatible OpenAI pour tout le laboratoire, des **
 
 ### Vérification de dimensionnement
 
-Utilisateurs simultanés × contexte moyen ≈ mémoire KV (chap. 5). Une seule RTX 4090 absorbe confortablement un labo de 15 personnes sur un modèle 8–9 B Q4 avec des contextes 16 k ; une A100/H100 d'occasion ou 2×4090 gèrent du 27–32 B pour le même monde. Commencez plus petit que prévu : les données d'utilisation de la passerelle vous disent exactement quand acheter.
+Utilisateurs simultanés × contexte moyen ≈ mémoire KV (chap. 5). Une seule RTX 4090 absorbe confortablement un labo de 15 personnes sur un modèle 8–9 B Q4 avec des contextes 16 k ; une A100/H100 d'occasion ou 2×4090 gèrent du 27–32 B pour le même effectif. Commencez plus petit que prévu : les données d'utilisation de la passerelle vous disent exactement quand acheter.
 
 ::: {.al-take}
 **Notre avis.** Installez la passerelle dès le premier jour, même pour trois utilisateurs — ajouter auth et quotas après que les gens ont pris leurs habitudes est un projet politique, pas informatique. Et résistez à l'envie de donner le plus gros modèle à tout le monde : dans notre labo, basculer 90 % du trafic sur un petit modèle rapide a été vécu comme une amélioration — la latence a chuté et personne n'a réclamé les paramètres manquants.

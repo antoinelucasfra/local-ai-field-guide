@@ -83,13 +83,13 @@ Cluster etiquette keeps everyone happy: one model per GPU (serve copies, don't t
 
 Les vitesses attendues par palier sont au chapitre 5 ; cette annexe est le guide d'achat. Prix indicatifs début 2026.
 
-### La échelle
+### L'échelle
 
 | Palier | Matériel | Fait tourner | Prix | Verdict |
 |---|---|---|---|---|
 | 0 | N'importe quel portable CPU (16 Go RAM) | chat 8 B Q4 à 5–15 t/s | 0 € | suffisant pour *commencer aujourd'hui* |
 | 1 | Mac M-series Pro/Max (32–64 Go unifiée) | jusqu'à ~32 B Q4 confortablement | 2–4,5 k€ | meilleure machine de dev polyvalente ; silencieuse |
-| 2 | Fixe + **RTX 3090** d'occasion (24 Go) | 8–32 B Q4 rapide, fine-tunes via QLoRA | 1–1,5 k€ tout compris | le point optimal prix/performance |
+| 2 | Fixe + **RTX 3090** d'occasion (24 Go) | 8–32 B Q4 rapide, fine-tunes via QLoRA | 1–1,5 k€ tout compris | le meilleur compromis prix/performance |
 | 3 | RTX 4090 / 5090 (24/32 Go) | pareil, 1,5–3× plus vite ; contextes plus grands | 2–3 k€+ | pour un usage intensif quotidien |
 | 4 | A100/H100 80 Go d'occasion ou serveur 2×4090 | classe 70 B, service d'équipe (chap. 15) | 10–25 k€ | l'étape serveur de laboratoire |
 
@@ -97,15 +97,15 @@ Les vitesses attendues par palier sont au chapitre 5 ; cette annexe est le guide
 
 - **Règle de mémoire unifiée** sur Apple silicon : un modèle demande environ sa taille de fichier de libre — un MacBook 32 Go fait bien tourner des 27–32 B Q4 car le GPU peut utiliser ~75 % de la mémoire unifiée.
 - **La 3090 d'occasion est la bête de somme de la communauté** : 24 Go de VRAM, option NVLink pas chère, éprouvée en QLoRA jusqu'à ~14 B et confortable en inférence jusqu'à 32 B. Achetez chez des reconditionneurs avec garantie ; testez la VRAM à l'arrivée (`gpu-burn`, `memtest_vulkan`).
-- **La VRAM prime sur tout.** Une carte plus lente mais plus mémoire dépasse une petite plus rapide dès que vous dépassez le contexte ou la taille de modèle (chap. 5).
-- **Disque** : les modèles font 5–60 Go pièce ; un NVMe pour les modèles actifs, du SATA bon marché pour l'archive. Charger depuis le SSD prend des secondes.
-- **Puissance & bruit** : une 3090 tire ~350 W en pointe (l'undervolting coupe ~20 % pour ~5 % de vitesse) ; un serveur de labo va en salle machines, pas dans un bureau.
+- **La VRAM prime sur tout.** Une carte plus lente mais mieux dotée en mémoire prend l'ascendant sur une petite plus rapide dès que vous dépassez le contexte ou la taille de modèle (chap. 5).
+- **Disque** : les modèles font 5–60 Go pièce ; un NVMe pour les modèles actifs, du SATA bon marché pour l'archive. Changer de modèle depuis le SSD prend des secondes.
+- **Puissance & bruit** : une 3090 tire ~350 W en pointe (l'undervolting coupe ~20 % pour ~5 % de vitesse) ; un serveur de labo a sa place en salle machines, pas dans un bureau.
 - **Les clusters n'aident pas le décodage** : éclater un LLM sur Ethernet tue la vitesse de génération (la latence réseau ≫ règle de bande passante du chap. 5). Un gros GPU > quatre petits pour l'inférence ; les clusters servent à l'*entraînement* seulement.
+- **N'oubliez pas les humains** : un serveur partagé (palier 4) + des postes palier 0–1 couvre la plupart des labos mieux que chacun avec un fixe palier 3 — c'est exactement l'argument TCO du chap. 18.
 
 ::: {.al-take}
-**Notre avis.** Achetez de la VRAM, pas des benchmarks : notre 3090 d'occasion a survécu à deux générations de cartes « plus rapides » que nous avons sautées, et l'argent non dépensé en flagship a financé la seconde 3090. Sautez complètement l'étape CPU-seul — elle fait comprendre les concepts, rien d'autre ; si le budget permet exactement une machine, qu'elle fasse 24 Go et qu'elle soit partagée.
+**Notre avis.** Achetez de la VRAM, pas des benchmarks : notre 3090 d'occasion a survécu à deux générations de cartes « plus rapides » que nous avons ignorées, et l'argent non dépensé en flagship a financé la seconde 3090. Sautez complètement l'étape CPU-seul — elle fait comprendre les concepts, rien d'autre ; si le budget permet exactement une machine, qu'elle fasse 24 Go et qu'elle soit partagée.
 :::
-- **N'oubliez pas les humains** : un serveur partagé (palier 4) + des postes palier 0–1 couvre la plupart des labos mieux que chacun avec un fixe palier 3 — c'est exactement l'argument TCO du chap. 18.
 
 ### Vous avez déjà un cluster institutionnel ? Servez-vous-en
 
@@ -151,5 +151,5 @@ Tout ce livre parle le protocole compatible OpenAI — pointez chaque outil vers
 | pi / agents de code | `models.json` → `baseUrl` (chap. 11) |
 | Scripts Python | argument `base_url` (chap. 12) |
 
-Quelques règles de savoir-vivre gardent tout le monde content : un modèle par GPU (servez des copies, ne découpez pas les petits modèles en tenseurs), les gros lots d'évaluation hors heures ouvrées, plafonnez les contextes demandés, et faites passer les accès d'équipe par les clés par utilisateur de la passerelle (chap. 15).
+Quelques règles de savoir-vivre gardent tout le monde content : un modèle par GPU (servez des copies, ne découpez pas les petits modèles en tenseurs), servez les gros lots d'évaluation hors heures ouvrées, plafonnez les contextes demandés, et faites passer les accès d'équipe par les clés par utilisateur de la passerelle (chap. 15).
 :::

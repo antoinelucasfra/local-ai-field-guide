@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="760" height="240" viewBox="0 0 760 240" role="img" font-family="DM Sans, sans-serif">
+<title>Fine-tuning pipeline: documents flow through Data Recipes into a dataset, then QLoRA training produces checkpoints, export produces GGUF or merged weights, deployment serves them, and evaluation feeds back into the dataset</title>
+<rect width="760" height="240" rx="12" fill="#ffffff"/>
+<defs>
+<marker id="ar" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0 0 L8 4 L0 8 z" fill="#57606a"/></marker>
+</defs>
+<!-- row of boxes -->
+<g stroke="#24292f" stroke-width="1.5">
+<rect x="20" y="80" width="120" height="64" rx="10" fill="#eef1f6"/>
+<rect x="180" y="80" width="120" height="64" rx="10" fill="#fff4ec"/>
+<rect x="340" y="80" width="120" height="64" rx="10" fill="#14b8a6" opacity="0.16"/>
+<rect x="500" y="80" width="110" height="64" rx="10" fill="#f97316" opacity="0.16"/>
+<rect x="650" y="80" width="90" height="64" rx="10" fill="#eef1f6"/>
+</g>
+<g font-size="13" fill="#24292f" text-anchor="middle" font-weight="600">
+<text x="80" y="106">Documents</text><text x="80" y="124" font-weight="normal" fill="#57606a">PDF · CSV · JSON</text>
+<text x="240" y="106">Data Recipes</text><text x="240" y="124" font-weight="normal" fill="#57606a">seed + generate</text>
+<text x="400" y="106">Dataset</text><text x="400" y="124" font-weight="normal" fill="#57606a">JSONL + hash</text>
+<text x="555" y="106">QLoRA train</text><text x="555" y="124" font-weight="normal" fill="#57606a">checkpoints</text>
+<text x="695" y="106">Export</text><text x="695" y="124" font-weight="normal" fill="#57606a">GGUF / merged</text>
+</g>
+<g stroke="#57606a" stroke-width="1.5" marker-end="url(#ar)">
+<line x1="140" y1="112" x2="176" y2="112"/><line x1="300" y1="112" x2="336" y2="112"/>
+<line x1="460" y1="112" x2="496" y2="112"/><line x1="610" y1="112" x2="646" y2="112"/>
+</g>
+<!-- deploy branch -->
+<g stroke="#24292f" stroke-width="1.5"><rect x="600" y="170" width="140" height="40" rx="10" fill="#eef1f6"/></g>
+<text x="670" y="195" font-size="12.5" fill="#24292f" text-anchor="middle" font-weight="600">Deploy: Studio · Ollama · llama-server</text>
+<path d="M 695 144 L 695 170" fill="none" stroke="#57606a" stroke-width="1.5" marker-end="url(#ar)"/>
+<!-- eval loop -->
+<g stroke="#24292f" stroke-width="1.5"><rect x="30" y="170" width="130" height="40" rx="10" fill="#14b8a6" opacity="0.16"/></g>
+<text x="95" y="188" font-size="12.5" fill="#24292f" text-anchor="middle" font-weight="600">Evaluate</text>
+<text x="95" y="203" font-size="11" fill="#57606a" text-anchor="middle">golden set gate</text>
+<path d="M 555 144 C 555 210 330 220 164 192" fill="none" stroke="#f97316" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<path d="M 95 170 C 95 150 150 132 176 122" fill="none" stroke="#f97316" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#ar)"/>
+<text x="360" y="228" font-size="11.5" fill="#f97316" text-anchor="middle">fail → fix dataset, retrain</text>
+<text x="380" y="34" font-size="15" fill="#24292f" text-anchor="middle" font-weight="700">The sovereign fine-tuning loop</text>
+</svg>

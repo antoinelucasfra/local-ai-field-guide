@@ -18,9 +18,9 @@ This chapter gives you the cost model, the risk picture, and a 90-day pilot desi
 ::: {.fr}
 ## Synthèse
 
-Les modèles à poids ouverts sont désormais à ~3 points des meilleurs modèles fermés sur les benchmarks indépendants ([Artificial Analysis](https://artificialanalysis.ai), début 2026) — et ils tournent sur du matériel achetable. Pour un organisme de recherche, cela inverse la logique : les travaux sensibles qui n'auraient jamais pu passer par des API cloud (résultats non publiés, données personnelles, dossiers de subvention) deviennent automatisables **dans votre périmètre**, avec une structure de coûts que vous possédez.
+Les modèles à poids ouverts sont désormais à ~3 points des meilleurs modèles fermés sur les benchmarks indépendants ([Artificial Analysis](https://artificialanalysis.ai), début 2026) — et ils tournent sur du matériel courant. Pour un organisme de recherche, cela inverse la logique : les travaux sensibles qui n'auraient jamais pu passer par des API cloud (résultats non publiés, données personnelles, dossiers de subvention) deviennent automatisables **dans votre périmètre**, avec une structure de coûts que vous maîtrisez.
 
-Ce chapitre fournit le modèle de coût, la lecture des risques et un pilote de 90 jours avec critères go/no-go explicites. Il s'inscrit dans la Partie V aux côtés de la note stratégique (chap. 19) ; les chercheurs nouveaux sur le sujet peuvent commencer par l'annexe A.
+Ce chapitre fournit le modèle de coût, la lecture des risques et un pilote de 90 jours avec critères go/no-go explicites. Il s'inscrit dans la Partie V aux côtés de la note stratégique (chap. 19) ; les chercheurs qui découvrent le sujet peuvent commencer par l'annexe A.
 :::
 
 ::: {.en}
@@ -60,7 +60,7 @@ La tarification API est une location perpétuelle ; le matériel local est un ac
 Deux tendances structurelles plaident pour agir maintenant ([tendances AA](https://artificialanalysis.ai/trends)) :
 
 1. **Le prix par unité d'intelligence s'effondre** — mais sa valeur aussi, car les poids ouverts comblent l'écart de qualité chaque trimestre.
-2. **La capacité matérielle par euro monte** — les architectures MoE font qu'un modèle 26B total / 4B actifs offre une qualité proche du front sur une seule carte 24 Go.
+2. **La capacité matérielle par euro monte** — les architectures MoE font qu'un modèle 26B total / 4B actifs offre une qualité proche de l'état de l'art sur une seule carte 24 Go.
 
 ![Coût cumulé : location API vs achat local. La droite locale démarre à l'achat (≈ 4 k€) puis croît lentement (électricité) ; la courbe API part de zéro mais croît de façon composée avec l'usage. Point d'équilibre ≈ mois 14 pour une équipe de 5 personnes — ensuite, chaque mois creuse l'avance du local. Illustratif ; remplacez par vos propres chiffres.](chapters/figures/fig-tco.svg){#fig-tco-fr width=100%}
 :::
@@ -126,7 +126,7 @@ Total pilot exposure: one workstation and ~10 person-days. The pilot is designed
 | Opération | 5–10 | Usage quotidien ; consigner temps gagné, problèmes qualité, incidents | ≥ 1 métrique clairement améliorée ; zéro incident de données |
 | Évaluation | 11–12 | Comparaison à la référence ; enquête utilisateurs ; bilan des coûts | Go/no-go selon critères préécrits |
 
-Engagement total du pilote : une station et ~10 jours-homme. Le pire cas du pilote : « nous avons appris où l'IA locale ne nous aide pas encore ».
+Mise de départ totale du pilote : une station et ~10 jours de travail. Le pire cas du pilote : « nous avons appris où l'IA locale ne nous aide pas encore ».
 :::
 
 ::: {.en}
@@ -145,7 +145,7 @@ Engagement total du pilote : une station et ~10 jours-homme. Le pire cas du pilo
 - Tâches automatisées par mois ; temps médian gagné par tâche
 - Coût par tâche réalisée (la tendance doit tendre vers ~0 € marginal)
 - Incidents de données : objectif zéro
-- Satisfaction des chercheurs (pulsation trimestrielle simple)
+- Satisfaction des chercheurs (simple micro-enquête trimestrielle)
 - Part des charges sensibles sorties des outils externes
 :::
 

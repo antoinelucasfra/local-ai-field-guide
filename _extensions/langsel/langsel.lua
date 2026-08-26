@@ -41,12 +41,22 @@ function Pandoc(doc)
     if v ~= nil then doc.meta[key] = v end
   end
 
-  local blocks = {}
-  for _, b in ipairs(doc.blocks) do
-    if not (b.t == 'Div' and drop(b.classes, lang)) then
-      table.insert(blocks, b)
+  -- Language divs can be NESTED (e.g. ::: {.en} inside :::: {.dl-strip}),
+  -- so filtering must recurse into kept Divs/BlockQuotes/Figures.
+  local function walk(blocks)
+    local out = {}
+    for _, b in ipairs(blocks) do
+      if not (b.t == 'Div' and drop(b.classes, lang)) then
+        if b.t == 'Div' or b.t == 'BlockQuote' or b.t == 'Figure' then
+          b.content = walk(b.content)
+        end
+        table.insert(out, b)
+      end
     end
+    return out
   end
+
+  local blocks = walk(doc.blocks)
   fix_ids(blocks)
   return pandoc.Pandoc(blocks, doc.meta)
 end
