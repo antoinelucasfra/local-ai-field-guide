@@ -28,19 +28,25 @@ jobs:
           version: 1.10.18
       - name: Langsel filter regression test
         run: tools/test-langsel.sh
-      - name: Render EN (CI check)
+      # PRs check the book render only; deploys build the decks too
+      - name: Render EN
+        if: github.event_name == 'pull_request'
         run: quarto render --profile en
-      # FR only when the render actually gets shipped, not on every PR
+      - name: Render EN (with decks)
+        if: github.event_name != 'pull_request'
+        run: tools/render.sh en
       - name: Render FR
-        if: github.event_name == 'push'
-        run: quarto render --profile fr
+        if: github.event_name != 'pull_request'
+        run: tools/render.sh fr
       - name: Assemble site
-        if: github.event_name == 'push'
+        if: github.event_name != 'pull_request'
         run: |
           mkdir -p _site/en _site/fr
           python3 tools/make_index.py --render _render/en --lang en --out _site/index.html
           cp tools/og-card.* _site/
           cp _render/en/404.html _site/404.html
+          # the root 404 page carries absolute /site_libs/... asset links
+          cp -r _render/en/site_libs _site/site_libs
           touch _site/.nojekyll
           cp -r _render/en/. _site/en/
           cp -r _render/fr/. _site/fr/

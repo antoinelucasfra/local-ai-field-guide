@@ -85,7 +85,16 @@ def toc(render, lang):
                         if not page.exists():
                                 missing.append(str(page))
                                 continue
-                        parts[-1][2].append((f"{lang}/{a[:-4]}.html", page_title(page)))
+                        slug = a.rsplit("/", 1)[-1][:-4]
+                        deck = pathlib.Path(render, slug + "-slides.html")
+                        slide = (
+                                f' <a class="slides" href="{lang}/{slug}-slides.html">slides</a>'
+                                if deck.exists()
+                                else ""
+                        )
+                        parts[-1][2].append(
+                                (f"{lang}/{a[:-4]}.html", page_title(page), slide)
+                        )
         if missing:
                 sys.exit(f"make_index: rendered pages not found: {'; '.join(missing)}")
         if not parts or any(not p[2] for p in parts):
@@ -99,9 +108,9 @@ def fragment(parts):
                 out.append('        <section class="part">')
                 out.append(f"          <p>{html.escape(en)}<small>{html.escape(fr)}</small></p>")
                 out.append('          <ul class="chapters">')
-                for href, title in chapters:
+                for href, title, slide in chapters:
                         out.append(
-                                f'            <li><a href="{href}">{html.escape(title)}</a></li>'
+                                f'            <li><a href="{href}">{html.escape(title)}</a>{slide}</li>'
                         )
                 out.append("          </ul>")
                 out.append("        </section>")
