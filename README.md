@@ -32,7 +32,7 @@ One workflow (`.github/workflows/book.yml`) drives everything:
 | push `main` | EN + FR render → site assembled (`index.html` + `en/` + `fr/`) → GitHub Pages |
 | tag `v*` | EN + FR render → release assets (`local-ai-field-guide-book-vX.Y.Z-en.zip` = PDF+EPUB+DOCX per lang, `local-ai-field-guide-code-vX.Y.Z.zip` = companion scripts, full site zip) → GitHub Release |
 
-A monthly **freshness audit** (`.github/workflows/freshness.yml`) checks every link in the chapters and lists chapters untouched for 6+ months, then reports in a `freshness`-labelled issue.
+Links are checked during every render by the `linkrot` extension (`fail-on-error: false`, so a dead link warns instead of blocking a build).
 
 Pages is live after the first push to `main`: Settings → Pages → Source **GitHub Actions**. Cut a release with:
 
