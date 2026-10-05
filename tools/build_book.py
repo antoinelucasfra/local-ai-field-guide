@@ -294,7 +294,7 @@ def main():
                 ".yml": f"""project:
   type: book
   output-dir: _render/en
-  pre-render: tools/build_book.py
+  pre-render: python3 tools/build_book.py
 profile:
   default: [en]
 
