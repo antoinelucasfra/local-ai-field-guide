@@ -41,7 +41,6 @@ jobs:
           python3 tools/make_index.py --render _render/en --lang en --out _site/index.html
           cp tools/og-card.* _site/
           cp _render/en/404.html _site/404.html
-          cp -r _render/en/404_files _site/404_files
           touch _site/.nojekyll
           cp -r _render/en/. _site/en/
           cp -r _render/fr/. _site/fr/
