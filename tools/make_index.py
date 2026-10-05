@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Fill the landing page's contents block from the rendered book.
+"""Fill the landing page from the generated book config and the render.
 
-Reads chapter titles + anchors from _render/<lang>/book.html, part labels
-and order from chapters/_order.txt, and the book title from build_book; writes
-the landing page with the generated regions regenerated. A chapter whose anchor
-is missing from the render aborts the build, so the landing page cannot drift
-from the book.
+Reads chapters/_order.txt for parts and chapter order, and _render/<lang>/ for
+each chapter's rendered title (Quarto's chapter number included). A chapter
+whose rendered page is missing aborts the build, so the landing page cannot
+drift from the book.
 
 Generated regions (markers in tools/index.html):
   <!--AL-META:BEGIN-->  <head> identity: title, description, share-card tags
@@ -14,16 +13,16 @@ Generated regions (markers in tools/index.html):
   <!--AL-TOC:END-->
   <!--AL-BRAND-->       the topbar brand link
 
-Run: python3 tools/make_index.py            (after a render)
+Run: tools/render.sh en && python3 tools/make_index.py
 """
 
 import argparse
 import html
+import pathlib
 import re
 import sys
-from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).parent))
+sys.path.insert(0, str(pathlib.Path(__file__).parent))
 import build_book as book  # noqa: E402  (same-directory helper)
 
 BEGIN = "<!--AL-TOC:BEGIN-->"
@@ -31,60 +30,26 @@ END = "<!--AL-TOC:END-->"
 META_BEGIN = "<!--AL-META:BEGIN-->"
 META_END = "<!--AL-META:END-->"
 BRAND = "<!--AL-BRAND-->"
-SECTION_RE = re.compile(
-        r'<section id="([^"]+)" class="level\d[^"]*">\s*<h\d[^>]*>(.*?)</h\d>', re.S
-)
+H1 = re.compile(r"<h1[^>]*>(.*?)</h1>", re.S)
+NUMBER = re.compile(r'<span class="chapter-number">([^<]+)</span>')
+TITLE = re.compile(r'<span class="chapter-title">(.*?)</span>', re.S)
+TAG = re.compile(r"<[^>]+>")
 
 
-def rendered_titles(path):
-        """{anchor id: plain-text heading} for every rendered section."""
-        source = Path(path).read_text(encoding="utf-8")
-        out = {}
-        for anchor, raw in SECTION_RE.findall(source):
-                text = html.unescape(re.sub(r"<[^>]+>", " ", raw))
-                out.setdefault(anchor, " ".join(text.split()))
-        return out
+def plain(raw):
+        return " ".join(html.unescape(TAG.sub(" ", raw)).split())
 
 
-def toc(en_html):
-        """[(part, [(href, title), ...]), ...] in book order."""
-        titles = rendered_titles(en_html)
-        parts, missing = [], []
-        for raw in book.order():
-                if raw.startswith("PART"):
-                        _, en, fr = (x.strip() for x in raw.split("|"))
-                        parts.append({"en": en, "fr": fr, "chapters": []})
-                else:
-                        slug = raw.split()[1][:-4]
-                        src = Path(book.CH, slug + ".qmd").read_text(encoding="utf-8")
-                        keep, _, _ = book.chapter_titles(book.dedup_ids(src.rstrip()), slug)
-                        found = [i for i in sorted(keep or ()) if i in titles]
-                        if len(found) != 1:
-                                ids = ", ".join(sorted(keep or ())) or "no id"
-                                missing.append(f"{slug} ({ids})")
-                                continue
-                        parts[-1]["chapters"].append((f"en/book.html#{found[0]}", titles[found[0]]))
-        if missing:
-                sys.exit(f"make_index: chapter anchors not found in render: {'; '.join(missing)}")
-        if not parts or any(not p["chapters"] for p in parts):
-                sys.exit("make_index: a PART has no rendered chapter — check chapters/_order.txt")
-        return parts
-
-
-def fragment(parts):
-        out = ['      <div class="parts">']
-        for p in parts:
-                out.append('        <section class="part">')
-                out.append(f"          <p>{html.escape(p['en'])}<small>{html.escape(p['fr'])}</small></p>")
-                out.append('          <ul class="chapters">')
-                for href, title in p["chapters"]:
-                        out.append(
-                                f'            <li><a href="{href}">{html.escape(title)}</a></li>'
-                        )
-                out.append("          </ul>")
-                out.append("        </section>")
-        out.append("      </div>")
-        return "\n".join(out)
+def page_title(path):
+        """'1. The rise of local AI' from a rendered chapter page."""
+        raw = H1.search(pathlib.Path(path).read_text(encoding="utf-8"))
+        if not raw:
+                sys.exit(f"make_index: no <h1> in {path}")
+        head = raw.group(1)
+        number, title = NUMBER.search(head), TITLE.search(head)
+        if number and title:
+                return f"{number.group(1)}. {plain(title.group(1))}"
+        return plain(head)
 
 
 def meta_block():
@@ -105,6 +70,45 @@ def meta_block():
         )
 
 
+def toc(render, lang):
+        """[(en label, fr label, [(href, title), ...]), ...] in book order."""
+        parts, missing = [], []
+        for kind, a, b, *_ in book.order():
+                if kind == "PART":
+                        parts.append([a, b, []])
+                elif kind == "APPENDICES":
+                        parts.append([a, b, []])
+                elif kind == "HOME":
+                        continue  # the landing page links the home page itself
+                else:
+                        page = pathlib.Path(render, a[:-4] + ".html")
+                        if not page.exists():
+                                missing.append(str(page))
+                                continue
+                        parts[-1][2].append((f"{lang}/{a[:-4]}.html", page_title(page)))
+        if missing:
+                sys.exit(f"make_index: rendered pages not found: {'; '.join(missing)}")
+        if not parts or any(not p[2] for p in parts):
+                sys.exit("make_index: a part has no rendered chapter — check chapters/_order.txt")
+        return parts
+
+
+def fragment(parts):
+        out = ['      <div class="parts">']
+        for en, fr, chapters in parts:
+                out.append('        <section class="part">')
+                out.append(f"          <p>{html.escape(en)}<small>{html.escape(fr)}</small></p>")
+                out.append('          <ul class="chapters">')
+                for href, title in chapters:
+                        out.append(
+                                f'            <li><a href="{href}">{html.escape(title)}</a></li>'
+                        )
+                out.append("          </ul>")
+                out.append("        </section>")
+        out.append("      </div>")
+        return "\n".join(out)
+
+
 def splice(text, begin, end, body, indent):
         """Replace the region between two markers with generated markup."""
         if begin not in text or end not in text:
@@ -116,22 +120,23 @@ def splice(text, begin, end, body, indent):
 
 def main():
         ap = argparse.ArgumentParser(description=__doc__)
-        ap.add_argument("--en", default="_render/en/book.html", help="rendered book")
+        ap.add_argument("--render", default="_render/en", help="rendered book directory")
+        ap.add_argument("--lang", default="en", help="link prefix for chapter pages")
         ap.add_argument("--template", default="tools/index.html")
         ap.add_argument("--out", default="_site/index.html")
         args = ap.parse_args()
 
-        tpl = Path(args.template).read_text(encoding="utf-8")
+        tpl = pathlib.Path(args.template).read_text(encoding="utf-8")
         if BRAND not in tpl:
                 sys.exit(f"make_index: {args.template} lacks {BRAND}")
 
-        parts = toc(args.en)
+        parts = toc(args.render, args.lang)
         out = splice(tpl, META_BEGIN, META_END, meta_block(), "    ")
         out = splice(out, BEGIN, END, fragment(parts), "      ")
         out = out.replace(BRAND, f'<a class="brand" href="./">{book.BRAND_EN}</a>')
-        Path(args.out).parent.mkdir(parents=True, exist_ok=True)
-        Path(args.out).write_text(out, encoding="utf-8")
-        chapters = sum(len(p["chapters"]) for p in parts)
+        pathlib.Path(args.out).parent.mkdir(parents=True, exist_ok=True)
+        pathlib.Path(args.out).write_text(out, encoding="utf-8")
+        chapters = sum(len(p[2]) for p in parts)
         print(f"index: {chapters} chapters in {len(parts)} parts -> {args.out}")
 
 

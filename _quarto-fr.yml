@@ -1,4 +1,80 @@
 project:
   output-dir: _render/fr
+
+lang: fr
 metadata:
   lang: fr
+
+book:
+  title: "Le guide de terrain de l'IA locale"
+  subtitle: "Exécuter, affûter, servir et gouverner sur votre propre matériel"
+  description: "Un guide de terrain ouvert et bilingue pour exécuter des modèles à poids ouverts sur votre propre matériel : choix des modèles, inférence, fine-tuning, agents, RAG, service, évaluation et RGPD."
+  cover-image-alt: "Le guide de terrain de l'IA locale"
+  image-alt: "Le guide de terrain de l'IA locale"
+  site-url: https://antoinelucasfra.github.io/local-ai-field-guide/fr/
+  chapters:
+    - index.qmd
+    - part: "Partie I — Fondations"
+      chapters:
+        - chapters/01-pourquoi.qmd
+        - chapters/02-choisir-modeles.qmd
+    - part: "Partie II — Exécuter des modèles"
+      chapters:
+        - chapters/03-ecosysteme-installation.qmd
+        - chapters/04-studio-chat.qmd
+        - chapters/05-parametres-inference.qmd
+    - part: "Partie III — Entraîner des modèles"
+      chapters:
+        - chapters/06-pipeline-finetuning.qmd
+        - chapters/07-hyperparametres-entrainement.qmd
+        - chapters/08-data-recipes.qmd
+    - part: "Partie IV — Développer et déployer"
+      chapters:
+        - chapters/09-export-deploiement.qmd
+        - chapters/10-agents-code-locaux.qmd
+        - chapters/11-harnais-agents.qmd
+        - chapters/12-voie-python.qmd
+        - chapters/13-rag.qmd
+        - chapters/14-multimodal.qmd
+        - chapters/15-serving.qmd
+    - part: "Partie V — Gouverner"
+      chapters:
+        - chapters/16-evaluer.qmd
+        - chapters/17-gdpr-durcissement.qmd
+        - chapters/18-dossier-economique.qmd
+        - chapters/19-note-strategique.qmd
+  appendices:
+    - chapters/A-annexe-chercheur.qmd
+    - chapters/B-sources-limites.qmd
+    - chapters/C-projets.qmd
+    - chapters/D-materiel.qmd
+    - chapters/E-dpia.qmd
+
+crossref:
+  appendix-title: "Annexe"
+
+ch-welcome: "À qui s'adresse ce livre"
+ch-01-pourquoi: "L'essor de l'IA locale : pourquoi maintenant"
+ch-02-choisir-modeles: "Le paysage des modèles ouverts, classé"
+ch-03-ecosysteme-installation: "La pile IA locale : runtimes, studios, affûteurs"
+ch-04-studio-chat: "Exécuter des modèles : interfaces de chat"
+ch-05-parametres-inference: "Les paramètres d'inférence, précisément"
+ch-06-pipeline-finetuning: "Le fine-tuning sans code : le pipeline d'entraînement"
+ch-07-hyperparametres-entrainement: "Hyperparamètres d'entraînement, expliqués"
+ch-08-data-recipes: "Construire des données d'entraînement depuis vos documents"
+ch-09-export-deploiement: "Export et déploiement"
+ch-10-agents-code-locaux: "Modèles locaux pour les agents de code"
+ch-11-harnais-agents: "Les harnais d'agents de code"
+ch-12-voie-python: "Le fine-tuning en Python : la boucle QLoRA"
+ch-13-rag: "Le livre de recettes RAG : vos documents, avec justificatifs"
+ch-14-multimodal: "Voix, vision et images"
+ch-15-serving: "Servir une équipe : du poste de bureau à la passerelle partagée"
+ch-16-evaluer: "Évaluer avant de faire confiance"
+ch-17-gdpr-durcissement: "Correspondance RGPD"
+ch-18-dossier-economique: "Le dossier économique de l'IA locale"
+ch-19-note-strategique: "L'IA locale comme stratégie d'institution"
+ch-A-annexe-chercheur: "L'IA locale pour votre recherche, en 30 minutes"
+ch-B-sources-limites: "Sources"
+ch-C-projets: "Guide de terrain des projets d'IA locale"
+ch-D-materiel: "Le matériel : quoi acheter, dans quel ordre"
+ch-E-dpia: "Modèle d'AIPD pour l'IA locale"

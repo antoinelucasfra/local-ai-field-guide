@@ -1,0 +1,38 @@
+book:
+  chapters:
+    - index.qmd
+    - part: "Part I — Foundations"
+      chapters:
+        - chapters/01-pourquoi.qmd
+        - chapters/02-choisir-modeles.qmd
+    - part: "Part II — Running models"
+      chapters:
+        - chapters/03-ecosysteme-installation.qmd
+        - chapters/04-studio-chat.qmd
+        - chapters/05-parametres-inference.qmd
+    - part: "Part III — Training models"
+      chapters:
+        - chapters/06-pipeline-finetuning.qmd
+        - chapters/07-hyperparametres-entrainement.qmd
+        - chapters/08-data-recipes.qmd
+    - part: "Part IV — Developing & deploying"
+      chapters:
+        - chapters/09-export-deploiement.qmd
+        - chapters/10-agents-code-locaux.qmd
+        - chapters/11-harnais-agents.qmd
+        - chapters/12-voie-python.qmd
+        - chapters/13-rag.qmd
+        - chapters/14-multimodal.qmd
+        - chapters/15-serving.qmd
+    - part: "Part V — Governing"
+      chapters:
+        - chapters/16-evaluer.qmd
+        - chapters/17-gdpr-durcissement.qmd
+        - chapters/18-dossier-economique.qmd
+        - chapters/19-note-strategique.qmd
+  appendices:
+    - chapters/A-annexe-chercheur.qmd
+    - chapters/B-sources-limites.qmd
+    - chapters/C-projets.qmd
+    - chapters/D-materiel.qmd
+    - chapters/E-dpia.qmd

@@ -1,59 +1,101 @@
 project:
-  type: default
+  type: book
+  output-dir: _render/en
   pre-render: tools/build_book.py
-  render:
-    - .book.qmd
-    - .book-slides.qmd
-    - .ch-00-bienvenue.qmd
-    - .chh-00-bienvenue.qmd
-    - .ch-01-pourquoi.qmd
-    - .chh-01-pourquoi.qmd
-    - .ch-02-choisir-modeles.qmd
-    - .chh-02-choisir-modeles.qmd
-    - .ch-03-ecosysteme-installation.qmd
-    - .chh-03-ecosysteme-installation.qmd
-    - .ch-04-studio-chat.qmd
-    - .chh-04-studio-chat.qmd
-    - .ch-05-parametres-inference.qmd
-    - .chh-05-parametres-inference.qmd
-    - .ch-06-pipeline-finetuning.qmd
-    - .chh-06-pipeline-finetuning.qmd
-    - .ch-07-hyperparametres-entrainement.qmd
-    - .chh-07-hyperparametres-entrainement.qmd
-    - .ch-08-data-recipes.qmd
-    - .chh-08-data-recipes.qmd
-    - .ch-09-export-deploiement.qmd
-    - .chh-09-export-deploiement.qmd
-    - .ch-10-agents-code-locaux.qmd
-    - .chh-10-agents-code-locaux.qmd
-    - .ch-11-harnais-agents.qmd
-    - .chh-11-harnais-agents.qmd
-    - .ch-12-voie-python.qmd
-    - .chh-12-voie-python.qmd
-    - .ch-13-rag.qmd
-    - .chh-13-rag.qmd
-    - .ch-14-multimodal.qmd
-    - .chh-14-multimodal.qmd
-    - .ch-15-serving.qmd
-    - .chh-15-serving.qmd
-    - .ch-16-evaluer.qmd
-    - .chh-16-evaluer.qmd
-    - .ch-17-gdpr-durcissement.qmd
-    - .chh-17-gdpr-durcissement.qmd
-    - .ch-18-dossier-economique.qmd
-    - .chh-18-dossier-economique.qmd
-    - .ch-19-note-strategique.qmd
-    - .chh-19-note-strategique.qmd
-    - .ch-A-annexe-chercheur.qmd
-    - .chh-A-annexe-chercheur.qmd
-    - .ch-B-sources-limites.qmd
-    - .chh-B-sources-limites.qmd
-    - .ch-C-projets.qmd
-    - .chh-C-projets.qmd
-    - .ch-D-materiel.qmd
-    - .chh-D-materiel.qmd
-    - .ch-E-dpia.qmd
-    - .chh-E-dpia.qmd
-    - 404.qmd
 profile:
   default: [en]
+
+lang: en
+metadata:
+  lang: en
+
+filters:
+  - langsel
+  - include-code-files
+  - passage-xref
+  - details
+  - code-window
+  - lightbox
+  - tools/drop-notes.lua
+
+extensions:
+  linkrot:
+    fail-on-error: false
+    timeout: 8
+    cache-results: true
+
+book:
+  title: "The Local AI Field Guide"
+  subtitle: "Run, fine-tune, serve and govern on your own hardware"
+  author: "Support IA — LocalAI"
+  date: today
+  description: "An open, bilingual field guide to running open-weight language models on your own hardware: choosing models, inference, fine-tuning, agents, RAG, serving, evaluation and GDPR. Available in French."
+  output-file: book
+  cover-image: tools/cover.png
+  cover-image-alt: "The Local AI Field Guide"
+  downloads: [pdf, epub, docx]
+  repo-url: https://github.com/antoinelucasfra/local-ai-field-guide
+  repo-actions: [edit, issue]
+  site-url: https://antoinelucasfra.github.io/local-ai-field-guide/
+  sharing: [twitter, linkedin]
+  search: true
+  page-navigation: true
+  reader-mode: true
+  favicon: tools/favicon.svg
+  image: https://antoinelucasfra.github.io/local-ai-field-guide/og-card.png
+  image-alt: "The Local AI Field Guide"
+  twitter-card: true
+  open-graph: true
+
+crossref:
+  appendix-title: "Appendix"
+
+format:
+  html:
+    theme:
+      light: [cosmo, al-brand-light, al-brand-book.scss]
+      dark: [cosmo, al-brand-dark, al-brand-book.scss]
+    toc: true
+    toc-depth: 3
+    number-depth: 1
+    code-copy: true
+    lightbox: auto
+  typst:
+    toc: true
+    papersize: a4
+    margin:
+      x: 2cm
+      y: 2cm
+  epub:
+    toc: true
+  docx:
+    toc: true
+
+# Per-chapter titles. Each chapter's single H1 is `# {{< meta ch-<slug> >}}`,
+# so the title follows the language profile instead of a language-specific
+# heading that the book structure would read before filtering.
+ch-welcome: "Who this book is for"
+ch-01-pourquoi: "The rise of local AI: why now"
+ch-02-choisir-modeles: "The open-model landscape, ranked"
+ch-03-ecosysteme-installation: "The local AI stack: runtimes, studios, fine-tuners"
+ch-04-studio-chat: "Running models: chat interfaces"
+ch-05-parametres-inference: "Inference parameters, precisely"
+ch-06-pipeline-finetuning: "Fine-tuning without code: the training pipeline"
+ch-07-hyperparametres-entrainement: "Training hyperparameters, explained"
+ch-08-data-recipes: "Building training data from your documents"
+ch-09-export-deploiement: "Export and deployment"
+ch-10-agents-code-locaux: "Local models for coding agents"
+ch-11-harnais-agents: "Coding agent harnesses"
+ch-12-voie-python: "Fine-tuning in Python: the QLoRA loop"
+ch-13-rag: "The RAG cookbook: your documents, with receipts"
+ch-14-multimodal: "Voice, vision and images"
+ch-15-serving: "Serving a team: from desktop to shared gateway"
+ch-16-evaluer: "Evaluate before you trust"
+ch-17-gdpr-durcissement: "GDPR mapping"
+ch-18-dossier-economique: "The Business Case for Local AI"
+ch-19-note-strategique: "Local AI as Institutional Strategy"
+ch-A-annexe-chercheur: "Local AI for Your Research. A 30-Minute Primer"
+ch-B-sources-limites: "Sources"
+ch-C-projets: "A field guide to local-AI projects"
+ch-D-materiel: "Hardware: what to buy, in what order"
+ch-E-dpia: "DPIA template for local AI"

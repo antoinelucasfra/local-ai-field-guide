@@ -2,7 +2,6 @@
 _render/
 .book.qmd
 .ch-*.qmd
-.chh-*.qmd
 
 /.quarto/
 **/*.quarto_ipynb
@@ -10,9 +9,8 @@ _render/
 
 # Local render artefacts (CI builds these into _render/)
 /[0-9][0-9]-*.*
-/book.*
-/.book-slides.qmd
-/.chh-*.typ
-/.chh-*_files/
+/*-slides.html
+/404.html
+/404_files/
 code/.ruff_cache/
 __pycache__/

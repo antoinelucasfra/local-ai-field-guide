@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="2400" viewBox="0 0 1600 2400" role="img" aria-label="The Local AI Field Guide — Le guide de terrain de l'IA locale">
+  <!-- Book cover. Used by book: cover-image for the HTML home page and the EPUB.
+       Export to tools/cover.png at 1600x2400 with any SVG rasterizer. -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="0%" r="75%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.20" />
+      <stop offset="100%" stop-color="#0f1117" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1600" height="2400" fill="#0f1117" />
+  <rect width="1600" height="2400" fill="url(#glow)" />
+  <rect x="0" y="0" width="1600" height="14" fill="#38bdf8" />
+
+  <g font-family="Space Grotesk, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="150" y="980" font-size="128" font-weight="700" fill="#e6edf3">The Local AI</text>
+    <text x="150" y="1120" font-size="128" font-weight="700" fill="#e6edf3">Field Guide</text>
+    <text x="150" y="1250" font-size="64" font-weight="500" fill="#7dd3fc">Le guide de terrain</text>
+    <text x="150" y="1330" font-size="64" font-weight="500" fill="#7dd3fc">de l'IA locale</text>
+  </g>
+
+  <rect x="150" y="1420" width="180" height="5" fill="#38bdf8" />
+
+  <g font-family="DM Sans, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="150" y="1530" font-size="52" fill="#e6edf3">Run, fine-tune, serve and govern</text>
+    <text x="150" y="1600" font-size="52" fill="#e6edf3">open-weight models on hardware</text>
+    <text x="150" y="1670" font-size="52" fill="#e6edf3">you own.</text>
+
+    <text x="150" y="1790" font-size="44" fill="#8b949e">Exécuter, affûter, servir et gouverner</text>
+    <text x="150" y="1850" font-size="44" fill="#8b949e">sur votre propre matériel.</text>
+
+    <text x="150" y="2110" font-size="40" fill="#e6edf3">Support IA — LocalAI</text>
+    <text x="150" y="2180" font-size="34" fill="#8b949e">EN · FR · HTML, PDF, EPUB, DOCX, slides</text>
+    <text x="150" y="2240" font-size="34" fill="#8b949e">antoinelucasfra.github.io/local-ai-field-guide</text>
+  </g>
+</svg>
