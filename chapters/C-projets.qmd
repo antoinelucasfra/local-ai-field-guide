@@ -1,6 +1,6 @@
-::: {.en}
-## Appendix C. A field guide to local-AI projects {#projects}
+# {{< meta ch-C-projets >}} {#projects}
 
+::: {.en}
 The ecosystem moves fast; these projects are maintained, popular and genuinely useful. All run offline.
 
 ### Front-ends & assistants
@@ -40,8 +40,6 @@ Selection criteria we applied: open source, active maintenance (check before ado
 :::
 
 ::: {.fr}
-## Annexe C. Guide de terrain des projets d'IA locale {#projects}
-
 L'écosystème va vite ; ces projets sont maintenus, populaires et réellement utiles. Tous fonctionnent hors ligne.
 
 ### Frontaux & assistants

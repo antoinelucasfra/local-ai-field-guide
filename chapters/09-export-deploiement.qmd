@@ -1,10 +1,4 @@
-::: {.en}
-## 9. Export and deployment {#export}
-:::
-
-::: {.fr}
-## 9. Export et déploiement {#export}
-:::
+# {{< meta ch-09-export-deploiement >}} {#export}
 
 ::: {.en}
 Export screen in your trainer (or its CLI equivalent): pick a training run → pick a checkpoint → choose the target:
@@ -37,7 +31,7 @@ Not all GGUF quantisations are equal. Sizes are approximate fractions of the 16-
 | `Q6_K` | ~41 % | very close to fp16 | reference comparisons |
 | `Q8_0` | ~53 % | effectively lossless | A/B baseline to judge lower quants against |
 
-Rule: pick the largest quant your hardware serves at acceptable speed, then verify on your golden set ([§ Evaluate](#evaluate)). Labels lie less than averages do.
+Rule: pick the largest quant your hardware serves at acceptable speed, then verify on your golden set ([§ Evaluate](16-evaluer.qmd#evaluate)). Labels lie less than averages do.
 
 ### Serving from the GGUF {#export-serving}
 
@@ -58,7 +52,7 @@ Raw llama.cpp for full control:
 llama-server -m assistant-UD-Q4_K_XL.gguf -c 32768 -ngl 99 --port 8080
 ```
 
-`-ngl 99` pushes every layer to GPU; `-c` is the context window. Size it to your worst-case prompt, not your average one ([§ Inference parameters](#params)).
+`-ngl 99` pushes every layer to GPU; `-c` is the context window. Size it to your worst-case prompt, not your average one ([§ Inference parameters](05-parametres-inference.qmd#params)).
 
 ### Choosing the target {#export-choice}
 
@@ -67,7 +61,7 @@ llama-server -m assistant-UD-Q4_K_XL.gguf -c 32768 -ngl 99 --port 8080
 | You alone, iterating | chat UI, nothing to deploy |
 | Team of ≤ 10 on one machine | Ollama or llama-server on the GPU box |
 | Application backend | any OpenAI-compatible server: llama-server, vLLM, Ollama, or your studio's API |
-| Many concurrent users, high throughput | vLLM on merged 16-bit weights ([§ Team serving](#serving)) |
+| Many concurrent users, high throughput | vLLM on merged 16-bit weights ([§ Team serving](15-serving.qmd#serving)) |
 | Air-gapped distribution | GGUF file + Modelfile in a versioned archive |
 
 ::: {.al-take}
@@ -92,7 +86,7 @@ Sauvegarde locale ou publication sur le Hub Hugging Face (token d'écriture requ
 - **Votre studio comme serveur d'API** : la plupart des studios et affûteurs exposent une commande de service qui charge l'export avec échantillonnage, contexte et couches GPU configurables (`llama serve` de llama.app, `unsloth run`, l'onglet Developer de LM Studio, …).
 - **Accès distant** : liez à `0.0.0.0` quand l'outil gère l'authentification ; sinon gardez la boucle locale et transférez le port en SSH (un tunnel comme Cloudflare ou Tailscale pour du HTTPS public).
 
-### Aide-mémoire des quantifications {#export-quants}
+### Aide-mémoire des quantifications {#export-quants-fr}
 
 Toutes les quantifications GGUF ne se valent pas. Tailles en fractions approximatives du modèle 16-bit d'origine[^ch09-quants] :
 
@@ -106,9 +100,9 @@ Toutes les quantifications GGUF ne se valent pas. Tailles en fractions approxima
 | `Q6_K` | ~41 % | très proche du fp16 | comparaisons de référence |
 | `Q8_0` | ~53 % | quasi sans perte | base A/B pour juger les quants inférieurs |
 
-Règle : prenez la plus grande quant que votre matériel peut servir à vitesse acceptable, puis vérifiez sur votre jeu de référence ([§ Évaluer](#evaluate)). Les étiquettes mentent moins que les moyennes.
+Règle : prenez la plus grande quant que votre matériel peut servir à vitesse acceptable, puis vérifiez sur votre jeu de référence ([§ Évaluer](16-evaluer.qmd#evaluate)). Les étiquettes mentent moins que les moyennes.
 
-### Servir depuis le GGUF {#export-serving}
+### Servir depuis le GGUF {#export-serving-fr}
 
 Wrapper Ollama avec persona et échantillonnage intégrés :
 
@@ -127,16 +121,16 @@ llama.cpp brut pour un contrôle total :
 llama-server -m assistant-UD-Q4_K_XL.gguf -c 32768 -ngl 99 --port 8080
 ```
 
-`-ngl 99` pousse toutes les couches sur GPU ; `-c` est la fenêtre de contexte. Dimensionnez-la sur votre pire prompt, pas sur votre moyenne ([§ Paramètres d'inférence](#params)).
+`-ngl 99` pousse toutes les couches sur GPU ; `-c` est la fenêtre de contexte. Dimensionnez-la sur votre pire prompt, pas sur votre moyenne ([§ Paramètres d'inférence](05-parametres-inference.qmd#params)).
 
-### Choisir la cible {#export-choice}
+### Choisir la cible {#export-choice-fr}
 
 | Situation | Cible |
 |---|---|
 | Vous seul, en itération | interface de chat, rien à déployer |
 | Équipe ≤ 10 sur une machine | Ollama ou llama-server sur le poste GPU |
 | Backend d'application | tout serveur compatible OpenAI : llama-server, vLLM, Ollama, ou l'API de votre studio |
-| Nombreux utilisateurs simultanés, haut débit | vLLM sur poids fusionnés 16-bit ([§ Service en équipe](#serving)) |
+| Nombreux utilisateurs simultanés, haut débit | vLLM sur poids fusionnés 16-bit ([§ Service en équipe](15-serving.qmd#serving)) |
 | Distribution hors ligne | fichier GGUF + Modelfile dans une archive versionnée |
 
 ::: {.al-take}

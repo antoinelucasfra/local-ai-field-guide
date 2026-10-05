@@ -1,6 +1,6 @@
-::: {.en}
-## 15. Serving a team: from desktop to shared gateway {#serving}
+# {{< meta ch-15-serving >}} {#serving}
 
+::: {.en}
 One workstation serves one researcher. A **lab server** serves thirty. The jump needs three additions: parallel serving, a gateway, and governance.
 
 ### Parallel serving
@@ -42,8 +42,6 @@ Concurrent users × average context ≈ KV memory (Chap. 5). A single RTX 4090 c
 :::
 
 ::: {.fr}
-## 15. Servir une équipe : du poste de bureau à la passerelle partagée {#serving}
-
 Un poste sert un chercheur. Un **serveur de laboratoire** en sert trente. Le saut exige trois ajouts : le service parallèle, une passerelle, et la gouvernance.
 
 ### Le service parallèle

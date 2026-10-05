@@ -1,6 +1,6 @@
-::: {.en}
-## 13. The RAG cookbook: your documents, with receipts {#rag}
+# {{< meta ch-13-rag >}} {#rag}
 
+::: {.en}
 Fine-tuning (Chap. 6) bakes a *skill* into weights; **RAG** (Retrieval-Augmented Generation)[^ch13-rag] answers questions *about specific documents* by retrieving the right passages at query time and letting the model cite them. [Rule of thumb: behaviour → fine-tune; knowledge that changes → RAG.]{.passage #pas-rag-rule}
 
 ### A fully local stack in four parts
@@ -10,7 +10,7 @@ Fine-tuning (Chap. 6) bakes a *skill* into weights; **RAG** (Retrieval-Augmented
 3. **Vector store**. For a lab, `sqlite-vec` (a file) is enough up to ~1M chunks; `pgvector` if you already run PostgreSQL; Qdrant when you need filtering and replication.
 4. **Generation**. Any model from Chap. 2 receives the question + top-k chunks and must answer *from them*.
 
-![Local RAG: documents are chunked and embedded once into a vector store on disk; at query time the top-k similar chunks are retrieved and answered from. Nothing leaves the machine.](chapters/figures/fig-rag.svg){#fig-rag width=100%}
+![Local RAG: documents are chunked and embedded once into a vector store on disk; at query time the top-k similar chunks are retrieved and answered from. Nothing leaves the machine.](figures/fig-rag.svg){#fig-rag width=100%}
 
 Minimal working pipeline:
 
@@ -51,8 +51,6 @@ Your chat UI's web search and document features use the same mechanics internall
 :::
 
 ::: {.fr}
-## 13. Le livre de recettes RAG : vos documents, avec justificatifs {#rag}
-
 Le fine-tuning (chap. 6) incorpore une *compétence* dans les poids ; le **RAG** (*Retrieval-Augmented Generation*)[^ch13-rag] répond aux questions *sur des documents précis* en récupérant les bons passages au moment de la requête et en laissant le modèle les citer. [Règle simple : comportement → fine-tune ; connaissance qui évolue → RAG.]{.passage #pas-regle-rag}
 
 ### Une stack entièrement locale en quatre composants
@@ -62,7 +60,7 @@ Le fine-tuning (chap. 6) incorpore une *compétence* dans les poids ; le **RAG**
 3. **Base vectorielle**. Pour un laboratoire, `sqlite-vec` (un fichier) suffit jusqu'à ~1 M de morceaux ; `pgvector` si vous avez déjà PostgreSQL ; Qdrant pour le filtrage et la réplication.
 4. **Génération**. N'importe quel modèle du chap. 2 reçoit la question + les k meilleurs morceaux et doit répondre *à partir d'eux*.
 
-![RAG local : les documents sont découpés et encodés une fois dans une base vectorielle sur disque ; à chaque question, les k morceaux les plus proches sont récupérés et servent de source. Rien ne quitte la machine.](chapters/figures/fig-rag.svg){#fig-rag-fr width=100%}
+![RAG local : les documents sont découpés et encodés une fois dans une base vectorielle sur disque ; à chaque question, les k morceaux les plus proches sont récupérés et servent de source. Rien ne quitte la machine.](figures/fig-rag.svg){#fig-rag-fr width=100%}
 
 Pipeline minimal fonctionnel :
 
@@ -105,14 +103,14 @@ La recherche web et les fonctions documentaires de votre interface de chat repos
 ::: {.en}
 The complete runnable version lives in `code/rag_minimal.py`; it ships here in full so this book's snippets can never drift from the companion repo:
 
-```{.python include="code/rag_minimal.py"}
+```{.python include="../code/rag_minimal.py"}
 ```
 :::
 
 ::: {.fr}
 La version complète et exécutable vit dans `code/rag_minimal.py` ; elle est incluse ici intégralement, pour que les extraits de ce livre ne puissent jamais diverger du dépôt compagnon :
 
-```{.python include="code/rag_minimal.py"}
+```{.python include="../code/rag_minimal.py"}
 ```
 :::
 

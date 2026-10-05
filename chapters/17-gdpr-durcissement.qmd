@@ -1,15 +1,9 @@
-::: {.en}
-## 17. GDPR mapping {#gdpr}
-:::
-
-::: {.fr}
-## 17. Correspondance RGPD {#gdpr}
-:::
+# {{< meta ch-17-gdpr-durcissement >}} {#gdpr}
 
 ::: {.en}
 How a local, self-hosted stack maps to core GDPR principles:
 
-![Where personal data lives: users, auth gateway, GPU host and encrypted storage all sit inside the on-premise boundary; the only optional crossing is web search, which can be disabled entirely.](chapters/figures/fig-gdpr-flow.svg){#fig-gdpr width=100%}
+![Where personal data lives: users, auth gateway, GPU host and encrypted storage all sit inside the on-premise boundary; the only optional crossing is web search, which can be disabled entirely.](figures/fig-gdpr-flow.svg){#fig-gdpr width=100%}
 
 
 | GDPR principle | Article | Local deployment answer |
@@ -33,7 +27,7 @@ local execution removes the *processor* risk, not your responsibilities as *cont
 ::: {.fr}
 Comment une pile locale auto-hébergée répond aux principes clés du RGPD :
 
-![Là où vivent les données personnelles : utilisateurs, passerelle d'authentification, hôte GPU et stockage chiffré restent dans la frontière sur site ; le seul franchissement optionnel est la recherche web, entièrement désactivable.](chapters/figures/fig-gdpr-flow.svg){#fig-gdpr-fr width=100%}
+![Là où vivent les données personnelles : utilisateurs, passerelle d'authentification, hôte GPU et stockage chiffré restent dans la frontière sur site ; le seul franchissement optionnel est la recherche web, entièrement désactivable.](figures/fig-gdpr-flow.svg){#fig-gdpr-fr width=100%}
 
 
 | Principe RGPD | Article | Réponse du déploiement local |
@@ -59,12 +53,12 @@ l'exécution locale supprime le risque lié au *sous-traitant*, pas vos responsa
 :::
 
 ::: {.fr}
-## Liste de durcissement {#hardening}
+## Liste de durcissement {#hardening-fr}
 :::
 
 ::: {.details summary="Expand the full hardening checklist"}
 ::: {.en}
-- Disable agent telemetry and the attribution header as shown in [Local models for coding agents](#agents); verify the telemetry setting of each component instead of assuming it.
+- Disable agent telemetry and the attribution header as shown in [Local models for coding agents](10-agents-code-locaux.qmd#agents); verify the telemetry setting of each component instead of assuming it.
 - Block egress from the GPU host except your package mirrors; web search is opt-in per message. Leave it off for sensitive workspaces.
 - Treat local API keys (whatever your server issues) like passwords: rotate, revoke, never commit.
 - Log prompts minimally; define retention; never log raw personal data by default.
@@ -76,7 +70,7 @@ l'exécution locale supprime le risque lié au *sous-traitant*, pas vos responsa
 
 ::: {.details summary="Déplier la liste de durcissement complète"}
 ::: {.fr}
-- Désactiver la télémétrie des agents et le header d'attribution comme indiqué dans [Modèles locaux pour agents de code](#agents) ; vérifiez le réglage de télémétrie de chaque composant au lieu de le présumer.
+- Désactiver la télémétrie des agents et le header d'attribution comme indiqué dans [Modèles locaux pour agents de code](10-agents-code-locaux.qmd#agents) ; vérifiez le réglage de télémétrie de chaque composant au lieu de le présumer.
 - Bloquer les flux sortants de l'hôte GPU sauf miroirs de paquets ; la recherche web est opt-in par message. Laissez-la coupée pour les espaces sensibles.
 - Traiter les clés API locales (celles que votre serveur émet) comme des mots de passe : rotation, révocation, jamais de commit.
 - Journaliser les prompts avec parcimonie ; définir une conservation ; ne jamais journaliser de données personnelles brutes par défaut.

@@ -1,10 +1,4 @@
-::: {.en}
-## 10. Local models for coding agents {#agents}
-:::
-
-::: {.fr}
-## 10. Modèles locaux pour les agents de code {#agents}
-:::
+# {{< meta ch-10-agents-code-locaux >}} {#agents}
 
 ::: {.en}
 Coding agents (Claude Code, Codex, OpenCode…) accept custom endpoints. They can drive **your** local model, keeping code and prompts on-premise. The wiring is two environment variables; some stacks also ship a shortcut:
@@ -62,7 +56,7 @@ Local-first escalation beats purism:
 
 1. Default endpoint = your local model. Code, prompts and diffs stay on-premise.
 2. Explicit escalation trigger for hard tasks: a per-session flag or second config that points at the cloud provider.
-3. Measure the split: log which tasks needed escalation; when the local pass-rate on routine work climbs (re-test with your golden set, [§ Evaluate](#evaluate)), lower the threshold again.
+3. Measure the split: log which tasks needed escalation; when the local pass-rate on routine work climbs (re-test with your golden set, [§ Evaluate](16-evaluer.qmd#evaluate)), lower the threshold again.
 
 ::: {.al-take}
 **Our take.** The privacy win here is real and immediate. We run reviews of sensitive client code through a local model without ever asking permission from anyone's compliance team. But there is a productivity tax on the hardest 10 % of tasks. Pretending otherwise is how local-AI pilots get quietly abandoned. Hybrid routing is not a compromise. It is the honest architecture.
@@ -99,7 +93,7 @@ claude --settings '{"env":{"CLAUDE_CODE_ATTRIBUTION_HEADER":"0","CLAUDE_CODE_ENA
 
 Selon l'AA Coding Agent Index, attendez-vous à ce que des modèles ouverts de classe 26–30B traitent bien les refactors courants, les tests et les revues, tandis que les plus gros modèles fermés gardent l'avantage sur les très longues missions multi-fichiers. Routez en conséquence.
 
-### Ce que les modèles locaux font bien {#agents-fit}
+### Ce que les modèles locaux font bien {#agents-fit-fr}
 
 | Tâche | Ajustement local | Pourquoi |
 |---|---|---|
@@ -110,7 +104,7 @@ Selon l'AA Coding Agent Index, attendez-vous à ce que des modèles ouverts de c
 | Longues missions multi-fichiers (30 min+) | △ | pression sur le contexte + erreurs d'outils cumulées |
 | Décisions d'architecture inédites | ✗ | routez vers votre meilleur modèle, local ou non |
 
-### Budgéter la fenêtre de contexte {#agents-context}
+### Budgéter la fenêtre de contexte {#agents-context-fr}
 
 Les boucles d'agent brûlent les jetons : chaque résultat d'outil, lectures de fichiers, sorties shell, diffs, entre dans le contexte et y reste. Repères pratiques :
 
@@ -119,13 +113,13 @@ Les boucles d'agent brûlent les jetons : chaque résultat d'outil, lectures de 
 - Surveillez l'**invalidation du cache KV** : tout ce qui réécrit le préfixe de conversation (header d'attribution ci-dessus, prompt système remanié) retraite toute la fenêtre. Le tueur silencieux de latence.
 - Gardez le harnais discipliné : lectures ciblées, sorties shell tronquées. Une fenêtre de 128k se remplit en une douzaine de `cat` négligents.
 
-### Stratégie de routage {#agents-routing}
+### Stratégie de routage {#agents-routing-fr}
 
 Partir du local et escalader si besoin bat le purisme :
 
 1. Endpoint par défaut = votre modèle local. Code, prompts et diffs restent sur site.
 2. Déclencheur explicite d'escalade pour les tâches dures : un flag par session ou une seconde config qui pointe vers le fournisseur cloud.
-3. Mesurez la répartition : journalisez quelles tâches ont nécessité l'escalade ; quand le taux de réussite local monte sur le travail courant (re-testez avec votre jeu de référence, [§ Évaluer](#evaluate)), rabaissez à nouveau le seuil.
+3. Mesurez la répartition : journalisez quelles tâches ont nécessité l'escalade ; quand le taux de réussite local monte sur le travail courant (re-testez avec votre jeu de référence, [§ Évaluer](16-evaluer.qmd#evaluate)), rabaissez à nouveau le seuil.
 
 ::: {.al-take}
 **Notre avis.** Le gain privacy ici est réel et immédiat. Nous faisons relire du code client sensible par un modèle local sans jamais demander la permission à une quelconque équipe conformité. Mais il y a une taxe de productivité sur les 10 % de tâches les plus dures ; la nier, c'est le meilleur moyen de voir un pilote d'IA locale abandonné en silence. Le routage hybride n'est pas un compromis ; c'est l'architecture honnête.

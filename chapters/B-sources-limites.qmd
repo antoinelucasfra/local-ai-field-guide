@@ -1,10 +1,4 @@
-::: {.en}
-## Sources {#sources}
-:::
-
-::: {.fr}
-## Sources {#sources}
-:::
+# {{< meta ch-B-sources-limites >}} {#sources}
 
 ::: {.en}
 - Local-stack documentation, one page per tool (all checked 2026-10-04): [llama.app](https://llama.app/docs/introduction), [llama.cpp](https://github.com/ggml-org/llama.cpp), [Ollama](https://ollama.com/docs), [LM Studio](https://lmstudio.ai/docs), [Jan](https://jan.ai/docs), [KoboldCpp](https://github.com/LostRuins/koboldcpp), [TextGen](https://github.com/oobabooga/text-generation-webui), [Open WebUI](https://docs.openwebui.com), [LLaMA-Factory](https://llamafactory.readthedocs.io), [Axolotl](https://docs.axolotl.ai), [torchtune](https://pytorch.org/torchtune), [mlx-lm](https://github.com/ml-explore/mlx-lm), [vLLM](https://docs.vllm.ai), [SGLang](https://github.com/sgl-project/sglang).
@@ -25,7 +19,7 @@
 :::
 
 ::: {.fr}
-## Références scientifiques {#sci-refs}
+## Références scientifiques {#sci-refs-fr}
 :::
 
 ::: {.en}
@@ -69,7 +63,7 @@ Articles évalués par les pairs et sources techniques primaires qui étayent le
 :::
 
 ::: {.fr}
-## Limites {#limits}
+## Limites {#limits-fr}
 :::
 
 ::: {.en}

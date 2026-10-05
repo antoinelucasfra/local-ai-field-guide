@@ -1,10 +1,4 @@
-::: {.en}
-## 8. Building training data from your documents {#data}
-:::
-
-::: {.fr}
-## 8. Construire des données d'entraînement depuis vos documents {#data}
-:::
+# {{< meta ch-08-data-recipes >}} {#data}
 
 ::: {.en}
 Getting a clean dataset is the hardest part of fine-tuning, and the least glamorous: 80 % of a fine-tune's quality is decided here, before any GPU spins up. Three ways to get there, all valid[^ch08-builders]:
@@ -20,7 +14,7 @@ Whichever you pick, the pipeline is the same six steps:
 3. **Validate** the setup to catch configuration errors early (schema mismatches, empty fields, missing columns).
 4. **Preview** sample rows, iterate on prompts until the rows look like work you would have written yourself.
 5. **Run** the full build and monitor progress.
-6. Feed the resulting dataset (JSONL + its hash) straight into training and fine-tune ([§ Fine-tuning pipeline](#finetune)).
+6. Feed the resulting dataset (JSONL + its hash) straight into training and fine-tune ([§ Fine-tuning pipeline](06-pipeline-finetuning.qmd#finetune)).
 
 Typical sovereign-AI pattern: feed internal documentation (procedures, tickets, contracts). Generate instruction/output pairs locally. Fine-tune a model that answers in your organisation's vocabulary. No document ever leaves the building.
 
@@ -34,14 +28,14 @@ Goal: a model that answers staff questions about internal IT procedures (a folde
 4. **Filter step.** Drop duplicates and rows where the answer is a verbatim copy of the question.
 5. **Validate → Preview → Run.** Read 20 random preview rows *before* the full run; fix prompt wording while it is cheap.
 
-One afternoon of builder work typically yields 1–3k usable pairs from a corpus that size. Enough for a first LoRA ([§ Fine-tuning pipeline](#finetune)).
+One afternoon of builder work typically yields 1–3k usable pairs from a corpus that size. Enough for a first LoRA ([§ Fine-tuning pipeline](06-pipeline-finetuning.qmd#finetune)).
 
 ### Failure modes {#data-pitfalls}
 
 | Failure | Symptom | Counter |
 |---|---|---|
 | Hallucinated pairs | model invents confident answers at inference time | grounding instruction in the generation block + manual sample review before training |
-| Personal data in seeds | PII memorised by the fine-tuned model | anonymise upstream. [§ GDPR mapping](#gdpr) treats the corpus as a processing activity |
+| Personal data in seeds | PII memorised by the fine-tuned model | anonymise upstream. [§ GDPR mapping](17-gdpr-durcissement.qmd#gdpr) treats the corpus as a processing activity |
 | Near-duplicates | inflated dataset, overfit answers | dedup filter block; check with exact-match on normalised question text |
 | Schema drift between runs | retraining on inconsistent columns | version the recipe/config; export the dataset file and hash it alongside the training config |
 
@@ -64,11 +58,11 @@ Quel que soit le choix, le pipeline compte les mêmes six étapes :
 3. **Validate** pour détecter tôt les erreurs de configuration (schémas incompatibles, champs vides, colonnes manquantes).
 4. **Preview** des lignes d'exemple, itérez sur les prompts jusqu'à ce que les lignes ressemblent à ce que vous auriez écrit vous-même.
 5. **Run** de la construction complète et suivi de la progression.
-6. Injectez le jeu obtenu (JSONL + son hash) directement dans l'entraînement ([§ Pipeline de fine-tuning](#finetune)).
+6. Injectez le jeu obtenu (JSONL + son hash) directement dans l'entraînement ([§ Pipeline de fine-tuning](06-pipeline-finetuning.qmd#finetune)).
 
 Schéma type d'IA souveraine : injecter la documentation interne (procédures, tickets, contrats). Générer localement des paires instruction/sortie. Affûter un modèle qui répond dans le vocabulaire de l'organisation. Aucun document ne quitte les lieux.
 
-### Un exemple concret {#data-example}
+### Un exemple concret {#data-example-fr}
 
 Objectif : un modèle qui répond aux questions du personnel sur les procédures IT internes (un dossier de 60 PDF).
 
@@ -78,14 +72,14 @@ Objectif : un modèle qui répond aux questions du personnel sur les procédures
 4. **Étape filtre.** Supprime les doublons et les lignes où la réponse copie la question mot pour mot.
 5. **Validate → Preview → Run.** Lisez 20 lignes d'aperçu au hasard *avant* le run complet ; corrigez les prompts tant que c'est encore peu coûteux.
 
-Un après-midi de construction produit typiquement 1 à 3 k paires utilisables pour un corpus de cette taille. Assez pour un premier LoRA ([§ Pipeline de fine-tuning](#finetune)).
+Un après-midi de construction produit typiquement 1 à 3 k paires utilisables pour un corpus de cette taille. Assez pour un premier LoRA ([§ Pipeline de fine-tuning](06-pipeline-finetuning.qmd#finetune)).
 
-### Modes d'échec {#data-pitfalls}
+### Modes d'échec {#data-pitfalls-fr}
 
 | Échec | Symptôme | Parade |
 |---|---|---|
 | Paires hallucinées | le modèle invente des réponses assurées en production | consigne d'ancrage dans le bloc de génération + revue manuelle d'échantillons avant entraînement |
-| Données personnelles dans les sources | la PII est mémorisée par le modèle affûté | anonymisez en amont. Le [§ Correspondance RGPD](#gdpr) traite le corpus comme activité de traitement |
+| Données personnelles dans les sources | la PII est mémorisée par le modèle affûté | anonymisez en amont. Le [§ Correspondance RGPD](17-gdpr-durcissement.qmd#gdpr) traite le corpus comme activité de traitement |
 | Quasi-doublons | jeu gonflé, réponses apprises par cœur | bloc de déduplication ; contrôle par correspondance exacte sur questions normalisées |
 | Dérive de schéma entre runs | ré-entraînement sur des colonnes incohérentes | versionnez la recette/la config ; exportez le fichier de données et hashez-le avec la config d'entraînement |
 
@@ -95,4 +89,4 @@ Un après-midi de construction produit typiquement 1 à 3 k paires utilisables p
 :::
 
 [^ch08-collapse]: Unchecked synthetic data degrades models: Shumailov et al., *AI models collapse when trained on recursively generated data*, Nature 631, 2024. Human review of generated rows is the standard mitigation.
-[^ch08-builders]: Dataset builders named here: Unsloth Studio *Data Recipes* (unsloth.ai/docs/new/studio/data-recipe, on NVIDIA NeMo Data Designer), LLaMA-Factory dataset configs (llamafactory.readthedocs.io), Axolotl `datasets:` block (docs.axolotl.ai), all checked 2026-10-04. The last option, your own script, needs nothing but the OpenAI-compatible endpoint from [§ The local AI stack](#ecosystem).
+[^ch08-builders]: Dataset builders named here: Unsloth Studio *Data Recipes* (unsloth.ai/docs/new/studio/data-recipe, on NVIDIA NeMo Data Designer), LLaMA-Factory dataset configs (llamafactory.readthedocs.io), Axolotl `datasets:` block (docs.axolotl.ai), all checked 2026-10-04. The last option, your own script, needs nothing but the OpenAI-compatible endpoint from [§ The local AI stack](03-ecosysteme-installation.qmd#ecosystem).

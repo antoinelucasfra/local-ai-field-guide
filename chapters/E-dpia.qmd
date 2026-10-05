@@ -1,6 +1,6 @@
-::: {.en}
-## Appendix E. DPIA template for local AI {#dpia}
+# {{< meta ch-E-dpia >}} {#dpia}
 
+::: {.en}
 A data protection impact assessment (GDPR art. 35) is required when processing is likely to result in high risk: large-scale personal-data processing, or any AI-based decisions about people. Copy this template per use case. It follows the CNIL/PIA structure. Local deployment makes several answers *easy*. The template makes them *explicit*.
 
 ### 1. Processing description
@@ -45,8 +45,6 @@ A data protection impact assessment (GDPR art. 35) is required when processing i
 :::
 
 ::: {.fr}
-## Annexe E. Modèle d'AIPD pour l'IA locale {#dpia}
-
 Une analyse d'impact relative à la protection des données (RGPD art. 35) est requise lorsque le traitement est susceptible d'engendrer un risque élevé : traitement à grande échelle de données personnelles, ou décisions automatisées concernant des personnes. Copiez ce modèle par cas d'usage. Il suit la structure CNIL/PIA. Le déploiement local rend plusieurs réponses *faciles*. Le modèle les rend *explicites*.
 
 ### 1. Description du traitement

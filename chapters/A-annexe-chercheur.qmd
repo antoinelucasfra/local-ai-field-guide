@@ -1,10 +1,4 @@
-::: {.en}
-## Local AI for Your Research. A 30-Minute Primer {#primer}
-:::
-
-::: {.fr}
-## L'IA locale pour votre recherche, en 30 minutes {#primer}
-:::
+# {{< meta ch-A-annexe-chercheur >}} {#primer}
 
 
 ::: {.en}

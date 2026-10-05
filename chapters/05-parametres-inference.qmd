@@ -1,10 +1,4 @@
-::: {.en}
-## 5. Inference parameters, precisely {#params}
-:::
-
-::: {.fr}
-## 5. Les paramètres d'inférence, précisément {#params}
-:::
+# {{< meta ch-05-parametres-inference >}} {#params}
 
 ::: {.en}
 A language model generates one token at a time. At each step it outputs a probability for every token in its vocabulary; the sampling parameters decide how the software picks the next token from that distribution. Everything below reshapes that distribution, or refuses to.
