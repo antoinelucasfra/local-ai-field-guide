@@ -37,7 +37,7 @@ h3 {
 }
 
 // links: quiet sky, honest underline
-main a:not(.dl-strip a):not(#TOC a) {
+main a:not(#TOC a) {
   color: $al-sky;
   text-decoration-color: rgba(56, 189, 248, 0.4);
   text-underline-offset: 3px;
@@ -111,7 +111,7 @@ ul, ol {
   }
 }
 
-// ── Part dividers (h1.unnumbered from _order.txt PART lines) ────────────
+// ── Page title / part headings (h1.unnumbered) ──────────────────────────
 h1.unnumbered {
   font-family: "Space Grotesk", sans-serif;
   font-size: 2.1rem;
@@ -137,41 +137,6 @@ h1.unnumbered {
 h2 {
   font-family: "Space Grotesk", sans-serif;
   letter-spacing: -0.01em;
-}
-
-// ── Chapter download strip → pill buttons ───────────────────────────────
-.dl-strip {
-  margin: 2.25rem 0;
-  padding: 0.9rem 1.1rem;
-  background: rgba(56, 189, 248, 0.06);
-  border: 1px solid rgba(56, 189, 248, 0.25);
-  border-left: 3px solid $al-sky;
-  border-radius: 10px;
-  font-size: 0.92rem;
-
-  p {
-    margin-bottom: 0;
-  }
-
-  a {
-    display: inline-block;
-    margin: 0.15rem 0.35rem 0.15rem 0;
-    padding: 0.18rem 0.75rem;
-    border-radius: 999px;
-    font-family: "JetBrains Mono", monospace;
-    font-size: 0.8rem;
-    text-decoration: none;
-    color: $al-sky;
-    background: rgba(56, 189, 248, 0.12);
-    border: 1px solid rgba(56, 189, 248, 0.35);
-    transition: background 0.15s ease, transform 0.15s ease;
-
-    &:hover {
-      background: rgba(56, 189, 248, 0.22);
-      transform: translateY(-1px);
-      color: $al-sky;
-    }
-  }
 }
 
 // ── TOC: sky active marker ──────────────────────────────────────────────

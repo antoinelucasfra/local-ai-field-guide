@@ -38,7 +38,7 @@ jobs:
         if: github.event_name == 'push'
         run: |
           mkdir -p _site/en _site/fr
-          python3 tools/make_index.py --en _render/en/book.html --out _site/index.html
+          python3 tools/make_index.py --render _render/en --lang en --out _site/index.html
           cp tools/og-card.* _site/
           cp _render/en/404.html _site/404.html
           cp -r _render/en/404_files _site/404_files
@@ -46,6 +46,7 @@ jobs:
           cp -r _render/en/. _site/en/
           cp -r _render/fr/. _site/fr/
           cp -r code/ _site/code/
+          rm -rf _site/en/404.html _site/en/404_files _site/fr/404.html _site/fr/404_files
       - uses: actions/upload-pages-artifact@98ef48e41587a300b82de4cf298aa98b57b2faae # v3
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         with:

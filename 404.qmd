@@ -10,8 +10,8 @@ This page does not exist. *Cette page n'existe pas.*
 
 Start from the [table of contents](./), or jump straight to a version of the book:
 
-- **English**: [The Local AI Field Guide](en/book.html) · [PDF](en/book.pdf) · [EPUB](en/book.epub) · [Word](en/book.docx)
-- **Français** : [Le guide de terrain de l'IA locale](fr/book.html) · [PDF](fr/book.pdf) · [EPUB](fr/book.epub) · [Word](fr/book.docx)
+- **English**: [The Local AI Field Guide](en/index.html) · [PDF](en/book.pdf) · [EPUB](en/book.epub) · [Word](en/book.docx)
+- **Français** : [Le guide de terrain de l'IA locale](fr/index.html) · [PDF](fr/book.pdf) · [EPUB](fr/book.epub) · [Word](fr/book.docx)
 
 Companion code: [`code/`](code/). Found a stale link? [Open an issue](https://github.com/antoinelucasfra/local-ai-field-guide/issues).
 
