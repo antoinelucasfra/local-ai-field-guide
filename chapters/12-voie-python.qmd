@@ -1,12 +1,18 @@
 ::: {.en}
-## 12. The Python path: Unsloth Core {#core}
+## 12. Fine-tuning in Python: the QLoRA loop {#core}
 :::
 
 ::: {.fr}
-## 12. La voie Python : Unsloth Core {#core}
+## 12. Le fine-tuning en Python : la boucle QLoRA {#core}
 :::
 
-When the GUI is not enough, the same engine is scriptable:
+::: {.en}
+When the GUI is not enough, the same loop is scriptable. The listing below is **Unsloth Core**, the most widely used Python trainer. Axolotl, torchtune and LLaMA-Factory express the same five steps as a YAML config or a recipe[^ch12-trainers]:
+:::
+
+::: {.fr}
+Quand l'interface graphique ne suffit plus, la même boucle se scripte. Le listing ci-dessous est **Unsloth Core**, l'affûteur Python le plus utilisé. Axolotl, torchtune et LLaMA-Factory expriment les mêmes cinq étapes sous forme de config YAML ou de recette[^ch12-trainers] :
+:::
 
 ```python
 from unsloth import FastLanguageModel
@@ -29,28 +35,35 @@ trainer = SFTTrainer(
 )
 trainer.train()
 model.save_pretrained_gguf("gguf/", tokenizer)
+
+# the same loop, other trainers:
+#   axolotl train config.yml
+#   llamafactory-cli train args.yaml
+#   tune run lora_finetune_single_device --config llama3_2/3B_lora_single_device
 ```
 
+Any Hugging Face model works as a base; the `-bnb-4bit` suffix above just means a repository that already ships a 4-bit quantised base, so QLoRA fits in less VRAM.
+
 ::: {.en}
-CLI equivalents exist for automation: `unsloth train`, `unsloth inference`, `unsloth export`, `unsloth list-checkpoints`. Studio configs saved as YAML can be replayed headlessly — CI-friendly.
+Every trainer has a headless equivalent for automation. `unsloth train|inference|export`, `axolotl train config.yml`, `llamafactory-cli train …`, `tune run …`. The YAML a GUI saves replays as-is in CI.
 
 ### Installing {#core-install}
 
-Linux or WSL2 with a CUDA 12.x driver:
+Linux or WSL2 with a CUDA 12.x driver (Unsloth is the listing's example; the same loop installs as Axolotl, torchtune or LLaMA-Factory):
 
 ```bash
 pip install unsloth
 ```
 
-Pin the version in your project (`pip freeze | grep unsloth`) — the stack moves fast and reproducibility beats novelty. No GPU on the machine that writes the code? The same script runs unchanged on a rented GPU box; only data must be copied there, never the other way round if the corpus is sensitive.
+Pin the version in your project (`pip freeze | grep -i unsloth`). The stack moves fast and reproducibility beats novelty. No GPU on the machine that writes the code? The same script runs unchanged on a rented GPU box; only data must be copied there, never the other way round if the corpus is sensitive.
 
 ### From snippet to production run {#core-walkthrough}
 
 The listing above is the skeleton. A production run adds four things:
 
-1. **A real dataset file** — JSONL with one instruction/output pair per line, produced by [§ Data Recipes](#data) or hand-curated. Hash it and record the hash next to the config: `sha256sum internal_corpus.jsonl > corpus.sha256`.
-2. **Deliberate hyperparameters** — `r=16` is a starting point, not a decision; learning rate, epochs and rank rationale live in [§ Hyperparameters](#hyper).
-3. **Evaluation before promotion** — score pass@1 against your golden set before the adapter goes anywhere near production ([§ Evaluate](#evaluate)):
+1. **A real dataset file**. JSONL with one instruction/output pair per line, produced by [§ Building training data](#data) or hand-curated. Hash it and record the hash next to the config: `sha256sum internal_corpus.jsonl > corpus.sha256`.
+2. **Deliberate hyperparameters**. `r=16` is a starting point, not a decision; learning rate, epochs and rank rationale live in [§ Hyperparameters](#hyper).
+3. **Evaluation before promotion**. Score pass@1 against your golden set before the adapter goes anywhere near production ([§ Evaluate](#evaluate)):
 
 ```python
 FastLanguageModel.for_inference(model)
@@ -58,7 +71,7 @@ for task in load_dataset("json", data_files="golden_set.jsonl")["train"]:
     out = generate(task["instruction"])   # score against task["reference"]
 ```
 
-4. **Versioned export** — `save_pretrained_gguf` output plus the YAML config and dataset hash in one archive ([§ Export](#export)).
+4. **Versioned export**. `save_pretrained_gguf` output plus the YAML config and dataset hash in one archive ([§ Export](#export)).
 
 ### Common failures {#core-failures}
 
@@ -70,30 +83,30 @@ for task in load_dataset("json", data_files="golden_set.jsonl")["train"]:
 | Training crawls | gradient checkpointing / flash attention off | enable both; check layer offloading (`-ngl` on llama.cpp) at inference |
 
 ::: {.al-take}
-**Our take.** Stay on the Studio GUI until you retrain weekly — then the Python path pays for itself in one afternoon of automation. The moment training becomes a script, it also becomes CI: dataset hash in, evaluated adapter out, no human clicking through screens at midnight before a deadline. That last part is where sovereign AI actually gets boring — which is the compliment.
+**Our take.** Stay on a trainer GUI until you retrain weekly. Then the Python path pays for itself in one afternoon of automation. The moment training becomes a script, it also becomes CI: dataset hash in, evaluated adapter out, no human clicking through screens at midnight before a deadline. That last part is where sovereign AI actually gets boring. Which is the compliment.
 :::
 :::
 
 ::: {.fr}
-Des équivalents CLI existent pour l'automatisation : `unsloth train`, `unsloth inference`, `unsloth export`, `unsloth list-checkpoints`. Les configs YAML du Studio se rejouent en headless — idéal en CI.
+Chaque affûteur a son équivalent headless pour l'automatisation. `unsloth train|inference|export`, `axolotl train config.yml`, `llamafactory-cli train …`, `tune run …`. Le YAML sauvegardé par une interface se rejoue tel quel en CI.
 
 ### Installation {#core-install}
 
-Linux ou WSL2 avec pilote CUDA 12.x :
+Linux ou WSL2 avec pilote CUDA 12.x (Unsloth sert d'exemple ; la même boucle s'installe avec Axolotl, torchtune ou LLaMA-Factory) :
 
 ```bash
 pip install unsloth
 ```
 
-Figez la version dans votre projet (`pip freeze | grep unsloth`) — la stack avance vite et la reproductibilité bat la nouveauté. Pas de GPU sur la machine qui écrit le code ? Le même script tourne à l'identique sur un GPU loué ; seules les données y sont copiées, jamais l'inverse si le corpus est sensible.
+Figez la version dans votre projet (`pip freeze | grep -i unsloth`). La stack avance vite et la reproductibilité bat la nouveauté. Pas de GPU sur la machine qui écrit le code ? Le même script tourne à l'identique sur un GPU loué ; seules les données y sont copiées, jamais l'inverse si le corpus est sensible.
 
 ### De l'extrait au run de production {#core-walkthrough}
 
 Le listing ci-dessus est le squelette. Un run de production ajoute quatre choses :
 
-1. **Un vrai fichier de données** — JSONL avec une paire instruction/sortie par ligne, produit par [§ Data Recipes](#data) ou curé à la main. Hashez-le et consignez le hash près de la config : `sha256sum internal_corpus.jsonl > corpus.sha256`.
-2. **Des hyperparamètres choisis** — `r=16` est un point de départ, pas une décision ; taux d'apprentissage, époques et logique du rang vivent au [§ Hyperparamètres](#hyper).
-3. **Évaluation avant promotion** — scorez le pass@1 sur votre jeu de référence avant de pousser l'adaptateur vers la production ([§ Évaluer](#evaluate)) :
+1. **Un vrai fichier de données**. JSONL avec une paire instruction/sortie par ligne, produit par [§ Construire des données d'entraînement](#data) ou curé à la main. Hashez-le et consignez le hash près de la config : `sha256sum internal_corpus.jsonl > corpus.sha256`.
+2. **Des hyperparamètres choisis**. `r=16` est un point de départ, pas une décision ; taux d'apprentissage, époques et logique du rang vivent au [§ Hyperparamètres](#hyper).
+3. **Évaluation avant promotion**. Scorez le pass@1 sur votre jeu de référence avant de pousser l'adaptateur vers la production ([§ Évaluer](#evaluate)) :
 
 ```python
 FastLanguageModel.for_inference(model)
@@ -101,7 +114,7 @@ for task in load_dataset("json", data_files="golden_set.jsonl")["train"]:
     out = generate(task["instruction"])   # score contre task["reference"]
 ```
 
-4. **Export versionné** — sortie de `save_pretrained_gguf` plus la config YAML et le hash du dataset dans une même archive ([§ Export](#export)).
+4. **Export versionné**. Sortie de `save_pretrained_gguf` plus la config YAML et le hash du dataset dans une même archive ([§ Export](#export)).
 
 ### Échecs courants {#core-failures}
 
@@ -113,6 +126,8 @@ for task in load_dataset("json", data_files="golden_set.jsonl")["train"]:
 | Entraînement au ralenti | gradient checkpointing / flash attention désactivés | activez les deux ; vérifiez l'offload de couches côté inférence |
 
 ::: {.al-take}
-**Notre avis.** Restez sur l'interface du Studio tant que vous n'affûtez pas chaque semaine — ensuite la voie Python se rembourse en un après-midi d'automatisation. Dès que l'entraînement devient un script, il devient aussi du CI : hash de dataset en entrée, adaptateur évalué en sortie, plus personne ne clique dans des écrans à minuit avant une échéance. C'est là que l'IA souveraine devient vraiment ennuyeuse — et c'est un compliment.
+**Notre avis.** Restez sur l'interface graphique de votre affûteur tant que vous n'affûtez pas chaque semaine. Ensuite la voie Python se rembourse en un après-midi d'automatisation. Dès que l'entraînement devient un script, il devient aussi du CI : hash de dataset en entrée, adaptateur évalué en sortie, plus personne ne clique dans des écrans à minuit avant une échéance. C'est là que l'IA souveraine devient vraiment ennuyeuse. Et c'est un compliment.
 :::
 :::
+
+[^ch12-trainers]: Trainer equivalents, checked 2026-10-04: Axolotl CLI + YAML (docs.axolotl.ai), torchtune recipes (pytorch.org/torchtune), LLaMA-Factory CLI/WebUI (llamafactory.readthedocs.io), Unsloth (unsloth.ai/docs).

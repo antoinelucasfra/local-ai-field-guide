@@ -1,89 +1,92 @@
 ::: {.en}
-## 4. Running models: Studio Chat {#chat}
+## 4. Running models: chat interfaces {#chat}
 :::
 
 ::: {.fr}
-## 4. Exécuter des modèles : Studio Chat {#chat}
+## 4. Exécuter des modèles : interfaces de chat {#chat}
 :::
 
 ::: {.en}
-The Chat page runs models 100 % offline:
+A chat UI is the shortest path from "model on disk" to "answer I can use", and it runs 100 % offline. Your pick in [§ The local AI stack](#ecosystem) does not change the first ten minutes. LM Studio, Jan, llama.app's web UI, KoboldCpp, TextGen, Open WebUI, and the studios that also train all start the same way:
 
-1. **Select model** dropdown → search Hugging Face or pick a local file. Choose the quantisation matching your RAM/VRAM (recommended default: `UD-Q4_K_XL`).
-2. Download happens automatically; previously downloaded GGUFs (HF cache, LM Studio folders) are auto-detected.
-3. Chat. Upload images, audio, PDFs, DOCX, code files as context. Toggle thinking and web search per message.
+1. **Model picker** → search Hugging Face or pick a local file. Choose the quantisation matching your RAM/VRAM: a 4-bit quant is the usual default (`Q4_K_M` for classic GGUFs, `UD-Q4_K_XL` for Unsloth Dynamic quants, 4-bit MLX on Apple silicon).
+2. Download happens in the background; GGUFs you already have (Hugging Face cache, another app's model folder) are usually auto-detected.
+3. Chat. Most UIs accept images, audio, PDFs, DOCX and code files as context, and expose thinking and web-search toggles per message.
 
-Built-in superstructure, all optional per-message:
+What the good ones add on top, all optional per message:
 
-- **Auto inference settings**: temperature/top-p/top-k pre-tuned per model family; context managed automatically by llama.cpp smart auto-context. What those knobs actually do → [§ Inference parameters](#params).
-- **Self-healing tool calling** + **sandboxed code execution** (Bash and Python): the model can run real code to verify answers; malformed tool calls are repaired instead of crashing the turn.
-- **Web search / deep research**: private DuckDuckGo search that reads actual pages; deep research plans, searches, and produces cited reports.
-- **Model Arena**: compare base vs fine-tuned (or any two models) on the same prompt.
-- **Providers**: connect OpenAI/Anthropic/Ollama/vLLM endpoints and use them in the same interface — useful for gradual migration from cloud to local.
+- **Sane inference defaults**: temperature/top-p/top-k pre-tuned per model family, context sized automatically by the runtime. What those knobs actually do → [§ Inference parameters](#params).
+- **Tool calling and sandboxed code execution** (Bash, Python): the model can run real code to check its own answer. Some studios go further and *repair* malformed tool calls instead of ending the turn with an error[^ch04-tools].
+- **Web search / deep research**: search plus page reading, so answers cite sources. Privacy depends on the search backend. Only a private or self-hosted backend keeps "offline" true.
+- **Side-by-side comparison**: two models, one prompt, same screen (`Model Arena` in Unsloth Studio, a second chat tab or two app windows elsewhere). It is the cheapest qualitative evaluation you will ever run.
+- **Providers**: connect OpenAI/Anthropic/Ollama/vLLM endpoints in the same interface. Useful for migrating from cloud to local model by model.
 
 ### Getting good answers {#chat-quality}
 
 - **System prompt**: set role, output format and refusal boundaries once per conversation; it persists across messages and models. Save recurring ones as presets.
-- **Thinking toggle**: leave on for maths, logic and code; switch off for short factual or stylistic requests — reasoning tokens cost latency even locally.
-- **Attachments**: images and audio need a vision/voice-capable model; PDFs, DOCX and code files are parsed to text and injected into context — on a 40-page document, ask section-by-section rather than "summarise everything".
+- **Thinking toggle**: leave on for maths, logic and code; switch off for short factual or stylistic requests. Reasoning tokens cost latency even locally.
+- **Attachments**: images and audio need a vision/voice-capable model; PDFs, DOCX and code files are parsed to text and injected into context. On a 40-page document, ask section-by-section rather than "summarise everything".
 - **Web search off = sovereign mode**: toggle off, not a byte leaves the machine. This is the configuration you describe in the DPIA ([§ GDPR mapping](#gdpr)).
 
 ### Practical recipes {#chat-recipes}
 
 | Task | Setup | Tip |
 |---|---|---|
-| Summarise a long report | attach PDF, thinking on | summarise section-by-section then a global synthesis — better than one giant pass |
-| Translate with house style | paste glossary into system prompt | the model fine-tuned in [§ Data Recipes](#data) already speaks your vocabulary |
+| Summarise a long report | attach PDF, thinking on | summarise section-by-section then a global synthesis. Better than one giant pass |
+| Translate with house style | paste glossary into system prompt | the model fine-tuned from your documents ([§ Building training data](#data)) already speaks your vocabulary |
 | Review a patch | paste diff, sandbox execution on | ask it to *run* the tests, not just read them |
 | Transcribe meeting audio | attach recording + voice model | demand speaker turns and action items in one prompt |
-| Compare two candidates | Model Arena, same prompt side-by-side | fastest qualitative [evaluation](#evaluate) you can run |
+| Compare two candidates | two chats side by side, same prompt ([Unsloth Studio's Model Arena](https://unsloth.ai/docs), or two windows) | fastest qualitative [evaluation](#evaluate) you can run |
 
-**Studio chat vs API server**: Chat is for a human iterating alone; the moment an application or another team member needs the model, export it and serve it — [§ Export](#export) and [§ Team serving](#serving).
+**Chat UI vs API server**: the chat UI is for one human iterating alone; the moment an application or another team member needs the model, serve it. [§ Export](#export) and [§ Team serving](#serving).
 
 ::: {.al-take}
-**Our take.** The Chat page is the most underrated evaluation bench in the stack. Before writing any benchmark script, we spend fifteen minutes in Model Arena throwing our ugliest real prompts at the candidate — the failure modes that surface there (rambling, ignored constraints, timid hedging) predict benchmark results surprisingly well, and they are legible to non-technical stakeholders, which benchmarks never are.
+**Our take.** The chat pane is the most underrated evaluation bench in the whole stack. Before writing any benchmark script, we spend fifteen minutes throwing our ugliest real prompts at the candidate side by side with the incumbent. The failures that surface, rambling, ignored constraints, timid hedging, predict benchmark results surprisingly well, and they are legible to non-technical stakeholders, which benchmarks never are.
 :::
 :::
+
 
 ::: {.fr}
-La page Chat exécute les modèles 100 % hors ligne :
+Une interface de chat est le chemin le plus court de « modèle sur le disque » à « réponse utilisable », et elle fonctionne 100 % hors ligne. Votre choix au [§ La pile IA locale](#ecosystem) ne change rien aux dix premières minutes. LM Studio, Jan, l'interface web de llama.app, KoboldCpp, TextGen, Open WebUI et les studios qui entraînent aussi démarrent tous de la même façon :
 
-1. Menu **Select model** → recherche Hugging Face ou fichier local. Choisissez la quantification adaptée à votre RAM/VRAM (défaut recommandé : `UD-Q4_K_XL`).
-2. Téléchargement automatique ; les GGUF déjà présents (cache HF, dossiers LM Studio) sont détectés automatiquement.
-3. Discutez. Joignez images, audio, PDF, DOCX, fichiers de code. Activez thinking et recherche web par message.
+1. **Sélecteur de modèle** → recherche Hugging Face ou fichier local. Choisissez la quantification adaptée à votre RAM/VRAM : un 4-bit est le défaut habituel (`Q4_K_M` pour les GGUF classiques, `UD-Q4_K_XL` pour les quants Dynamic d'Unsloth, MLX 4-bit sur Apple Silicon).
+2. Le téléchargement se fait en arrière-plan ; les GGUF déjà présents (cache Hugging Face, dossier de modèles d'une autre application) sont en général détectés automatiquement.
+3. Discutez. La plupart des interfaces acceptent images, audio, PDF, DOCX et fichiers de code comme contexte, et exposent les bascules thinking et recherche web par message.
 
-Surcouche intégrée — tout est optionnel, à activer par message :
+Ce que les bonnes ajoutent par-dessus, toujours optionnel :
 
-- **Réglages d'inférence auto** : temperature/top-p/top-k pré-réglés par famille de modèles ; contexte géré automatiquement par le smart auto-context de llama.cpp. Ce que font réellement ces boutons → [§ Paramètres d'inférence](#params).
-- **Appels d'outils auto-réparateurs** + **exécution de code en bac à sable** (Bash et Python) : le modèle peut exécuter du vrai code pour vérifier ses réponses ; les appels mal formés sont réparés au lieu de faire planter le tour.
-- **Recherche web / recherche approfondie** : recherche privée DuckDuckGo qui lit les vraies pages ; la recherche approfondie planifie, cherche et produit des rapports sourcés.
-- **Model Arena** : comparer base vs affûté (ou deux modèles quelconques) sur le même prompt.
-- **Fournisseurs** : connectez des endpoints OpenAI/Anthropic/Ollama/vLLM dans la même interface — utile pour migrer progressivement du cloud vers le local.
+- **Des réglages d'inférence sains** : temperature/top-p/top-k pré-réglés par famille de modèles, contexte dimensionné automatiquement par le runtime. Ce que font réellement ces boutons → [§ Paramètres d'inférence](#params).
+- **Appels d'outils et exécution de code en bac à sable** (Bash, Python) : le modèle peut exécuter du vrai code pour vérifier sa réponse. Certains studios vont plus loin et *réparent* les appels d'outils mal formés au lieu de terminer le tour sur une erreur[^ch04-tools].
+- **Recherche web / recherche approfondie** : recherche et lecture des pages, pour des réponses sourcées. La confidentialité dépend du moteur de recherche utilisé. Seul un moteur privé ou auto-hébergé garde le « hors ligne » vrai.
+- **Comparaison côte à côte** : deux modèles, un prompt, le même écran (`Model Arena` dans Unsloth Studio, un second onglet ou deux fenêtres ailleurs). C'est l'évaluation qualitative la moins chère qui soit.
+- **Fournisseurs** : connectez des endpoints OpenAI/Anthropic/Ollama/vLLM dans la même interface. Utile pour migrer du cloud vers le local, modèle par modèle.
 
 ### Obtenir de bonnes réponses {#chat-quality}
 
 - **Prompt système** : rôle, format de sortie et limites définis une fois par conversation ; ils persistent d'un message et d'un modèle à l'autre. Sauvegardez les récurrents en presets.
-- **Toggle thinking** : actif pour les maths, la logique et le code ; coupé pour les demandes factuelles ou stylistiques courtes — les jetons de raisonnement coûtent de la latence, même en local.
-- **Pièces jointes** : images et audio exigent un modèle vision/voix ; PDF, DOCX et fichiers de code sont analysés en texte et injectés dans le contexte — sur un document de 40 pages, demandez section par section plutôt que « résume tout ».
+- **Toggle thinking** : actif pour les maths, la logique et le code ; coupé pour les demandes factuelles ou stylistiques courtes. Les jetons de raisonnement coûtent de la latence, même en local.
+- **Pièces jointes** : images et audio exigent un modèle vision/voix ; PDF, DOCX et fichiers de code sont analysés en texte et injectés dans le contexte. Sur un document de 40 pages, demandez section par section plutôt que « résume tout ».
 - **Recherche web coupée = mode souverain** : toggle désactivé, pas un octet ne quitte la machine. C'est la configuration à décrire dans l'AIPD ([§ Correspondance RGPD](#gdpr)).
 
 ### Recettes pratiques {#chat-recipes}
 
 | Tâche | Réglage | Astuce |
 |---|---|---|
-| Résumer un long rapport | PDF joint, thinking activé | résumez section par section puis synthèse globale — mieux qu'une seule passe géante |
-| Traduire avec votre style | collez le glossaire dans le prompt système | le modèle affûté du [§ Data Recipes](#data) connaît déjà votre vocabulaire |
+| Résumer un long rapport | PDF joint, thinking activé | résumez section par section puis synthèse globale. Mieux qu'une seule passe géante |
+| Traduire avec votre style | collez le glossaire dans le prompt système | le modèle affûté depuis vos documents ([§ Construire des données d'entraînement](#data)) connaît déjà votre vocabulaire |
 | Relire un patch | collez le diff, exécution bac à sable active | demandez-lui d'*exécuter* les tests, pas seulement de les lire |
 | Transcrire un audio de réunion | enregistrement joint + modèle voix | exigez tours de parole et actions dans un même prompt |
-| Comparer deux candidats | Model Arena, même prompt côte à côte | l'[évaluation](#evaluate) qualitative la plus rapide qui soit |
+| Comparer deux candidats | deux chats côte à côte, même prompt ([Model Arena d'Unsloth Studio](https://unsloth.ai/docs), ou deux fenêtres) | l'[évaluation](#evaluate) qualitative la plus rapide qui soit |
 
-**Chat Studio vs serveur d'API** : le Chat sert à un humain qui itère seul ; dès qu'une application ou un collègue a besoin du modèle, exportez-le et servez-le — [§ Export](#export) et [§ Service en équipe](#serving).
+**Interface de chat vs serveur d'API** : l'interface sert à un humain qui itère seul ; dès qu'une application ou un collègue a besoin du modèle, servez-le. [§ Export](#export) et [§ Service en équipe](#serving).
 
 ::: {.al-take}
-**Notre avis.** La page Chat est le banc d'évaluation le plus sous-estimé de la stack. Avant d'écrire le moindre script de benchmark, nous passons quinze minutes dans le Model Arena à envoyer nos vrais prompts les plus tordus au candidat — les modes d'échec qui y apparaissent (divagations, contraintes ignorées, prudence excessive) prédisent étonnamment bien les scores, et ils sont lisibles par des non-techniciens, ce que les benchmarks ne seront jamais.
+**Notre avis.** Le panneau de chat est le banc d'évaluation le plus sous-estimé de toute la pile. Avant d'écrire le moindre script de benchmark, nous passons quinze minutes à envoyer nos vrais prompts les plus tordus au candidat, côte à côte avec le titulaire. Les échecs qui apparaissent, divagations, contraintes ignorées, prudence excessive, prédisent étonnamment bien les scores, et ils sont lisibles par des non-techniciens, ce que les benchmarks ne seront jamais.
 :::
 :::
 
 ::: {.notes}
-Demo script: open Studio, load a Q4 model, run one prompt with web search off then on. Point out everything stays local. / Scénario de démo : ouvrir Studio, charger un modèle Q4, un prompt avec recherche web off puis on. Souligner que tout reste local.
+Demo script: open your chat UI, load a Q4 model, run one prompt with web search off then on. Point out everything stays local. / Scénario de démo : ouvrir votre interface de chat, charger un modèle Q4, un prompt avec recherche web off puis on. Souligner que tout reste local.
 :::
+
+[^ch04-tools]: Studio feature, vendor-reported: Unsloth changelog reports tool calls "+30 % to +80 % more accurate" after repair (github.com/unslothai/unsloth/releases, checked 2026-10-04). Treat the number as a vendor claim, the *mechanism* as the useful part.

@@ -8,7 +8,7 @@
 
 
 ::: {.en}
-## Strategic context: a consolidating landscape
+## Strategic context: capability is concentrating
 
 Frontier AI capability is concentrating. Artificial Analysis tracks hyperscaler AI capital expenditure in the hundreds of billions of dollars per year, and its country analysis shows frontier-intelligence production dominated by US and Chinese labs, with Europe represented mainly through open-weight releases (e.g. Mistral, France). Two consequences for a research institute:
 
@@ -17,7 +17,7 @@ Frontier AI capability is concentrating. Artificial Analysis tracks hyperscaler 
 :::
 
 ::: {.fr}
-## Contexte stratégique : un paysage qui se concentre
+## Contexte stratégique : la capacité se concentre
 
 La capacité IA de pointe se concentre. Artificial Analysis recense des dépenses en capital de plusieurs centaines de milliards de dollars par an chez les hyperscalers, et son analyse par pays montre une production d'intelligence de pointe dominée par les laboratoires américains et chinois, l'Europe étant surtout présente via les poids ouverts (ex. Mistral, France). Deux conséquences pour un institut de recherche :
 
@@ -56,7 +56,7 @@ La posture « local d'abord » est un *arbitrage* réglementaire : l'inférence 
 
 Technology without governance creates risk; governance without technology creates nothing. Institute-level instruments needed:
 
-- **Model registry**: every deployed model recorded — version hash, source, licence, quantisation, intended purpose, evaluation report. Weights are assets; treat them as such.
+- **Model registry.** Every deployed model recorded. Version hash, source, licence, quantisation, intended purpose, evaluation report. Weights are assets; treat them as such.
 - **Acceptable-use policy**: permitted data classes per deployment zone; mandatory human review for outputs affecting individuals (GDPR Art. 22); prohibition on feeding personal data into models outside approved zones.
 - **Evaluation gate**: no model enters service without passing a domain-specific test set built from real institutional tasks (the practitioner guide's "Evaluate before you trust" section defines the protocol).
 - **Incident procedure**: hallucination-caused harm, data exposure suspicion and prompt-injection abuse all route to the existing IT-security incident process.
@@ -68,10 +68,10 @@ Technology without governance creates risk; governance without technology create
 
 La technologie sans gouvernance crée du risque ; la gouvernance sans technologie ne crée rien. Instruments nécessaires au niveau de l'institut :
 
-- **Registre des modèles** : chaque modèle déployé est enregistré — hash de version, source, licence, quantification, finalité, rapport d'évaluation. Les poids sont des actifs ; traitez-les comme tels.
+- **Registre des modèles.** Chaque modèle déployé est enregistré. Hash de version, source, licence, quantification, finalité, rapport d'évaluation. Les poids sont des actifs ; traitez-les comme tels.
 - **Politique d'usage acceptable** : classes de données autorisées par zone de déploiement ; relecture humaine obligatoire pour les sorties affectant des personnes (RGPD art. 22) ; interdiction d'injecter des données personnelles dans des modèles hors zones approuvées.
 - **Porte d'évaluation** : aucun modèle n'entre en service sans réussir un jeu de tests métier construit à partir de tâches institutionnelles réelles (la section « Évaluer avant de faire confiance » du guide praticien définit le protocole).
-- **Procédure d'incident** : préjudice par hallucination, suspicion d'exposition de données, abus par injection de prompt — tout suit le processus d'incident de sécurité informatique existant.
+- **Procédure d'incident.** Préjudice par hallucination, suspicion d'exposition de données, abus par injection de prompt. Tout suit le processus d'incident de sécurité informatique existant.
 - **Plan de compétences** : une petite équipe plateforme centrale sert tous les labos ; les chercheurs reçoivent de la formation, pas des tâches d'exploitation.
 :::
 
@@ -150,17 +150,17 @@ Le risque asymétrique est clairement du côté de l'inaction.
 ::: {.en}
 ## Twelve-month roadmap
 
-1. **Q1** — Governance instruments adopted (registry, AUP, eval gate); 90-day pilot launched; platform hire identified.
-2. **Q2** — Pilot evaluated against pre-written criteria; shared server procured on go decision; first training cohort.
-3. **Q3** — Two additional labs onboarded; French-language model evaluation published internally; hybrid routing policy live.
-4. **Q4** — Board review: KPIs, incidents, cost per task; decision on domain fine-tuning programme (scenario tier).
+1. **Q1**. Governance instruments adopted (registry, AUP, eval gate); 90-day pilot launched; platform hire identified.
+2. **Q2**. Pilot evaluated against pre-written criteria; shared server procured on go decision; first training cohort.
+3. **Q3**. Two additional labs onboarded; French-language model evaluation published internally; hybrid routing policy live.
+4. **Q4**. Board review: KPIs, incidents, cost per task; decision on domain fine-tuning programme (scenario tier).
 :::
 
 ::: {.fr}
 ## Feuille de route sur douze mois
 
-1. **T1** — Instruments de gouvernance adoptés (registre, politique d'usage, porte d'évaluation) ; pilote de 90 jours lancé ; recrutement plateforme identifié.
-2. **T2** — Pilote évalué selon critères préécrits ; serveur partagé acheté en cas de go ; première cohorte formée.
-3. **T3** — Deux labos supplémentaires intégrés ; évaluation de modèles francophones publiée en interne ; politique de routage hybride active.
-4. **T4** — Revue par la direction : indicateurs, incidents, coût par tâche ; décision sur le programme d'affûtage métier (palier de scénario).
+1. **T1**. Instruments de gouvernance adoptés (registre, politique d'usage, porte d'évaluation) ; pilote de 90 jours lancé ; recrutement plateforme identifié.
+2. **T2**. Pilote évalué selon critères préécrits ; serveur partagé acheté en cas de go ; première cohorte formée.
+3. **T3**. Deux labos supplémentaires intégrés ; évaluation de modèles francophones publiée en interne ; politique de routage hybride active.
+4. **T4**. Revue par la direction : indicateurs, incidents, coût par tâche ; décision sur le programme d'affûtage métier (palier de scénario).
 :::

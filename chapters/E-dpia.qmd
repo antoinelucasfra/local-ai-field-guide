@@ -1,7 +1,7 @@
 ::: {.en}
 ## Appendix E. DPIA template for local AI {#dpia}
 
-A data protection impact assessment (GDPR art. 35) is required when processing is likely to result in high risk — large-scale personal-data processing, or any AI-based decisions about people. Copy this template per use case; it follows the CNIL/PIA structure. Local deployment makes several answers *easy* — the template makes them *explicit*.
+A data protection impact assessment (GDPR art. 35) is required when processing is likely to result in high risk: large-scale personal-data processing, or any AI-based decisions about people. Copy this template per use case. It follows the CNIL/PIA structure. Local deployment makes several answers *easy*. The template makes them *explicit*.
 
 ### 1. Processing description
 
@@ -22,7 +22,7 @@ A data protection impact assessment (GDPR art. 35) is required when processing i
 
 - Why is a language model necessary at all?
 - Why local rather than an API provider (data volume, secrecy, cost)?
-- Why this model size — could a smaller model do the job?
+- Why this model size? Could a smaller model do the job?
 - Is the data strictly necessary for the purpose?
 
 ### 4. Risks and measures
@@ -41,13 +41,13 @@ A data protection impact assessment (GDPR art. 35) is required when processing i
 - Consulted: DPO opinion, date:
 - Approved by (name/role/date):
 
-*Local-first note*: items that are nightmares with cloud APIs (data leaving the EU, sub-processors, retention you don't control) collapse into verifiable one-liners here — that is a genuine administrative advantage of the architecture this book recommends.
+*Local-first note*: items that are nightmares with cloud APIs (data leaving the EU, sub-processors, retention you don't control) collapse into verifiable one-liners here. That is a genuine administrative advantage of the architecture this book recommends.
 :::
 
 ::: {.fr}
 ## Annexe E. Modèle d'AIPD pour l'IA locale {#dpia}
 
-Une analyse d'impact relative à la protection des données (RGPD art. 35) est requise lorsque le traitement est susceptible d'engendrer un risque élevé — traitement à grande échelle de données personnelles, ou décisions automatisées concernant des personnes. Copiez ce modèle par cas d'usage ; il suit la structure CNIL/PIA. Le déploiement local rend plusieurs réponses *faciles* — le modèle les rend *explicites*.
+Une analyse d'impact relative à la protection des données (RGPD art. 35) est requise lorsque le traitement est susceptible d'engendrer un risque élevé : traitement à grande échelle de données personnelles, ou décisions automatisées concernant des personnes. Copiez ce modèle par cas d'usage. Il suit la structure CNIL/PIA. Le déploiement local rend plusieurs réponses *faciles*. Le modèle les rend *explicites*.
 
 ### 1. Description du traitement
 
@@ -68,7 +68,7 @@ Une analyse d'impact relative à la protection des données (RGPD art. 35) est r
 
 - Pourquoi un modèle de langage est-il nécessaire ?
 - Pourquoi local plutôt qu'un fournisseur d'API (volume, secret, coût) ?
-- Pourquoi cette taille de modèle — un plus petit suffirait-il ?
+- Pourquoi cette taille de modèle ? Un plus petit suffirait-il ?
 - Les données sont-elles strictement nécessaires à la finalité ?
 
 ### 4. Risques et mesures
@@ -87,5 +87,5 @@ Une analyse d'impact relative à la protection des données (RGPD art. 35) est r
 - Consulté : avis du DPO, date :
 - Validé par (nom/fonction/date) :
 
-*Note « local-first »* : les points qui sont des cauchemars avec les API cloud (données quittant l'UE, sous-traitants, conservation hors de contrôle) se réduisent ici à quelques lignes vérifiables — c'est un véritable avantage administratif de l'architecture que ce livre recommande.
+*Note « local-first »* : les points qui sont des cauchemars avec les API cloud (données quittant l'UE, sous-traitants, conservation hors de contrôle) se réduisent ici à quelques lignes vérifiables. C'est un véritable avantage administratif de l'architecture que ce livre recommande.
 :::

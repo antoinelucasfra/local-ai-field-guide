@@ -1,7 +1,7 @@
 ::: {.en}
 ## 14. Voice, vision and images {#multimodal}
 
-Text is the default; local stacks now cover ears and eyes too — all offline.
+Text is the default. Local stacks now cover ears and eyes too, all offline.
 
 ### Speech-to-text: whisper.cpp / faster-whisper
 
@@ -16,7 +16,7 @@ Text is the default; local stacks now cover ears and eyes too — all offline.
 
 ### Vision
 
-Studio Chat accepts images with vision-capable models (Qwen-VL family, Gemma vision variants) — screenshots, scanned figures, whiteboards — fully offline (Chap. 4). Practical wins: extracting tables from PDFs into CSV, describing plots, reading handwritten lab notes.
+Your chat UI accepts images with vision-capable models (Qwen-VL family, Gemma vision variants). Screenshots, scanned figures, whiteboards, fully offline (Chap. 4). Practical wins: extracting tables from PDFs into CSV, describing plots, reading handwritten lab notes.
 
 ### Image generation
 
@@ -24,28 +24,28 @@ Diffusion models run locally via **ComfyUI** or `stable-diffusion.cpp`: FLUX.2, 
 
 ### Sizing rule of thumb
 
-Each modality adds its own model and its own memory budget: Whisper large ≈ 3 GB VRAM, a vision-LLM ≈ weights + image tokens (Chap. 5 KV math applies), diffusion ≈ 6–12 GB. On one 24 GB card, serve *either* an LLM *or* heavy diffusion comfortably — not both at once. Annex D maps hardware tiers.
+Each modality adds its own model and its own memory budget: Whisper large ≈ 3 GB VRAM, a vision-LLM ≈ weights + image tokens (Chap. 5 KV math applies), diffusion ≈ 6–12 GB. On one 24 GB card, serve *either* an LLM *or* heavy diffusion comfortably. Not both at once. Annex D maps hardware tiers.
 :::
 
 ::: {.fr}
 ## 14. Voix, vision et images {#multimodal}
 
-Le texte est la valeur par défaut ; les stacks locales couvrent aussi les oreilles et les yeux — tout hors ligne.
+Le texte est la valeur par défaut. Les piles locales couvrent aussi les oreilles et les yeux, tout hors ligne.
 
 ### Reconnaissance vocale : whisper.cpp / faster-whisper
 
 - **whisper.cpp** fait tourner le Whisper d'OpenAI sur CPU (et Metal/Vulkan) : transcription en temps réel d'une réunion sur un portable.
 - **faster-whisper** (CTranslate2) va encore 2 à 4× plus vite dans les pipelines Python ; `large-v3` pour la précision, `small`/`medium` pour la vitesse.
 - Le français fonctionne bien sans réglage ; ajoutez **pyannote-audio** en local pour la diarisation (« qui a dit quoi »).
-- Pipeline type de laboratoire : enregistreur → whisper.cpp → synthèse par LLM avec points d'action → compte rendu dans votre outil de notes. Tout reste sur site — c'est précisément pour cela que le juridique vous laisse faire (chap. 17).
+- Pipeline type de laboratoire : enregistreur → whisper.cpp → synthèse par LLM avec points d'action → compte rendu dans votre outil de notes. Tout reste sur site. C'est précisément pour cela que le juridique vous laisse faire (chap. 17).
 
 ### Synthèse vocale : Piper
 
-**Piper** fournit des voix neuronales rapides et légères qui tiennent sur un Raspberry Pi. Des voix françaises existent (`fr_FR-siwis-medium`, `fr_FR-upmc-medium`). Utilisez-le pour lire les synthèses à voix haute, des assistants vocaux ou l'accessibilité. Pour des voix de studio expressives, des options lourdes (clonage type XTTS) existent — mais vérifiez consentement et éthique avant tout clonage.
+**Piper** fournit des voix neuronales rapides et légères qui tiennent sur un Raspberry Pi. Des voix françaises existent (`fr_FR-siwis-medium`, `fr_FR-upmc-medium`). Utilisez-le pour lire les synthèses à voix haute, des assistants vocaux ou l'accessibilité. Pour des voix de studio expressives, des options lourdes (clonage type XTTS) existent. Mais vérifiez consentement et éthique avant tout clonage.
 
 ### La vision
 
-Studio Chat accepte les images avec les modèles à vision (famille Qwen-VL, variantes vision de Gemma) — captures d'écran, figures scannées, tableaux blancs — entièrement hors ligne (chap. 4). Usages gagnants : extraire des tableaux de PDF vers CSV, décrire des graphiques, lire des notes de labo manuscrites.
+Votre interface de chat accepte les images avec les modèles à vision (famille Qwen-VL, variantes vision de Gemma). Captures d'écran, figures scannées, tableaux blancs, entièrement hors ligne (chap. 4). Usages gagnants : extraire des tableaux de PDF vers CSV, décrire des graphiques, lire des notes de labo manuscrites.
 
 ### La génération d'images
 
@@ -53,5 +53,5 @@ Les modèles de diffusion tournent en local via **ComfyUI** ou `stable-diffusion
 
 ### Règle de dimensionnement
 
-Chaque modalité apporte son modèle et son budget mémoire : Whisper large ≈ 3 Go de VRAM, un LLM vision ≈ poids + jetons d'image (la math KV du chap. 5 s'applique), diffusion ≈ 6–12 Go. Sur une seule carte 24 Go, servez *soit* un LLM *soit* de la diffusion lourde confortablement — pas les deux à la fois. L'annexe D mappe les paliers matériels.
+Chaque modalité apporte son modèle et son budget mémoire : Whisper large ≈ 3 Go de VRAM, un LLM vision ≈ poids + jetons d'image (la math KV du chap. 5 s'applique), diffusion ≈ 6–12 Go. Sur une seule carte 24 Go, servez *soit* un LLM *soit* de la diffusion lourde confortablement. Pas les deux à la fois. L'annexe D mappe les paliers matériels.
 :::

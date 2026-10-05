@@ -9,38 +9,38 @@
 ::: {.en}
 ### A method, not a ranking {#method}
 
-**Models are perishable; methods are not.** New state-of-the-art models — open and closed — now ship weekly, and leaderboard positions reshuffle just as fast. Every model name in this book is an *illustration from an early-2026 snapshot*, not a recommendation frozen in time. What stays valid is the selection method:
+**Models are perishable. Methods are not.** New state-of-the-art models, open and closed, now ship weekly, and leaderboard positions reshuffle just as fast. Every model name in this book is an *illustration from an early-2026 snapshot*, not a recommendation frozen in time. What stays valid is the selection method:
 
-1. **Define the use first.** Task, context size, language mix, privacy level, latency, hardware (Chap. 5) — the context decides, never the hype.
+1. **Define the use first.** Task, context size, language mix, privacy level, latency, hardware (Chap. 5). The context decides, never the hype.
 2. **Shortlist on trusted, independent sources**, checked *at decision time*:
-   - [LMArena](https://lmarena.ai) — crowdsourced blind head-to-head battles (text, webdev, vision arenas); good for perceived quality, immune to benchmark gaming;
-   - [ArtificialAnalysis.ai](https://artificialanalysis.ai) — independent composite indices (intelligence, coding agents), price/speed per band, open-vs-proprietary tracking;
-   - vendor benchmarks only as a starting hint — they select their own tests.
-3. **Validate on your own golden set** before committing (Chap. 16): 50–200 real tasks scored pass@1. This final gate is yours; no leaderboard replaces it.
+   - [LMArena](https://lmarena.ai). Crowdsourced blind head-to-head battles (text, webdev, vision arenas). Good for perceived quality, immune to benchmark gaming;
+   - [ArtificialAnalysis.ai](https://artificialanalysis.ai). Independent composite indices (intelligence, coding agents), price/speed per band, open-vs-proprietary tracking;
+   - vendor benchmarks only as a starting hint. They select their own tests.
+3. **Validate on your own golden set** before committing (Chap. 16): 50–200 real tasks scored pass@1. This final gate is yours. No leaderboard replaces it.
 4. **Re-check at every re-decision.** A model pinned in a policy document ages like milk; pin the *method* instead.
 
-Keep the list of named models in your infrastructure **short and swappable**: one small/fast, one strong generalist, one specialist if the domain demands it — behind standard interfaces (Chap. 9, 15) so swapping is a config line, not a project.
+Keep the list of named models in your infrastructure **short and swappable**: one small/fast, one strong generalist, one specialist if the domain demands it. Behind standard interfaces (Chap. 9, 15), swapping is a config line, not a project.
 :::
 
 ::: {.fr}
 ### Une méthode, pas un classement {#method}
 
-**Les modèles sont périssables ; les méthodes ne le sont pas.** De nouveaux modèles state-of-the-art — ouverts comme fermés — sortent désormais chaque semaine, et les positions se redistribuent tout aussi vite. Chaque nom de modèle dans ce livre est une *illustration d'un instantané début 2026*, pas une recommandation figée. Ce qui reste valide, c'est la méthode de sélection :
+**Les modèles sont périssables. Les méthodes, elles, ne le sont pas.** De nouveaux modèles state-of-the-art, ouverts comme fermés, sortent désormais chaque semaine, et les positions se redistribuent tout aussi vite. Chaque nom de modèle dans ce livre est une *illustration d'un instantané début 2026*, pas une recommandation figée. Ce qui reste valide, c'est la méthode de sélection :
 
-1. **Définissez d'abord l'usage.** Tâche, taille de contexte, mélange linguistique, niveau de confidentialité, latence, matériel (chap. 5) — c'est le contexte qui décide, jamais la mode.
+1. **Définissez d'abord l'usage.** Tâche, taille de contexte, mélange linguistique, niveau de confidentialité, latence, matériel (chap. 5). C'est le contexte qui décide, jamais la mode.
 2. **Présélectionnez sur des sources indépendantes de confiance**, consultées *au moment de décider* :
-   - [LMArena](https://lmarena.ai) — duels à l'aveugle arbitrés par la foule (arenas texte, webdev, vision) ; utile pour la qualité perçue, immunisé contre la triche aux benchmarks ;
-   - [ArtificialAnalysis.ai](https://artificialanalysis.ai) — indices composites indépendants (intelligence, agents de code), prix/vitesse par bande, suivi ouvert vs propriétaire ;
-   - les benchmarks des vendeurs ne servent que d'indice de départ — ils choisissent leurs propres tests.
-3. **Validez sur votre propre jeu doré** avant d'engager (chap. 16) : 50–200 tâches réelles scorées en pass@1. Cette porte finale est la vôtre ; aucun leaderboard ne la remplace.
+   - [LMArena](https://lmarena.ai). Duels à l'aveugle arbitrés par la foule (arenas texte, webdev, vision). Utile pour la qualité perçue, immunisé contre la triche aux benchmarks ;
+   - [ArtificialAnalysis.ai](https://artificialanalysis.ai). Indices composites indépendants (intelligence, agents de code), prix/vitesse par bande, suivi ouvert vs propriétaire ;
+   - les benchmarks des vendeurs ne servent que d'indice de départ. Ils choisissent leurs propres tests.
+3. **Validez sur votre propre jeu doré** avant d'engager (chap. 16) : 50–200 tâches réelles scorées en pass@1. Cette porte finale est la vôtre. Aucun leaderboard ne la remplace.
 4. **Revérifiez à chaque nouvelle décision.** Un modèle figé dans un document de politique interne vieillit mal ; épinglez la *méthode*, pas le modèle.
 
-Gardez la liste des modèles nommés dans votre infrastructure **courte et remplaçable** : un petit/rapide, un généraliste solide, un spécialiste si le domaine l'exige — derrière des interfaces standards (chap. 9, 15) pour que le remplacement tienne en une ligne de configuration, pas en un projet.
+Gardez la liste des modèles nommés dans votre infrastructure **courte et remplaçable** : un petit/rapide, un généraliste solide, un spécialiste si le domaine l'exige. Derrière des interfaces standards (chap. 9, 15), le remplacement tient en une ligne de configuration, pas en un projet.
 :::
 
 
 ::: {.en}
-Snapshot from [artificialanalysis.ai](https://artificialanalysis.ai) (early 2026, AA Intelligence Index v4.1.1 — higher is better):
+Snapshot from [artificialanalysis.ai](https://artificialanalysis.ai) (early 2026, AA Intelligence Index v4.1.1, higher is better):
 
 | Rank | Model | License | AA Index |
 |---|---|---|---|
@@ -67,13 +67,13 @@ And for agentic coding (AA Coding Agent Index v1.4, composite of DeepSWE, Termin
 | Codex + DeepSeek V4 Flash | **Open** | 0.50 |
 | Claude Code + GLM-5.2 | **Open** | 0.43 |
 
-[Reading:]{fg="#b22222"} rankings move monthly. Re-check [artificialanalysis.ai/models](https://artificialanalysis.ai/models) and [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) before committing to a model; the *method* below outlives any specific ranking.
+Rankings move monthly. Re-check [artificialanalysis.ai/models](https://artificialanalysis.ai/models) and [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) before committing to a model. The *method* below outlives any ranking.
 
-![The same snapshot seen as a map — composite intelligence vs blended API price. Open weights now cluster in the value zone: near-frontier quality at roughly an order of magnitude lower cost. Illustrative: prices are typical blended rates, indices from the tables above.](chapters/figures/fig-quality-price.svg){#fig-landscape width=100%}
+![The same snapshot seen as a map. Composite intelligence vs blended API price. Open weights now cluster in the value zone: near-frontier quality at roughly an order of magnitude lower cost. Illustrative: prices are typical blended rates, indices from the tables above.](chapters/figures/fig-quality-price.svg){#fig-landscape width=100%}
 :::
 
 ::: {.fr}
-Instantané de [artificialanalysis.ai](https://artificialanalysis.ai) (début 2026, AA Intelligence Index v4.1.1 — plus c'est haut, mieux c'est) :
+Instantané de [artificialanalysis.ai](https://artificialanalysis.ai) (début 2026, AA Intelligence Index v4.1.1, plus c'est haut, mieux c'est) :
 
 | Rang | Modèle | Licence | AA Index |
 |---|---|---|---|
@@ -100,9 +100,9 @@ Et pour le codage agentique (AA Coding Agent Index v1.4, composite de DeepSWE, T
 | Codex + DeepSeek V4 Flash | **Ouvert** | 0,50 |
 | Claude Code + GLM-5.2 | **Ouvert** | 0,43 |
 
-[Lecture :]{fg="#b22222"} les classements bougent chaque mois. Revérifiez [artificialanalysis.ai/models](https://artificialanalysis.ai/models) et [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) avant de choisir ; la *méthode* ci-dessous survit à tout classement particulier.
+Les classements bougent chaque mois. Revérifiez [artificialanalysis.ai/models](https://artificialanalysis.ai/models) et [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) avant de choisir. La *méthode* ci-dessous survit à tout classement.
 
-![Le même instantané vu en carte — intelligence composite vs prix API moyen. Les poids ouverts se regroupent dans la zone du rapport qualité/prix : qualité proche du front pour un coût environ dix fois moindre. Illustratif : tarifs moyens typiques, indices issus des tableaux ci-dessus.](chapters/figures/fig-quality-price.svg){#fig-landscape-fr width=100%}
+![Le même instantané vu en carte. Intelligence composite vs prix API moyen. Les poids ouverts se regroupent dans la zone du rapport qualité/prix : qualité proche du front pour un coût environ dix fois moindre. Illustratif : tarifs moyens typiques, indices issus des tableaux ci-dessus.](chapters/figures/fig-quality-price.svg){#fig-landscape-fr width=100%}
 :::
 
 ::: {.en}
@@ -114,7 +114,7 @@ Et pour le codage agentique (AA Coding Agent Index v1.4, composite de DeepSWE, T
 :::
 
 ::: {.en}
-Illustrative pairings **as of the early-2026 snapshot** — treat the *shape* of each answer (size class, capability, hardware) as durable, the names as replaceable: cross live rankings with day-zero Unsloth support and your actual hardware (4-bit sizes below):
+Illustrative pairings **from the early-2026 snapshot**. Treat the *shape* of each answer (size class, capability, hardware) as durable and the names as replaceable. Cross live rankings with day-zero GGUF support in your runtime and your actual hardware (4-bit sizes below):
 
 | Use case | Recommended open models | Why | Hardware (inference, 4-bit) |
 |---|---|---|---|
@@ -123,25 +123,25 @@ Illustrative pairings **as of the early-2026 snapshot** — treat the *shape* of
 | General-purpose departmental assistant | Qwen3.8 27B, Gemma 4, Muse Glimmer 30B | Balanced quality/speed, good multilingual (French included) | 1× 24 GB GPU |
 | High-volume / edge / laptop | Qwen3.5 4B class, small Gemma | Sub-second latency, tiny footprint | CPU or 8 GB GPU |
 | Documents & RAG-heavy workflows | Long-context Qwen/GLM variants + embedding models | Large context windows now exceed 100k tokens at the median (AA architecture trends) | 24 GB GPU |
-| Vision (image understanding) | Gemma / Qwen vision variants | Multimodal fine-tuning supported by Unsloth | 16–24 GB GPU |
-| Image/video generation | FLUX, Z-Image, LTX, Wan, MiniMax-H3 | Runnable and LoRA-trainable in Unsloth Studio | 16–24 GB GPU |
-| Voice | TTS/STT models supported by Unsloth | Fine-tunable voices, on-prem | 8–16 GB GPU |
+| Vision (image understanding) | Gemma / Qwen vision variants | Multimodal fine-tuning (Unsloth, LLaMA-Factory) | 16–24 GB GPU |
+| Image/video generation | FLUX, Z-Image, LTX, Wan, MiniMax-H3 | Runnable locally; LoRA training via the diffusers/kohya toolchain | 16–24 GB GPU |
+| Voice | TTS/STT models (Whisper and similar) | Runnable locally; voices fine-tunable on-prem | 8–16 GB GPU |
 | French/EU preference | Mistral open models | EU lab, permissive licenses, strong French | Size-dependent |
 
 Rules of thumb:
 
-- **Prefer recent MoE "AxB" models** (e.g. 26B-A4B: 26B total, ~4B active) — frontier-adjacent quality at small-model speed.
+- **Prefer recent MoE "AxB" models** (e.g. 26B-A4B: 26B total, ~4B active). Frontier-adjacent quality at small-model speed.
 - **Instruct over base** for fine-tuning: chat templates work out of the box, less data needed.
-- **Quantisation naming**: `unsloth/…-UD-Q4_K_XL` GGUFs are Unsloth *Dynamic* quants — they recover most accuracy lost to standard 4-bit; prefer them over plain Q4.
+- **Quantisation naming**: `UD-Q4_K_XL` (Unsloth *Dynamic*) recovers most of the accuracy a plain 4-bit quant loses; other runtimes ship their own 4-bit variants (MLX 4-bit, `IQ4_XS`). Compare on your golden set, not on the label.
 - **Train in the precision you serve**: 4-bit serving pairs with QLoRA 4-bit training.
 
 ::: {.al-take}
-**Our take.** We stopped chasing the top of the rankings months ago: the crown changes hands weekly and re-plumbing a fleet costs more than the two index points gained. In practice we standardise on one 24-GB-class workhorse per year, run Chapter 16 evals on our own tasks, and only revisit when those numbers — not AA's — say so. Boring, cheap, and it has never let us down.
+**Our take.** We stopped chasing the top of the rankings months ago: the crown changes hands weekly and re-plumbing a fleet costs more than the two index points gained. In practice we standardise on one 24-GB-class workhorse per year, run Chapter 16 evals on our own tasks, and only revisit when those numbers, not AA's, say so. Boring, cheap, and it has never let us down.
 :::
 :::
 
 ::: {.fr}
-Associations illustratives **à l'instantané début 2026** — traitez la *forme* de chaque réponse (classe de taille, capacité, matériel) comme durable et les noms comme remplaçables : croisez les classements vivants avec le support day-zero d'Unsloth et votre matériel réel (tailles 4-bit ci-dessous) :
+Associations illustratives, **instantané début 2026**. Traitez la *forme* de chaque réponse (classe de taille, capacité, matériel) comme durable et les noms comme remplaçables. Croisez les classements vivants avec le support GGUF day-zero de votre runtime et votre matériel réel (tailles 4-bit ci-dessous) :
 
 | Cas d'usage | Modèles ouverts recommandés | Pourquoi | Matériel (inférence, 4-bit) |
 |---|---|---|---|
@@ -150,23 +150,23 @@ Associations illustratives **à l'instantané début 2026** — traitez la *form
 | Assistant départemental polyvalent | Qwen3.8 27B, Gemma 4, Muse Glimmer 30B | Équilibre qualité/vitesse, bon multilingue (français inclus) | 1 GPU 24 Go |
 | Fort volume / edge / portable | Qwen3.5 4B et petits Gemma | Latence sub-seconde, empreinte minime | CPU ou GPU 8 Go |
 | Documents & workflows RAG | Variantes long-contexte Qwen/GLM + modèles d'embeddings | Fenêtres de contexte désormais >100k tokens en médiane (tendances AA) | GPU 24 Go |
-| Vision (compréhension d'image) | Gemma / Qwen vision | Fine-tuning multimodal pris en charge par Unsloth | GPU 16–24 Go |
-| Génération image/vidéo | FLUX, Z-Image, LTX, Wan, MiniMax-H3 | Exécutables et entraînables en LoRA dans Unsloth Studio | GPU 16–24 Go |
-| Voix | Modèles TTS/STT pris en charge par Unsloth | Voix affûtables, sur site | GPU 8–16 Go |
+| Vision (compréhension d'image) | Gemma / Qwen vision | Fine-tuning multimodal (Unsloth, LLaMA-Factory) | GPU 16–24 Go |
+| Génération image/vidéo | FLUX, Z-Image, LTX, Wan, MiniMax-H3 | Exécutables localement ; LoRA via la chaîne diffusers/kohya | GPU 16–24 Go |
+| Voix | Modèles TTS/STT (Whisper et similaires) | Exécutables localement ; voix affûtables sur site | GPU 8–16 Go |
 | Préférence française/UE | Modèles ouverts Mistral | Laboratoire UE, licences permissives, excellent français | Selon taille |
 
 Règles pratiques :
 
-- **Privilégier les MoE récents « AxB »** (ex. 26B-A4B : 26B au total, ~4B actifs) — qualité proche du front à vitesse de petit modèle.
+- **Privilégier les MoE récents « AxB »** (ex. 26B-A4B : 26B au total, ~4B actifs). Qualité proche du front à vitesse de petit modèle.
 - **Instruct plutôt que base** pour le fine-tuning : templates de chat prêts à l'emploi, moins de données nécessaires.
-- **Nomenclature de quantification** : les GGUF `unsloth/…-UD-Q4_K_XL` sont les quants *Dynamic* d'Unsloth — ils récupèrent l'essentiel de la précision perdue par un 4-bit standard ; préférez-les.
+- **Nomenclature de quantification** : `UD-Q4_K_XL` (*Dynamic*, Unsloth) récupère l'essentiel de la précision qu'un 4-bit standard perd ; les autres runtimes publient leurs variantes 4-bit (MLX 4-bit, `IQ4_XS`). Comparez sur votre jeu de référence, pas sur l'étiquette.
 - **Entraînez dans la précision servie** : un service en 4-bit s'apparie à un entraînement QLoRA 4-bit.
 
 ::: {.al-take}
-**Notre avis.** Nous avons cessé de courir après la tête des classements depuis des mois : la couronne change de main chaque semaine et refondre toute une flotte coûte plus cher que les deux points d'indice gagnés. En pratique, nous standardisons un cheval de trait par an (classe 24 Go), passons les évals du chapitre 16 sur nos propres tâches, et nous ne revoyons notre copie que lorsque ces chiffres — pas ceux d'AA — l'exigent. Ennuyeux, peu coûteux, et jamais pris en défaut.
+**Notre avis.** Nous avons cessé de courir après la tête des classements depuis des mois : la couronne change de main chaque semaine et refondre toute une flotte coûte plus cher que les deux points d'indice gagnés. En pratique, nous standardisons un cheval de trait par an (classe 24 Go), passons les évals du chapitre 16 sur nos propres tâches, et nous ne revoyons notre copie que lorsque ces chiffres, pas ceux d'AA, l'exigent. Ennuyeux, peu coûteux, et jamais pris en défaut.
 :::
 :::
 
 ::: {.notes}
-Have the audience read the tables themselves: ask 'which model would YOU pick for a 16 GB laptop?' Tables are snapshots — teach the method, not the ranking. / Faites lire les tableaux par la salle : « quel modèle choisiriez-vous pour un portable 16 Go ? ». Les tableaux sont des instantanés — enseignez la méthode, pas le classement.
+Have the audience read the tables themselves: ask 'which model would YOU pick for a 16 GB laptop?' Tables are snapshots. Teach the method, not the ranking. / Faites lire les tableaux par la salle : « quel modèle choisiriez-vous pour un portable 16 Go ? ». Les tableaux sont des instantanés. Enseignez la méthode, pas le classement.
 :::

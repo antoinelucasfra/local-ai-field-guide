@@ -7,14 +7,16 @@
 :::
 
 ::: {.en}
-- Unsloth documentation: [studio overview](https://unsloth.ai/docs/new/studio), [getting started](https://unsloth.ai/docs/new/studio/start), [installation](https://unsloth.ai/docs/new/studio/install), [chat](https://unsloth.ai/docs/new/studio/chat), [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe), [export](https://unsloth.ai/docs/new/studio/export), [API endpoint](https://unsloth.ai/docs/basics/api), [Claude Code](https://unsloth.ai/docs/basics/claude-code), [Codex](https://unsloth.ai/docs/basics/codex), [fine-tuning guide](https://unsloth.ai/docs/get-started/fine-tuning-llms-guide), [Desktop](https://unsloth.ai/docs/desktop)
-- LMArena: [leaderboard](https://lmarena.ai) (crowdsourced blind battles: text, webdev, vision) — consult at decision time
+- Local-stack documentation, one page per tool (all checked 2026-10-04): [llama.app](https://llama.app/docs/introduction), [llama.cpp](https://github.com/ggml-org/llama.cpp), [Ollama](https://ollama.com/docs), [LM Studio](https://lmstudio.ai/docs), [Jan](https://jan.ai/docs), [KoboldCpp](https://github.com/LostRuins/koboldcpp), [TextGen](https://github.com/oobabooga/text-generation-webui), [Open WebUI](https://docs.openwebui.com), [LLaMA-Factory](https://llamafactory.readthedocs.io), [Axolotl](https://docs.axolotl.ai), [torchtune](https://pytorch.org/torchtune), [mlx-lm](https://github.com/ml-explore/mlx-lm), [vLLM](https://docs.vllm.ai), [SGLang](https://github.com/sgl-project/sglang).
+- Unsloth documentation (one trainer among the above): [studio overview](https://unsloth.ai/docs/new/studio), [getting started](https://unsloth.ai/docs/new/studio/start), [installation](https://unsloth.ai/docs/new/studio/install), [chat](https://unsloth.ai/docs/new/studio/chat), [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe), [export](https://unsloth.ai/docs/new/studio/export), [API endpoint](https://unsloth.ai/docs/basics/api), [Claude Code](https://unsloth.ai/docs/basics/claude-code), [Codex](https://unsloth.ai/docs/basics/codex), [fine-tuning guide](https://unsloth.ai/docs/get-started/fine-tuning-llms-guide), [Desktop](https://unsloth.ai/docs/desktop)
+- LMArena: [leaderboard](https://lmarena.ai) (crowdsourced blind battles: text, webdev, vision). Consult at decision time.
 - Artificial Analysis: [models leaderboard](https://artificialanalysis.ai/models), [coding agents](https://artificialanalysis.ai/agents/coding-agents), [AI trends](https://artificialanalysis.ai/trends) (Intelligence Index v4.1.1, Coding Agent Index v1.4; snapshot early 2026)
 :::
 
 ::: {.fr}
-- Documentation Unsloth : [présentation Studio](https://unsloth.ai/docs/new/studio), [prise en main](https://unsloth.ai/docs/new/studio/start), [installation](https://unsloth.ai/docs/new/studio/install), [chat](https://unsloth.ai/docs/new/studio/chat), [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe), [export](https://unsloth.ai/docs/new/studio/export), [endpoint API](https://unsloth.ai/docs/basics/api), [Claude Code](https://unsloth.ai/docs/basics/claude-code), [Codex](https://unsloth.ai/docs/basics/codex), [guide de fine-tuning](https://unsloth.ai/docs/get-started/fine-tuning-llms-guide), [Desktop](https://unsloth.ai/docs/desktop)
-- LMArena : [classement](https://lmarena.ai) (duels à l'aveugle arbitrés par la foule : texte, webdev, vision) — à consulter au moment de décider
+- Documentation de la pile locale, une page par outil (vérifiée le 2026-10-04) : [llama.app](https://llama.app/docs/introduction), [llama.cpp](https://github.com/ggml-org/llama.cpp), [Ollama](https://ollama.com/docs), [LM Studio](https://lmstudio.ai/docs), [Jan](https://jan.ai/docs), [KoboldCpp](https://github.com/LostRuins/koboldcpp), [TextGen](https://github.com/oobabooga/text-generation-webui), [Open WebUI](https://docs.openwebui.com), [LLaMA-Factory](https://llamafactory.readthedocs.io), [Axolotl](https://docs.axolotl.ai), [torchtune](https://pytorch.org/torchtune), [mlx-lm](https://github.com/ml-explore/mlx-lm), [vLLM](https://docs.vllm.ai), [SGLang](https://github.com/sgl-project/sglang).
+- Documentation Unsloth (un affûteur parmi les précédents) : [présentation Studio](https://unsloth.ai/docs/new/studio), [prise en main](https://unsloth.ai/docs/new/studio/start), [installation](https://unsloth.ai/docs/new/studio/install), [chat](https://unsloth.ai/docs/new/studio/chat), [Data Recipes](https://unsloth.ai/docs/new/studio/data-recipe), [export](https://unsloth.ai/docs/new/studio/export), [endpoint API](https://unsloth.ai/docs/basics/api), [Claude Code](https://unsloth.ai/docs/basics/claude-code), [Codex](https://unsloth.ai/docs/basics/codex), [guide de fine-tuning](https://unsloth.ai/docs/get-started/fine-tuning-llms-guide), [Desktop](https://unsloth.ai/docs/desktop)
+- LMArena : [classement](https://lmarena.ai) (duels à l'aveugle arbitrés par la foule : texte, webdev, vision). À consulter au moment de décider.
 - Artificial Analysis : [classement des modèles](https://artificialanalysis.ai/models), [agents de code](https://artificialanalysis.ai/agents/coding-agents), [tendances IA](https://artificialanalysis.ai/trends) (Intelligence Index v4.1.1, Coding Agent Index v1.4 ; instantané début 2026)
 :::
 
@@ -29,37 +31,37 @@
 ::: {.en}
 Peer-reviewed papers and primary technical sources backing the quantitative claims in this book (footnotes in chapters give context):
 
-- **LoRA** — Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models*, 2021 ([arXiv:2106.09685](https://arxiv.org/abs/2106.09685))
-- **QLoRA** — Dettmers, Pagnoni, Holtzman, Zettlemoyer, *QLoRA: Efficient Finetuning of Quantized LLMs*, NeurIPS 2023 ([arXiv:2305.14314](https://arxiv.org/abs/2305.14314))
-- **8-bit optimizers** — Dettmers et al., *8-bit Optimizers via Block-wise Quantization*, ICLR 2022 ([arXiv:2110.02861](https://arxiv.org/abs/2110.02861))
-- **Grouped-Query Attention** — Ainslie et al., 2023 ([arXiv:2305.13245](https://arxiv.org/abs/2305.13245))
-- **Inference memory/bandwidth analysis** — Kim et al., *Full Stack Optimization of Transformer Inference*, 2023 ([arXiv:2303.14005](https://arxiv.org/abs/2303.14005)); Sheng et al., *FlexGen*, 2023 ([arXiv:2303.06965](https://arxiv.org/abs/2303.06965))
-- **RAG** — Lewis et al., NeurIPS 2020 ([arXiv:2005.11401](https://arxiv.org/abs/2005.11401)); dense retrieval: Karpukhin et al., EMNLP 2020 ([arXiv:2004.04906](https://arxiv.org/abs/2004.04906))
-- **Multilingual embeddings** — Chen et al., *BGE M3-Embedding*, 2024 ([arXiv:2402.03216](https://arxiv.org/abs/2402.03216))
-- **LLM-as-judge** — Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023 ([arXiv:2306.05685](https://arxiv.org/abs/2306.05685))
-- **Synthetic-data degradation** — Shumailov et al., *AI models collapse when trained on recursively generated data*, Nature 631, 2024
-- **Random seeds** — Picard, *"torch.manual_seed(3407) is all you need"*, 2021 ([arXiv:2109.08203](https://arxiv.org/abs/2109.08203))
-- **GGUF quantisation sizes/perplexity** — llama.cpp quantization reference ([tools/quantize/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md)); k-quants: [PR #1684](https://github.com/ggml-org/llama.cpp/pull/1684)
-- **GDPR** — Regulation (EU) 2016/679, official text ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2016/679/oj)), in particular Art. 22 (automated decisions) and Art. 28 (processors)
-- **Unsloth performance figures** — vendor benchmarks from the [Unsloth repository](https://github.com/unslothai/unsloth) and [blog/changelog](https://unsloth.ai/blog); per-model results vary (1.5×–3×)
+- **LoRA**. Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models*, 2021 ([arXiv:2106.09685](https://arxiv.org/abs/2106.09685))
+- **QLoRA**. Dettmers, Pagnoni, Holtzman, Zettlemoyer, *QLoRA: Efficient Finetuning of Quantized LLMs*, NeurIPS 2023 ([arXiv:2305.14314](https://arxiv.org/abs/2305.14314))
+- **8-bit optimizers**. Dettmers et al., *8-bit Optimizers via Block-wise Quantization*, ICLR 2022 ([arXiv:2110.02861](https://arxiv.org/abs/2110.02861))
+- **Grouped-Query Attention**. Ainslie et al., 2023 ([arXiv:2305.13245](https://arxiv.org/abs/2305.13245))
+- **Inference memory/bandwidth analysis**. Kim et al., *Full Stack Optimization of Transformer Inference*, 2023 ([arXiv:2303.14005](https://arxiv.org/abs/2303.14005)); Sheng et al., *FlexGen*, 2023 ([arXiv:2303.06965](https://arxiv.org/abs/2303.06965))
+- **RAG**. Lewis et al., NeurIPS 2020 ([arXiv:2005.11401](https://arxiv.org/abs/2005.11401)); dense retrieval: Karpukhin et al., EMNLP 2020 ([arXiv:2004.04906](https://arxiv.org/abs/2004.04906))
+- **Multilingual embeddings**. Chen et al., *BGE M3-Embedding*, 2024 ([arXiv:2402.03216](https://arxiv.org/abs/2402.03216))
+- **LLM-as-judge**. Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023 ([arXiv:2306.05685](https://arxiv.org/abs/2306.05685))
+- **Synthetic-data degradation**. Shumailov et al., *AI models collapse when trained on recursively generated data*, Nature 631, 2024
+- **Random seeds**. Picard, *"torch.manual_seed(3407) is all you need"*, 2021 ([arXiv:2109.08203](https://arxiv.org/abs/2109.08203))
+- **GGUF quantisation sizes/perplexity**. Llama.cpp quantization reference ([tools/quantize/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md)); k-quants: [PR #1684](https://github.com/ggml-org/llama.cpp/pull/1684)
+- **GDPR**. Regulation (EU) 2016/679, official text ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2016/679/oj)), in particular Art. 22 (automated decisions) and Art. 28 (processors)
+- **Unsloth performance figures**. Vendor benchmarks from the [Unsloth repository](https://github.com/unslothai/unsloth) and [blog/changelog](https://unsloth.ai/blog); per-model results vary (1.5×–3×)
 :::
 
 ::: {.fr}
 Articles évalués par les pairs et sources techniques primaires qui étayent les affirmations chiffrées de ce livre (les notes de bas de page des chapitres donnent le contexte) :
 
-- **LoRA** — Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models*, 2021 ([arXiv:2106.09685](https://arxiv.org/abs/2106.09685))
-- **QLoRA** — Dettmers, Pagnoni, Holtzman, Zettlemoyer, *QLoRA: Efficient Finetuning of Quantized LLMs*, NeurIPS 2023 ([arXiv:2305.14314](https://arxiv.org/abs/2305.14314))
-- **Optimiseurs 8 bits** — Dettmers et al., *8-bit Optimizers via Block-wise Quantization*, ICLR 2022 ([arXiv:2110.02861](https://arxiv.org/abs/2110.02861))
-- **Grouped-Query Attention** — Ainslie et al., 2023 ([arXiv:2305.13245](https://arxiv.org/abs/2305.13245))
-- **Analyse mémoire/bande passante en inférence** — Kim et al., *Full Stack Optimization of Transformer Inference*, 2023 ([arXiv:2303.14005](https://arxiv.org/abs/2303.14005)) ; Sheng et al., *FlexGen*, 2023 ([arXiv:2303.06965](https://arxiv.org/abs/2303.06965))
-- **RAG** — Lewis et al., NeurIPS 2020 ([arXiv:2005.11401](https://arxiv.org/abs/2005.11401)); récupération dense : Karpukhin et al., EMNLP 2020 ([arXiv:2004.04906](https://arxiv.org/abs/2004.04906))
-- **Embeddings multilingues** — Chen et al., *BGE M3-Embedding*, 2024 ([arXiv:2402.03216](https://arxiv.org/abs/2402.03216))
-- **LLM comme juge** — Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023 ([arXiv:2306.05685](https://arxiv.org/abs/2306.05685))
-- **Dégradation des données synthétiques** — Shumailov et al., *AI models collapse when trained on recursively generated data*, Nature 631, 2024
-- **Graines aléatoires** — Picard, *"torch.manual_seed(3407) is all you need"*, 2021 ([arXiv:2109.08203](https://arxiv.org/abs/2109.08203))
-- **Tailles/perplexité des quants GGUF** — référence de quantification llama.cpp ([tools/quantize/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md)) ; k-quants : [PR #1684](https://github.com/ggml-org/llama.cpp/pull/1684)
-- **RGPD** — Règlement (UE) 2016/679, texte officiel ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2016/679/oj)), notamment art. 22 (décisions automatisées) et art. 28 (sous-traitants)
-- **Chiffres de performance Unsloth** — benchmarks constructeur du [dépôt Unsloth](https://github.com/unslothai/unsloth) et du [blog/journal des versions](https://unsloth.ai/blog) ; résultats variables selon les modèles (1,5×–3×)
+- **LoRA**. Hu et al., *LoRA: Low-Rank Adaptation of Large Language Models*, 2021 ([arXiv:2106.09685](https://arxiv.org/abs/2106.09685))
+- **QLoRA**. Dettmers, Pagnoni, Holtzman, Zettlemoyer, *QLoRA: Efficient Finetuning of Quantized LLMs*, NeurIPS 2023 ([arXiv:2305.14314](https://arxiv.org/abs/2305.14314))
+- **Optimiseurs 8 bits**. Dettmers et al., *8-bit Optimizers via Block-wise Quantization*, ICLR 2022 ([arXiv:2110.02861](https://arxiv.org/abs/2110.02861))
+- **Grouped-Query Attention**. Ainslie et al., 2023 ([arXiv:2305.13245](https://arxiv.org/abs/2305.13245))
+- **Analyse mémoire/bande passante en inférence**. Kim et al., *Full Stack Optimization of Transformer Inference*, 2023 ([arXiv:2303.14005](https://arxiv.org/abs/2303.14005)) ; Sheng et al., *FlexGen*, 2023 ([arXiv:2303.06965](https://arxiv.org/abs/2303.06965))
+- **RAG**. Lewis et al., NeurIPS 2020 ([arXiv:2005.11401](https://arxiv.org/abs/2005.11401)); récupération dense : Karpukhin et al., EMNLP 2020 ([arXiv:2004.04906](https://arxiv.org/abs/2004.04906))
+- **Embeddings multilingues**. Chen et al., *BGE M3-Embedding*, 2024 ([arXiv:2402.03216](https://arxiv.org/abs/2402.03216))
+- **LLM comme juge**. Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023 ([arXiv:2306.05685](https://arxiv.org/abs/2306.05685))
+- **Dégradation des données synthétiques**. Shumailov et al., *AI models collapse when trained on recursively generated data*, Nature 631, 2024
+- **Graines aléatoires**. Picard, *"torch.manual_seed(3407) is all you need"*, 2021 ([arXiv:2109.08203](https://arxiv.org/abs/2109.08203))
+- **Tailles/perplexité des quants GGUF**. Référence de quantification llama.cpp ([tools/quantize/README.md](https://github.com/ggml-org/llama.cpp/blob/master/tools/quantize/README.md)) ; k-quants : [PR #1684](https://github.com/ggml-org/llama.cpp/pull/1684)
+- **RGPD**. Règlement (UE) 2016/679, texte officiel ([EUR-Lex](https://eur-lex.europa.eu/eli/reg/2016/679/oj)), notamment art. 22 (décisions automatisées) et art. 28 (sous-traitants)
+- **Chiffres de performance Unsloth**. Benchmarks constructeur du [dépôt Unsloth](https://github.com/unslothai/unsloth) et du [blog/journal des versions](https://unsloth.ai/blog) ; résultats variables selon les modèles (1,5×–3×)
 :::
 
 ::: {.en}
@@ -74,16 +76,16 @@ Articles évalués par les pairs et sources techniques primaires qui étayent le
 - Model leadership shifts **weekly**: every ranking here is a dated snapshot of a moving field. Before any decision, re-check live sources (artificialanalysis.ai, lmarena.ai) and apply the selection method of Chapter 2 — adapted to your use case and context, validated on your own golden set.
 - Same for harness+model pairs in coding agents: benchmark the pair you plan to run on your own tasks rather than trusting any published table.
 - A fine-tuned mid-size model is near-SOTA **on its domain**, not a frontier generalist; route hard general questions accordingly.
-- Hallucinations remain possible — keep a human in the loop for decisions affecting individuals (Art. 22 restricts fully automated decisions).
+- Hallucinations remain possible. Keep a human in the loop for decisions affecting individuals (Art. 22 restricts fully automated decisions).
 - Quantisation (4-bit) still costs some accuracy; benchmark UD quants vs higher precision before choosing.
-- Studio is beta: features and defaults evolve quickly; pin versions in production.
+- The GUI layer moves fast (several studios are beta): pin versions in production, and expect menu names to differ between tools.
 :::
 
 ::: {.fr}
-- Le leadership des modèles évolue **chaque semaine** : chaque classement ici est l'instantané daté d'un domaine mouvant. Avant toute décision, revérifiez les classements en ligne (artificialanalysis.ai, lmarena.ai) et appliquez la méthode de sélection du chapitre 2 — adaptée à votre usage et à votre contexte, validée sur votre propre jeu doré.
+- Le leadership des modèles évolue **chaque semaine** : chaque classement ici est l'instantané daté d'un domaine mouvant. Avant toute décision, revérifiez les classements en ligne (artificialanalysis.ai, lmarena.ai) et appliquez la méthode de sélection du chapitre 2. Adaptée à votre usage et à votre contexte, validée sur votre propre jeu doré.
 - Même chose pour les paires harnais+modèle des agents de code : benchmarkez la paire que vous comptez exécuter sur vos propres tâches plutôt que de faire confiance à un tableau publié.
 - Un modèle intermédiaire affûté est quasi-SOTA **sur son domaine**, pas un généraliste de pointe ; redirigez les questions générales difficiles vers un modèle de pointe.
-- Les hallucinations restent possibles — gardez un humain dans la boucle pour les décisions affectant des personnes (l'art. 22 encadre les décisions entièrement automatisées).
+- Les hallucinations restent possibles. Gardez un humain dans la boucle pour les décisions affectant des personnes (l'art. 22 encadre les décisions entièrement automatisées).
 - La quantification (4-bit) coûte encore un peu de précision ; benchmarkez les quants UD vs précisions supérieures avant de choisir.
-- Le Studio est en bêta : fonctionnalités et réglages par défaut évoluent vite ; figez les versions en production.
+- La couche graphique évolue vite (plusieurs studios sont en bêta) : figez les versions en production, et attendez-vous à des noms de menus différents d'un outil à l'autre.
 :::
