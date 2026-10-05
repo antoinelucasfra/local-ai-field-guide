@@ -14,3 +14,6 @@ _render/
 /404_files/
 code/.ruff_cache/
 __pycache__/
+
+# generated chapter files (tools/build_book.py writes one per book render)
+/chapters/*.qmd
