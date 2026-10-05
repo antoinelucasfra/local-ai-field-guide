@@ -53,7 +53,6 @@
 
   /* ── sidebar: chapters as collapsible groups ─────────────────── */
   #TOC {
-    font-size: 0.86rem;
     border-left: none;
     padding-left: 0;
   }
@@ -263,8 +262,6 @@
       } else if (cur) {
         curList.appendChild(link(a).firstChild);
         hadChild = true;
-      } else if (lv === 2) {
-        out.appendChild(link(a)); // childless chapter shown flat
       } else {
         out.appendChild(link(a)); // front matter before first chapter
       }

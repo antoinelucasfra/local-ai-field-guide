@@ -54,5 +54,6 @@ project:
     - .chh-D-materiel.qmd
     - .ch-E-dpia.qmd
     - .chh-E-dpia.qmd
+    - 404.qmd
 profile:
   default: [en]

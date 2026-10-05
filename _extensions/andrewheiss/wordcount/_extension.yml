@@ -17,7 +17,9 @@ contributes:
       # Local patch: wordcount.lua is NOT declared here. Quarto expands shortcodes
       # AFTER pre-quarto filters and never fires extension-contributed post-quarto
       # filters, so declaring it either way breaks {{< words-* >}}. It is wired
-      # directly at post-quarto by tools/build_book.py instead.
+      # directly at post-quarto by tools/build_book.py instead. Its Pandoc filter
+      # must keep a FLAT block list (see .content note in wordcount.lua) or the
+      # Quarto html sidebar TOC renders empty.
       citeproc: false
     html: default
     pdf: default

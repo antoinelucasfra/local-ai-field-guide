@@ -38,7 +38,9 @@ jobs:
         if: github.event_name == 'push'
         run: |
           mkdir -p _site/en _site/fr
-          cp tools/index.html _site/index.html
+          python3 tools/make_index.py --en _render/en/book.html --out _site/index.html
+          cp tools/og-card.* _site/
+          cp _render/en/404.html _site/404.html
           touch _site/.nojekyll
           cp -r _render/en/. _site/en/
           cp -r _render/fr/. _site/fr/
@@ -83,10 +85,10 @@ jobs:
           V="${GITHUB_REF_NAME}"
           cd _site
           for L in en fr; do
-            zip -q "../localai-book-$V-$L.zip" "$L/book.pdf" "$L/book.epub" "$L/book.docx"
+            zip -q "../local-ai-field-guide-book-$V-$L.zip" "$L/book.pdf" "$L/book.epub" "$L/book.docx"
           done
-          zip -qr "../localai-code-$V.zip" code
-          zip -qr "../localai-site-$V.zip" .
+          zip -qr "../local-ai-field-guide-code-$V.zip" code
+          zip -qr "../local-ai-field-guide-site-$V.zip" .
       - name: Create GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
@@ -94,4 +96,4 @@ jobs:
           gh release create "$GITHUB_REF_NAME" \
             --repo "$GITHUB_REPOSITORY" \
             --generate-notes \
-            localai-book-*.zip localai-site-*.zip
+            local-ai-field-guide-book-*.zip local-ai-field-guide-code-*.zip local-ai-field-guide-site-*.zip

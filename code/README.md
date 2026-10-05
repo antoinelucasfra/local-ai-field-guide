@@ -1,10 +1,10 @@
-# Companion code — Sovereign Local AI
+# Companion code — The Local AI Field Guide
 
 Runnable companions to the book's recipes. Each file maps to a chapter:
 
 | File | Chapter | What it does |
 | --- | --- | --- |
-| `finetune_unsloth.py` | 12 · Python path | QLoRA fine-tune → evaluate → export GGUF |
+| `finetune_qlora.py` | 12 · Fine-tuning in Python | QLoRA fine-tune → evaluate → export GGUF (Unsloth backend; Axolotl/torchtune notes in the header) |
 | `eval_gate.py` | 16 · Evaluate | Golden-set regression gate (exit ≠ 0 blocks promotion) |
 | `golden_set.template.jsonl` | 16 · Evaluate | Starter schema for your own golden set |
 | `rag_minimal.py` | 13 · RAG cookbook | sqlite-vec + bge-m3 minimal retrieval pipeline |

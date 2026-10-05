@@ -1,0 +1,23 @@
+---
+title: "Page not found"
+format:
+  html:
+    output-file: 404.html
+    theme:
+      light: [cosmo, al-brand-light, al-brand-book.scss]
+      dark: [cosmo, al-brand-dark, al-brand-book.scss]
+    toc: false
+    embed-resources: true
+---
+
+This page does not exist. *Cette page n'existe pas.*
+
+Start from the [table of contents](./), or jump straight to a version of the book:
+
+- **English**: [The Local AI Field Guide](en/book.html) · [PDF](en/book.pdf) · [EPUB](en/book.epub) · [Word](en/book.docx)
+- **Français** : [Le guide de terrain de l'IA locale](fr/book.html) · [PDF](fr/book.pdf) · [EPUB](fr/book.epub) · [Word](fr/book.docx)
+
+Companion code: [`code/`](code/). Found a stale link? [Open an issue](https://github.com/antoinelucasfra/local-ai-field-guide/issues).
+
+<!-- Links are relative because GitHub Pages serves this file for any missing path
+     under the site root; a rename of the repository therefore leaves them working. -->

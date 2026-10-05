@@ -5,6 +5,7 @@ Figures are *illustrative snapshots* (early-2026, inspired by artificialanalysis
 benchmarks and the book's own tables) — clearly labelled as such in captions.
 """
 
+import math
 import os
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -49,7 +50,7 @@ def save(name, body):
     except OSError as e:
         raise SystemExit(f"make_figs: {e}") from e
     try:
-        with open(os.path.join(OUT, name), "w") as f:
+        with open(os.path.join(OUT, name), "w", encoding="utf-8") as f:
             f.write(body + "</svg>\n")
     except OSError as e:
         raise SystemExit(f"make_figs: {e}") from e
@@ -64,8 +65,6 @@ def fig_quality_price():
     s = [svg_open(W, H)]
 
     # axes: price $/Mtok blended, log 0.05..100 ; quality index 20..80
-    import math
-
     def px(v):
         lo, hi = math.log10(0.1), math.log10(100)
         return L + (math.log10(max(v, 0.1)) - lo) / (hi - lo) * pw
@@ -81,28 +80,18 @@ def fig_quality_price():
         s.append(text(px(g), T + ph + 20, lab, 11, MUTED, "middle", mono=True))
 
     # models from the book's own AA snapshot (ch. 2) + plausible blended prices
+    # (name, $/Mtok blended, quality index, open weights, label dx, dy, anchor)
     pts = [
-        ("Claude Opus 5", 12, 63, False),
-        ("Claude Fable 5", 10, 62, False),
-        ("GPT-5.6 Sol", 9, 61, False),
-        ("Grok 4.6", 7, 61, False),
-        ("Gemini 3.7 Flash", 0.6, 56, False),
-        ("Kimi K3", 0.9, 60, True),
-        ("GLM-5.3", 0.7, 59, True),
-        ("Muse Spark 1.2", 0.35, 57, True),
-        ("DeepSeek V4 Pro", 0.45, 53, True),
+        ("Claude Opus 5", 12, 63, False, -10, -10, "end"),
+        ("Claude Fable 5", 10, 62, False, -12, 12, "end"),
+        ("GPT-5.6 Sol", 9, 61, False, 12, -4, "start"),
+        ("Grok 4.6", 7, 61, False, 12, 10, "start"),
+        ("Gemini 3.7 Flash", 0.6, 56, False, 12, 8, "start"),
+        ("Kimi K3", 0.9, 60, True, -12, -8, "end"),
+        ("GLM-5.3", 0.7, 59, True, 12, -6, "start"),
+        ("Muse Spark 1.2", 0.35, 57, True, -12, 14, "end"),
+        ("DeepSeek V4 Pro", 0.45, 53, True, 12, 4, "start"),
     ]
-    offs = {
-        "Claude Opus 5": (-10, -10, "end"),
-        "Claude Fable 5": (-12, 12, "end"),
-        "GPT-5.6 Sol": (12, -4, "start"),
-        "Grok 4.6": (12, 10, "start"),
-        "Gemini 3.7 Flash": (12, 8, "start"),
-        "Kimi K3": (-12, -8, "end"),
-        "GLM-5.3": (12, -6, "start"),
-        "Muse Spark 1.2": (-12, 14, "end"),
-        "DeepSeek V4 Pro": (12, 4, "start"),
-    }
     # frontier zone hint
     s.append(
         f'<path d="M {px(2)} {py(82)} Q {px(60)} {py(78)} {px(100)} {py(70)} '
@@ -110,13 +99,12 @@ def fig_quality_price():
     )
     s.append(text(px(30), py(81), "closed frontier", 11, SKY, "middle"))
 
-    for name, p, q, is_open in pts:
+    for name, p, q, is_open, dx, dy, anc in pts:
         cx, cy = px(p), py(q)
         col = TEAL if is_open else CORAL
         s.append(
             f'<circle cx="{cx:.0f}" cy="{cy:.0f}" r="6" fill="{col}" opacity="0.9"/>'
         )
-        dx, dy, anc = offs[name]
         s.append(text(cx + dx, cy + dy + 4, name, 11, INK, anc, mono=is_open))
 
     s.append(

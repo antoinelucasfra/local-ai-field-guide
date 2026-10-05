@@ -434,6 +434,9 @@ function Pandoc(el)
     abstract = abstract_words,
     total = total_words,
   }
+  -- Local patch: `.content` keeps a FLAT block list. Wrapping the whole
+  -- document in a Div hides every heading from Quarto's html TOC builder,
+  -- which silently renders the sidebar TOC empty (book + per-chapter html).
   el.blocks = pandoc.walk_block(pandoc.Div(el.blocks), {
     Span = function(sp)
       local spec = sp.attributes["data-wordcount"]
@@ -445,7 +448,7 @@ function Pandoc(el)
       if n == 0 then return nil end
       return pandoc.Str(tostring(sum))
     end
-  })
+  }).content
 
   return el
 end

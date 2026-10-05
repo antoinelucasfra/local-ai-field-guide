@@ -151,9 +151,6 @@ h2 {
 
   p {
     margin-bottom: 0;
-
-    // label text before first link stays muted
-    &:first-line { color: inherit; }
   }
 
   a {

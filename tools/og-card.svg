@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="The Local AI Field Guide — Le guide de terrain de l'IA locale">
+  <!-- Social share card. og:image needs a raster file: export this SVG to
+       tools/og-card.png at 1200x630 with any SVG rasterizer, then the workflow
+       copies both into _site/ and GitHub's Settings > Social preview can use it. -->
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="0%" r="80%">
+      <stop offset="0%" stop-color="#38bdf8" stop-opacity="0.22" />
+      <stop offset="100%" stop-color="#0f1117" stop-opacity="0" />
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0f1117" />
+  <rect width="1200" height="630" fill="url(#glow)" />
+  <rect x="0" y="0" width="1200" height="8" fill="#38bdf8" />
+
+  <g font-family="Space Grotesk, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="80" y="250" font-size="72" font-weight="700" fill="#e6edf3">
+      The Local AI Field Guide
+    </text>
+    <text x="80" y="318" font-size="38" font-weight="500" fill="#7dd3fc">
+      Le guide de terrain de l'IA locale
+    </text>
+  </g>
+
+  <rect x="80" y="368" width="120" height="3" fill="#38bdf8" />
+
+  <g font-family="DM Sans, Segoe UI, Helvetica, Arial, sans-serif">
+    <text x="80" y="440" font-size="32" fill="#e6edf3">
+      Run, fine-tune, serve and govern open-weight models
+    </text>
+    <text x="80" y="484" font-size="32" fill="#e6edf3">
+      on hardware you own.
+    </text>
+    <text x="80" y="556" font-size="24" fill="#8b949e">
+      Bilingual EN/FR · HTML, PDF, EPUB, DOCX, slides · open, CC BY 4.0
+    </text>
+    <text x="80" y="596" font-size="22" fill="#8b949e">
+      antoinelucasfra.github.io/local-ai-field-guide
+    </text>
+  </g>
+</svg>
