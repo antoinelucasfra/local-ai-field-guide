@@ -18,10 +18,6 @@ MODEL = "BAAI/bge-m3"
 DB = "docs.db"
 
 
-def embed(db, model, text):
-    return model.encode(text).tolist()
-
-
 def cmd_index(paths):
     model = SentenceTransformer(MODEL)
     db = sqlite3.connect(DB)
@@ -42,7 +38,7 @@ def cmd_index(paths):
                 continue
             db.execute(
                 "INSERT INTO chunks(embedding, text) VALUES (?, ?)",
-                (embed(db, model, text), text),
+                (model.encode(text).tolist(), text),
             )
             n += 1
     db.commit()
@@ -57,7 +53,7 @@ def cmd_ask(question, k=4):
     rows = db.execute(
         """SELECT text, distance FROM chunks WHERE embedding MATCH ?
            ORDER BY distance LIMIT ?""",
-        (embed(db, model, question), k),
+        (model.encode(question).tolist(), k),
     ).fetchall()
     context = "\n---\n".join(t for t, _ in rows)
 
@@ -66,6 +62,7 @@ def cmd_ask(question, k=4):
     from llama_cpp import Llama  # type: ignore[import-not-found]
 
     llm = Llama.from_pretrained(
+        # any GGUF repo + quant works: swap for the model you standardised on
         repo_id="unsloth/Qwen3-8B-GGUF",
         filename="*UD-Q4_K_XL.gguf",
         n_ctx=8192,

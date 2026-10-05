@@ -21,13 +21,27 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 def _open(path, mode="r"):
         # generator inputs must fail loud — but with a readable message
+        # (encoding is explicit: chapters are UTF-8, Windows defaults aren't)
         try:
-                return open(path, mode)
+                return open(path, mode, encoding="utf-8")
         except OSError as e:
                 sys.exit(f"build_book: {e}")
 
 
 CH = os.path.join(ROOT, "chapters")
+
+# Book identity — the single source. tools/make_index.py reads these for the
+# landing page, so a rename is one edit here.
+TITLE_EN = "The Local AI Field Guide"
+TITLE_FR = "Le guide de terrain de l'IA locale"
+BRAND_EN = "The <em>Local AI Field Guide</em>"
+DESCRIPTION_EN = (
+        "An open, bilingual field guide to running open-weight language models on your "
+        "own hardware: choosing models, inference, fine-tuning, agents, RAG, serving, "
+        "evaluation and GDPR. Available in French."
+)
+SITE = "https://antoinelucasfra.github.io/local-ai-field-guide/"
+REPO = "https://github.com/antoinelucasfra/local-ai-field-guide"
 
 FRONT = """---
 author: "Support IA — LocalAI"
@@ -89,18 +103,7 @@ BOOK_FMT = """  html:
 # concurrently; html + revealjs race on the shared <slug>_files dir and
 # corrupt embed-resources). Split docs = parallel-safe plain `quarto render`.
 SLIDES_FMT = """  revealjs:
-    output-file: {slug}-slides.html
-    theme: [default, al-brand-slides.scss]
-    slide-number: c/t
-    hash-type: number
-    progress: true
-    scrollable: true
-    smaller: true
-    highlight-style: github
-    embed-resources: true"""
-
-BOOK_SLIDES_FMT = """  revealjs:
-    output-file: book-slides.html
+    output-file: {outfile}
     theme: [default, al-brand-slides.scss]
     slide-number: c/t
     hash-type: number
@@ -140,7 +143,7 @@ profile:
 """
 
 
-REPO_SRC = "https://github.com/antoinelucasfra/localai-review/blob/main/chapters/"
+REPO_SRC = "https://github.com/antoinelucasfra/local-ai-field-guide/blob/main/chapters/"
 
 
 def order():
@@ -168,18 +171,26 @@ def dedup_ids(body):
 
 
 def chapter_titles(body, slug):
+        """Chapter titles + title-heading ids in one scan.
+
+        Titles fall back to the slug. Ids are None unless both languages carry
+        a titled chapter heading (the welcome page has none).
+        """
         ten = tfr = None
-        lines = body.split("\n")
-        for i, line in enumerate(lines):
-                m = re.match(r"^## (.+?) \{#\w+", line.strip())
-                if not m:
-                        continue
-                prev = lines[i - 1].strip() if i else ""
-                if prev == "::: {.en}" and ten is None:
-                        ten = m.group(1)
-                elif prev == "::: {.fr}" and tfr is None:
-                        tfr = m.group(1)
-        return (ten or slug), (tfr or slug)
+        ids = []
+        for m in re.finditer(
+                r"^[ \t]*:::[ \t]*\{\.(en|fr)\}[ \t]*\n[ \t]*## (.+?) \{#([\w-]+)\}",
+                body,
+                re.M,
+        ):
+                lang, title, ident = m.group(1), m.group(2), m.group(3)
+                if lang == "en" and ten is None:
+                        ten = title
+                        ids.append(ident)
+                elif lang == "fr" and tfr is None:
+                        tfr = title
+                        ids.append(ident)
+        return (set(ids) if len(ids) == 2 else None), (ten or slug), (tfr or slug)
 
 
 def demote_sections(body, keep):
@@ -193,16 +204,6 @@ def demote_sections(body, keep):
                         line = "#" + line
                 out.append(line)
         return "\n".join(out)
-
-
-def title_ids(body):
-        """Ids of the two chapter-title headings (first per language block);
-        None when the fragment has no ## titles (e.g. welcome page)."""
-        ids = []
-        for m in re.finditer(r"::: \{\.(en|fr)\}\n## .*?\{#([\w-]+)\}", body):
-                if len(ids) < 2:
-                        ids.append(m.group(2))
-        return set(ids) if len(ids) == 2 else None
 
 
 def rewrite_foreign_links(body, ids):
@@ -278,11 +279,12 @@ def main():
                                 slug_body,
                                 flags=re.S,
                         )
-                        keep = None if slug == "00-bienvenue" else title_ids(body)
+                        keep, ten, tfr = chapter_titles(body, slug)
+                        if slug == "00-bienvenue":
+                                keep = None
                         if keep:
                                 body = demote_sections(body, keep)
                         book.append(add_standalone_links(body, slug) + "\n\n")
-                        ten, tfr = chapter_titles(body, slug)
                         ids = set(re.findall(r"\{#([\w-]+)\}", body))
                         sbody = rewrite_foreign_links(body, ids)
                         # standalone docs: .ch keeps presenter notes (slides), .chh drops them
@@ -296,7 +298,9 @@ def main():
                         with _open(os.path.join(ROOT, f".ch-{slug}.qmd"), "w") as f:
                                 f.write(
                                         FRONT.format(
-                                                fmt=SLIDES_FMT.format(slug=slug),
+                                                fmt=SLIDES_FMT.format(
+                                                        outfile=f"{slug}-slides.html"
+                                                ),
                                                 ext_filters=EXT_FILTERS,
                                                 **meta,
                                         )
@@ -318,8 +322,8 @@ def main():
         with _open(os.path.join(ROOT, ".book.qmd"), "w") as f:
                 f.write(
                         FRONT.format(
-                                ten="Sovereign Local AI — The Reference Guide",
-                                tfr="L'IA locale souveraine — Le guide de référence",
+                                ten=TITLE_EN,
+                                tfr=TITLE_FR,
                                 fmt=BOOK_FMT,
                                 ext_filters=EXT_FILTERS,
                         )
@@ -328,9 +332,9 @@ def main():
         with _open(os.path.join(ROOT, ".book-slides.qmd"), "w") as f:
                 f.write(
                         FRONT.format(
-                                ten="Sovereign Local AI — Slides",
-                                tfr="L'IA locale souveraine — Diapositives",
-                                fmt=BOOK_SLIDES_FMT,
+                                ten=f"{TITLE_EN} — Slides",
+                                tfr=f"{TITLE_FR} — Diapositives",
+                                fmt=SLIDES_FMT.format(outfile="book-slides.html"),
                                 ext_filters=EXT_FILTERS,
                         )
                         + "".join(slides)
@@ -343,7 +347,9 @@ def main():
                                 + "".join(
                                         f"\n    - .ch-{s}.qmd\n    - .chh-{s}.qmd"
                                         for s in slugs
-                                ),
+                                )
+                                # site 404 page (GitHub Pages serves _site/404.html)
+                                + "\n    - 404.qmd",
                         )
                 )
         print(
