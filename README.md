@@ -7,7 +7,7 @@ One Quarto **book** project → **a single coherent book** (19 chapters in 5 par
 | Book | one HTML page per chapter plus `index.html`, `book.pdf` · `book.docx` · `book.epub` |
 | Per chapter ×24 | `<slug>-slides.html` (reveal deck, self-contained, shareable numbered URLs) |
 
-Quarto owns the book furniture: parts and appendices in the sidebar, chapter numbering, full-text search, previous/next navigation, *edit this page* and *report an issue* links, and a PDF/EPUB/Word download block. The decks are the only generated sources — a book project renders its chapters, not extra decks.
+Quarto owns the book furniture: parts and appendices in the sidebar, chapter numbering, full-text search, previous/next navigation and *report an issue*, plus a PDF/EPUB/Word download block. Two things are generated: the per-chapter revealjs decks (a book project renders its chapters, not extra decks) and the per-language chapter files, because Quarto reads a chapter's title from its first heading *before* filters run and uses that text for the sidebar, breadcrumbs and search index.
 
 ## Companion code
 
@@ -47,17 +47,18 @@ Parts and chapter order live in `chapters/_order.txt` — the single place to ed
 ## Architecture
 
 ```
-index.qmd            the book home page (Quarto requires one), unnumbered
-chapters/*.qmd       chapters: ::: {.en} / ::: {.fr} divs, no YAML   ← edit these
-chapters/_order.txt  parts, appendices and chapter order
-tools/build_book.py  pre-render hook: writes _quarto.yml + _quarto-fr.yml and
-                     the .ch-<lang>-<slug>.qmd deck sources
-tools/drop-notes.lua filter: removes ::: {.notes} blocks from the book formats
-tools/render.sh      one command per language: book + decks + 404
-tools/index.html     landing page shell (hero, styling, generated markers)
-tools/make_index.py  splices the landing page from build_book + the render
-tools/cover.svg|png  book cover (HTML home page + EPUB)
-tools/og-card.svg|png share card for social previews
+index.qmd                  the book home page (Quarto requires one), unnumbered
+chapters/_src/*.qmd        chapters: ::: {.en} / ::: {.fr} divs, no YAML ← edit these
+chapters/_order.txt        parts, appendices and chapter order
+chapters/*.qmd             generated per render, one language's title  (gitignored)
+tools/build_book.py        pre-render hook: writes _quarto.yml + _quarto-fr.yml, the
+                           chapters/<slug>.qmd files and the deck sources
+tools/drop-notes.lua       filter: removes ::: {.notes} blocks from the book formats
+tools/render.sh            one command per language: book + decks + 404
+tools/index.html           landing page shell (hero, styling, generated markers)
+tools/make_index.py        splices the landing page from build_book + the render
+tools/cover.svg|png        book cover (HTML home page + EPUB)
+tools/og-card.svg|png      share card for social previews
 tools/favicon.svg    book favicon
 _extensions/langsel/ filter: keeps the matching language divs; swaps titles;
                      renames {#id-fr} heading ids back to {#id}
@@ -71,7 +72,7 @@ The book title, subtitle, description and URLs live once, as constants at the to
 
 ## Editing
 
-Write each language variant inside its div (`::: {.en}` / `::: {.fr}`); keep heading ids identical across languages — the second (French) occurrence is written `{#id-fr}` and langsel renames it back after filtering. To add a chapter: create `chapters/NN-slug.qmd` with `# Title {#id}` in both language divs, add a `FILE NN-slug.qmd` line to `_order.txt` under the right `PART`. Nothing else — the config regenerates on next render. Chapter numbers are Quarto's: never write one into a heading.
+Write each language variant inside its div (`::: {.en}` / `::: {.fr}`); keep heading ids identical across languages — the second (French) occurrence is written `{#id-fr}` and langsel renames it back after filtering. To add a chapter: create `chapters/_src/NN-slug.qmd` starting with `# {{< meta ch-NN-slug >}} {#id}` (the marker the generator replaces), add a `FILE NN-slug.qmd|EN title|FR title` line to `_order.txt` under the right `PART`. Nothing else — the config and the per-language chapter files regenerate on next render. Chapter numbers are Quarto's: never write one into a heading. `index.qmd` keeps a real heading (it is not generated), and its one-item breadcrumb is hidden in CSS because Quarto builds it from that heading's marker.
 
 ## Conventions
 
