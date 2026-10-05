@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+message: "If you use this book, cite it as below."
+type: book
+title: "The Local AI Field Guide"
+abstract: >-
+  An open, bilingual (English/French) practical guide to running, fine-tuning,
+  serving and governing open-weight language models on hardware you own.
+authors:
+  - name: "Support IA — LocalAI"
+    website: "https://antoinelucasfra.github.io/local-ai-field-guide/"
+repository-code: "https://github.com/antoinelucasfra/local-ai-field-guide"
+url: "https://antoinelucasfra.github.io/local-ai-field-guide/"
+license: CC-BY-4.0
+version: 1.0.0
+date-released: 2026-08-23
+keywords:
+  - local AI
+  - open-weight language models
+  - GGUF
+  - QLoRA
+  - RAG
+  - sovereign AI
+  - GDPR
+  - bilingual
