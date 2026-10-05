@@ -5,12 +5,12 @@ Fine-tuning (Chap. 6) bakes a *skill* into weights; **RAG** (Retrieval-Augmented
 
 ### A fully local stack in four parts
 
-1. **Embeddings** — a small model turns text chunks into vectors. Use a multilingual model so French and English land in the same space: `bge-m3`[^ch13-m3] or `multilingual-e5-base` run on CPU in milliseconds.
-2. **Chunking** — split documents into ~300–800 token pieces with ~15% overlap. Split on structure (headings, paragraphs) before splitting on count.
-3. **Vector store** — for a lab, `sqlite-vec` (a file) is enough up to ~1M chunks; `pgvector` if you already run PostgreSQL; Qdrant when you need filtering and replication.
-4. **Generation** — any model from Chap. 2 receives the question + top-k chunks and must answer *from them*.
+1. **Embeddings**. A small model turns text chunks into vectors. Use a multilingual model so French and English land in the same space: `bge-m3`[^ch13-m3] or `multilingual-e5-base` run on CPU in milliseconds.
+2. **Chunking**. Split documents into ~300–800 token pieces with ~15% overlap. Split on structure (headings, paragraphs) before splitting on count.
+3. **Vector store**. For a lab, `sqlite-vec` (a file) is enough up to ~1M chunks; `pgvector` if you already run PostgreSQL; Qdrant when you need filtering and replication.
+4. **Generation**. Any model from Chap. 2 receives the question + top-k chunks and must answer *from them*.
 
-![Local RAG: documents are chunked and embedded once into a vector store on disk; at query time the top-k similar chunks are retrieved and answered from — nothing leaves the machine.](chapters/figures/fig-rag.svg){#fig-rag width=100%}
+![Local RAG: documents are chunked and embedded once into a vector store on disk; at query time the top-k similar chunks are retrieved and answered from. Nothing leaves the machine.](chapters/figures/fig-rag.svg){#fig-rag width=100%}
 
 Minimal working pipeline:
 
@@ -36,17 +36,17 @@ def ask(question, k=5):
 # then: answer = llm(f"Answer only from these excerpts:\n{ask(q)}\n\nQ: {q}")
 ```
 
-Studio Chat's web search and document features use the same mechanics internally (Chap. 4); Data Recipes can *generate* training data from those same sources when you decide a skill must move into weights (Chap. 8).
+Your chat UI's web search and document features use the same mechanics internally (Chap. 4); a dataset builder can *generate* training data from those same sources when you decide a skill must move into weights (Chap. 8).
 
 ### Retrieval quality is the whole game
 
-- **Hybrid search beats pure vectors**: add BM25 keyword scoring (SQLite FTS5) and fuse rankings — acronyms, part numbers and names are where embeddings fail.
+- **Hybrid search beats pure vectors**: add BM25 keyword scoring (SQLite FTS5) and fuse rankings. Acronyms, part numbers and names are where embeddings fail.
 - **Respect lost-in-the-middle**: put the best chunks first and last (Chap. 5); 20 chunks help less than 6 good ones.
-- **Evaluate retrieval separately** from generation: does the golden set's reference passage (Chap. 16) appear in the top-k? Fix retrieval before blaming the model — remember [the routing rule]{.pref pas="pas-rag-rule"}.
-- **Show citations**: force the model to quote chunk ids — reviewers verify instead of trusting, which is also your GDPR transparency story (Chap. 17).
+- **Evaluate retrieval separately** from generation: does the golden set's reference passage (Chap. 16) appear in the top-k? Fix retrieval before blaming the model. Remember [the routing rule]{.pref pas="pas-rag-rule"}.
+- **Show citations**: force the model to quote chunk ids. Reviewers verify instead of trusting, which is also your GDPR transparency story (Chap. 17).
 
 ::: {.al-take}
-**Our take.** Every RAG disappointment we have ever debugged was a retrieval failure wearing a model's costume. Spend the week on chunking, hybrid search and a 50-question golden set before you spend a single euro on a bigger model — a mediocre model fed the right 6 chunks beats an excellent one fed 20 wrong ones, every time we have measured it.
+**Our take.** Every RAG disappointment we have ever debugged was a retrieval failure wearing a model's costume. Spend the week on chunking, hybrid search and a 50-question golden set before you spend a single euro on a bigger model. A mediocre model fed the right 6 chunks beats an excellent one fed 20 wrong ones, every time we have measured it.
 :::
 :::
 
@@ -57,12 +57,12 @@ Le fine-tuning (chap. 6) incorpore une *compétence* dans les poids ; le **RAG**
 
 ### Une stack entièrement locale en quatre composants
 
-1. **Embeddings** — un petit modèle transforme des morceaux de texte en vecteurs. Choisissez un modèle multilingue pour que français et anglais partagent le même espace : `bge-m3`[^ch13-m3] ou `multilingual-e5-base` tournent sur CPU en millisecondes.
-2. **Découpage** — coupez en morceaux de ~300 à 800 jetons avec ~15 % de chevauchement. Coupez d'abord selon la structure (titres, paragraphes), puis selon la taille.
-3. **Base vectorielle** — pour un laboratoire, `sqlite-vec` (un fichier) suffit jusqu'à ~1 M de morceaux ; `pgvector` si vous avez déjà PostgreSQL ; Qdrant pour le filtrage et la réplication.
-4. **Génération** — n'importe quel modèle du chap. 2 reçoit la question + les k meilleurs morceaux et doit répondre *à partir d'eux*.
+1. **Embeddings**. Un petit modèle transforme des morceaux de texte en vecteurs. Choisissez un modèle multilingue pour que français et anglais partagent le même espace : `bge-m3`[^ch13-m3] ou `multilingual-e5-base` tournent sur CPU en millisecondes.
+2. **Découpage**. Coupez en morceaux de ~300 à 800 jetons avec ~15 % de chevauchement. Coupez d'abord selon la structure (titres, paragraphes), puis selon la taille.
+3. **Base vectorielle**. Pour un laboratoire, `sqlite-vec` (un fichier) suffit jusqu'à ~1 M de morceaux ; `pgvector` si vous avez déjà PostgreSQL ; Qdrant pour le filtrage et la réplication.
+4. **Génération**. N'importe quel modèle du chap. 2 reçoit la question + les k meilleurs morceaux et doit répondre *à partir d'eux*.
 
-![RAG local : les documents sont découpés et encodés une fois dans une base vectorielle sur disque ; à chaque question, les k morceaux les plus proches sont récupérés et servent de source — rien ne quitte la machine.](chapters/figures/fig-rag.svg){#fig-rag-fr width=100%}
+![RAG local : les documents sont découpés et encodés une fois dans une base vectorielle sur disque ; à chaque question, les k morceaux les plus proches sont récupérés et servent de source. Rien ne quitte la machine.](chapters/figures/fig-rag.svg){#fig-rag-fr width=100%}
 
 Pipeline minimal fonctionnel :
 
@@ -88,17 +88,17 @@ def ask(question, k=5):
 # puis : reponse = llm(f"Réponds uniquement à partir de ces extraits :\n{ask(q)}\n\nQ : {q}")
 ```
 
-La recherche web et les fonctions documentaires du Studio Chat reposent sur les mêmes mécanismes (chap. 4) ; Data Recipes peut *générer* des données d'entraînement depuis ces mêmes sources quand vous décidez qu'une compétence doit passer dans les poids (chap. 8).
+La recherche web et les fonctions documentaires de votre interface de chat reposent sur les mêmes mécanismes (chap. 4) ; un constructeur de jeux de données peut *générer* des données d'entraînement depuis ces mêmes sources quand vous décidez qu'une compétence doit passer dans les poids (chap. 8).
 
 ### La qualité de la récupération fait tout
 
-- **La recherche hybride bat les vecteurs seuls** : ajoutez un score BM25 par mots-clés (SQLite FTS5) et fusionnez les classements — acronymes, références et noms propres sont l'angle mort des embeddings.
+- **La recherche hybride bat les vecteurs seuls** : ajoutez un score BM25 par mots-clés (SQLite FTS5) et fusionnez les classements. Acronymes, références et noms propres sont l'angle mort des embeddings.
 - **Respectez le lost-in-the-middle** : placez les meilleurs morceaux au début et à la fin (chap. 5) ; 20 morceaux servent moins que 6 bons.
-- **Évaluez la récupération séparément** de la génération : le passage de référence de votre jeu doré (chap. 16) apparaît-il dans le top-k ? Corrigez la récupération avant de blâmer le modèle — souvenez-vous de [la règle de routage]{.pref pas="pas-regle-rag"}.
-- **Affichez les citations** : obligez le modèle à citer les identifiants de morceaux — les relecteurs vérifient au lieu de faire confiance, ce qui nourrit aussi votre transparence RGPD (chap. 17).
+- **Évaluez la récupération séparément** de la génération : le passage de référence de votre jeu doré (chap. 16) apparaît-il dans le top-k ? Corrigez la récupération avant de blâmer le modèle. Souvenez-vous de [la règle de routage]{.pref pas="pas-regle-rag"}.
+- **Affichez les citations** : obligez le modèle à citer les identifiants de morceaux. Les relecteurs vérifient au lieu de faire confiance, ce qui nourrit aussi votre transparence RGPD (chap. 17).
 
 ::: {.al-take}
-**Notre avis.** Toutes les déceptions RAG que nous avons déboguées étaient un échec de récupération déguisé en modèle. Passez la semaine sur le découpage, la recherche hybride et un jeu doré de 50 questions avant de dépenser un euro dans un modèle plus gros — un modèle médiocre nourri des 6 bons morceaux bat un excellent nourri de 20 mauvais, à chaque mesure que nous avons faite.
+**Notre avis.** Toutes les déceptions RAG que nous avons déboguées étaient un échec de récupération déguisé en modèle. Passez la semaine sur le découpage, la recherche hybride et un jeu doré de 50 questions avant de dépenser un euro dans un modèle plus gros. Un modèle médiocre nourri des 6 bons morceaux bat un excellent nourri de 20 mauvais, à chaque mesure que nous avons faite.
 :::
 :::
 

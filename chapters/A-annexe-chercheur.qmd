@@ -1,16 +1,16 @@
 ::: {.en}
-## Local AI for Your Research — A 30-Minute Primer {#primer}
+## Local AI for Your Research. A 30-Minute Primer {#primer}
 :::
 
 ::: {.fr}
-## L'IA locale pour votre recherche — en 30 minutes {#primer}
+## L'IA locale pour votre recherche, en 30 minutes {#primer}
 :::
 
 
 ::: {.en}
 ## What is "local AI"?
 
-A large language model (LLM) is the technology behind ChatGPT-style assistants. **Open-weight** versions of these models can be downloaded and run entirely on your own computer — no subscription, no internet connection needed after download, and no third party sees anything you type.
+A large language model (LLM) is the technology behind ChatGPT-style assistants. **Open-weight** versions of these models can be downloaded and run entirely on your own computer. No subscription, no internet connection needed after download, and no third party sees anything you type.
 
 Quality is no longer the obstacle: independent benchmarks ([artificialanalysis.ai](https://artificialanalysis.ai)) show the best open models within ~3 points of the best closed ones (59.7 vs 63.1 on their intelligence index), and small models handle everyday research tasks well on an ordinary laptop.
 :::
@@ -18,7 +18,7 @@ Quality is no longer the obstacle: independent benchmarks ([artificialanalysis.a
 ::: {.fr}
 ## Qu'est-ce que l'« IA locale » ?
 
-Un grand modèle de langage (LLM) est la technologie derrière les assistants type ChatGPT. Les versions à **poids ouverts** de ces modèles se téléchargent et s'exécutent entièrement sur votre ordinateur — sans abonnement, sans connexion Internet après le téléchargement, et aucun tiers ne voit ce que vous tapez.
+Un grand modèle de langage (LLM) est la technologie derrière les assistants type ChatGPT. Les versions à **poids ouverts** de ces modèles se téléchargent et s'exécutent entièrement sur votre ordinateur. Sans abonnement, sans connexion Internet après le téléchargement, et aucun tiers ne voit ce que vous tapez.
 
 La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialanalysis.ai](https://artificialanalysis.ai)) montrent les meilleurs modèles ouverts à ~3 points des meilleurs fermés (59,7 contre 63,1 sur leur indice d'intelligence), et les petits modèles gèrent bien les tâches de recherche courantes sur un portable ordinaire.
 :::
@@ -28,7 +28,7 @@ La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialana
 
 - **Unpublished results stay yours**: manuscripts in progress, review responses, grant drafts never transit a commercial API.
 - **Sensitive data becomes usable**: patient records, genomic data or personal data that legally cannot be sent to cloud providers can be analysed with models running inside your institution.
-- **No meter running**: experiment freely — summarise 200 papers, translate, refactor code — with zero per-token cost and no rate limits.
+- **No meter running.** Experiment freely: summarise 200 papers, translate, refactor code, with zero per-token cost and no rate limits.
 - **Reproducibility**: the exact model version you used can be recorded, archived and cited like any other software dependency.
 :::
 
@@ -37,7 +37,7 @@ La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialana
 
 - **Vos résultats non publiés restent vôtres** : manuscrits en cours, réponses aux relecteurs, demandes de financement ne transitent jamais par une API commerciale.
 - **Les données sensibles deviennent exploitables** : dossiers patients, données génomiques ou données personnelles qui ne peuvent légalement pas partir vers le cloud peuvent être analysées par des modèles exécutés dans votre institution.
-- **Aucun compteur** : expérimentez librement — résumez 200 articles, traduisez, refactorisez du code — sans coût par token ni limite de débit.
+- **Aucun compteur.** Expérimentez librement : résumez 200 articles, traduisez, refactorisez du code, sans coût par token ni limite de débit.
 - **Reproductibilité** : la version exacte du modèle utilisée peut être enregistrée, archivée et citée comme toute autre dépendance logicielle.
 :::
 
@@ -80,7 +80,7 @@ La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialana
 ::: {.en}
 ## What it cannot do
 
-- Match the largest closed models on very long, multi-step expert work — route those tasks elsewhere if you have access.
+- Match the largest closed models on very long, multi-step expert work. Route those tasks elsewhere if you have access.
 - Guarantee correctness: hallucinations remain possible; keep a human decision-maker.
 - Replace statistical software: use R/Python for inference; LLMs help you *write* that code.
 :::
@@ -88,7 +88,7 @@ La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialana
 ::: {.fr}
 ## Ce qu'elle ne sait pas faire
 
-- Égaler les plus gros modèles fermés sur de très longues tâches expertes multi-étapes — confiez-les ailleurs si vous y avez accès.
+- Égaler les plus gros modèles fermés sur de très longues tâches expertes multi-étapes. Confiez-les ailleurs si vous y avez accès.
 - Garantir l'exactitude : les hallucinations restent possibles ; l'humain décide.
 - Remplacer les logiciels statistiques : utilisez R/Python pour l'inférence ; les LLM vous aident à *écrire* ce code.
 :::
@@ -96,39 +96,41 @@ La qualité n'est plus l'obstacle : les benchmarks indépendants ([artificialana
 ::: {.en}
 ## Try it today
 
-With admin rights, one command installs everything (Mac, Windows, Linux):
+With admin rights, one install covers a runtime *and* a chat UI. The shortest CLI path (macOS/Linux):
 
 ```bash
-curl -fsSL https://unsloth.ai/install.sh | sh
+curl -fsSL https://ollama.com/install.sh | sh    # runtime + model registry
+ollama run <model>                               # chat in the terminal
 ```
 
-Then open the local web interface, pick a small model (e.g. a Qwen3.5-class 4B) and start chatting. No GPU required. Your IT team can also deploy a shared server — point them at the chapters below.
+Prefer clicking? Download a desktop app instead (LM Studio, Jan) or llama.app, which ships both a terminal chat and a web UI. Then pick a small model (e.g. a Qwen3.5-class 4B) and start chatting. No GPU required. Your IT team can also deploy a shared server. Point them at the chapters below.
 :::
 
 ::: {.fr}
 ## Essayez aujourd'hui
 
-Avec les droits administrateur, une commande installe tout (Mac, Windows, Linux) :
+Avec les droits administrateur, une installation couvre un runtime *et* une interface de chat. Le chemin CLI le plus court (macOS/Linux) :
 
 ```bash
-curl -fsSL https://unsloth.ai/install.sh | sh
+curl -fsSL https://ollama.com/install.sh | sh    # runtime + registre de modèles
+ollama run <modele>                              # chat en terminal
 ```
 
-Ouvrez ensuite l'interface web locale, choisissez un petit modèle (ex. un Qwen3.5 4B) et discutez. Aucun GPU requis. Votre équipe IT peut aussi déployer un serveur partagé — orientez-la vers les chapitres ci-dessous.
+Vous préférez cliquer ? Téléchargez plutôt une application de bureau (LM Studio, Jan) ou llama.app, qui fournit à la fois le chat en terminal et une interface web. Choisissez ensuite un petit modèle (ex. un Qwen3.5 4B) et discutez. Aucun GPU requis. Votre équipe IT peut aussi déployer un serveur partagé. Orientez-la vers les chapitres ci-dessous.
 :::
 
 ::: {.en}
 ## Going further
 
-- **Chapters 1–15 (Parts I–IV)** — setup, running models, inference parameters, fine-tuning and deployment
-- **Chapter 18** — costs, risks and a 90-day pilot plan for lab directors
-- **Chapter 19** — sovereignty, regulation and investment scenarios for institute leadership
+- **Chapters 1–15 (Parts I–IV)**. Setup, running models, inference parameters, fine-tuning and deployment
+- **Chapter 18**. Costs, risks and a 90-day pilot plan for lab directors
+- **Chapter 19**. Sovereignty, regulation and investment scenarios for institute leadership
 :::
 
 ::: {.fr}
 ## Pour aller plus loin
 
-- **Chapitres 1–15 (Parties I–IV)** — installation, exécution des modèles, paramètres d'inférence, fine-tuning et déploiement
-- **Chapitre 18** — coûts, risques et plan pilote de 90 jours pour directeurs de laboratoire
-- **Chapitre 19** — souveraineté, régulation et scénarios d'investissement pour la direction d'institut
+- **Chapitres 1–15 (Parties I–IV)**. Installation, exécution des modèles, paramètres d'inférence, fine-tuning et déploiement
+- **Chapitre 18**. Coûts, risques et plan pilote de 90 jours pour directeurs de laboratoire
+- **Chapitre 19**. Souveraineté, régulation et scénarios d'investissement pour la direction d'institut
 :::

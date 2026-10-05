@@ -7,7 +7,7 @@ The ecosystem moves fast; these projects are maintained, popular and genuinely u
 
 | Project | What it does | Why it's interesting |
 |---|---|---|
-| **Open WebUI** | polished ChatGPT-style web UI over Ollama/llama.cpp | multi-user, RAG uploads, prompt library — the natural lab portal |
+| **Open WebUI** | polished ChatGPT-style web UI over Ollama/llama.cpp | multi-user, RAG uploads, prompt library. The natural lab portal |
 | **LibreChat** | multi-provider chat front-end | one UI for local + remote endpoints, agents & code interpreter |
 | **Jan** | desktop ChatGPT alternative (local API server included) | clean UX, OpenAI-compatible server on localhost |
 | **AnythingLLM** | document-chat workspaces | turnkey RAG on your PDFs, per-workspace isolation |
@@ -17,7 +17,7 @@ The ecosystem moves fast; these projects are maintained, popular and genuinely u
 | Project | What it does | Why it's interesting |
 |---|---|---|
 | **khoj** | personal AI search over your notes/docs | self-hosted second brain with web+Org/PDF connectors |
-| **Paperless-ngx** (+AI) | document management | OCR + LLM tagging of scanned paperwork — pairs with whisper/RAG |
+| **Paperless-ngx** (+AI) | document management | OCR + LLM tagging of scanned paperwork. Pairs with whisper/RAG |
 | **Onyx (ex-Danswer)** | enterprise search + assistant | connectors for wikis/drives, hybrid retrieval |
 
 ### Development
@@ -33,10 +33,10 @@ The ecosystem moves fast; these projects are maintained, popular and genuinely u
 | Project | What it does | Why it's interesting |
 |---|---|---|
 | **ComfyUI** | node-based diffusion studio | FLUX/SDXL pipelines, LoRA training, batch image ops |
-| **whisper.cpp / Piper** | STT / TTS | see Chapter 14 — meeting minutes and spoken answers |
+| **whisper.cpp / Piper** | STT / TTS | see Chapter 14. Meeting minutes and spoken answers |
 | **Home Assistant** (Wyoming) | voice assistant at home | full offline "hey Jarvis" with Piper + whisper + an LLM |
 
-Selection criteria we applied: open source, active maintenance (check before adopting), no phone-home telemetry by default, French-community support. Anything here can be swapped later — prefer standard interfaces (OpenAI-compatible APIs) so tools stay interchangeable.
+Selection criteria we applied: open source, active maintenance (check before adopting), no phone-home telemetry by default, French-community support. Anything here can be swapped later. Prefer standard interfaces (OpenAI-compatible APIs) so tools stay interchangeable.
 :::
 
 ::: {.fr}
@@ -48,7 +48,7 @@ L'écosystème va vite ; ces projets sont maintenus, populaires et réellement u
 
 | Projet | Ce que ça fait | Pourquoi c'est intéressant |
 |---|---|---|
-| **Open WebUI** | interface web soignée type ChatGPT par-dessus Ollama/llama.cpp | multi-utilisateur, RAG sur fichiers, bibliothèque de prompts — le portail naturel du labo |
+| **Open WebUI** | interface web soignée type ChatGPT par-dessus Ollama/llama.cpp | multi-utilisateur, RAG sur fichiers, bibliothèque de prompts. Le portail naturel du labo |
 | **LibreChat** | frontal de chat multi-fournisseurs | une UI pour endpoints locaux + distants, agents et interpréteur de code |
 | **Jan** | alternative de bureau à ChatGPT (serveur API local inclus) | UX propre, serveur compatible OpenAI sur localhost |
 | **AnythingLLM** | espaces de travail documentaires | RAG clé en main sur vos PDF, isolation par espace |
@@ -58,7 +58,7 @@ L'écosystème va vite ; ces projets sont maintenus, populaires et réellement u
 | Projet | Ce que ça fait | Pourquoi c'est intéressant |
 |---|---|---|
 | **khoj** | recherche IA personnelle sur vos notes/documents | second cerveau auto-hébergé avec connecteurs web/Org/PDF |
-| **Paperless-ngx** (+IA) | gestion documentaire | OCR + étiquetage LLM des papiers scannés — se combine avec whisper/RAG |
+| **Paperless-ngx** (+IA) | gestion documentaire | OCR + étiquetage LLM des papiers scannés. Se combine avec whisper/RAG |
 | **Onyx (ex-Danswer)** | recherche d'entreprise + assistant | connecteurs wikis/drives, récupération hybride |
 
 ### Développement
@@ -74,8 +74,8 @@ L'écosystème va vite ; ces projets sont maintenus, populaires et réellement u
 | Projet | Ce que ça fait | Pourquoi c'est intéressant |
 |---|---|---|
 | **ComfyUI** | studio de diffusion par nœuds | pipelines FLUX/SDXL, entraînement LoRA, opérations d'images en lot |
-| **whisper.cpp / Piper** | STT / TTS | voir chapitre 14 — comptes rendus et réponses parlées |
+| **whisper.cpp / Piper** | STT / TTS | voir chapitre 14. Comptes rendus et réponses parlées |
 | **Home Assistant** (Wyoming) | assistant vocal à la maison | « hey Jarvis » 100 % hors ligne avec Piper + whisper + un LLM |
 
-Critères de sélection appliqués : open source, maintenance active (à revérifier avant d'adopter), pas de télémétrie par défaut, soutien communautaire francophone. Tout ici se remplace facilement — préférez les interfaces standards (API compatibles OpenAI) pour que les outils restent interchangeables.
+Critères de sélection appliqués : open source, maintenance active (à revérifier avant d'adopter), pas de télémétrie par défaut, soutien communautaire francophone. Tout ici se remplace facilement. Préférez les interfaces standards (API compatibles OpenAI) pour que les outils restent interchangeables.
 :::

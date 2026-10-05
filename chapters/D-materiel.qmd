@@ -24,7 +24,7 @@ Speed expectations per tier were given in Chapter 5; this annex is the buying gu
 - **Don't forget the humans**: one shared server (Tier 4) + Tier 0–1 client machines covers most labs better than everyone buying Tier 3 desktops — that's exactly the TCO argument of Chap. 18.
 
 ::: {.al-take}
-**Our take.** Buy VRAM, not benchmarks: a used 3090 has outlived two generations of "faster" cards we skipped, and the money we did not spend on a flagship bought the second one. Skip the CPU-only detour entirely — it teaches you the concepts and nothing else; if budget allows exactly one machine, make it 24 GB and shared.
+**Our take.** Buy VRAM, not benchmarks: a used 3090 has outlived two generations of "faster" cards we skipped, and the money we did not spend on a flagship bought the second one. Skip the CPU-only detour entirely. It teaches you the concepts and nothing else. If budget allows exactly one machine, make it 24 GB and shared.
 :::
 
 ![Decode speed by tier, from the ladder above. The gap to internalize: hardware buys roughly an order of magnitude, quantization buys back most of the model size at ~95% quality (Q4).](chapters/figures/fig-throughput.svg){#fig-throughput width=100%}
@@ -33,14 +33,14 @@ Speed expectations per tier were given in Chapter 5; this annex is the buying gu
 
 ### You already have an institute cluster? Use it
 
-Most public labs already own the hardware. A classic HPC setup: **login nodes** (internet, no GPU), **GPU compute nodes** behind a scheduler (SLURM), a **shared filesystem** (`/home`, `/scratch` or Lustre), **compute nodes with blocked internet egress**, and Apptainer for containers. That is everything local AI needs — three recipes:
+Most public labs already own the hardware. A classic HPC setup: **login nodes** (internet, no GPU), **GPU compute nodes** behind a scheduler (SLURM), a **shared filesystem** (`/home`, `/scratch` or Lustre), **compute nodes with blocked internet egress**, and Apptainer for containers. That is everything local AI needs. Three recipes:
 
 **1. Bring weights in (once, from the login node).** Compute nodes can't download; the login node can:
 
 ```bash
 export HF_HOME=/scratch/$USER/hf          # models land on shared storage
 pip install -U huggingface_hub
-hf download unsloth/Qwen3-8B-GGUF \
+hf download ggml-org/gemma-4-e4b-it-GGUF \
    Qwen3-8B-UD-Q4_K_XL.gguf --local-dir /scratch/$USER/llm/
 ```
 
@@ -48,7 +48,7 @@ Put models in a **group-writable directory** so the whole lab shares one copy.
 
 **2. Serve it.** Two modes:
 
-- **Dedicated serving node** (best daily experience): ask IT to pin one GPU node outside (or under a long reservation of) the scheduler, then run `llama-server` from a prebuilt llama.cpp binary — no root needed — exactly as in Chap. 15, and put the LiteLLM gateway on top. The whole Part II/IV tooling then points at one stable `base_url`.
+- **Dedicated serving node** (best daily experience): ask IT to pin one GPU node outside (or under a long reservation of) the scheduler, then run `llama-server` from a prebuilt llama.cpp binary. No root needed. Exactly as in Chap. 15. Put the LiteLLM gateway on top. The whole Part II/IV tooling then points at one stable `base_url`.
 - **Per-job serving** (zero privileges):
 
 ```bash
@@ -63,15 +63,15 @@ python run_eval.py --base-url http://localhost:8080/v1   # your workload
 
 Job ends → server dies. Ideal for batch pipelines and golden-set evaluations (Chap. 16); for interactive chat prefer the dedicated node.
 
-**3. Train without drama.** A QLoRA fine-tune is a *single-GPU* job: `#SBATCH --gres=gpu:1` on any partition with 24 GB+ cards. Never request multi-node for LLM fine-tuning — clusters help training throughput, not single-model quality (Chap. 5). Keep datasets + adapter checkpoints on `/scratch`; Unsloth runs unchanged under SLURM.
+**3. Train without drama.** A QLoRA fine-tune is a *single-GPU* job: `#SBATCH --gres=gpu:1` on any partition with 24 GB+ cards. Never request multi-node for LLM fine-tuning. Clusters help training throughput, not single-model quality (Chap. 5). Keep datasets + adapter checkpoints on `/scratch`; every trainer in [§ The local AI stack](#ecosystem) runs unchanged under SLURM.
 
 ### Daily use once an endpoint exists
 
-Everything in this book speaks the OpenAI-compatible protocol — point each tool at the cluster endpoint and you're done:
+Everything in this book speaks the OpenAI-compatible protocol. Point each tool at the cluster endpoint and you're done:
 
 | Tool | Where to set it |
 |---|---|
-| Studio Chat | Settings → provider connection (Chap. 4) |
+| Chat UI | Settings → provider connection (Chap. 4) |
 | pi / coding agents | `models.json` → `baseUrl` (Chap. 11) |
 | Python scripts | `base_url` argument (Chap. 12) |
 
@@ -95,28 +95,28 @@ Les vitesses attendues par palier sont au chapitre 5 ; cette annexe est le guide
 
 ### Lire le tableau
 
-- **Règle de mémoire unifiée** sur Apple silicon : un modèle demande environ sa taille de fichier de libre — un MacBook 32 Go fait bien tourner des 27–32 B Q4 car le GPU peut utiliser ~75 % de la mémoire unifiée.
+- **Règle de mémoire unifiée** sur Apple silicon : un modèle demande environ sa taille de fichier de libre. Un MacBook 32 Go fait bien tourner des 27–32 B Q4 car le GPU peut utiliser ~75 % de la mémoire unifiée.
 - **La 3090 d'occasion est la bête de somme de la communauté** : 24 Go de VRAM, option NVLink pas chère, éprouvée en QLoRA jusqu'à ~14 B et confortable en inférence jusqu'à 32 B. Achetez chez des reconditionneurs avec garantie ; testez la VRAM à l'arrivée (`gpu-burn`, `memtest_vulkan`).
 - **La VRAM prime sur tout.** Une carte plus lente mais mieux dotée en mémoire prend l'ascendant sur une petite plus rapide dès que vous dépassez le contexte ou la taille de modèle (chap. 5).
 - **Disque** : les modèles font 5–60 Go pièce ; un NVMe pour les modèles actifs, du SATA bon marché pour l'archive. Changer de modèle depuis le SSD prend des secondes.
 - **Puissance & bruit** : une 3090 tire ~350 W en pointe (l'undervolting coupe ~20 % pour ~5 % de vitesse) ; un serveur de labo a sa place en salle machines, pas dans un bureau.
 - **Les clusters n'aident pas le décodage** : éclater un LLM sur Ethernet tue la vitesse de génération (la latence réseau ≫ règle de bande passante du chap. 5). Un gros GPU > quatre petits pour l'inférence ; les clusters servent à l'*entraînement* seulement.
-- **N'oubliez pas les humains** : un serveur partagé (palier 4) + des postes palier 0–1 couvre la plupart des labos mieux que chacun avec un fixe palier 3 — c'est exactement l'argument TCO du chap. 18.
+- **N'oubliez pas les humains** : un serveur partagé (palier 4) + des postes palier 0–1 couvre la plupart des labos mieux que chacun avec un fixe palier 3. C'est exactement l'argument TCO du chap. 18.
 
 ::: {.al-take}
-**Notre avis.** Achetez de la VRAM, pas des benchmarks : notre 3090 d'occasion a survécu à deux générations de cartes « plus rapides » que nous avons ignorées, et l'argent non dépensé en flagship a financé la seconde 3090. Sautez complètement l'étape CPU-seul — elle fait comprendre les concepts, rien d'autre ; si le budget permet exactement une machine, qu'elle fasse 24 Go et qu'elle soit partagée.
+**Notre avis.** Achetez de la VRAM, pas des benchmarks : notre 3090 d'occasion a survécu à deux générations de cartes « plus rapides » que nous avons ignorées, et l'argent non dépensé en flagship a financé la seconde 3090. Sautez complètement l'étape CPU-seul. Elle fait comprendre les concepts, rien d'autre. Si le budget permet exactement une machine, qu'elle fasse 24 Go et qu'elle soit partagée.
 :::
 
 ### Vous avez déjà un cluster institutionnel ? Servez-vous-en
 
-La plupart des labos publics possèdent déjà le matériel. Une configuration HPC classique : des **nœuds de connexion** (internet, pas de GPU), des **nœuds de calcul GPU** derrière un ordonnanceur (SLURM), un **système de fichiers partagé** (`/home`, `/scratch` ou Lustre), des **nœuds de calcul sans sortie internet**, et Apptainer pour les conteneurs. C'est tout ce qu'il faut à l'IA locale — trois recettes :
+La plupart des labos publics possèdent déjà le matériel. Une configuration HPC classique : des **nœuds de connexion** (internet, pas de GPU), des **nœuds de calcul GPU** derrière un ordonnanceur (SLURM), un **système de fichiers partagé** (`/home`, `/scratch` ou Lustre), des **nœuds de calcul sans sortie internet**, et Apptainer pour les conteneurs. C'est tout ce qu'il faut à l'IA locale. Trois recettes :
 
 **1. Amener les poids (une fois, depuis le nœud de connexion).** Les nœuds de calcul ne téléchargent pas ; le nœud de connexion oui :
 
 ```bash
 export HF_HOME=/scratch/$USER/hf          # les modèles atterrissent sur le stockage partagé
 pip install -U huggingface_hub
-hf download unsloth/Qwen3-8B-GGUF \
+hf download ggml-org/gemma-4-e4b-it-GGUF \
    Qwen3-8B-UD-Q4_K_XL.gguf --local-dir /scratch/$USER/llm/
 ```
 
@@ -139,7 +139,7 @@ python run_eval.py --base-url http://localhost:8080/v1   # votre charge de trava
 
 Fin de la tâche → le serveur meurt. Idéal pour les pipelines batch et les évaluations sur jeu doré (chap. 16) ; pour le chat interactif, préférez le nœud dédié.
 
-**3. Entraîner sans drame.** Un fine-tune QLoRA est une tâche *mono-GPU* : `#SBATCH --gres=gpu:1` sur n'importe quelle partition avec cartes 24 Go+. Ne demandez jamais du multi-nœuds pour un fine-tuning de LLM — les clusters aident le débit d'entraînement, pas la qualité d'un modèle seul (chap. 5). Gardez jeux de données et checkpoints d'adaptateur sur `/scratch` ; Unsloth fonctionne tel quel sous SLURM.
+**3. Entraîner sans drame.** Un fine-tune QLoRA est une tâche *mono-GPU* : `#SBATCH --gres=gpu:1` sur n'importe quelle partition avec cartes 24 Go+. Ne demandez jamais du multi-nœuds pour un fine-tuning de LLM. Les clusters aident le débit d'entraînement, pas la qualité d'un modèle seul (chap. 5). Gardez jeux de données et checkpoints d'adaptateur sur `/scratch` ; tous les affûteurs du [§ La pile IA locale](#ecosystem) fonctionnent tels quels sous SLURM.
 
 ### L'usage quotidien une fois l'endpoint en place
 
@@ -147,7 +147,7 @@ Tout ce livre parle le protocole compatible OpenAI — pointez chaque outil vers
 
 | Outil | Où le régler |
 |---|---|
-| Studio Chat | Paramètres → connexion fournisseur (chap. 4) |
+| Interface de chat | Paramètres → connexion fournisseur (chap. 4) |
 | pi / agents de code | `models.json` → `baseUrl` (chap. 11) |
 | Scripts Python | argument `base_url` (chap. 12) |
 

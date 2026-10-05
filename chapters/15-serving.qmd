@@ -5,7 +5,7 @@ One workstation serves one researcher. A **lab server** serves thirty. The jump 
 
 ### Parallel serving
 
-- **llama-server** (`llama.cpp`): `--parallel N --ctx-size …` splits the context budget across concurrent slots — remember KV-cache math (Chap. 5): 8 B model, 32 k context, 4 slots ⇒ ~16 GB on top of weights.
+- **llama-server** (`llama.cpp`): `--parallel N --ctx-size …` splits the context budget across concurrent slots. Remember KV-cache math (Chap. 5): 8 B model, 32 k context, 4 slots ⇒ ~16 GB on top of weights.
 - **vLLM**: continuous batching, much higher throughput for many simultaneous users; needs bigger GPUs and speaks OpenAI API natively.
 - Rule: llama.cpp for ≤ ~10 light users per GPU; vLLM beyond.
 
@@ -23,12 +23,12 @@ router_settings: {routing_strategy: usage-based-routing}
 general_settings: {max_budget: 100, budget_duration: 30d}
 ```
 
-You get: one stable OpenAI-compatible URL for the whole lab, **API keys per user/team**, quotas and budgets enforced, automatic fallback between GPUs, and a usage dashboard. Every tool in this book — Studio Chat connections, pi's `models.json`, Aider, Cline — points at the same gateway.
+You get: one stable OpenAI-compatible URL for the whole lab, **API keys per user/team**, quotas and budgets enforced, automatic fallback between GPUs, and a usage dashboard. Every tool in this book, chat UIs, pi's `models.json`, Aider, Cline, points at the same gateway.
 
 ### Governance hooks
 
 - **Auth**: keep models unreachable except through the gateway behind your SSO/reverse proxy (OAuth2/OIDC). Local AI must not mean shadow IT.
-- **Routing table**: publish which tasks go to `fast` vs `big` — most traffic belongs on small models; reserve frontier-size ones for review.
+- **Routing table.** Publish which tasks go to `fast` vs `big`. Most traffic belongs on small models; reserve frontier-size ones for review.
 - **Privacy by default**: gateways can log prompts; *don't*. Aggregate token counts only. If an audit ever requires logging, make it opt-in per project with retention limits (Chap. 17).
 - **Cost allocation** without cloud bills = tokens per team from the dashboard → feeds the TCO story of Chap. 18 and the scenarios of Chap. 19.
 
@@ -37,7 +37,7 @@ You get: one stable OpenAI-compatible URL for the whole lab, **API keys per user
 Concurrent users × average context ≈ KV memory (Chap. 5). A single RTX 4090 comfortably absorbs a 15-person lab on an 8–9 B Q4 model with 16 k contexts; a used A100/H100 or 2×4090 handles 27–32 B class for the same crowd. Start smaller than you think: utilisation data from the gateway tells you exactly when to buy.
 
 ::: {.al-take}
-**Our take.** Put the gateway in on day one, even for three users — retrofitting auth and quotas after people have built habits is a political project, not an IT one. And resist the urge to give everyone the biggest model: in our lab, moving 90 % of traffic to a small fast model felt like an upgrade, because latency dropped and nobody missed the parameters.
+**Our take.** Put the gateway in on day one, even for three users. Retrofitting auth and quotas after people have built habits is a political project, not an IT one. And resist the urge to give everyone the biggest model: in our lab, moving 90 % of traffic to a small fast model felt like an upgrade, because latency dropped and nobody missed the parameters.
 :::
 :::
 
@@ -48,7 +48,7 @@ Un poste sert un chercheur. Un **serveur de laboratoire** en sert trente. Le sau
 
 ### Le service parallèle
 
-- **llama-server** (`llama.cpp`) : `--parallel N --ctx-size …` répartit le budget de contexte entre créneaux simultanés — rappel de la math KV (chap. 5) : modèle 8 B, contexte 32 k, 4 créneaux ⇒ ~16 Go au-dessus des poids.
+- **llama-server** (`llama.cpp`) : `--parallel N --ctx-size …` répartit le budget de contexte entre créneaux simultanés. Rappel de la math KV (chap. 5) : modèle 8 B, contexte 32 k, 4 créneaux ⇒ ~16 Go au-dessus des poids.
 - **vLLM** : batching continu, débit bien supérieur pour de nombreux utilisateurs simultanés ; exige de plus grosses cartes et expose l'API OpenAI nativement.
 - Règle : llama.cpp jusqu'à ~10 utilisateurs légers par GPU ; vLLM au-delà.
 
@@ -66,12 +66,12 @@ router_settings: {routing_strategy: usage-based-routing}
 general_settings: {max_budget: 100, budget_duration: 30d}
 ```
 
-Vous obtenez : une URL unique compatible OpenAI pour tout le laboratoire, des **clés API par utilisateur/équipe**, des quotas et budgets appliqués, un basculement automatique entre GPUs et un tableau de bord d'usage. Tous les outils de ce livre — connexions Studio Chat, `models.json` de pi, Aider, Cline — pointent vers la même passerelle.
+Vous obtenez : une URL unique compatible OpenAI pour tout le laboratoire, des **clés API par utilisateur/équipe**, des quotas et budgets appliqués, un basculement automatique entre GPUs et un tableau de bord d'usage. Tous les outils de ce livre, interfaces de chat, `models.json` de pi, Aider, Cline, pointent vers la même passerelle.
 
 ### Les points d'ancrage de gouvernance
 
 - **Authentification** : modèles inaccessibles hors passerelle, derrière votre SSO/proxy inverse (OAuth2/OIDC). IA locale ne doit pas vouloir dire informatique fantôme.
-- **Table de routage** : publiez quelles tâches vont sur `fast` vs `big` — l'essentiel du trafic appartient aux petits modèles ; réservez les tailles frontier à la relecture.
+- **Table de routage.** Publiez quelles tâches vont sur `fast` vs `big`. L'essentiel du trafic appartient aux petits modèles ; réservez les tailles frontier à la relecture.
 - **Confidentialité par défaut** : les passerelles peuvent journaliser les prompts ; *ne le faites pas*. Comptez seulement les jetons agrégés. Si un audit exige un jour des logs, rendez-les opt-in par projet avec durée de conservation limitée (chap. 17).
 - **Imputation des coûts** sans facture cloud = jetons par équipe depuis le tableau de bord → alimente le TCO du chap. 18 et les scénarios du chap. 19.
 
@@ -80,6 +80,6 @@ Vous obtenez : une URL unique compatible OpenAI pour tout le laboratoire, des **
 Utilisateurs simultanés × contexte moyen ≈ mémoire KV (chap. 5). Une seule RTX 4090 absorbe confortablement un labo de 15 personnes sur un modèle 8–9 B Q4 avec des contextes 16 k ; une A100/H100 d'occasion ou 2×4090 gèrent du 27–32 B pour le même effectif. Commencez plus petit que prévu : les données d'utilisation de la passerelle vous disent exactement quand acheter.
 
 ::: {.al-take}
-**Notre avis.** Installez la passerelle dès le premier jour, même pour trois utilisateurs — ajouter auth et quotas après que les gens ont pris leurs habitudes est un projet politique, pas informatique. Et résistez à l'envie de donner le plus gros modèle à tout le monde : dans notre labo, basculer 90 % du trafic sur un petit modèle rapide a été vécu comme une amélioration — la latence a chuté et personne n'a réclamé les paramètres manquants.
+**Notre avis.** Installez la passerelle dès le premier jour, même pour trois utilisateurs. Ajouter auth et quotas après que les gens ont pris leurs habitudes est un projet politique, pas informatique. Et résistez à l'envie de donner le plus gros modèle à tout le monde : dans notre labo, basculer 90 % du trafic sur un petit modèle rapide a été vécu comme une amélioration. La latence a chuté et personne n'a réclamé les paramètres manquants.
 :::
 :::

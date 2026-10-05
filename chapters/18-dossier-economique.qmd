@@ -10,7 +10,7 @@
 ::: {.en}
 ## Executive summary
 
-Open-weight language models now sit within ~3 points of the best closed models on independent benchmarks ([Artificial Analysis](https://artificialanalysis.ai), early 2026) — and they run on hardware you can buy. For a research organisation this flips the default: sensitive workloads that could never use cloud APIs (unpublished results, personal data, grant material) become automatable **inside your perimeter**, at a cost structure you own.
+Open-weight language models now sit within ~3 points of the best closed models on independent benchmarks ([Artificial Analysis](https://artificialanalysis.ai), early 2026). And they run on hardware you can buy. For a research organisation this flips the default. Sensitive workloads that could never use cloud APIs (unpublished results, personal data, grant material) become automatable **inside your perimeter**, at a cost structure you own.
 
 This chapter gives you the cost model, the risk picture, and a 90-day pilot design with explicit go/no-go criteria. It sits in Part V alongside the strategy paper (Chap. 19); researchers new to the topic can start with Appendix A.
 :::
@@ -18,7 +18,7 @@ This chapter gives you the cost model, the risk picture, and a 90-day pilot desi
 ::: {.fr}
 ## Synthèse
 
-Les modèles à poids ouverts sont désormais à ~3 points des meilleurs modèles fermés sur les benchmarks indépendants ([Artificial Analysis](https://artificialanalysis.ai), début 2026) — et ils tournent sur du matériel courant. Pour un organisme de recherche, cela inverse la logique : les travaux sensibles qui n'auraient jamais pu passer par des API cloud (résultats non publiés, données personnelles, dossiers de subvention) deviennent automatisables **dans votre périmètre**, avec une structure de coûts que vous maîtrisez.
+Les modèles à poids ouverts sont désormais à ~3 points des meilleurs modèles fermés sur les benchmarks indépendants ([Artificial Analysis](https://artificialanalysis.ai), début 2026). Et ils tournent sur du matériel courant. Pour un organisme de recherche, cela inverse la logique. Les travaux sensibles qui n'auraient jamais pu passer par des API cloud (résultats non publiés, données personnelles, dossiers de subvention) deviennent automatisables **dans votre périmètre**, avec une structure de coûts que vous maîtrisez.
 
 Ce chapitre fournit le modèle de coût, la lecture des risques et un pilote de 90 jours avec critères go/no-go explicites. Il s'inscrit dans la Partie V aux côtés de la note stratégique (chap. 19) ; les chercheurs qui découvrent le sujet peuvent commencer par l'annexe A.
 :::
@@ -32,16 +32,16 @@ API pricing is a perpetual rental; local hardware is a purchase that amortises. 
 |---|---|---|
 | Upfront | €0 | Workstation €3–5k (24 GB GPU / Mac 64 GB+) or shared server €15–40k |
 | Ongoing | Per-token fees × usage, forever; price per unit falls but usage grows faster | Electricity (~0.3–0.8 kW under load), occasional hardware refresh every 4–5 yrs |
-| Scaling behaviour | Linear with adoption — success increases the bill | Step function — buy once, serve the whole lab |
+| Scaling behaviour | Linear with adoption. Success increases the bill | Step function. Buy once, serve the whole lab |
 | Sensitive-data workloads | Not available without compliance exceptions | Included |
 | Rate limits / outages | Provider-controlled | Yours to size |
 
 Two structural trends favour acting now rather than later ([AA trends](https://artificialanalysis.ai/trends)):
 
-1. **Price per unit of intelligence keeps collapsing** — but so does the value of paying it, because open weights close the quality gap every quarter.
-2. **Hardware capability per euro keeps rising** — MoE architectures mean a 26B-total/4B-active model delivers frontier-adjacent quality on a single 24 GB card.
+1. **Price per unit of intelligence keeps collapsing**. But so does the value of paying it, because open weights close the quality gap every quarter.
+2. **Hardware capability per euro keeps rising**. MoE architectures mean a 26B-total/4B-active model delivers frontier-adjacent quality on a single 24 GB card.
 
-![Cumulative cost: API rental vs buying local. The local line starts at the purchase (≈ €4k) and grows slowly (electricity); the API curve starts at zero but compounds with usage. Break-even lands around month 14 for a 5-seat team — every month after that widens the gap in the local box's favour. Illustrative; substitute your own numbers.](chapters/figures/fig-tco.svg){#fig-tco width=100%}
+![Cumulative cost: API rental vs buying local. The local line starts at the purchase (≈ €4k) and grows slowly (electricity); the API curve starts at zero but compounds with usage. Break-even lands around month 14 for a 5-seat team. Every month after that widens the gap in the local box's favour. Illustrative; substitute your own numbers.](chapters/figures/fig-tco.svg){#fig-tco width=100%}
 :::
 
 ::: {.fr}
@@ -53,16 +53,16 @@ La tarification API est une location perpétuelle ; le matériel local est un ac
 |---|---|---|
 | Initial | 0 € | Station €3–5k (GPU 24 Go / Mac 64 Go+) ou serveur partagé €15–40k |
 | Courant | Frais par token × usage, pour toujours ; le prix unitaire baisse mais l'usage croît plus vite | Électricité (~0,3–0,8 kW en charge), renouvellement matériel tous les 4–5 ans |
-| Comportement à l'échelle | Linéaire avec l'adoption — le succès augmente la facture | Par paliers — on achète une fois, tout le labo est servi |
+| Comportement à l'échelle | Linéaire avec l'adoption. Le succès augmente la facture | Par paliers. On achète une fois, tout le labo est servi |
 | Charges de travail sensibles | Indisponible sans dérogations de conformité | Inclus |
 | Limites de débit / pannes | Décidées par le fournisseur | À dimensionner vous-même |
 
 Deux tendances structurelles plaident pour agir maintenant ([tendances AA](https://artificialanalysis.ai/trends)) :
 
-1. **Le prix par unité d'intelligence s'effondre** — mais sa valeur aussi, car les poids ouverts comblent l'écart de qualité chaque trimestre.
-2. **La capacité matérielle par euro monte** — les architectures MoE font qu'un modèle 26B total / 4B actifs offre une qualité proche de l'état de l'art sur une seule carte 24 Go.
+1. **Le prix par unité d'intelligence s'effondre**. Mais sa valeur aussi, car les poids ouverts comblent l'écart de qualité chaque trimestre.
+2. **La capacité matérielle par euro monte**. Les architectures MoE font qu'un modèle 26B total / 4B actifs offre une qualité proche de l'état de l'art sur une seule carte 24 Go.
 
-![Coût cumulé : location API vs achat local. La droite locale démarre à l'achat (≈ 4 k€) puis croît lentement (électricité) ; la courbe API part de zéro mais croît de façon composée avec l'usage. Point d'équilibre ≈ mois 14 pour une équipe de 5 personnes — ensuite, chaque mois creuse l'avance du local. Illustratif ; remplacez par vos propres chiffres.](chapters/figures/fig-tco.svg){#fig-tco-fr width=100%}
+![Coût cumulé : location API vs achat local. La droite locale démarre à l'achat (≈ 4 k€) puis croît lentement (électricité) ; la courbe API part de zéro mais croît de façon composée avec l'usage. Point d'équilibre ≈ mois 14 pour une équipe de 5 personnes. Ensuite, chaque mois creuse l'avance du local. Illustratif ; remplacez par vos propres chiffres.](chapters/figures/fig-tco.svg){#fig-tco-fr width=100%}
 :::
 
 ::: {.en}
@@ -78,14 +78,14 @@ Deux tendances structurelles plaident pour agir maintenant ([tendances AA](https
 
 | Risk | Cloud APIs | Local deployment | Mitigation either way |
 |---|---|---|---|
-| Data leakage to third party | Inherent to the model | None by design (offline capable) | — / network egress rules |
+| Data leakage to third party | Inherent to the model | None by design (offline capable) | locked down by contract / network egress rules |
 | Vendor lock-in & deprecation | Model retired on provider's schedule | Weights archived forever | Open formats (GGUF/safetensors) |
 | Compliance (GDPR Art. 28/35, Ch. V) | Processor agreements, transfer analyses | No processor; DPIA still required | Document corpus as processing activity |
 | Hallucinated output | Yes | Yes | Human-in-the-loop; domain evaluation gate |
 | Model memorising training data | n/a | Possible | Treat corpora as personal data; access control |
 | Skills dependency | Low (vendor does ops) | Moderate (IT owns it) | Shared central service, not per-lab ops |
 
-Local removes an entire class of *legal* risk while introducing ordinary *operational* risks — the kind institutions already know how to manage.
+Local removes an entire class of *legal* risk while introducing ordinary *operational* risks. The kind institutions already know how to manage.
 :::
 
 ::: {.fr}
@@ -93,14 +93,14 @@ Local removes an entire class of *legal* risk while introducing ordinary *operat
 
 | Risque | API cloud | Déploiement local | Atténuation dans tous les cas |
 |---|---|---|---|
-| Fuite de données vers un tiers | Inhérente au modèle | Aucune par conception (hors ligne possible) | — / règles de flux réseau |
+| Fuite de données vers un tiers | Inhérente au modèle | Aucune par conception (hors ligne possible) | verrouillée par contrat / règles de flux réseau |
 | Lock-in fournisseur & obsolescence | Modèle retiré au calendrier du fournisseur | Poids archivés indéfiniment | Formats ouverts (GGUF/safetensors) |
 | Conformité (RGPD art. 28/35, chap. V) | Contrats de sous-traitance, analyses de transfert | Pas de sous-traitant ; AIPD toujours requise | Corpus documentés comme activité de traitement |
 | Sorties hallucinées | Oui | Oui | Humain dans la boucle ; porte d'évaluation métier |
 | Mémorisation des données d'entraînement | n/a | Possible | Corpora traités comme données personnelles ; contrôle d'accès |
 | Dépendance compétences | Faible (le vendeur opère) | Modérée (l'IT opère) | Service central mutualisé, pas d'ops par labo |
 
-Le local supprime toute une classe de risques *juridiques* et introduit des risques *opérationnels* ordinaires — ceux que les institutions savent déjà gérer.
+Le local supprime toute une classe de risques *juridiques* et introduit des risques *opérationnels* ordinaires. Ceux que les institutions savent déjà gérer.
 :::
 
 ::: {.en}
