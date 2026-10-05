@@ -112,6 +112,13 @@ ul, ol {
 }
 
 // ── Page title / part headings (h1.unnumbered) ──────────────────────────
+// The home page's breadcrumb holds a single crumb, which Quarto builds from the
+// chapter's raw heading text (index.qmd's heading is a per-language marker), so
+// drop it rather than publish the marker.
+.quarto-page-breadcrumbs ol.breadcrumb .breadcrumb-item:only-child {
+  display: none;
+}
+
 h1.unnumbered {
   font-family: "Space Grotesk", sans-serif;
   font-size: 2.1rem;

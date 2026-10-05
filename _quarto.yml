@@ -35,7 +35,10 @@ book:
   cover-image-alt: "The Local AI Field Guide"
   downloads: [pdf, epub, docx]
   repo-url: https://github.com/antoinelucasfra/local-ai-field-guide
-  repo-actions: [edit, issue]
+  # no edit action: Quarto links the file it rendered, which for chapters is the
+  # generated chapters/<slug>.qmd (per-language title, not in git). Sources are
+  # chapters/_src/<slug>.qmd.
+  repo-actions: [issue]
   site-url: https://antoinelucasfra.github.io/local-ai-field-guide/
   sharing: [twitter, linkedin]
   search: true
@@ -71,9 +74,8 @@ format:
   docx:
     toc: true
 
-# Per-chapter titles. Each chapter's single H1 is `# {{< meta ch-<slug> >}}`,
-# so the title follows the language profile instead of a language-specific
-# heading that the book structure would read before filtering.
+# Per-chapter titles, so a source can still be rendered on its own; the book
+# reads the generated chapters/<slug>.qmd files, whose H1 is real text.
 ch-welcome: "Who this book is for"
 ch-01-pourquoi: "The rise of local AI: why now"
 ch-02-choisir-modeles: "The open-model landscape, ranked"

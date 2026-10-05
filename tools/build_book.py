@@ -1,21 +1,26 @@
 #!/usr/bin/env python3
-"""Build the bilingual Quarto book configuration.
+"""Build the bilingual Quarto book configuration and chapter files.
 
-Sources : chapters/*.qmd fragments + chapters/_order.txt (the edited files)
-          index.qmd                            (the book home page)
-Outputs : _quarto.yml + _quarto-fr.yml           book project config, regenerated
-          .ch-<lang>-<slug>.qmd                  revealjs decks (hidden, gitignored)
+Sources : chapters/_src/*.qmd + chapters/_order.txt  (the edited files)
+          index.qmd                                 (the book home page)
+Outputs : _quarto.yml + _quarto-fr.yml              book project config
+          chapters/<slug>.qmd                       chapter, title in one language
+          .ch-<lang>-<slug>.qmd                     revealjs decks (gitignored)
 
-Id convention: the second occurrence of {#id} in a fragment (the FR heading)
+Every chapter has one H1 and it is not duplicated per language: the book reads a
+chapter's first heading *before* filters run, so an English/French pair there
+titled the French edition in English. The sources keep the heading as a marker
+(`# {{< meta ch-<slug> >}} {#id}`) and this generator writes, per run, the
+chapter file the book lists, with a real title for the active profile — Quarto
+reads titles from source text for the sidebar, breadcrumbs and search index, so
+the text has to be there, not in a shortcode.
+
+Id convention: the second occurrence of {#id} in a source (the FR heading)
 becomes {#id-fr}; langsel.lua renames it back after filtering, so pandoc never
 sees duplicate ids and final anchors stay language-independent.
 
-The book itself is a real Quarto book project: chapters, parts and appendices
-live in the generated config, and Quarto does the numbering, sidebar, search,
-downloads and cross-file links. Only the per-chapter revealjs decks are still
-generated here, because a book project renders its chapters, not extra decks.
-
-Run automatically as project pre-render; manual: python3 tools/build_book.py
+Run automatically as project pre-render (QUARTO_PROFILE picks the language);
+manual: python3 tools/build_book.py
 """
 
 import glob
@@ -36,6 +41,9 @@ def _open(path, mode="r"):
 
 
 CH = os.path.join(ROOT, "chapters")
+# chapter bodies: Quarto ignores _-prefixed directories, so these are never
+# rendered as pages of their own (the generated chapter files are)
+SRC = os.path.join(CH, "_src")
 
 # Book identity — the single source. tools/make_index.py reads these for the
 # landing page, so a rename is one edit here.
@@ -221,24 +229,53 @@ def deck_body(body, title, slug):
         return re.sub(r"\]\((?:\.\./)?(?:chapters/)?([\w-]+)\.qmd\)", r"](\1.html)", body)
 
 
+def active_lang():
+        """'' for English (the default profile), 'fr' for French."""
+        return "fr" if "fr" in os.environ.get("QUARTO_PROFILE", "").split(",") else ""
+
+
+def chapter_body(body, title):
+        """The chapter file the book lists. Its single H1 keeps the marker's id but
+        carries the profile's real title, because Quarto reads that text for the
+        sidebar, the breadcrumbs and the search index."""
+        return re.sub(
+                r"^#\s+\{\{< meta ch-[\w-]+ >\}\}\s*(\{#[\w-]+\})\s*$",
+                rf"# {title} \1",
+                body,
+                count=1,
+                flags=re.M,
+        )
+
+
 def main():
         entries = order()
-        # the generator owns .ch-*.qmd: drop decks from an older layout
+        lang = active_lang()
+        # the generator owns .ch-*.qmd and chapters/*.qmd: drop leftovers from an
+        # older layout, or chapters that left _order.txt
         for stale in glob.glob(os.path.join(ROOT, ".ch-*.qmd")):
                 os.remove(stale)
+        wanted = {entry[1] for entry in entries if entry[0] == "FILE"}
+        for stale in glob.glob(os.path.join(CH, "*.qmd")):
+                if os.path.relpath(stale, ROOT).replace(os.sep, "/") not in wanted:
+                        os.remove(stale)
         decks = []
         for entry in entries:
                 if entry[0] != "FILE":
                         continue
                 _, path, slug, ten, tfr = entry
-                body = _open(os.path.join(ROOT, path)).read().rstrip()
-                for lang, title in (("en", ten), ("fr", tfr)):
-                        out = os.path.join(ROOT, f".ch-{lang}-{slug}.qmd")
+                body = _open(os.path.join(SRC, slug + ".qmd")).read().rstrip()
+                chapter = chapter_body(body, ten if lang == "" else tfr)
+                if chapter == body:
+                        sys.exit(f"build_book: {slug}: chapter heading marker not found")
+                with _open(os.path.join(ROOT, path), "w") as f:
+                        f.write(chapter + "\n")
+                for deck_lang, title in (("en", ten), ("fr", tfr)):
+                        out = os.path.join(ROOT, f".ch-{deck_lang}-{slug}.qmd")
                         with _open(out, "w") as f:
                                 f.write(
                                         DECK.format(
                                                 title=title.replace('"', "'"),
-                                                lang=lang,
+                                                lang=deck_lang,
                                                 slug=slug,
                                                 filters=FILTERS_DECK,
                                         )
@@ -281,7 +318,10 @@ book:
   cover-image-alt: "{TITLE_EN}"
   downloads: [pdf, epub, docx]
   repo-url: {REPO}
-  repo-actions: [edit, issue]
+  # no edit action: Quarto links the file it rendered, which for chapters is the
+  # generated chapters/<slug>.qmd (per-language title, not in git). Sources are
+  # chapters/_src/<slug>.qmd.
+  repo-actions: [issue]
   site-url: {SITE}
   sharing: [twitter, linkedin]
   search: true
@@ -297,9 +337,8 @@ book:
 
 {FORMATS}
 
-# Per-chapter titles. Each chapter's single H1 is `# {{{{< meta ch-<slug> >}}}}`,
-# so the title follows the language profile instead of a language-specific
-# heading that the book structure would read before filtering.
+# Per-chapter titles, so a source can still be rendered on its own; the book
+# reads the generated chapters/<slug>.qmd files, whose H1 is real text.
 {chapter_meta(entries, "")}
 """,
                 "-en.yml": f"""book:
@@ -336,8 +375,8 @@ book:
                 with _open(os.path.join(ROOT, f"_quarto{name}"), "w") as f:
                         f.write(content)
         print(
-                f"built _quarto.yml + _quarto-en.yml + _quarto-fr.yml + {len(decks)} "
-                f"revealjs decks ({len(decks) // 2}x EN/FR)"
+                f"built _quarto.yml + _quarto-en.yml + _quarto-fr.yml, "
+                f"{len(decks) // 2} chapters ({lang or 'en'}), {len(decks)} decks"
         )
 
 
