@@ -1,10 +1,4 @@
-::: {.en}
-## 1. The rise of local AI: why now {#why}
-:::
-
-::: {.fr}
-## 1. L'essor de l'IA locale : pourquoi maintenant {#why}
-:::
+# {{< meta ch-01-pourquoi >}} {#why}
 
 ::: {.en}
 For three years, frontier AI meant closed APIs: GPT, Claude, Gemini. Enterprises traded data sovereignty for capability. Every prompt went through a third party, priced per token, subject to foreign jurisdictions and vendor retention policies.

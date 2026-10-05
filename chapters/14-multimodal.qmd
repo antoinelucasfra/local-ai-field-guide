@@ -1,6 +1,6 @@
-::: {.en}
-## 14. Voice, vision and images {#multimodal}
+# {{< meta ch-14-multimodal >}} {#multimodal}
 
+::: {.en}
 Text is the default. Local stacks now cover ears and eyes too, all offline.
 
 ### Speech-to-text: whisper.cpp / faster-whisper
@@ -28,8 +28,6 @@ Each modality adds its own model and its own memory budget: Whisper large ≈ 3 
 :::
 
 ::: {.fr}
-## 14. Voix, vision et images {#multimodal}
-
 Le texte est la valeur par défaut. Les piles locales couvrent aussi les oreilles et les yeux, tout hors ligne.
 
 ### Reconnaissance vocale : whisper.cpp / faster-whisper

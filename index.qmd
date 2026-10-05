@@ -1,6 +1,6 @@
-::: {.en}
-## Who this book is for {#audience}
+# {{< meta ch-welcome >}} {.unnumbered #audience}
 
+::: {.en}
 Local AI means open-weight language models running on your own hardware. For a growing share of professional work it now beats cloud APIs: sensitive data, domain-specific tasks, unlimited usage at zero marginal cost. This book is the complete reference for adopting it in a French research, public-sector or corporate environment. It uses a stack of local runtimes, studios and trainers. None of them is mandatory.
 
 | You are… | Read first | You will get |
@@ -17,8 +17,6 @@ Local AI means open-weight language models running on your own hardware. For a g
 :::
 
 ::: {.fr}
-## À qui s'adresse ce livre {#audience}
-
 L'IA locale, ce sont des modèles de langage à poids ouverts exécutés sur votre propre matériel. Pour une part croissante du travail professionnel, elle bat les API cloud : données sensibles, tâches métier, usage illimité à coût marginal nul. Ce livre est la référence complète pour son adoption dans un environnement français de recherche, public ou privé. Il utilise une pile de runtimes, studios et affûteurs locaux. Aucun d'eux n'est obligatoire.
 
 | Vous êtes… | Commencez par | Vous obtiendrez |
@@ -45,11 +43,10 @@ L'IA locale, ce sont des modèles de langage à poids ouverts exécutés sur vot
 
 Annexes: a 30-minute researcher primer (A), sources & limits (B), a local-AI projects field guide (C), the hardware buying guide (D), and a DPIA template (E).
 
-*This edition: {{< words-total >}} words, EN or FR.*
 :::
 
 ::: {.fr}
-## Les cinq parties {#parts}
+## Les cinq parties {#parts-fr}
 
 - **Partie I — Fondations** : pourquoi l'IA locale maintenant, et comment choisir ses modèles.
 - **Partie II — Exécuter** : installer un runtime, les interfaces de chat, et tous les paramètres d'inférence expliqués.
@@ -59,5 +56,4 @@ Annexes: a 30-minute researcher primer (A), sources & limits (B), a local-AI pro
 
 Annexes : initiation chercheur en 30 minutes (A), sources et limites (B), guide de terrain des projets (C), guide d'achat matériel (D), modèle d'AIPD (E).
 
-*Cette édition : {{< words-total >}} mots, en français ou en anglais.*
 :::

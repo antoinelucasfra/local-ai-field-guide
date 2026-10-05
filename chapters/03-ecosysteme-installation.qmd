@@ -1,10 +1,4 @@
-::: {.en}
-## 3. The local AI stack: runtimes, studios, fine-tuners {#ecosystem}
-:::
-
-::: {.fr}
-## 3. La pile IA locale : runtimes, studios, affûteurs {#ecosystem}
-:::
+# {{< meta ch-03-ecosysteme-installation >}} {#ecosystem}
 
 ::: {.en}
 Three jobs, three layers, usually three different projects:
@@ -47,7 +41,7 @@ If you only remember one thing from this chapter: pick **one** runtime and **one
 :::
 
 ::: {.fr}
-### Deux formes d'outil {#shapes}
+### Deux formes d'outil {#shapes-fr}
 
 | Forme | Comment on le pilote | Exemples |
 |---|---|---|
@@ -95,7 +89,7 @@ What is *not* in this table: nothing here is required. A GGUF file, `llama.cpp`,
 :::
 
 ::: {.fr}
-### Qui fait quoi {#tools}
+### Qui fait quoi {#tools-fr}
 
 Une ligne par outil, sa propre documentation comme source. Formes et capacités uniquement, aucune allégation de performance :
 
@@ -179,7 +173,7 @@ For a public HTTPS URL, put a reverse proxy or mesh VPN in front (Cloudflare Tun
 :::
 
 ::: {.fr}
-### Installation et configuration {#setup}
+### Installation et configuration {#setup-fr}
 
 Choisissez un runtime, une interface de chat, et un affûteur si vous comptez entraîner. Trois chemins d'installation couvrent presque tous les cas ; le widget WebLLM plus bas n'en exige aucun.
 
@@ -269,7 +263,7 @@ It is of course a tiny model. The point is to *feel* that weights are just files
 :::
 
 ::: {.fr}
-### Essayer un modèle dans le navigateur, sans rien installer {#browser}
+### Essayer un modèle dans le navigateur, sans rien installer {#browser-fr}
 
 Pressé·e ? Le widget ci-dessous fait tourner un petit modèle de langage **dans cette page web** grâce à [WebLLM](https://github.com/mlc-ai/web-llm) et à votre GPU via WebGPU. Sans compte, sans serveur, sans installation. Le premier chargement télécharge ~500 Mo une seule fois (mis en cache ensuite) ; fonctionne dans Chrome/Edge/Safari sur toute machine récente.
 

@@ -1,10 +1,4 @@
-::: {.en}
-## 12. Fine-tuning in Python: the QLoRA loop {#core}
-:::
-
-::: {.fr}
-## 12. Le fine-tuning en Python : la boucle QLoRA {#core}
-:::
+# {{< meta ch-12-voie-python >}} {#core}
 
 ::: {.en}
 When the GUI is not enough, the same loop is scriptable. The listing below is **Unsloth Core**, the most widely used Python trainer. Axolotl, torchtune and LLaMA-Factory express the same five steps as a YAML config or a recipe[^ch12-trainers]:
@@ -61,9 +55,9 @@ Pin the version in your project (`pip freeze | grep -i unsloth`). The stack move
 
 The listing above is the skeleton. A production run adds four things:
 
-1. **A real dataset file**. JSONL with one instruction/output pair per line, produced by [§ Building training data](#data) or hand-curated. Hash it and record the hash next to the config: `sha256sum internal_corpus.jsonl > corpus.sha256`.
-2. **Deliberate hyperparameters**. `r=16` is a starting point, not a decision; learning rate, epochs and rank rationale live in [§ Hyperparameters](#hyper).
-3. **Evaluation before promotion**. Score pass@1 against your golden set before the adapter goes anywhere near production ([§ Evaluate](#evaluate)):
+1. **A real dataset file**. JSONL with one instruction/output pair per line, produced by [§ Building training data](08-data-recipes.qmd#data) or hand-curated. Hash it and record the hash next to the config: `sha256sum internal_corpus.jsonl > corpus.sha256`.
+2. **Deliberate hyperparameters**. `r=16` is a starting point, not a decision; learning rate, epochs and rank rationale live in [§ Hyperparameters](07-hyperparametres-entrainement.qmd#hyper).
+3. **Evaluation before promotion**. Score pass@1 against your golden set before the adapter goes anywhere near production ([§ Evaluate](16-evaluer.qmd#evaluate)):
 
 ```python
 FastLanguageModel.for_inference(model)
@@ -71,7 +65,7 @@ for task in load_dataset("json", data_files="golden_set.jsonl")["train"]:
     out = generate(task["instruction"])   # score against task["reference"]
 ```
 
-4. **Versioned export**. `save_pretrained_gguf` output plus the YAML config and dataset hash in one archive ([§ Export](#export)).
+4. **Versioned export**. `save_pretrained_gguf` output plus the YAML config and dataset hash in one archive ([§ Export](09-export-deploiement.qmd#export)).
 
 ### Common failures {#core-failures}
 
@@ -90,7 +84,7 @@ for task in load_dataset("json", data_files="golden_set.jsonl")["train"]:
 ::: {.fr}
 Chaque affûteur a son équivalent headless pour l'automatisation. `unsloth train|inference|export`, `axolotl train config.yml`, `llamafactory-cli train …`, `tune run …`. Le YAML sauvegardé par une interface se rejoue tel quel en CI.
 
-### Installation {#core-install}
+### Installation {#core-install-fr}
 
 Linux ou WSL2 avec pilote CUDA 12.x (Unsloth sert d'exemple ; la même boucle s'installe avec Axolotl, torchtune ou LLaMA-Factory) :
 
@@ -100,13 +94,13 @@ pip install unsloth
 
 Figez la version dans votre projet (`pip freeze | grep -i unsloth`). La stack avance vite et la reproductibilité bat la nouveauté. Pas de GPU sur la machine qui écrit le code ? Le même script tourne à l'identique sur un GPU loué ; seules les données y sont copiées, jamais l'inverse si le corpus est sensible.
 
-### De l'extrait au run de production {#core-walkthrough}
+### De l'extrait au run de production {#core-walkthrough-fr}
 
 Le listing ci-dessus est le squelette. Un run de production ajoute quatre choses :
 
-1. **Un vrai fichier de données**. JSONL avec une paire instruction/sortie par ligne, produit par [§ Construire des données d'entraînement](#data) ou curé à la main. Hashez-le et consignez le hash près de la config : `sha256sum internal_corpus.jsonl > corpus.sha256`.
-2. **Des hyperparamètres choisis**. `r=16` est un point de départ, pas une décision ; taux d'apprentissage, époques et logique du rang vivent au [§ Hyperparamètres](#hyper).
-3. **Évaluation avant promotion**. Scorez le pass@1 sur votre jeu de référence avant de pousser l'adaptateur vers la production ([§ Évaluer](#evaluate)) :
+1. **Un vrai fichier de données**. JSONL avec une paire instruction/sortie par ligne, produit par [§ Construire des données d'entraînement](08-data-recipes.qmd#data) ou curé à la main. Hashez-le et consignez le hash près de la config : `sha256sum internal_corpus.jsonl > corpus.sha256`.
+2. **Des hyperparamètres choisis**. `r=16` est un point de départ, pas une décision ; taux d'apprentissage, époques et logique du rang vivent au [§ Hyperparamètres](07-hyperparametres-entrainement.qmd#hyper).
+3. **Évaluation avant promotion**. Scorez le pass@1 sur votre jeu de référence avant de pousser l'adaptateur vers la production ([§ Évaluer](16-evaluer.qmd#evaluate)) :
 
 ```python
 FastLanguageModel.for_inference(model)
@@ -114,9 +108,9 @@ for task in load_dataset("json", data_files="golden_set.jsonl")["train"]:
     out = generate(task["instruction"])   # score contre task["reference"]
 ```
 
-4. **Export versionné**. Sortie de `save_pretrained_gguf` plus la config YAML et le hash du dataset dans une même archive ([§ Export](#export)).
+4. **Export versionné**. Sortie de `save_pretrained_gguf` plus la config YAML et le hash du dataset dans une même archive ([§ Export](09-export-deploiement.qmd#export)).
 
-### Échecs courants {#core-failures}
+### Échecs courants {#core-failures-fr}
 
 | Symptôme | Cause habituelle | Remède |
 |---|---|---|

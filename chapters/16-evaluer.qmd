@@ -1,10 +1,4 @@
-::: {.en}
-## 16. Evaluate before you trust {#evaluate}
-:::
-
-::: {.fr}
-## 16. Évaluer avant de faire confiance {#evaluate}
-:::
+# {{< meta ch-16-evaluer >}} {#evaluate}
 
 ::: {.en}
 Never deploy a model on institutional work without a measurement. Three layers:
@@ -37,7 +31,7 @@ Every change to model, quantisation or fine-tune re-runs the same script:
           --baseline results/baseline.json --threshold 2
 ```
 
-Exit non-zero blocks promotion. Wire it into the same CI that rebuilds the adapter ([§ Fine-tuning in Python](#core)). Keep every `results/*.json`: the score history is your evidence file for [§ GDPR accountability](#gdpr) and the business case ([§ Economics](#bizcase)).
+Exit non-zero blocks promotion. Wire it into the same CI that rebuilds the adapter ([§ Fine-tuning in Python](12-voie-python.qmd#core)). Keep every `results/*.json`: the score history is your evidence file for [§ GDPR accountability](17-gdpr-durcissement.qmd#gdpr) and the business case ([§ Economics](18-dossier-economique.qmd#bizcase)).
 
 ### Memorisation probe {#eval-memory}
 
@@ -45,7 +39,7 @@ Fine-tuned models can parrot their training corpus. Before any deployment that t
 
 - Plant or pick 10–20 canary strings (names, reference numbers) present in the training data.
 - Prompt for them directly and via paraphrase; expect zero recall.
-- Any hit → the corpus was not cleaned; go back to [§ Building training data](#data), not to a disclaimer.
+- Any hit → the corpus was not cleaned; go back to [§ Building training data](08-data-recipes.qmd#data), not to a disclaimer.
 
 A minimal report reads: date · candidate (name, quant, config hash) · golden-set hash · scores per metric · delta vs baseline · decision. One page, versioned. Enough to reconstruct the decision two years later.
 
@@ -63,20 +57,20 @@ Ne déployez jamais un modèle sur un travail institutionnel sans évaluation ch
 
 Règle de quantification : préférez les quants dynamiques (`UD-*` d'Unsloth, MLX 4-bit). Ils récupèrent l'essentiel de la précision que les formats 4-bit standards perdent. En cas de doute, comparez la quant candidate à une précision supérieure sur votre jeu de référence plutôt que de vous fier à l'étiquette.
 
-### Construire le jeu de référence {#eval-golden}
+### Construire le jeu de référence {#eval-golden-fr}
 
 1. **Moissonnez des tâches réelles**. Tickets passés, vrais e-mails, rapports effectifs du flux visé. Les tâches synthétiques évaluent la capacité à faire des tâches synthétiques.
 2. **Réponses de référence quand c'est bon marché**. Sortie attendue exacte pour l'extraction/classification ; listes de faits clés pour la prose ; tests unitaires pour le code. Là où aucune vérité terrain n'existe, réservez la ligne à une notation humaine plutôt que d'en inventer une.
 3. **Figez et versionnez**. `golden.jsonl` + un hash, rangés près des configs d'entraînement. Il ne doit jamais apparaître dans un corpus d'entraînement. La contamination transforme la porte en miroir.
 4. **Rafraîchissez chaque trimestre**. Retirez les lignes que tous les modèles maîtrisent ; ajoutez des lignes issues des nouveaux modes d'échec observés en production.
 
-### Noter sans se mentir {#eval-metrics}
+### Noter sans se mentir {#eval-metrics-fr}
 
 - **Déterministe d'abord** : correspondance exacte/regex pour l'extraction, pass@1 avec tests exécutés pour le code, couverture de liste de faits pour les résumés. Pas cher, reproductible, impossible à contester.
 - **LLM-juge seulement sans vérité terrain**[^ch16-judge], avec un barème écrit (critères, échelle, gestion du refus) et *un seul modèle juge figé* consigné avec les résultats. Les juges héritent de biais. Calibrez le vôtre sur ~30 exemples notés par un humain et publiez le taux d'accord avant de vous y fier.
 - **Fixez la porte avant de mesurer** : « promu si ≥ référence − 2 points » décidé à l'avance bat la rationalisation a posteriori à tous les coups.
 
-### La porte anti-régression {#eval-gate}
+### La porte anti-régression {#eval-gate-fr}
 
 Chaque changement de modèle, de quantification ou de fine-tune rejoue le même script :
 
@@ -85,15 +79,15 @@ Chaque changement de modèle, de quantification ou de fine-tune rejoue le même 
           --baseline results/baseline.json --threshold 2
 ```
 
-Sortie non nulle = promotion bloquée. Branchez-le dans le même CI qui reconstruit l'adaptateur ([§ Le fine-tuning en Python](#core)). Conservez chaque `results/*.json` : l'historique des scores est votre pièce de responsabilité ([§ Responsabilisation RGPD](#gdpr)) et votre dossier économique ([§ Économie](#bizcase)).
+Sortie non nulle = promotion bloquée. Branchez-le dans le même CI qui reconstruit l'adaptateur ([§ Le fine-tuning en Python](12-voie-python.qmd#core)). Conservez chaque `results/*.json` : l'historique des scores est votre pièce de responsabilité ([§ Responsabilisation RGPD](17-gdpr-durcissement.qmd#gdpr)) et votre dossier économique ([§ Économie](18-dossier-economique.qmd#bizcase)).
 
-### Sonde de mémorisation {#eval-memory}
+### Sonde de mémorisation {#eval-memory-fr}
 
 Les modèles affûtés peuvent réciter leur corpus. Avant tout déploiement touchant des données personnelles :
 
 - Plantez ou choisissez 10–20 chaînes canaris (noms, numéros de référence) présentes dans les données d'entraînement.
 - Demandez-les directement et par périphrase ; zéro rappel attendu.
-- Le moindre succès → le corpus n'était pas nettoyé ; retournez à [§ Construire des données d'entraînement](#data), pas à une clause de non-responsabilité.
+- Le moindre succès → le corpus n'était pas nettoyé ; retournez à [§ Construire des données d'entraînement](08-data-recipes.qmd#data), pas à une clause de non-responsabilité.
 
 Un rapport minimal tient en une page : date · candidat (nom, quant, hash de config) · hash du jeu de référence · scores par métrique · écart vs référence · décision. Versionné. Assez pour reconstituer la décision deux ans plus tard.
 

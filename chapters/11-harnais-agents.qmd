@@ -1,6 +1,6 @@
-::: {.en}
-## 11. Coding agent harnesses {#harness}
+# {{< meta ch-11-harnais-agents >}} {#harness}
 
+::: {.en}
 An **agent harness** is the loop wrapped around a language model: system prompt + tool definitions (read files, edit files, run shell commands), permission gates before destructive actions, context assembly between turns, and the interface you type into. The model is the engine. The harness is the chassis and cockpit. The same model performs visibly differently across harnesses. The Coding Agent Index (Chap. 2) measures *harness+model pairs*, not models alone.
 
 ### Why local models change the calculus
@@ -65,7 +65,7 @@ Honourable mention: **Claude Code**. Closed source, but the reference UX. It dri
 
 ### Local reality checklist
 
-![The agent loop: the harness exchanges prompts and tool calls with a localhost model endpoint; tools (files, shell, git, tests) run on-premise, and results feed back into context until done.](chapters/figures/fig-agent-loop.svg){#fig-agent width=100%}
+![The agent loop: the harness exchanges prompts and tool calls with a localhost model endpoint; tools (files, shell, git, tests) run on-premise, and results feed back into context until done.](figures/fig-agent-loop.svg){#fig-agent width=100%}
 
 - **Measure the harness tax first.** System prompt + tool schemas can eat 10–20 k tokens before your code is even attached. On a 32 k-context model that is the whole budget: pick harnesses that trim, and check Chap. 5's KV-cache math.
 - **Tool-calling format matters more than size.** Use models trained for function calling (Qwen-Coder, GLM, Kimi) and serve them with `llama-server --jinja`. Some studios also repair malformed tool calls before they break the turn (Chap. 4).
@@ -76,8 +76,6 @@ Honourable mention: **Claude Code**. Closed source, but the reference UX. It dri
 :::
 
 ::: {.fr}
-## 11. Les harnais d'agents de code {#harness}
-
 Un **harnais d'agent** est la boucle qui enveloppe un modèle de langage : prompt système + définitions d'outils (lire des fichiers, éditer, exécuter des commandes shell), des contrôles de permission avant les actions destructrices, assemblage du contexte entre les tours, et l'interface dans laquelle vous tapez. Le modèle est le moteur. Le harnais est le châssis et le poste de pilotage. Le même modèle obtient des scores visiblement différents selon le harnais. L'indice Coding Agent (chap. 2) mesure des paires *harnais+modèle*, pas des modèles seuls.
 
 ### Pourquoi les modèles locaux changent la donne
@@ -142,7 +140,7 @@ Mention honorable : **Claude Code**. Closed source, mais l'UX de référence. Il
 
 ### La checklist du terrain local
 
-![La boucle d'agent : le harnais échange prompts et appels d'outils avec un endpoint de modèle sur localhost ; les outils (fichiers, shell, git, tests) tournent sur site, et les résultats reviennent dans le contexte jusqu'à la fin.](chapters/figures/fig-agent-loop.svg){#fig-agent-fr width=100%}
+![La boucle d'agent : le harnais échange prompts et appels d'outils avec un endpoint de modèle sur localhost ; les outils (fichiers, shell, git, tests) tournent sur site, et les résultats reviennent dans le contexte jusqu'à la fin.](figures/fig-agent-loop.svg){#fig-agent-fr width=100%}
 
 - **Mesurez d'abord la taxe du harnais.** Prompt système + schémas d'outils peuvent consommer 10–20 k jetons avant même que votre code soit joint. Sur un modèle 32 k de contexte, c'est tout le budget : choisissez des harnais qui rognent et revoyez le calcul de cache KV du chap. 5.
 - **Le format d'appel d'outils compte plus que la taille.** Utilisez des modèles entraînés au function calling (Qwen-Coder, GLM, Kimi) et servez-les avec `llama-server --jinja`. Certains studios réparent en plus les appels malformés avant qu'ils ne cassent le tour (chap. 4).

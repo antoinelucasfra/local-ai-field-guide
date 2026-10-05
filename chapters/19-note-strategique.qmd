@@ -1,10 +1,4 @@
-::: {.en}
-## 19. Local AI as Institutional Strategy {#strategy}
-:::
-
-::: {.fr}
-## 19. L'IA locale comme stratégie d'institution {#strategy}
-:::
+# {{< meta ch-19-note-strategique >}} {#strategy}
 
 
 ::: {.en}

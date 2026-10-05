@@ -1,33 +1,35 @@
-# PART|EN|FR  then FILE lines, in book order
-PART|Foundations|Fondations
-FILE 00-bienvenue.qmd
+# PART|EN|FR then FILE lines, in book order.
+# FILE lines carry their EN|FR titles; HOME is the book home page.
+HOME|Who this book is for|À qui s'adresse ce livre
+# APPENDICES|EN|FR is the group label for the book's appendices list.
+# index.qmd (the home page) is not listed: Quarto requires it separately.
 PART|Part I — Foundations|Partie I — Fondations
-FILE 01-pourquoi.qmd
-FILE 02-choisir-modeles.qmd
+FILE 01-pourquoi.qmd|The rise of local AI: why now|L'essor de l'IA locale : pourquoi maintenant
+FILE 02-choisir-modeles.qmd|The open-model landscape, ranked|Le paysage des modèles ouverts, classé
 PART|Part II — Running models|Partie II — Exécuter des modèles
-FILE 03-ecosysteme-installation.qmd
-FILE 04-studio-chat.qmd
-FILE 05-parametres-inference.qmd
+FILE 03-ecosysteme-installation.qmd|The local AI stack: runtimes, studios, fine-tuners|La pile IA locale : runtimes, studios, affûteurs
+FILE 04-studio-chat.qmd|Running models: chat interfaces|Exécuter des modèles : interfaces de chat
+FILE 05-parametres-inference.qmd|Inference parameters, precisely|Les paramètres d'inférence, précisément
 PART|Part III — Training models|Partie III — Entraîner des modèles
-FILE 06-pipeline-finetuning.qmd
-FILE 07-hyperparametres-entrainement.qmd
-FILE 08-data-recipes.qmd
+FILE 06-pipeline-finetuning.qmd|Fine-tuning without code: the training pipeline|Le fine-tuning sans code : le pipeline d'entraînement
+FILE 07-hyperparametres-entrainement.qmd|Training hyperparameters, explained|Hyperparamètres d'entraînement, expliqués
+FILE 08-data-recipes.qmd|Building training data from your documents|Construire des données d'entraînement depuis vos documents
 PART|Part IV — Developing & deploying|Partie IV — Développer et déployer
-FILE 09-export-deploiement.qmd
-FILE 10-agents-code-locaux.qmd
-FILE 11-harnais-agents.qmd
-FILE 12-voie-python.qmd
-FILE 13-rag.qmd
-FILE 14-multimodal.qmd
-FILE 15-serving.qmd
+FILE 09-export-deploiement.qmd|Export and deployment|Export et déploiement
+FILE 10-agents-code-locaux.qmd|Local models for coding agents|Modèles locaux pour les agents de code
+FILE 11-harnais-agents.qmd|Coding agent harnesses|Les harnais d'agents de code
+FILE 12-voie-python.qmd|Fine-tuning in Python: the QLoRA loop|Le fine-tuning en Python : la boucle QLoRA
+FILE 13-rag.qmd|The RAG cookbook: your documents, with receipts|Le livre de recettes RAG : vos documents, avec justificatifs
+FILE 14-multimodal.qmd|Voice, vision and images|Voix, vision et images
+FILE 15-serving.qmd|Serving a team: from desktop to shared gateway|Servir une équipe : du poste de bureau à la passerelle partagée
 PART|Part V — Governing|Partie V — Gouverner
-FILE 16-evaluer.qmd
-FILE 17-gdpr-durcissement.qmd
-FILE 18-dossier-economique.qmd
-FILE 19-note-strategique.qmd
-PART|Appendices|Annexes
-FILE A-annexe-chercheur.qmd
-FILE B-sources-limites.qmd
-FILE C-projets.qmd
-FILE D-materiel.qmd
-FILE E-dpia.qmd
+FILE 16-evaluer.qmd|Evaluate before you trust|Évaluer avant de faire confiance
+FILE 17-gdpr-durcissement.qmd|GDPR mapping|Correspondance RGPD
+FILE 18-dossier-economique.qmd|The Business Case for Local AI|Le dossier économique de l'IA locale
+FILE 19-note-strategique.qmd|Local AI as Institutional Strategy|L'IA locale comme stratégie d'institution
+APPENDICES|Appendices|Annexes
+FILE A-annexe-chercheur.qmd|Local AI for Your Research. A 30-Minute Primer|L'IA locale pour votre recherche, en 30 minutes
+FILE B-sources-limites.qmd|Sources|Sources
+FILE C-projets.qmd|A field guide to local-AI projects|Guide de terrain des projets d'IA locale
+FILE D-materiel.qmd|Hardware: what to buy, in what order|Le matériel : quoi acheter, dans quel ordre
+FILE E-dpia.qmd|DPIA template for local AI|Modèle d'AIPD pour l'IA locale

@@ -1,10 +1,4 @@
-::: {.en}
-## The open-model landscape, ranked {#landscape}
-:::
-
-::: {.fr}
-## Le paysage des modèles ouverts, classé {#landscape}
-:::
+# {{< meta ch-02-choisir-modeles >}} {#landscape}
 
 ::: {.en}
 ### A method, not a ranking {#method}
@@ -23,7 +17,7 @@ Keep the list of named models in your infrastructure **short and swappable**: on
 :::
 
 ::: {.fr}
-### Une méthode, pas un classement {#method}
+### Une méthode, pas un classement {#method-fr}
 
 **Les modèles sont périssables. Les méthodes, elles, ne le sont pas.** De nouveaux modèles state-of-the-art, ouverts comme fermés, sortent désormais chaque semaine, et les positions se redistribuent tout aussi vite. Chaque nom de modèle dans ce livre est une *illustration d'un instantané début 2026*, pas une recommandation figée. Ce qui reste valide, c'est la méthode de sélection :
 
@@ -69,7 +63,7 @@ And for agentic coding (AA Coding Agent Index v1.4, composite of DeepSWE, Termin
 
 Rankings move monthly. Re-check [artificialanalysis.ai/models](https://artificialanalysis.ai/models) and [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) before committing to a model. The *method* below outlives any ranking.
 
-![The same snapshot seen as a map. Composite intelligence vs blended API price. Open weights now cluster in the value zone: near-frontier quality at roughly an order of magnitude lower cost. Illustrative: prices are typical blended rates, indices from the tables above.](chapters/figures/fig-quality-price.svg){#fig-landscape width=100%}
+![The same snapshot seen as a map. Composite intelligence vs blended API price. Open weights now cluster in the value zone: near-frontier quality at roughly an order of magnitude lower cost. Illustrative: prices are typical blended rates, indices from the tables above.](figures/fig-quality-price.svg){#fig-landscape width=100%}
 :::
 
 ::: {.fr}
@@ -102,15 +96,15 @@ Et pour le codage agentique (AA Coding Agent Index v1.4, composite de DeepSWE, T
 
 Les classements bougent chaque mois. Revérifiez [artificialanalysis.ai/models](https://artificialanalysis.ai/models) et [/agents/coding-agents](https://artificialanalysis.ai/agents/coding-agents) avant de choisir. La *méthode* ci-dessous survit à tout classement.
 
-![Le même instantané vu en carte. Intelligence composite vs prix API moyen. Les poids ouverts se regroupent dans la zone du rapport qualité/prix : qualité proche du front pour un coût environ dix fois moindre. Illustratif : tarifs moyens typiques, indices issus des tableaux ci-dessus.](chapters/figures/fig-quality-price.svg){#fig-landscape-fr width=100%}
+![Le même instantané vu en carte. Intelligence composite vs prix API moyen. Les poids ouverts se regroupent dans la zone du rapport qualité/prix : qualité proche du front pour un coût environ dix fois moindre. Illustratif : tarifs moyens typiques, indices issus des tableaux ci-dessus.](figures/fig-quality-price.svg){#fig-landscape-fr width=100%}
 :::
 
 ::: {.en}
-## 2. Which model for which use case {#usecases}
+## Which model for which use case {#usecases}
 :::
 
 ::: {.fr}
-## 2. Quel modèle pour quel usage {#usecases}
+## Quel modèle pour quel usage {#usecases-fr}
 :::
 
 ::: {.en}

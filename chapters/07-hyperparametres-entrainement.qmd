@@ -1,10 +1,4 @@
-::: {.en}
-## 7. Training hyperparameters, explained {#hyper}
-:::
-
-::: {.fr}
-## 7. Hyperparamètres d'entraînement, expliqués {#hyper}
-:::
+# {{< meta ch-07-hyperparametres-entrainement >}} {#hyper}
 
 ::: {.en}
 The GUI of your trainer pre-fills sane defaults (rank 16 / alpha 32 / dropout 0.05, LR 2e-4, 3 epochs, batch 4 × grad-accum 8, AdamW 8-bit, linear schedule, warmup 5, seed 3407). The sample config of every CLI trainer does the same. Here is what each actually does, so you know when to deviate.
