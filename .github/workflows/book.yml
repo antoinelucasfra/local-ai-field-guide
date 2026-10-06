@@ -31,7 +31,9 @@ jobs:
       # PRs check the book render only; deploys build the decks too
       - name: Render EN
         if: github.event_name == 'pull_request'
-        run: quarto render --profile en
+        run: |
+          QUARTO_PROFILE=en python3 tools/build_book.py
+          quarto render --profile en
       - name: Render EN (with decks)
         if: github.event_name != 'pull_request'
         run: tools/render.sh en
