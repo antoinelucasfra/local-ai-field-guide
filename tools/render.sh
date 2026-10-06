@@ -1,13 +1,11 @@
 #!/usr/bin/env sh
-# Render one language edition: the book (HTML, PDF, EPUB, DOCX), the 404 page
-# and the per-chapter revealjs decks.
+# Render one language edition (<lang>, default en): the book (HTML, PDF, EPUB,
+# DOCX), the 404 page and the per-chapter revealjs decks.
 #
-#   tools/render.sh        # English
-#   tools/render.sh fr     # French
-#
-# The book render also runs tools/build_book.py (pre-render) for the config and
-# the decks, but Quarto resolves book.chapters *before* pre-render, so the
-# generated chapter files have to exist before it starts: run the generator here.
+# tools/build_book.py runs first: Quarto resolves book.chapters before the
+# pre-render hook, so a fresh checkout has no chapters/<slug>.qmd when Quarto
+# starts. Deck and 404 renders are single-file renders, so Quarto writes them next
+# to their source and they are moved into _render/<lang>/ at the end.
 set -e
 lang="${1:-en}"
 cd "$(dirname "$0")/.."
@@ -22,10 +20,9 @@ for f in .ch-"$lang"-*.qmd; do
 done
 
 mkdir -p "_render/$lang"
-for f in ./*-slides.html; do
-        [ -e "$f" ] && mv "$f" "_render/$lang/"
+for f in ./*-slides.html ./*-files 404.html; do
+        [ -e "$f" ] || continue  # (set -e: an unmatched glob must not abort)
+        mv "$f" "_render/$lang/"
 done
-[ -e 404.html ] && mv 404.html "_render/$lang/"
-[ -d 404_files ] && mv 404_files "_render/$lang/"
 
 echo "rendered $lang -> _render/$lang/"

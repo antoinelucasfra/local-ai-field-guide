@@ -3,24 +3,24 @@
 
 Sources : chapters/_src/*.qmd + chapters/_order.txt  (the edited files)
           index.qmd                                 (the book home page)
-Outputs : _quarto.yml + _quarto-fr.yml              book project config
+Outputs : _quarto.yml + _quarto-en.yml + _quarto-fr.yml  book config
           chapters/<slug>.qmd                       chapter, title in one language
           .ch-<lang>-<slug>.qmd                     revealjs decks (gitignored)
 
 Every chapter has one H1 and it is not duplicated per language: the book reads a
 chapter's first heading *before* filters run, so an English/French pair there
-titled the French edition in English. The sources keep the heading as a marker
-(`# {{< meta ch-<slug> >}} {#id}`) and this generator writes, per run, the
-chapter file the book lists, with a real title for the active profile — Quarto
-reads titles from source text for the sidebar, breadcrumbs and search index, so
-the text has to be there, not in a shortcode.
+titled the French edition in English. The sources keep that heading as an inert
+marker (`# {{< meta ch-<slug> >}} {#id}` — nothing expands it) and this generator
+writes, per run, the chapter file the book lists with a real title for the active
+profile: Quarto reads source text for the sidebar, breadcrumbs and search index.
 
 Id convention: the second occurrence of {#id} in a source (the FR heading)
 becomes {#id-fr}; langsel.lua renames it back after filtering, so pandoc never
 sees duplicate ids and final anchors stay language-independent.
 
-Run automatically as project pre-render (QUARTO_PROFILE picks the language);
-manual: python3 tools/build_book.py
+Run as project pre-render (QUARTO_PROFILE picks the language) and by tools/render.sh
+before Quarto starts, because a fresh checkout has no chapters/<slug>.qmd yet and
+Quarto resolves book.chapters before the pre-render hook.
 """
 
 import glob
@@ -29,15 +29,6 @@ import re
 import sys
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-
-def _open(path, mode="r"):
-        # generator inputs must fail loud — but with a readable message
-        # (encoding is explicit: chapters are UTF-8, Windows defaults aren't)
-        try:
-                return open(path, mode, encoding="utf-8")
-        except OSError as e:
-                sys.exit(f"build_book: {e}")
 
 
 CH = os.path.join(ROOT, "chapters")
@@ -65,22 +56,18 @@ DESCRIPTION_FR = (
 SITE = "https://antoinelucasfra.github.io/local-ai-field-guide/"
 REPO = "https://github.com/antoinelucasfra/local-ai-field-guide"
 
-# Project-level filter chain, applied to every book format. The decks override
-# this with FILTERS_DECK (same minus drop-notes: speaker notes must survive).
-FILTERS = """  - langsel
-  - include-code-files
-  - passage-xref
-  - details
-  - code-window
-  - lightbox
-  - tools/drop-notes.lua"""
-
-FILTERS_DECK = """  - langsel
-  - include-code-files
-  - passage-xref
-  - details
-  - code-window
-  - lightbox"""
+# Project-level filter chain, applied to every book format. The decks use the
+# same chain minus drop-notes: speaker notes must survive for revealjs.
+FILTER_NAMES = [
+        "langsel",
+        "include-code-files",
+        "passage-xref",
+        "details",
+        "code-window",
+        "lightbox",
+]
+FILTERS = "\n".join(f"  - {f}" for f in [*FILTER_NAMES, "tools/drop-notes.lua"])
+FILTERS_DECK = "\n".join(f"  - {f}" for f in FILTER_NAMES)
 
 # Charts/tables keep their own numbering; appendices get "Appendix A —".
 CROSSREF_EN = """crossref:
@@ -138,8 +125,10 @@ format:
 
 """
 
-REPO_SRC = f"{REPO}/blob/main/chapters/"
 BOOK_URL = f"{SITE}og-card.png"
+
+# The shared H1 marker of chapters/_src/*.qmd: `# {{< meta ch-<slug> >}} {#id}`
+H1_MARKER = re.compile(r"^#\s+\{\{< meta ch-[\w-]+ >\}\}\s*(\{#[\w-]+\})\s*$", re.M)
 
 
 def order():
@@ -150,7 +139,7 @@ def order():
         one place chapter titles live.
         """
         out = []
-        for raw in _open(os.path.join(CH, "_order.txt")):
+        for raw in open(os.path.join(CH, "_order.txt"), encoding="utf-8"):
                 line = raw.strip()
                 if not line or line.startswith("#"):
                         continue
@@ -201,29 +190,10 @@ def book_entries(entries, lang):
         return "\n".join(chapters), "\n".join(appendices)
 
 
-def chapter_meta(entries, lang):
-        """Chapter-title metadata for one language, used by each source's shared
-        H1 (`# {{< meta ch-<slug> >}}`) and by the deck front matter."""
-        out = []
-        for entry in entries:
-                if entry[0] not in ("FILE", "HOME"):
-                        continue
-                slug, ten, tfr = entry[2], entry[3], entry[4]
-                title = ten if lang == "" else tfr
-                out.append(f'ch-{slug}: "{title.replace(chr(34), chr(39))}"')
-        return "\n".join(out)
-
-
-def deck_body(body, title, slug):
+def deck_body(body, title):
         """A deck: the shared chapter title becomes a slide, book links point at
         book pages, and includes are rewritten for a root-level document."""
-        body = re.sub(
-                r"^#\s+\{\{< meta ch-[\w-]+ >\}\}\s*(\{#[\w-]+\})\s*$",
-                rf"## {title} \1",
-                body,
-                count=1,
-                flags=re.M,
-        )
+        body = H1_MARKER.sub(rf"## {title} \1", body, count=1)
         body = body.replace('include="../code/', 'include="code/')
         body = re.sub(r"\]\((?:\.\./)?(?:chapters/)?([\w-]+)\.qmd#", r"](\1.html#", body)
         return re.sub(r"\]\((?:\.\./)?(?:chapters/)?([\w-]+)\.qmd\)", r"](\1.html)", body)
@@ -238,13 +208,7 @@ def chapter_body(body, title):
         """The chapter file the book lists. Its single H1 keeps the marker's id but
         carries the profile's real title, because Quarto reads that text for the
         sidebar, the breadcrumbs and the search index."""
-        return re.sub(
-                r"^#\s+\{\{< meta ch-[\w-]+ >\}\}\s*(\{#[\w-]+\})\s*$",
-                rf"# {title} \1",
-                body,
-                count=1,
-                flags=re.M,
-        )
+        return H1_MARKER.sub(rf"# {title} \1", body, count=1)
 
 
 def main():
@@ -263,15 +227,15 @@ def main():
                 if entry[0] != "FILE":
                         continue
                 _, path, slug, ten, tfr = entry
-                body = _open(os.path.join(SRC, slug + ".qmd")).read().rstrip()
+                body = open(os.path.join(SRC, slug + ".qmd"), encoding="utf-8").read().rstrip()
                 chapter = chapter_body(body, ten if lang == "" else tfr)
                 if chapter == body:
                         sys.exit(f"build_book: {slug}: chapter heading marker not found")
-                with _open(os.path.join(ROOT, path), "w") as f:
+                with open(os.path.join(ROOT, path), "w", encoding="utf-8") as f:
                         f.write(chapter + "\n")
                 for deck_lang, title in (("en", ten), ("fr", tfr)):
                         out = os.path.join(ROOT, f".ch-{deck_lang}-{slug}.qmd")
-                        with _open(out, "w") as f:
+                        with open(out, "w", encoding="utf-8") as f:
                                 f.write(
                                         DECK.format(
                                                 title=title.replace('"', "'"),
@@ -279,7 +243,7 @@ def main():
                                                 slug=slug,
                                                 filters=FILTERS_DECK,
                                         )
-                                        + deck_body(body, title, slug)
+                                        + deck_body(body, title)
                                         + "\n"
                                 )
                         decks.append(out)
@@ -294,7 +258,7 @@ def main():
                 ".yml": f"""project:
   type: book
   output-dir: _render/en
-  pre-render: python3 tools/build_book.py
+  pre-render: tools/build_book.py
 profile:
   default: [en]
 
@@ -336,10 +300,6 @@ book:
 {CROSSREF_EN}
 
 {FORMATS}
-
-# Per-chapter titles, so a source can still be rendered on its own; the book
-# reads the generated chapters/<slug>.qmd files, whose H1 is real text.
-{chapter_meta(entries, "")}
 """,
                 "-en.yml": f"""book:
   chapters:
@@ -367,12 +327,10 @@ book:
 {fr_appendices}
 
 {CROSSREF_FR}
-
-{chapter_meta(entries, "fr")}
 """,
         }
         for name, content in configs.items():
-                with _open(os.path.join(ROOT, f"_quarto{name}"), "w") as f:
+                with open(os.path.join(ROOT, f"_quarto{name}"), "w", encoding="utf-8") as f:
                         f.write(content)
         print(
                 f"built _quarto.yml + _quarto-en.yml + _quarto-fr.yml, "
