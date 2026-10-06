@@ -20,7 +20,7 @@ tools/render.sh        # English: book (HTML/PDF/EPUB/DOCX) + decks + 404
 tools/render.sh fr     # French
 ```
 
-Everything lands in `_render/<lang>/`; nothing is left in the repo root. The landing page is the one assembled piece: `python3 tools/make_index.py --render _render/en --lang en` splices the contents block into `tools/index.html` (CI does this while assembling `_site/`). The generated configuration (`_quarto.yml`, `_quarto-fr.yml`) and the deck sources (`.ch-<lang>-<slug>.qmd`) are regenerated on every render; the decks are the only hidden files left, and git ignores them.
+Everything lands in `_render/<lang>/`; nothing is left in the repo root. The landing page is the one assembled piece: `python3 tools/make_index.py --render _render/en --lang en` splices the contents block into `tools/index.html` (CI does this while assembling `_site/`). Every run regenerates three configs (`_quarto.yml`, `_quarto-en.yml`, `_quarto-fr.yml`), the chapter files `chapters/<slug>.qmd` and the deck sources `.ch-<lang>-<slug>.qmd`; all of it is gitignored, and only `chapters/_src/` is yours to edit.
 
 ## CI · Pages · Releases
 
@@ -64,7 +64,7 @@ _extensions/langsel/ filter: keeps the matching language divs; swaps titles;
                      renames {#id-fr} heading ids back to {#id}
 ```
 
-Non-obvious build constraints are documented next to the code that depends on them: the `{#id-fr}` id convention (`_extensions/langsel/langsel.lua`), the `drop-notes` split between book formats and decks (`tools/drop-notes.lua`), and the single-file deck renders that Quarto writes next to their source rather than into `output-dir` (`tools/render.sh`).
+Constraints are documented next to the code that depends on them.
 
 Cross-chapter links are written file-qualified in the sources (`16-evaluer.qmd#evaluate`); Quarto resolves them to the rendered page in every format. The deck sources get the same links rewritten to `.html`, since the decks sit next to the book pages.
 
@@ -72,7 +72,7 @@ The book title, subtitle, description and URLs live once, as constants at the to
 
 ## Editing
 
-Write each language variant inside its div (`::: {.en}` / `::: {.fr}`); keep heading ids identical across languages — the second (French) occurrence is written `{#id-fr}` and langsel renames it back after filtering. To add a chapter: create `chapters/_src/NN-slug.qmd` starting with `# {{< meta ch-NN-slug >}} {#id}` (the marker the generator replaces), add a `FILE NN-slug.qmd|EN title|FR title` line to `_order.txt` under the right `PART`. Nothing else — the config and the per-language chapter files regenerate on next render. Chapter numbers are Quarto's: never write one into a heading. `index.qmd` keeps a real heading (it is not generated), and its one-item breadcrumb is hidden in CSS because Quarto builds it from that heading's marker.
+Write each language variant inside its div (`::: {.en}` / `::: {.fr}`); keep heading ids identical across languages — the second (French) occurrence is written `{#id-fr}` and langsel renames it back after filtering. To add a chapter: create `chapters/_src/NN-slug.qmd` starting with `# {{< meta ch-NN-slug >}} {#id}` (the marker the generator replaces), add a `FILE NN-slug.qmd|EN title|FR title` line to `_order.txt` under the right `PART`. Nothing else — the config and the per-language chapter files regenerate on next render. Chapter numbers are Quarto's: never write one into a heading. `index.qmd` is the one hand-written page (Quarto wants the home page at the project root, so it is not generated): it keeps the title marker, and its one-item breadcrumb is hidden in CSS because Quarto builds that crumb from the raw marker.
 
 ## Conventions
 

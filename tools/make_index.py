@@ -74,9 +74,7 @@ def toc(render, lang):
         """[(en label, fr label, [(href, title), ...]), ...] in book order."""
         parts, missing = [], []
         for kind, a, b, *_ in book.order():
-                if kind == "PART":
-                        parts.append([a, b, []])
-                elif kind == "APPENDICES":
+                if kind in ("PART", "APPENDICES"):
                         parts.append([a, b, []])
                 elif kind == "HOME":
                         continue  # the landing page links the home page itself

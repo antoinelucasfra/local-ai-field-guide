@@ -1,7 +1,7 @@
 project:
   type: book
   output-dir: _render/en
-  pre-render: python3 tools/build_book.py
+  pre-render: tools/build_book.py
 profile:
   default: [en]
 
@@ -73,31 +73,3 @@ format:
     toc: true
   docx:
     toc: true
-
-# Per-chapter titles, so a source can still be rendered on its own; the book
-# reads the generated chapters/<slug>.qmd files, whose H1 is real text.
-ch-welcome: "Who this book is for"
-ch-01-pourquoi: "The rise of local AI: why now"
-ch-02-choisir-modeles: "The open-model landscape, ranked"
-ch-03-ecosysteme-installation: "The local AI stack: runtimes, studios, fine-tuners"
-ch-04-studio-chat: "Running models: chat interfaces"
-ch-05-parametres-inference: "Inference parameters, precisely"
-ch-06-pipeline-finetuning: "Fine-tuning without code: the training pipeline"
-ch-07-hyperparametres-entrainement: "Training hyperparameters, explained"
-ch-08-data-recipes: "Building training data from your documents"
-ch-09-export-deploiement: "Export and deployment"
-ch-10-agents-code-locaux: "Local models for coding agents"
-ch-11-harnais-agents: "Coding agent harnesses"
-ch-12-voie-python: "Fine-tuning in Python: the QLoRA loop"
-ch-13-rag: "The RAG cookbook: your documents, with receipts"
-ch-14-multimodal: "Voice, vision and images"
-ch-15-serving: "Serving a team: from desktop to shared gateway"
-ch-16-evaluer: "Evaluate before you trust"
-ch-17-gdpr-durcissement: "GDPR mapping"
-ch-18-dossier-economique: "The Business Case for Local AI"
-ch-19-note-strategique: "Local AI as Institutional Strategy"
-ch-A-annexe-chercheur: "Local AI for Your Research. A 30-Minute Primer"
-ch-B-sources-limites: "Sources"
-ch-C-projets: "A field guide to local-AI projects"
-ch-D-materiel: "Hardware: what to buy, in what order"
-ch-E-dpia: "DPIA template for local AI"
