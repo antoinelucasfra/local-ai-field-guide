@@ -250,6 +250,10 @@ def main():
 
         en_chapters, en_appendices = book_entries(entries, "")
         fr_chapters, fr_appendices = book_entries(entries, "fr")
+        # index.qmd is hand-written (not generated), so its shared H1 marker has
+        # nothing to be replaced with: it expands this key instead. One key per
+        # profile; generated chapters carry real titles and need none.
+        home = next(e for e in entries if e[0] == "HOME")
         # Quarto *concatenates* list values when it merges a profile into
         # _quarto.yml, so book.chapters/appendices must live in the profile files
         # only — putting the EN list in the base would render the whole book
@@ -291,6 +295,8 @@ book:
   search: true
   page-navigation: true
   reader-mode: true
+  page-footer:
+    center: "Book: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — Support IA — LocalAI"
   favicon: tools/favicon.svg
   image: {BOOK_URL}
   image-alt: "{TITLE_EN}"
@@ -300,6 +306,8 @@ book:
 {CROSSREF_EN}
 
 {FORMATS}
+
+ch-welcome: "{home[3]}"
 """,
                 "-en.yml": f"""book:
   chapters:
@@ -314,6 +322,10 @@ lang: fr
 metadata:
   lang: fr
 
+language:
+  tools-download: "Télécharger"
+  tools-share: "Partager"
+
 book:
   title: "{TITLE_FR}"
   subtitle: "{SUBTITLE_FR}"
@@ -321,12 +333,16 @@ book:
   cover-image-alt: "{TITLE_FR}"
   image-alt: "{TITLE_FR}"
   site-url: {SITE}fr/
+  page-footer:
+    center: "Livre : [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — Support IA — LocalAI"
   chapters:
 {fr_chapters}
   appendices:
 {fr_appendices}
 
 {CROSSREF_FR}
+
+ch-welcome: "{home[4]}"
 """,
         }
         for name, content in configs.items():
