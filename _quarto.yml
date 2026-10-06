@@ -44,6 +44,8 @@ book:
   search: true
   page-navigation: true
   reader-mode: true
+  page-footer:
+    center: "Book: [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — Support IA — LocalAI"
   favicon: tools/favicon.svg
   image: https://antoinelucasfra.github.io/local-ai-field-guide/og-card.png
   image-alt: "The Local AI Field Guide"
@@ -73,3 +75,5 @@ format:
     toc: true
   docx:
     toc: true
+
+ch-welcome: "Who this book is for"

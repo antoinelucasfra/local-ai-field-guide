@@ -5,6 +5,10 @@ lang: fr
 metadata:
   lang: fr
 
+language:
+  tools-download: "Télécharger"
+  tools-share: "Partager"
+
 book:
   title: "Le guide de terrain de l'IA locale"
   subtitle: "Exécuter, affûter, servir et gouverner sur votre propre matériel"
@@ -12,6 +16,8 @@ book:
   cover-image-alt: "Le guide de terrain de l'IA locale"
   image-alt: "Le guide de terrain de l'IA locale"
   site-url: https://antoinelucasfra.github.io/local-ai-field-guide/fr/
+  page-footer:
+    center: "Livre : [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) — Support IA — LocalAI"
   chapters:
     - index.qmd
     - part: "Partie I — Fondations"
@@ -52,3 +58,5 @@ book:
 
 crossref:
   appendix-title: "Annexe"
+
+ch-welcome: "À qui s'adresse ce livre"
