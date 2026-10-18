@@ -11,6 +11,8 @@ Quantisation rule: prefer the dynamic quants (`UD-*` from Unsloth, MLX 4-bit). T
 
 ### Reading the quant names {#quant-names}
 
+Two families exist: post-training quantization (most labels you will meet) and quantization-aware training, where the model trains with the precision loss in the loop. Everything below is PTQ. And only repos with a `-GGUF` suffix are runnable; on the Hub, filter by the llama.cpp app, sort by downloads, and read the quantisation column rather than the model name.[^ch16-quant]
+
 Hub listings are a wall of acronyms. They decode mechanically:[^ch16-quant]
 
 | Label | Meaning |
@@ -83,6 +85,8 @@ Ne déployez jamais un modèle sur un travail institutionnel sans évaluation ch
 Règle de quantification : préférez les quants dynamiques (`UD-*` d'Unsloth, MLX 4-bit). Ils récupèrent l'essentiel de la précision que les formats 4-bit standards perdent. En cas de doute, comparez la quant candidate à une précision supérieure sur votre jeu de référence plutôt que de vous fier à l'étiquette.
 
 ### Lire les noms de quants {#quant-names-fr}
+
+Deux familles existent : la quantification post-entraînement (la plupart des étiquettes que vous croiserez) et l'entraînement conscient de la quantification, où le modèle s'entraîne avec la perte de précision dans la boucle. Tout ce qui suit est du post-entraînement. Et seuls les dépôts au suffixe `-GGUF` sont exécutables ; sur le Hub, filtrez par l'application llama.cpp, triez par téléchargements et lisez la colonne de quantification plutôt que le nom du modèle.[^ch16-quant]
 
 Les listes du Hub sont un mur d'acronymes. Ils se décodent mécaniquement :[^ch16-quant]
 

@@ -115,7 +115,7 @@ Illustrative pairings **from the early-2026 snapshot**. Treat the *shape* of eac
 | Best possible on-prem reasoning/agentic | Kimi K3, GLM-5.3 | Top of the open rankings, near-closed parity | Multi-GPU server or 128 GB+ unified memory |
 | Coding assistant / local coding agent | Qwen3.5/3.8 Coder, Gemma 4 26B-A4B, GLM-5.x | Strong tool-calling, trained for code; Gemma 4 26B-A4B runs on a 24 GB machine | 24 GB GPU / Apple silicon |
 | General-purpose departmental assistant | Qwen3.8 27B, Gemma 4, Muse Glimmer 30B | Balanced quality/speed, good multilingual (French included) | 1× 24 GB GPU |
-| High-volume / edge / laptop | Qwen3.5 4B class, small Gemma | Sub-second latency, tiny footprint | CPU or 8 GB GPU |
+| High-volume / edge / laptop | Qwen3.5 4B class, small Gemma, LFM2.5 230M[^ch02-lfm] | Sub-second latency, tiny footprint; 230M models run on a Raspberry Pi or a phone | CPU or 8 GB GPU |
 | Documents & RAG-heavy workflows | Long-context Qwen/GLM variants + embedding models | Large context windows now exceed 100k tokens at the median (AA architecture trends) | 24 GB GPU |
 | Vision (image understanding) | Gemma / Qwen vision variants | Multimodal fine-tuning (Unsloth, LLaMA-Factory) | 16–24 GB GPU |
 | Image/video generation | FLUX, Z-Image, LTX, Wan, MiniMax-H3 | Runnable locally; LoRA training via the diffusers/kohya toolchain | 16–24 GB GPU |
@@ -142,7 +142,7 @@ Associations illustratives, **instantané début 2026**. Traitez la *forme* de c
 | Meilleur raisonnement/agents sur site | Kimi K3, GLM-5.3 | Tête du classement ouvert, quasi-parité avec le fermé | Serveur multi-GPU ou mémoire unifiée 128 Go+ |
 | Assistant de code / agent local | Qwen3.5/3.8 Coder, Gemma 4 26B-A4B, GLM-5.x | Appels d'outils solides, entraînés au code ; Gemma 4 26B-A4B tient sur une machine 24 Go | GPU 24 Go / Apple silicon |
 | Assistant départemental polyvalent | Qwen3.8 27B, Gemma 4, Muse Glimmer 30B | Équilibre qualité/vitesse, bon multilingue (français inclus) | 1 GPU 24 Go |
-| Fort volume / edge / portable | Qwen3.5 4B et petits Gemma | Latence sub-seconde, empreinte minime | CPU ou GPU 8 Go |
+| Fort volume / edge / portable | Qwen3.5 4B et petits Gemma, LFM2.5 230M[^ch02-lfm] | Latence sub-seconde, empreinte minime ; un 230M tourne sur Raspberry Pi ou téléphone | CPU ou GPU 8 Go |
 | Documents & workflows RAG | Variantes long-contexte Qwen/GLM + modèles d'embeddings | Fenêtres de contexte désormais >100k tokens en médiane (tendances AA) | GPU 24 Go |
 | Vision (compréhension d'image) | Gemma / Qwen vision | Fine-tuning multimodal (Unsloth, LLaMA-Factory) | GPU 16–24 Go |
 | Génération image/vidéo | FLUX, Z-Image, LTX, Wan, MiniMax-H3 | Exécutables localement ; LoRA via la chaîne diffusers/kohya | GPU 16–24 Go |
@@ -164,3 +164,5 @@ Règles pratiques :
 ::: {.notes}
 Have the audience read the tables themselves: ask 'which model would YOU pick for a 16 GB laptop?' Tables are snapshots. Teach the method, not the ranking. / Faites lire les tableaux par la salle : « quel modèle choisiriez-vous pour un portable 16 Go ? ». Les tableaux sont des instantanés. Enseignez la méthode, pas le classement.
 :::
+
+[^ch02-lfm]: LiquidAI/LFM2.5-230M-GGUF (Hugging Face repository, checked 2026-10-18): ~230 M parameters, runs on edge hardware including Raspberry Pi and phones, and makes a plausible drafter for a larger sibling. Edge example from Hugging Face, *Local AI Ecosystem with llama.cpp* (talk deck, September 2026), https://www.canva.com/design/DAHXJy7MerE/IkE4Ri9hWWNOnxz6azJTKg/view.

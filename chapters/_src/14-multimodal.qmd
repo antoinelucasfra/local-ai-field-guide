@@ -18,6 +18,17 @@ Text is the default. Local stacks now cover ears and eyes too, all offline.
 
 Your chat UI accepts images with vision-capable models (Qwen-VL family, Gemma vision variants). Screenshots, scanned figures, whiteboards, fully offline (Chap. 4). Practical wins: extracting tables from PDFs into CSV, describing plots, reading handwritten lab notes.
 
+In llama.cpp, vision and audio live in the same CLI and server — one model handles text, images and audio:[^ch14-multimodal]
+
+```bash
+llama cli -hf ggml-org/gemma-4-e4b-it-GGUF:Q4_0 --image photo.png -p "Describe this image."
+# interactive
+> /image chart.png
+> what is the trend here?
+> /audio meeting.mp3
+> transcribe this audio
+```
+
 ### Image generation
 
 Diffusion models run locally via **ComfyUI** or `stable-diffusion.cpp`: FLUX.2, Z-Image, SDXL checkpoints in GGUF/safetensors. A 24 GB GPU generates 1024px images in seconds; figures for slides and papers (check publisher policy), mockups, dataset augmentation for vision fine-tunes. LoRA training for a house style runs in Studio/Desktop (Chap. 6).
@@ -45,6 +56,17 @@ Le texte est la valeur par défaut. Les piles locales couvrent aussi les oreille
 
 Votre interface de chat accepte les images avec les modèles à vision (famille Qwen-VL, variantes vision de Gemma). Captures d'écran, figures scannées, tableaux blancs, entièrement hors ligne (chap. 4). Usages gagnants : extraire des tableaux de PDF vers CSV, décrire des graphiques, lire des notes de labo manuscrites.
 
+Dans llama.cpp, la vision et l'audio vivent dans la même CLI et le même serveur — un seul modèle traite texte, images et audio :[^ch14-multimodal]
+
+```bash
+llama cli -hf ggml-org/gemma-4-e4b-it-GGUF:Q4_0 --image photo.png -p "Décris cette image."
+# interactif
+> /image graphique.png
+> quelle est la tendance ici ?
+> /audio reunion.mp3
+> transcris cet audio
+```
+
 ### La génération d'images
 
 Les modèles de diffusion tournent en local via **ComfyUI** ou `stable-diffusion.cpp` : checkpoints FLUX.2, Z-Image, SDXL en GGUF/safetensors. Une carte 24 Go génère du 1024 px en quelques secondes ; illustrations pour slides et articles (vérifiez la politique de l'éditeur), maquettes, augmentation de données pour les fine-tunes vision. L'entraînement de LoRA pour un style maison se fait dans Studio/Desktop (chap. 6).
@@ -53,3 +75,5 @@ Les modèles de diffusion tournent en local via **ComfyUI** ou `stable-diffusion
 
 Chaque modalité apporte son modèle et son budget mémoire : Whisper large ≈ 3 Go de VRAM, un LLM vision ≈ poids + jetons d'image (la math KV du chap. 5 s'applique), diffusion ≈ 6–12 Go. Sur une seule carte 24 Go, servez *soit* un LLM *soit* de la diffusion lourde confortablement. Pas les deux à la fois. L'annexe D mappe les paliers matériels.
 :::
+
+[^ch14-multimodal]: Hugging Face, *Local AI Ecosystem with llama.cpp* (talk deck, September 2026), https://www.canva.com/design/DAHXJy7MerE/IkE4Ri9hWWNOnxz6azJTKg/view (checked 2026-10-18). The single-model multimodal CLI commands follow the deck.
