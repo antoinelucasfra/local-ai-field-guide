@@ -9,6 +9,18 @@ $ink-dark: #E6EDF3;
 $muted-dark: #8B949E;
 $void: #0F1117;
 
+// Pin the deck to the dark brand surfaces. The revealjs dark theme sets
+// white text, but the brand layer (no light/dark pair here) leaks its
+// LIGHT foreground (#1C2128) into $presentation-heading-color and
+// $presentation-list-bullet-color afterwards — dark headings/bullets on
+// the #0F1117 backdrop. Re-assert the dark values last.
+/*-- scss:defaults --*/
+$body-bg: $void;
+$body-color: $ink-dark;
+$presentation-heading-color: $ink-dark;
+$presentation-list-bullet-color: $ink-dark;
+$link-color: $sky;
+
 /*-- scss:rules --*/
 
 .reveal {

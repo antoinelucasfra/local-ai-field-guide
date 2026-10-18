@@ -116,13 +116,13 @@ filters:
 format:
   revealjs:
     output-file: "{slug}-slides.html"
-    theme: [default, al-brand-slides.scss]
+    theme: [dark, al-brand-slides.scss]
     slide-number: c/t
     hash-type: number
     progress: true
     scrollable: true
     smaller: true
-    highlight-style: github
+    highlight-style: github-dark
     embed-resources: true
 ---
 
