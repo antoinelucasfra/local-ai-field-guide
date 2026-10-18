@@ -11,8 +11,8 @@ authors:
 repository-code: "https://github.com/antoinelucasfra/local-ai-field-guide"
 url: "https://antoinelucasfra.github.io/local-ai-field-guide/"
 license: CC-BY-4.0
-version: 1.0.0
-date-released: 2026-08-23
+version: 2.0.0
+date-released: 2026-10-18
 keywords:
   - local AI
   - open-weight language models
