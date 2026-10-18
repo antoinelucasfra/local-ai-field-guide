@@ -30,15 +30,17 @@ One workflow (`.github/workflows/book.yml`) drives everything:
 | --- | --- |
 | push / PR | `tools/render.sh en` — build check |
 | push `main` | EN + FR render → site assembled (`index.html` + `en/` + `fr/`) → GitHub Pages |
-| tag `v*` | EN + FR render → release assets (`local-ai-field-guide-book-vX.Y.Z-en.zip` = PDF+EPUB+DOCX per lang, `local-ai-field-guide-code-vX.Y.Z.zip` = companion scripts, full site zip) → GitHub Release |
+| tag `v*` | EN + FR render → release assets (`local-ai-field-guide-book-vX.Y.Z-en.zip` = PDF+EPUB+DOCX per lang, `local-ai-field-guide-code-vX.Y.Z.zip` = companion scripts, full site zip) → GitHub Release, with auto-generated notes. `CHANGELOG.md` is the curated, human-readable record per version; bump it and `CITATION.cff` whenever you cut one. |
 
 Links are checked during every render by the `linkrot` extension (`fail-on-error: false`, so a dead link warns instead of blocking a build).
 
 Pages is live after the first push to `main`: Settings → Pages → Source **GitHub Actions**. Cut a release with:
 
 ```bash
-git tag v1.0.0 && git push origin main v1.0.0
+git tag v1.1.0 && git push origin main v1.1.0
 ```
+
+Current version: 2.0.0 (see `CHANGELOG.md`).
 
 ## Book structure
 
