@@ -18,6 +18,7 @@ Speed expectations per tier were given in Chapter 5; this annex is the buying gu
 - **Unified memory rule** on Apple silicon: a model needs roughly its file size free — a 32 GB MacBook runs 27–32 B Q4 GGUFs well because the GPU can use ~75% of unified memory.
 - **The used 3090 is the community's workhorse**: 24 GB VRAM, cheap NVLink option, proven for QLoRA fine-tunes of up to ~14 B and comfortable inference to 32 B. Buy from refurbishers with warranty; stress-test VRAM (`gpu-burn`, `memtest_vulkan`) on arrival.
 - **VRAM beats everything else.** A slower card with more memory outruns a faster small one the moment you exceed context or model size (Chap. 5).
+- **Dense wants bandwidth, big MoEs want capacity.** A dense model reads every weight for every token, so it wants the fastest memory that fits it: VRAM. A MoE only reads its active experts — a 90B-A10B reads ~10 B per token — so it runs well on slower unified memory that would starve a dense model of the same total size. On one machine, small MoEs are happy in VRAM; large ones are the case for 64 GB+ Macs.[^hw-moe]
 - **Disk**: models are 5–60 GB each; one NVMe for hot models, cheap SATA for the archive. Swapping models from SSD takes seconds.
 - **Power & noise**: a 3090 draws ~350 W peak (undervolting cuts ~20% for ~5% speed); a lab server belongs in a machine room, not an office.
 - **Clusters don't help decode**: splitting one LLM across Ethernet kills token speed (interconnect latency ≫ bandwidth rule of Chap. 5). One big GPU > four small ones for inference; clusters matter for *training* only.
@@ -96,6 +97,7 @@ Les vitesses attendues par palier sont au chapitre 5 ; cette annexe est le guide
 - **Règle de mémoire unifiée** sur Apple silicon : un modèle demande environ sa taille de fichier de libre. Un MacBook 32 Go fait bien tourner des 27–32 B Q4 car le GPU peut utiliser ~75 % de la mémoire unifiée.
 - **La 3090 d'occasion est la bête de somme de la communauté** : 24 Go de VRAM, option NVLink pas chère, éprouvée en QLoRA jusqu'à ~14 B et confortable en inférence jusqu'à 32 B. Achetez chez des reconditionneurs avec garantie ; testez la VRAM à l'arrivée (`gpu-burn`, `memtest_vulkan`).
 - **La VRAM prime sur tout.** Une carte plus lente mais mieux dotée en mémoire prend l'ascendant sur une petite plus rapide dès que vous dépassez le contexte ou la taille de modèle (chap. 5).
+- **Dense = bande passante, gros MoE = capacité.** Un modèle dense relit tous ses poids à chaque token : il veut la mémoire la plus rapide qui le contient, la VRAM. Un MoE ne lit que ses experts actifs — un 90B-A10B lit ~10 B par token — donc il tourne très bien sur une mémoire unifiée plus lente, qui asphyxierait un dense de même taille totale. Sur une machine, les petits MoE sont à l'aise en VRAM ; les gros sont la raison d'être des Mac 64 Go+.[^hw-moe]
 - **Disque** : les modèles font 5–60 Go pièce ; un NVMe pour les modèles actifs, du SATA bon marché pour l'archive. Changer de modèle depuis le SSD prend des secondes.
 - **Puissance & bruit** : une 3090 tire ~350 W en pointe (l'undervolting coupe ~20 % pour ~5 % de vitesse) ; un serveur de labo a sa place en salle machines, pas dans un bureau.
 - **Les clusters n'aident pas le décodage** : éclater un LLM sur Ethernet tue la vitesse de génération (la latence réseau ≫ règle de bande passante du chap. 5). Un gros GPU > quatre petits pour l'inférence ; les clusters servent à l'*entraînement* seulement.
@@ -151,3 +153,5 @@ Tout ce livre parle le protocole compatible OpenAI — pointez chaque outil vers
 
 Quelques règles de savoir-vivre gardent tout le monde content : un modèle par GPU (servez des copies, ne découpez pas les petits modèles en tenseurs), servez les gros lots d'évaluation hors heures ouvrées, plafonnez les contextes demandés, et faites passer les accès d'équipe par les clés par utilisateur de la passerelle (chap. 15).
 :::
+
+[^hw-moe]: Hugging Face, *Local AI Ecosystem with llama.cpp* (talk deck, September 2026), https://www.canva.com/design/DAHXJy7MerE/IkE4Ri9hWWNOnxz6azJTKg/view (checked 2026-10-18). The dense-versus-MoE memory placement follows the deck's hardware slides.

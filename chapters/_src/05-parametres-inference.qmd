@@ -49,6 +49,35 @@ A chat UI's auto-context manages this budget for you; when you drive llama-serve
 | Data-center GPU (A100/H100) | 130–200+ t/s |
 
 For MoE models, speed tracks the *active* parameters, not total. A 26B-A4B behaves like a 4B dense model at similar quality. Quantisation also changes speed: smaller weights = fewer bytes to move = faster decode, which is why Q4 beats Q8 beats FP16 on throughput.
+
+Measure your own numbers instead of trusting anyone's table:
+
+```bash
+llama bench -hf ggml-org/gemma-4-e4b-it-GGUF:Q4_0 -p 128 -n 64 -r 3
+# pp128 = prefill throughput at 128-token prompts, tg64 = decode of 64 tokens, 3 runs
+```
+
+On an M-series Mac this prints, for a 1B Q4_K model, ~2 184 t/s prefill and ~115 t/s decode. The table above is orders of magnitude; `llama bench` is your machine's truth.[^ch05-spec]
+
+### Speculative decoding: free speed, paid in memory
+
+Quantisation shrinks the weights; speculative decoding attacks the other bottleneck, the weight read per generated token. Pair the big model with a small drafter: the drafter proposes several tokens in one shot, the big model verifies all of them in a single forward pass and accepts the ones it would have produced itself; where they disagree it corrects. The output distribution is unchanged, so nothing is lost, unlike quantisation.[^ch05-spec]
+
+The arithmetic works because decode is bandwidth-bound: eight drafted tokens cost eight reads of the small weights plus one read of the big ones, instead of eight reads of the big ones. But a drafter that agrees 70 % of the time still decays fast over a chain — acceptance survival drops from 70 % for one token to 34 % over three and 6 % over eight. Keep drafts short; rejection is sequential, so when token 3 of 8 is refused, tokens 4–8 are wasted.
+
+- The drafter has to be good, or most drafts are rejected and you pay memory for nothing. Prefer drafters shipped by the model owners, often in the same Hub repo.
+- The price is the drafter's size plus its KV cache, resident next to the main model.
+- llama.cpp ships three techniques as of September 2026 — MTP, DFlash and EAGLE3:
+
+```bash
+# MTP: drafter ships in the main repo, no extra download
+llama serve -hf ggml-org/Qwen3.8-27B-GGUF:Q8_0 --spec-type draft-mtp --spec-draft-n-max 3
+
+# DFlash: separate drafter repo, block-diffusion drafting
+llama serve -hf ggml-org/Qwen3.8-27B-GGUF:Q4_K_M \
+  -hfd z-lab/Qwen3.8-27B-DFlash2-GGUF:Q4_K_M \
+  --spec-type draft-dflash --spec-draft-n-max 7
+```
 :::
 
 ::: {.fr}
@@ -100,6 +129,35 @@ L'auto-contexte d'une interface de chat gère ce budget pour vous ; si vous pilo
 | GPU datacenter (A100/H100) | 130–200+ t/s |
 
 Pour les MoE, la vitesse suit les paramètres *actifs*, pas le total. Un 26B-A4B se comporte comme un dense 4B à qualité proche. La quantification change aussi la vitesse : poids plus petits = moins d'octets à déplacer = decode plus rapide ; c'est pourquoi Q4 bat Q8 qui bat FP16 en débit.
+
+Mesurez vos propres chiffres au lieu de faire confiance au tableau de qui que ce soit :
+
+```bash
+llama bench -hf ggml-org/gemma-4-e4b-it-GGUF:Q4_0 -p 128 -n 64 -r 3
+# pp128 = débit de prefill sur prompts de 128 tokens, tg64 = decode de 64 tokens, 3 passes
+```
+
+Sur un Mac M-series, on lit pour un 1B Q4_K environ 2 184 t/s en prefill et 115 t/s en decode. Le tableau ci-dessus donne des ordres de grandeur ; `llama bench` donne la vérité de votre machine.[^ch05-spec]
+
+### Décodage spéculatif : vitesse gratuite, payée en mémoire
+
+La quantification réduit les poids ; le décodage spéculatif attaque l'autre goulot, la relecture des poids à chaque token produit. On jumelle le grand modèle avec un petit rédacteur : le rédacteur propose plusieurs tokens d'un coup, le grand modèle les vérifie tous en une seule passe et accepte ceux qu'il aurait produits lui-même ; là où ils divergent, il corrige. La distribution de sortie est inchangée, donc aucune perte, contrairement à la quantification.[^ch05-spec]
+
+L'arithmétique tient parce que le decode est limité par la bande passante : huit tokens proposés coûtent huit lectures des petits poids plus une lecture des gros, au lieu de huit lectures des gros. Mais un rédacteur qui s'accorde 70 % du temps s'essouffle vite en chaîne — la survie d'acceptation passe de 70 % pour un token à 34 % sur trois et 6 % sur huit. Proposez court ; le rejet est séquentiel, si le token 3 sur 8 est refusé, les tokens 4 à 8 sont perdus.
+
+- Le rédacteur doit être bon, sinon la plupart de ses propositions sont rejetées et vous payez de la mémoire pour rien. Préférez les rédacteurs publiés par les auteurs des modèles, souvent dans le même dépôt Hub.
+- Le prix : la taille du rédacteur plus son KV cache, résidents à côté du modèle principal.
+- llama.cpp embarque trois techniques à fin septembre 2026 — MTP, DFlash et EAGLE3 :
+
+```bash
+# MTP : le rédacteur est livré dans le dépôt principal, sans téléchargement supplémentaire
+llama serve -hf ggml-org/Qwen3.8-27B-GGUF:Q8_0 --spec-type draft-mtp --spec-draft-n-max 3
+
+# DFlash : dépôt séparé pour le rédacteur, draft par diffusion par blocs
+llama serve -hf ggml-org/Qwen3.8-27B-GGUF:Q4_K_M \
+  -hfd z-lab/Qwen3.8-27B-DFlash2-GGUF:Q4_K_M \
+  --spec-type draft-dflash --spec-draft-n-max 7
+```
 :::
 
 ::: {.notes}
@@ -108,3 +166,4 @@ Best live exercise: set temperature to 0 vs 1.5 on the same prompt, three runs e
 
 [^ch05-gqa]: Grouped-Query Attention, Ainslie et al., 2023 (arXiv:2305.13245). Arithmetic check for Llama-3-8B: 2 tensors × 8 KV heads × 128 dims × 2 bytes × 32 layers = 128 KB/token at fp16.
 [^ch05-bw]: Decode is memory-bandwidth-bound in autoregressive inference; see Kim et al., *Full Stack Optimization of Transformer Inference*, 2023 (arXiv:2303.14005), and Sheng et al., *FlexGen*, 2023 (arXiv:2303.06965).
+[^ch05-spec]: Hugging Face, *Local AI Ecosystem with llama.cpp* (talk deck, September 2026), https://www.canva.com/design/DAHXJy7MerE/IkE4Ri9hWWNOnxz6azJTKg/view (checked 2026-10-18). Speculative-decoding arithmetic and techniques, the llama.cpp flags and the `llama bench` example output follow the deck.
