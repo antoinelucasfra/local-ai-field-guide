@@ -9,6 +9,31 @@ Never deploy a model on institutional work without a measurement. Three layers:
 
 Quantisation rule: prefer the dynamic quants (`UD-*` from Unsloth, MLX 4-bit). They recover most of the accuracy standard 4-bit formats lose. When in doubt, compare the candidate quant against a higher precision on your golden set rather than trusting the label.
 
+### Reading the quant names {#quant-names}
+
+Hub listings are a wall of acronyms. They decode mechanically:[^ch16-quant]
+
+| Label | Meaning |
+|---|---|
+| `Q4_0`, `Q8_0` | Legacy: symmetric, 0-centred scale. Runs everywhere, superseded by k-quants. |
+| `Q4_K_M` | 4-bit k-quant, medium variant. K-quants quantize the scale too (weights 4-bit, scales 8-bit) and nest bins within bins to contain rounding errors. Mid-sized models save a few GB that would otherwise hold scaling constants. |
+| `IQ4_XS` | 4-bit i-quant, extra-small. Weights are matched against a fixed codebook of lattice points; an importance matrix computed from sample text decides which weights deserve higher precision. Higher quality than k-quants at equal bits, slightly more compute per block. |
+| `UD-*` | Unsloth Dynamic: quantizes the bulk low, upcasts information-dense and sensitive layers to higher precision. The default choice (rule above). |
+| `MXFP4`, `NVFP4` | Modern microblock formats: Blackwell GPUs only. GGUF quants run everywhere. |
+
+Rules of thumb: 4, 6 or 8-bit for medium models; avoid 1- and 2-bit unless the model is already large and strong — a weak model has no spare precision to donate.
+
+You can quantize your own fine-tune:
+
+```bash
+# k-quant, 4-bit
+llama quantize -hf ggml-org/gemma-4-e4b-it-GGUF Q4_K_M
+
+# i-quant: importance matrix first, then quantize with it
+llama-imatrix -m -hf ggml-org/gemma-4-e4b-it-GGUF -f calibration.txt -o imatrix.gguf -ngl 99
+llama quantize --imatrix imatrix.gguf -hf ggml-org/gemma-4-e4b-it-GGUF model-IQ4_XS.gguf IQ4_XS
+```
+
 ### Building the golden set {#eval-golden}
 
 1. **Harvest real tasks**. Past tickets, real emails, actual reports from the target workflow. Synthetic tasks evaluate the model's ability to do synthetic tasks.
@@ -57,6 +82,31 @@ Ne déployez jamais un modèle sur un travail institutionnel sans évaluation ch
 
 Règle de quantification : préférez les quants dynamiques (`UD-*` d'Unsloth, MLX 4-bit). Ils récupèrent l'essentiel de la précision que les formats 4-bit standards perdent. En cas de doute, comparez la quant candidate à une précision supérieure sur votre jeu de référence plutôt que de vous fier à l'étiquette.
 
+### Lire les noms de quants {#quant-names-fr}
+
+Les listes du Hub sont un mur d'acronymes. Ils se décodent mécaniquement :[^ch16-quant]
+
+| Étiquette | Signification |
+|---|---|
+| `Q4_0`, `Q8_0` | Historiques : échelle symétrique centrée sur 0. Tournent partout, dépassés par les k-quants. |
+| `Q4_K_M` | k-quant 4-bit, variante medium. Les k-quants quantifient aussi l'échelle (poids en 4-bit, échelles en 8-bit) et imbriquent des bins dans les bins pour contenir les erreurs d'arrondi. Les modèles de taille moyenne économisent quelques Go qui partiraient sinon en constantes d'échelle. |
+| `IQ4_XS` | i-quant 4-bit, extra-small. Les poids sont appariés contre un codebook fixe de points de réseau ; une matrice d'importance calculée sur du texte d'exemple décide quels poids méritent plus de précision. Meilleure qualité que les k-quants à bits égaux, un peu plus de calcul par bloc. |
+| `UD-*` | Unsloth Dynamic : quantifie la masse bas, remonte les couches denses en information et les sensibles à plus haute précision. Le choix par défaut (règle ci-dessus). |
+| `MXFP4`, `NVFP4` | Formats microblocs modernes : GPU Blackwell uniquement. Les quants GGUF tournent partout. |
+
+Règles de pouce : 4, 6 ou 8-bit pour les modèles de taille moyenne ; évitez 1 et 2-bit sauf si le modèle est déjà gros et fort — un modèle faible n'a aucune précision à donner.
+
+Vous pouvez quantifier vous-même votre fine-tune :
+
+```bash
+# k-quant, 4-bit
+llama quantize -hf ggml-org/gemma-4-e4b-it-GGUF Q4_K_M
+
+# i-quant : d'abord la matrice d'importance, puis la quantification avec
+llama-imatrix -m -hf ggml-org/gemma-4-e4b-it-GGUF -f calibration.txt -o imatrix.gguf -ngl 99
+llama quantize --imatrix imatrix.gguf -hf ggml-org/gemma-4-e4b-it-GGUF model-IQ4_XS.gguf IQ4_XS
+```
+
 ### Construire le jeu de référence {#eval-golden-fr}
 
 1. **Moissonnez des tâches réelles**. Tickets passés, vrais e-mails, rapports effectifs du flux visé. Les tâches synthétiques évaluent la capacité à faire des tâches synthétiques.
@@ -97,3 +147,4 @@ Un rapport minimal tient en une page : date · candidat (nom, quant, hash de con
 :::
 
 [^ch16-judge]: Zheng et al., *Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena*, NeurIPS 2023 (arXiv:2306.05685): strong agreement with humans (~80 %+ on pairwise comparisons), but with documented biases: position, verbosity, self-enhancement.
+[^ch16-quant]: Hugging Face, *Local AI Ecosystem with llama.cpp* (talk deck, September 2026), https://www.canva.com/design/DAHXJy7MerE/IkE4Ri9hWWNOnxz6azJTKg/view (checked 2026-10-18). Quant-name anatomy, k-/i-quant mechanics and the quantize commands follow the deck; llama.cpp's quantisation reference (referenced above) remains the canonical table.
