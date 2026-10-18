@@ -79,7 +79,10 @@ FORMATS = """format:
   html:
     theme:
       light: [cosmo, al-brand-light, al-brand-book.scss]
-      dark: [cosmo, al-brand-dark, al-brand-book.scss]
+      # no cosmo in dark: a bootswatch light theme leaks its gray palette
+      # ($body-color #373a3c) into the dark compile, beating the brand's
+      # $body-color → near-black text on the #0F1117 background.
+      dark: [al-brand-dark, al-brand-book.scss]
     toc: true
     toc-depth: 3
     number-depth: 1
