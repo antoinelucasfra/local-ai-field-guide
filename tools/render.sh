@@ -15,9 +15,8 @@ command -v python3 >/dev/null 2>&1 || py=python  # Git Bash has no python3
 QUARTO_PROFILE="$lang" "$py" tools/build_book.py
 quarto render --profile "$lang"
 quarto render 404.qmd --profile "$lang"
-for f in .ch-"$lang"-*.qmd; do
-        quarto render "$f"
-done
+# One quarto call for all decks: each extra invocation re-parses the project.
+quarto render .ch-"$lang"-*.qmd
 
 mkdir -p "_render/$lang"
 for f in ./*-slides.html ./*-files 404.html; do

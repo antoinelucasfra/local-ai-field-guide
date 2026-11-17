@@ -147,6 +147,8 @@ def order():
                 if not line or line.startswith("#"):
                         continue
                 head, *rest = (x.strip() for x in line.split("|"))
+                if not line.startswith("APPENDICES") and len(rest) != 2:
+                        sys.exit(f"build_book: _order.txt line needs EN|FR labels: {line}")
                 if line.startswith("APPENDICES"):
                         out.append(
                                 (
@@ -161,8 +163,6 @@ def order():
                         out.append(("HOME", "index.qmd", "welcome", rest[0], rest[1]))
                 elif line.startswith("FILE"):
                         slug = head.split()[1][:-4]
-                        if len(rest) != 2:
-                                sys.exit(f"build_book: FILE line needs EN|FR titles: {line}")
                         out.append(("FILE", f"chapters/{slug}.qmd", slug, rest[0], rest[1]))
                 else:
                         sys.exit(f"build_book: unknown _order.txt line: {line}")

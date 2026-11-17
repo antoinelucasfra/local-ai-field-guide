@@ -69,7 +69,7 @@ def main():
     if not exports:
         sys.exit(f"no GGUF under {args.out} — nothing to gate")
     gate = subprocess.run(
-        [sys.executable, "eval_gate.py", "--gguf", str(exports[0])],
+        [sys.executable, str(Path(__file__).parent / "eval_gate.py"), "--gguf", str(exports[0])],
         check=False,
     )
     if gate.returncode != 0:

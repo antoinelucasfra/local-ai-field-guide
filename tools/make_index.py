@@ -63,7 +63,7 @@ def meta_block():
                         f'    <meta property="og:title" content="{title}" />',
                         f'    <meta property="og:description" content="{desc}" />',
                         f'    <meta property="og:url" content="{book.SITE}" />',
-                        '    <meta property="og:image" content="og-card.png" />',
+                        f'    <meta property="og:image" content="{book.SITE}og-card.png" />',
                         f'    <meta property="og:image:alt" content="{title} — run, fine-tune, serve, govern" />',
                         '    <meta name="twitter:card" content="summary_large_image" />',
                 ]

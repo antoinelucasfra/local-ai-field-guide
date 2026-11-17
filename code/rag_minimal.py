@@ -8,6 +8,7 @@ Usage:
 
 import argparse
 import glob
+import os
 import sqlite3
 import sys
 
@@ -46,6 +47,8 @@ def cmd_index(paths):
 
 
 def cmd_ask(question, k=4):
+    if not os.path.exists(DB):
+        sys.exit(f"no index at {DB} — run `rag_minimal.py index` first")
     model = SentenceTransformer(MODEL)
     db = sqlite3.connect(DB)
     db.enable_load_extension(True)
@@ -93,7 +96,4 @@ if __name__ == "__main__":
     if args.cmd == "index":
         cmd_index(args.paths)
     else:
-        try:
-            cmd_ask(args.question)
-        except FileNotFoundError:
-            sys.exit(f"no index at {DB} — run `rag_minimal.py index` first")
+        cmd_ask(args.question)

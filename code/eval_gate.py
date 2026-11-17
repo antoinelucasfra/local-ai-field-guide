@@ -32,8 +32,6 @@ def main():
     )
     args = ap.parse_args()
 
-    from llama_cpp import Llama  # type: ignore[import-not-found]
-
     tasks = []
     try:
         with open(args.golden) as f:
@@ -42,6 +40,11 @@ def main():
                     tasks.append(json.loads(line))
     except (OSError, json.JSONDecodeError) as e:
         raise SystemExit(f"[gate] cannot read golden set {args.golden}: {e}") from e
+    if not tasks:
+        raise SystemExit(f"[gate] golden set {args.golden} is empty")
+
+    from llama_cpp import Llama  # type: ignore[import-not-found]
+
     llm = Llama(model_path=args.gguf, n_ctx=4096, verbose=False)
 
     passed = 0
